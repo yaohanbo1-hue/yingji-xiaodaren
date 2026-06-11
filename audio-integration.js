@@ -191,7 +191,7 @@
       return;
     }
     
-    hookPageManager();
+    // hookPageManager(); // 禁用：包装 navigate 会破坏原始页面切换逻辑
     hookQuizEngine();
     hookUIInteractions();
     hookComboSystem();
