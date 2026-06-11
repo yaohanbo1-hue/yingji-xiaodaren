@@ -1,0 +1,275 @@
+/**
+ * ===========================================================================
+ * 错题本样式 — 玻璃态设计
+ * ===========================================================================
+ */
+
+/* 统计区 */
+.wrong-book-stats {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin: 20px 0;
+  padding: 20px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.wb-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px 25px;
+}
+
+.wb-stat-num {
+  font-size: 32px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.wb-stat-label {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  margin-top: 5px;
+}
+
+/* 操作按钮区 */
+.wrong-book-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.wb-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.9);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(5px);
+}
+
+.wb-btn:hover {
+  background: rgba(255,255,255,0.15);
+  transform: translateY(-1px);
+}
+
+.wb-btn-primary {
+  background: linear-gradient(135deg, rgba(59,130,246,0.4), rgba(139,92,246,0.4));
+  border-color: rgba(99,102,241,0.3);
+}
+
+.wb-btn-primary:hover {
+  background: linear-gradient(135deg, rgba(59,130,246,0.6), rgba(139,92,246,0.6));
+}
+
+.wb-btn-danger {
+  background: rgba(239,68,68,0.2);
+  border-color: rgba(239,68,68,0.3);
+}
+
+.wb-btn-danger:hover {
+  background: rgba(239,68,68,0.4);
+}
+
+.wb-btn-small {
+  padding: 6px 12px;
+  font-size: 12px;
+  margin-top: 8px;
+  margin-right: 8px;
+}
+
+.wb-btn-del {
+  background: rgba(255,255,255,0.05);
+  opacity: 0.7;
+}
+
+/* 错题列表 */
+.wrong-book-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 10px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.wb-item {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 16px;
+  transition: all 0.2s ease;
+}
+
+.wb-item:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.15);
+}
+
+.wb-item.mastered {
+  opacity: 0.6;
+  border-color: rgba(34,197,94,0.3);
+}
+
+.wb-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.wb-item-status {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.wb-item-count {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  background: rgba(239,68,68,0.2);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.wb-item.mastered .wb-item-count {
+  background: rgba(34,197,94,0.2);
+  color: rgba(34,197,94,0.8);
+}
+
+.wb-item-question {
+  font-size: 14px;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.wb-item-answer {
+  font-size: 13px;
+  color: rgba(34,197,94,0.9);
+  padding: 8px 12px;
+  background: rgba(34,197,94,0.1);
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.wb-item-exp {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.4;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+/* 复习模式 */
+.wb-review {
+  padding: 20px;
+  text-align: center;
+}
+
+.wb-review h3 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: rgba(255,255,255,0.9);
+}
+
+.wb-review-question {
+  font-size: 16px;
+  color: rgba(255,255,255,0.95);
+  padding: 20px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.wb-review-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.wb-review-opt {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.9);
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wb-review-opt:hover:not(:disabled) {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(99,102,241,0.4);
+}
+
+.wb-review-opt:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.wb-review-opt.correct {
+  background: rgba(34,197,94,0.2);
+  border-color: rgba(34,197,94,0.5);
+  color: rgba(34,197,94,1);
+}
+
+.wb-review-opt.wrong {
+  background: rgba(239,68,68,0.2);
+  border-color: rgba(239,68,68,0.5);
+  color: rgba(239,68,68,1);
+}
+
+/* 错题本角标 */
+#wrongBookBadge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 18px;
+  height: 18px;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  box-shadow: 0 2px 6px rgba(239,68,68,0.4);
+}
+
+/* 滚动条 */
+.wrong-book-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.wrong-book-list::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.03);
+  border-radius: 3px;
+}
+
+.wrong-book-list::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.15);
+  border-radius: 3px;
+}
+
+.wrong-book-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.25);
+}

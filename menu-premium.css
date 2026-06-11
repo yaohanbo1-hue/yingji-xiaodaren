@@ -1,0 +1,252 @@
+/**
+ * ===========================================================================
+ * 应急小达人 v1.1.0 Premium — 高级菜单样式
+ * ===========================================================================
+ * 设计理念：简洁、现代、有质感
+ * ===========================================================================
+ */
+
+/* ===== 分类按钮增强 ===== */
+.menu-cat-btn {
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-radius: 16px !important;
+  padding: 20px 24px !important;
+  box-shadow: 
+    0 4px 12px rgba(0,0,0,0.2),
+    inset 0 1px 0 rgba(255,255,255,0.05) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-cat-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.menu-cat-btn:hover {
+  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%) !important;
+  border-color: rgba(255,255,255,0.15) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 
+    0 8px 24px rgba(0,0,0,0.3),
+    0 0 20px rgba(59, 130, 246, 0.1),
+    inset 0 1px 0 rgba(255,255,255,0.1) !important;
+}
+
+.menu-cat-btn:hover::before {
+  opacity: 1;
+}
+
+.menu-cat-btn:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+.cat-icon {
+  font-size: 24px !important;
+  display: block;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.cat-title {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: #E8EAED !important;
+  display: block;
+  letter-spacing: 0.5px;
+}
+
+.cat-count {
+  font-size: 12px !important;
+  color: #9AA0AB !important;
+  display: block;
+  margin-top: 4px;
+}
+
+/* ===== 学习区/挑战区标题 ===== */
+.menu-section-title {
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: #9AA0AB !important;
+  padding: 12px 0 8px !important;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu-section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.1), transparent);
+  margin-left: 12px;
+}
+
+.collapse-arrow {
+  font-size: 12px !important;
+  color: #5F6570 !important;
+  transition: transform 0.3s ease;
+}
+
+/* ===== 模式按钮增强 ===== */
+.mode-btn {
+  background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 12px !important;
+  padding: 16px 12px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.mode-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.mode-btn:hover {
+  background: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 100%) !important;
+  border-color: rgba(255,255,255,0.12) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 
+    0 8px 16px rgba(0,0,0,0.25),
+    0 0 12px rgba(59, 130, 246, 0.08) !important;
+}
+
+.mode-btn:hover::before {
+  opacity: 1;
+}
+
+.mode-btn:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+.mode-icon {
+  font-size: 22px !important;
+  display: block;
+  margin-bottom: 6px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.mode-name {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #E8EAED !important;
+  display: block;
+  letter-spacing: 0.3px;
+}
+
+.mode-desc {
+  font-size: 11px !important;
+  color: #5F6570 !important;
+  display: block;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.mode-badge {
+  font-size: 10px !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  background: rgba(255,255,255,0.08) !important;
+  color: #9AA0AB !important;
+  box-shadow: none !important;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+/* ===== 徽章特殊样式 ===== */
+.mode-badge[style*="linear-gradient"] {
+  background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,107,0,0.2)) !important;
+  color: #FFD700 !important;
+  border: 1px solid rgba(255,215,0,0.3);
+}
+
+/* ===== 返回分类按钮 ===== */
+.back-to-categories {
+  font-size: 13px !important;
+  color: #9AA0AB !important;
+  padding: 8px 16px !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.back-to-categories:hover {
+  color: #5BA4CF !important;
+}
+
+.back-to-categories span {
+  transition: transform 0.2s ease;
+}
+
+.back-to-categories:hover span {
+  transform: translateX(-2px);
+}
+
+/* ===== 底部状态栏 ===== */
+.status-bar {
+  background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%) !important;
+  backdrop-filter: blur(12px) !important;
+  border-top: 1px solid rgba(255,255,255,0.06) !important;
+  padding: 12px 16px !important;
+}
+
+/* ===== 进度条增强 ===== */
+.xp-bar-container {
+  background: rgba(0,0,0,0.3) !important;
+  border-radius: 4px !important;
+  overflow: hidden;
+  height: 6px !important;
+}
+
+.xp-bar-fill {
+  background: linear-gradient(90deg, #5BA4CF, #8B5CF6) !important;
+  border-radius: 4px !important;
+  box-shadow: 0 0 8px rgba(91, 164, 207, 0.4) !important;
+}
+
+/* ===== 移动端优化 ===== */
+@media (max-width: 768px) {
+  .menu-cat-btn {
+    padding: 16px 20px !important;
+  }
+  
+  .mode-btn {
+    padding: 14px 10px !important;
+  }
+  
+  .cat-icon {
+    font-size: 20px !important;
+  }
+  
+  .cat-title {
+    font-size: 14px !important;
+  }
+}

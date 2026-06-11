@@ -1,0 +1,142 @@
+/**
+ * ===========================================================================
+ * 证书打印增强样式
+ * ===========================================================================
+ */
+
+/* 打印按钮 */
+.cert-print-btn {
+  padding: 12px 24px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: 10px;
+}
+
+.cert-print-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+/* 证书弹窗增强 */
+.cert-modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* 批量导出按钮 */
+.cert-export-all-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2));
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 15px;
+}
+
+.cert-export-all-btn:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.3));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+/* 打印样式优化 */
+@media print {
+  /* 隐藏所有非证书元素 */
+  body * {
+    visibility: hidden !important;
+  }
+  
+  .cert-modal-overlay,
+  .cert-modal-overlay * {
+    visibility: visible !important;
+  }
+  
+  .cert-modal-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    background: white !important;
+    backdrop-filter: none !important;
+  }
+  
+  .cert-modal-content {
+    box-shadow: none !important;
+    border: none !important;
+    max-width: 100% !important;
+    max-height: 100vh !important;
+  }
+  
+  .cert-modal-header,
+  .cert-modal-actions {
+    display: none !important;
+  }
+  
+  .cert-canvas-wrapper {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  #certificateCanvas {
+    max-width: 100% !important;
+    max-height: 100vh !important;
+    width: auto !important;
+    height: auto !important;
+  }
+}
+
+/* 证书预览动画 */
+@keyframes certShine {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.cert-modal-content {
+  animation: certModalIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes certModalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* 证书画布增强 */
+#certificateCanvas {
+  border-radius: 8px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
+              0 0 60px rgba(59, 130, 246, 0.1);
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .cert-modal-actions {
+    flex-direction: column;
+  }
+  
+  .cert-download-btn,
+  .cert-print-btn {
+    width: 100%;
+    margin-left: 0;
+  }
+}

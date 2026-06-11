@@ -1,0 +1,206 @@
+/**
+ * ===========================================================================
+ * 主菜单视觉优化样式
+ * ===========================================================================
+ */
+
+/* 鼠标跟随光晕 */
+.menu-mouse-glow {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+  mix-blend-mode: screen;
+}
+
+/* 菜单卡片增强 */
+.menu-card,
+.mode-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 卡片内部光晕 */
+.menu-card::before,
+.mode-card::before {
+  content: '';
+  position: absolute;
+  top: var(--mouse-y, 50%);
+  left: var(--mouse-x, 50%);
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.menu-card:hover::before,
+.mode-card:hover::before {
+  opacity: 1;
+}
+
+/* 卡片边框光效 */
+.menu-card::after,
+.mode-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, 
+    rgba(59, 130, 246, 0.5), 
+    rgba(139, 92, 246, 0.5), 
+    rgba(59, 130, 246, 0.5));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.menu-card:hover::after,
+.mode-card:hover::after {
+  opacity: 1;
+}
+
+/* 分类标题增强 */
+.menu-section-title,
+.section-header {
+  position: relative;
+  overflow: visible;
+}
+
+.section-header-glow {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(59, 130, 246, 0.5), 
+    rgba(139, 92, 246, 0.5), 
+    rgba(59, 130, 246, 0.5), 
+    transparent);
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.menu-section-title:hover .section-header-glow,
+.section-header:hover .section-header-glow {
+  opacity: 1;
+}
+
+/* 图标动画 */
+.section-icon,
+.menu-icon {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 菜单项悬浮效果增强 */
+.menu-item {
+  transition: all 0.2s ease;
+}
+
+.menu-item:hover {
+  transform: translateX(5px);
+  background: rgba(59, 130, 246, 0.1);
+}
+
+/* 分类展开动画 */
+.menu-section-content {
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s ease;
+}
+
+/* 菜单卡片图标悬浮 */
+.menu-card:hover .menu-card-icon,
+.mode-card:hover .mode-card-icon {
+  transform: scale(1.1) rotate(5deg);
+  filter: drop-shadow(0 0 10px currentColor);
+}
+
+.menu-card-icon,
+.mode-card-icon {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 菜单标题文字光效 */
+.menu-card:hover .menu-card-title,
+.mode-card:hover .mode-card-title {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.menu-card-title,
+.mode-card-title {
+  transition: all 0.3s ease;
+}
+
+/* 菜单描述文字 */
+.menu-card:hover .menu-card-desc,
+.mode-card:hover .mode-card-desc {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.menu-card-desc,
+.mode-card-desc {
+  transition: color 0.3s ease;
+}
+
+/* 菜单徽章闪烁 */
+.menu-badge,
+.mode-badge {
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(59, 130, 246, 0);
+  }
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .menu-mouse-glow {
+    display: none;
+  }
+  
+  .menu-card::before,
+  .mode-card::before {
+    display: none;
+  }
+}
+
+/* 减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+  .menu-card,
+  .mode-card,
+  .menu-item,
+  .section-icon,
+  .menu-icon {
+    transition: none !important;
+  }
+  
+  .menu-mouse-glow {
+    display: none;
+  }
+}

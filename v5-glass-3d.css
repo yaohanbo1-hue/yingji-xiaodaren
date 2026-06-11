@@ -1,0 +1,798 @@
+/**
+ * ===========================================================================
+ * 应急小达人 v1.1.0 — 液态玻璃 + 3D 沉浸系统
+ * ===========================================================================
+ * 
+ * 【模块说明】
+ * v5-glass-3d.css 是游戏的核心视觉增强样式表，
+ * 实现了苹果风格的液态玻璃(Glassmorphism)效果和 3D 透视交互。
+ * 
+ * 【设计灵感】
+ * 参考 Apple iOS 26+ Liquid Glass 设计语言：
+ * - 毛玻璃模糊背景 (backdrop-filter: blur)
+ * - 半透明渐变边框
+ * - 内发光高光效果 (inset box-shadow)
+ * - 微妙的光泽反射 (::before 伪元素)
+ * 
+ * 【核心样式类】
+ * 1. 液态玻璃核心材质
+ *    - .quiz-opt, .scenario-opt: 答题选项玻璃卡片
+ *    - .quiz-card, .scenario-card: 题目/情景卡片
+ *    - .mode-btn: 模式选择按钮
+ *    - .survival-hud: 生存模式 HUD
+ * 
+ * 2. 3D 透视效果
+ *    - transform-style: preserve-3d
+ *    - perspective: 1000px
+ *    - rotateX/Y + translateZ 组合
+ * 
+ * 3. 动画系统
+ *    - @keyframes glassShimmer: 玻璃光泽扫过
+ *    - @keyframes float3D: 3D 悬浮漂浮
+ *    - @keyframes neonPulse: 霓虹脉冲发光
+ * 
+ * 4. 交互状态
+ *    - :hover 3D 倾斜 + 光晕增强
+ *    - :active 按下缩放反馈
+ *    - .active 选中状态高亮
+ * 
+ * 【浏览器兼容】
+ * - backdrop-filter: -webkit- 前缀兼容 Safari
+ * - 降级方案: 不支持时回退到半透明背景
+ * 
+ * 【性能优化】
+ * - 使用 will-change 提示浏览器优化渲染
+ * - 限制 blur 半径在 20-30px 范围内
+ * - 避免在动画元素上使用 backdrop-filter
+ * 
+ * @version 5.0 (glass-3d-unified)
+ * @date 2026-06-05
+ * @author 应急小达人开发团队
+ * ===========================================================================
+ */
+/* ============================================
+   应急小达人 — 液态玻璃 + 3D 沉浸系统
+   v5-glass-3d-unified
+   ============================================ */
+
+:root {
+  --glass-blur: 20px;
+  --glass-saturate: 1.6;
+  --glass-bg: rgba(255,255,255,0.06);
+  --glass-border: rgba(255,255,255,0.12);
+  --glass-highlight: rgba(255,255,255,0.15);
+  --glass-shadow: rgba(0,0,0,0.3);
+  --accent-cyan: #00d4ff;
+  --accent-purple: #a855f7;
+  --accent-green: #00e676;
+  --accent-red: #ff1744;
+  --accent-orange: #ff9800;
+  --perspective: 1000px;
+}
+
+body {
+  perspective: 1200px;
+  perspective-origin: 50% 40%;
+  overflow-x: hidden;
+}
+
+.page { transform-style: preserve-3d; }
+
+/* ===== 液态玻璃核心材质 ===== */
+.quiz-opt, .scenario-opt, .quiz-card, .quiz-content,
+.scenario-card, .quiz-exp-box, .explanation-box,
+.mode-btn, .survival-hud, .result-box, .scenario-feedback {
+  position: relative;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0.06) 100%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate)) brightness(1.05);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate)) brightness(1.05);
+  border: 1.5px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px var(--glass-shadow), inset 0 1px 0 var(--glass-highlight), inset 0 -1px 0 rgba(255,255,255,0.03);
+  transform-style: preserve-3d;
+}
+
+/* 液态玻璃内反光层 */
+.quiz-opt::before, .scenario-opt::before, .quiz-card::before,
+.quiz-content::before, .scenario-card::before, .mode-btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 60%, transparent 100%);
+  border-radius: 20px 20px 0 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 液态玻璃边缘高光 */
+.quiz-opt::after, .scenario-opt::after, .quiz-card::after,
+.quiz-content::after, .scenario-card::after {
+  content: '';
+  position: absolute;
+  top: -1px; left: 10%; right: 10%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 30%, rgba(0,212,255,0.3) 50%, rgba(255,255,255,0.4) 70%, transparent 100%);
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+/* ===== 3D 选项卡片 ===== */
+.quiz-options, .scenario-options, .pk-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 0;
+}
+
+.quiz-opt, .scenario-opt {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  cursor: pointer;
+  user-select: none;
+  color: #e0e0e0;
+  font-size: 0.95em;
+  line-height: 1.5;
+  text-align: left;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: perspective(var(--perspective)) rotateX(0deg) rotateY(0deg) translateZ(0px);
+  will-change: transform, box-shadow;
+}
+
+.quiz-opt .opt-label, .scenario-opt .opt-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px; height: 34px; min-width: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(0,212,255,0.2), rgba(168,85,247,0.15));
+  border: 1px solid rgba(0,212,255,0.3);
+  color: var(--accent-cyan);
+  font-family: 'Orbitron', 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 0.85em;
+  text-shadow: 0 0 8px rgba(0,212,255,0.5);
+  transform: translateZ(8px);
+  position: relative; z-index: 3;
+}
+
+.quiz-opt .opt-text, .scenario-opt .opt-text {
+  transform: translateZ(4px);
+  position: relative; z-index: 3;
+}
+
+/* 悬停 — 3D 翘起 + 液态玻璃高亮 */
+.quiz-opt:hover, .scenario-opt:hover {
+  transform: perspective(var(--perspective)) rotateX(-3deg) rotateY(2deg) translateZ(16px) scale(1.02);
+  border-color: rgba(0,212,255,0.4);
+  background: linear-gradient(135deg, rgba(0,212,255,0.12) 0%, rgba(168,85,247,0.08) 50%, rgba(0,212,255,0.06) 100%);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4), 0 0 40px rgba(0,212,255,0.12), 0 0 80px rgba(0,212,255,0.06), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+.quiz-opt:hover::after, .scenario-opt:hover::after {
+  opacity: 1;
+  background: linear-gradient(90deg, transparent 0%, rgba(0,212,255,0.6) 30%, rgba(168,85,247,0.5) 50%, rgba(0,212,255,0.6) 70%, transparent 100%);
+}
+
+.quiz-opt:active, .scenario-opt:active {
+  transform: perspective(var(--perspective)) rotateX(1deg) rotateY(-1deg) translateZ(-4px) scale(0.98);
+  transition-duration: 0.1s;
+}
+
+/* 正确 — 液态玻璃绿光 */
+.quiz-opt.correct, .scenario-opt.correct {
+  background: linear-gradient(135deg, rgba(0,230,118,0.18) 0%, rgba(0,230,118,0.06) 100%) !important;
+  border-color: rgba(0,230,118,0.5) !important;
+  box-shadow: 0 12px 40px rgba(0,230,118,0.25), 0 0 60px rgba(0,230,118,0.12), 0 0 120px rgba(0,230,118,0.06), inset 0 1px 0 rgba(255,255,255,0.2) !important;
+  transform: perspective(var(--perspective)) translateZ(30px) scale(1.03) !important;
+  color: #69f0ae;
+}
+
+.quiz-opt.correct .opt-label {
+  background: linear-gradient(135deg, rgba(0,230,118,0.35), rgba(0,230,118,0.15));
+  border-color: rgba(0,230,118,0.5);
+  color: #00e676;
+}
+
+.quiz-opt.correct::after {
+  background: linear-gradient(90deg, transparent, rgba(0,230,118,0.6), transparent) !important;
+  opacity: 1;
+}
+
+/* 错误 — 液态玻璃红光 + 抖动 */
+.quiz-opt.wrong, .scenario-opt.wrong {
+  background: linear-gradient(135deg, rgba(255,23,68,0.18) 0%, rgba(255,23,68,0.06) 100%) !important;
+  border-color: rgba(255,23,68,0.5) !important;
+  box-shadow: 0 8px 30px rgba(255,23,68,0.25), 0 0 50px rgba(255,23,68,0.1), inset 0 1px 0 rgba(255,255,255,0.1) !important;
+  transform: perspective(var(--perspective)) rotateX(2deg) rotateY(-3deg) translateZ(-8px) scale(0.97) !important;
+  color: #ff5252;
+  animation: wrongShake3D 0.6s ease;
+}
+
+.quiz-opt.wrong .opt-label {
+  background: linear-gradient(135deg, rgba(255,23,68,0.35), rgba(255,23,68,0.15));
+  border-color: rgba(255,23,68,0.5);
+  color: #ff1744;
+}
+
+.quiz-opt.wrong::after {
+  background: linear-gradient(90deg, transparent, rgba(255,23,68,0.6), transparent) !important;
+  opacity: 1;
+}
+
+@keyframes wrongShake3D {
+  0%,100% { transform: perspective(var(--perspective)) rotateX(2deg) rotateY(-3deg) translateX(0) translateZ(-8px); }
+  15% { transform: perspective(var(--perspective)) rotateX(2deg) rotateY(-3deg) translateX(-8px) translateZ(-8px); }
+  30% { transform: perspective(var(--perspective)) rotateX(2deg) rotateY(-3deg) translateX(6px) translateZ(-8px); }
+  45% { transform: perspective(var(--perspective)) rotateX(2deg) rotateY(-3deg) translateX(-5px) translateZ(-8px); }
+  60% { transform: perspective(var(--perspective)) rotateX(2deg) rotateY(-3deg) translateX(4px) translateZ(-8px); }
+  75% { transform: perspective(var(--perspective)) rotateX(2deg) rotateY(-3deg) translateX(-2px) translateZ(-8px); }
+}
+
+/* 禁用态 */
+.quiz-opt.disabled, .scenario-opt.disabled {
+  pointer-events: none;
+  opacity: 0.4;
+  filter: grayscale(0.5) brightness(0.8);
+  transform: none !important;
+}
+
+.quiz-opt.disabled.correct, .scenario-opt.disabled.correct {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* ===== 3D 题目卡片 ===== */
+.quiz-card, .quiz-content, .scenario-card {
+  padding: 28px 24px;
+  width: 100%;
+  max-width: 500px;
+  animation: card3DGlassIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes card3DGlassIn {
+  0% { opacity: 0; transform: perspective(1200px) rotateY(-20deg) rotateX(8deg) translateZ(-120px) scale(0.85); filter: blur(4px); }
+  60% { opacity: 1; filter: blur(0); transform: perspective(1200px) rotateY(3deg) rotateX(-1deg) translateZ(20px) scale(1.02); }
+  100% { opacity: 1; filter: blur(0); transform: perspective(1200px) rotateY(0deg) rotateX(0deg) translateZ(0px) scale(1); }
+}
+
+.quiz-card::after, .quiz-content::after, .scenario-card::after {
+  bottom: -10px; left: 5%; right: 5%;
+  height: 24px;
+  background: radial-gradient(ellipse, rgba(0,0,0,0.35) 0%, transparent 70%);
+  filter: blur(10px);
+  transform: translateZ(-15px);
+  z-index: -1;
+}
+
+/* ===== 3D 灾害图标 ===== */
+.disaster-icon, .quiz-disaster-icon, .scenario-icon {
+  font-size: 3.2em;
+  text-align: center;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5));
+  transform-style: preserve-3d;
+  animation: icon3DGlassFloat 5s ease-in-out infinite;
+}
+
+@keyframes icon3DGlassFloat {
+  0%,100% { transform: perspective(800px) rotateY(0deg) rotateX(0deg) translateZ(0px) translateY(0px); }
+  25% { transform: perspective(800px) rotateY(10deg) rotateX(-6deg) translateZ(25px) translateY(-10px); }
+  50% { transform: perspective(800px) rotateY(0deg) rotateX(6deg) translateZ(35px) translateY(-5px); }
+  75% { transform: perspective(800px) rotateY(-10deg) rotateX(-4deg) translateZ(20px) translateY(-12px); }
+}
+
+/* ===== 题目文字 ===== */
+.quiz-question {
+  font-size: 1.15em;
+  font-weight: 600;
+  color: #f0f0f0;
+  line-height: 1.6;
+  margin-bottom: 18px;
+  text-align: center;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  transform: translateZ(6px);
+  position: relative; z-index: 3;
+}
+
+/* ===== 解析框 ===== */
+.quiz-exp-box, .explanation-box {
+  padding: 20px;
+  width: 100%;
+  max-width: 500px;
+  animation: exp3DGlassIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes exp3DGlassIn {
+  0% { opacity: 0; transform: perspective(1000px) rotateX(12deg) translateZ(-60px) translateY(30px); filter: blur(3px); }
+  100% { opacity: 1; filter: blur(0); transform: perspective(1000px) rotateX(0deg) translateZ(0px) translateY(0px); }
+}
+
+.exp-text {
+  font-size: 0.95em;
+  color: #b0bec5;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  transform: translateZ(4px);
+  position: relative; z-index: 3;
+}
+
+.tip-text {
+  font-size: 0.9em;
+  color: #80cbc4;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(0,212,255,0.04));
+  border-radius: 12px;
+  border-left: 3px solid rgba(0,212,255,0.5);
+  backdrop-filter: blur(10px);
+  transform: translateZ(4px);
+  position: relative; z-index: 3;
+}
+
+/* ===== 进度条 ===== */
+.quiz-progress-bar {
+  width: 100%; max-width: 500px; height: 6px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 14px;
+  transform: translateZ(4px);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.quiz-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+  border-radius: 3px;
+  transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 0 16px rgba(0,212,255,0.4), 0 0 40px rgba(0,212,255,0.15);
+  transform: translateZ(4px);
+}
+
+.quiz-timer {
+  width: 100%; max-width: 500px; height: 8px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 14px;
+  transform: translateZ(4px);
+}
+
+.quiz-timer-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00e676, #ffea00, #ff1744);
+  border-radius: 4px;
+  transition: width 0.3s linear;
+  box-shadow: 0 0 12px rgba(255,234,0,0.3);
+}
+
+/* ===== 头部信息栏 ===== */
+.quiz-header, .scenario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; max-width: 500px;
+  padding: 10px 0;
+  margin-bottom: 8px;
+}
+
+.quiz-progress-text, .quiz-score-text {
+  font-family: 'Orbitron', 'Rajdhani', sans-serif;
+  font-size: 0.85em;
+  color: rgba(255,255,255,0.7);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  transform: translateZ(4px);
+}
+
+.quiz-streak {
+  font-family: 'Orbitron', 'Rajdhani', sans-serif;
+  font-size: 0.85em;
+  color: var(--accent-orange);
+  text-shadow: 0 0 12px rgba(255,152,0,0.5);
+  animation: streakPulse 1.2s ease-in-out infinite;
+  transform: translateZ(6px);
+}
+
+@keyframes streakPulse {
+  0%,100% { opacity: 1; transform: translateZ(6px) scale(1); }
+  50% { opacity: 0.8; transform: translateZ(10px) scale(1.05); }
+}
+
+/* ===== 3D 按钮 ===== */
+.btn-primary, .quiz-next-btn {
+  position: relative;
+  padding: 14px 36px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+  color: white;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.05em;
+  font-weight: 700;
+  cursor: pointer;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  transform-style: preserve-3d;
+  transform: perspective(800px) rotateX(0deg);
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 6px 20px rgba(0,212,255,0.3), 0 0 40px rgba(0,212,255,0.1), inset 0 1px 0 rgba(255,255,255,0.25);
+}
+
+.btn-primary:hover, .quiz-next-btn:hover {
+  transform: perspective(800px) rotateX(-6deg) translateZ(12px) scale(1.06);
+  box-shadow: 0 18px 40px rgba(0,212,255,0.4), 0 0 60px rgba(0,212,255,0.2), 0 0 100px rgba(168,85,247,0.1), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.btn-primary:active, .quiz-next-btn:active {
+  transform: perspective(800px) rotateX(2deg) translateZ(-5px) scale(0.95);
+}
+
+.btn-primary::before, .quiz-next-btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  transition: left 0.6s;
+}
+
+.btn-primary:hover::before, .quiz-next-btn:hover::before { left: 100%; }
+
+/* ===== 3D 菜单按钮 ===== */
+.mode-btn {
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px);
+}
+
+.mode-btn:hover {
+  transform: perspective(1000px) rotateX(-5deg) rotateY(5deg) translateZ(16px) scale(1.06);
+  border-color: rgba(0,212,255,0.4);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.45), 0 0 40px rgba(0,212,255,0.12), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+.mode-btn:active {
+  transform: perspective(1000px) rotateX(1deg) rotateY(-1deg) translateZ(-5px) scale(0.97);
+}
+
+/* ===== 血条 HUD ===== */
+.survival-hud {
+  width: 100%; max-width: 500px;
+  padding: 14px 18px;
+  margin-bottom: 14px;
+  border-color: rgba(255,23,68,0.2);
+  background: linear-gradient(135deg, rgba(255,23,68,0.1), rgba(255,23,68,0.03));
+}
+
+.hp-bar-container {
+  width: 100%; height: 10px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 8px;
+  transform: perspective(600px) rotateX(2deg) translateZ(4px);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.hp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff1744, #ff5252, #ff8a80);
+  border-radius: 5px;
+  transition: width 0.5s ease;
+  box-shadow: 0 0 16px rgba(255,23,68,0.4), 0 0 30px rgba(255,23,68,0.15);
+  transform: translateZ(4px);
+}
+
+/* ===== 连击庆祝 ===== */
+.combo-celebration {
+  position: fixed;
+  top: 50%; left: 50%;
+  font-size: 2.8em;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  text-shadow: 0 0 20px rgba(0,212,255,0.8), 0 0 40px rgba(0,212,255,0.4), 0 0 80px rgba(168,85,247,0.3);
+  pointer-events: none;
+  z-index: 9999;
+  animation: combo3DGlassExplode 1.6s ease-out forwards;
+}
+
+@keyframes combo3DGlassExplode {
+  0% { opacity: 1; transform: translate(-50%,-50%) perspective(800px) rotateY(0deg) scale(0.3); filter: blur(4px); }
+  20% { opacity: 1; filter: blur(0); transform: translate(-50%,-50%) perspective(800px) rotateY(90deg) rotateX(10deg) scale(1.3); }
+  50% { opacity: 1; transform: translate(-50%,-50%) perspective(800px) rotateY(270deg) rotateX(-5deg) scale(1.1); }
+  80% { opacity: 0.6; transform: translate(-50%,-50%) perspective(800px) rotateY(360deg) scale(1.6) translateY(-30px); }
+  100% { opacity: 0; transform: translate(-50%,-50%) perspective(800px) rotateY(360deg) scale(2.2) translateY(-80px); }
+}
+
+/* ===== 情景反馈 ===== */
+.scenario-feedback {
+  padding: 16px;
+  margin-top: 12px;
+  font-size: 0.95em;
+  line-height: 1.5;
+  animation: feedback3DGlassIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.scenario-feedback.correct {
+  background: linear-gradient(135deg, rgba(0,230,118,0.12), rgba(0,230,118,0.04));
+  border-color: rgba(0,230,118,0.35);
+  color: #69f0ae;
+}
+
+.scenario-feedback.wrong {
+  background: linear-gradient(135deg, rgba(255,23,68,0.12), rgba(255,23,68,0.04));
+  border-color: rgba(255,23,68,0.35);
+  color: #ff5252;
+}
+
+@keyframes feedback3DGlassIn {
+  0% { opacity: 0; transform: perspective(800px) rotateX(10deg) translateZ(-40px) scale(0.92); filter: blur(2px); }
+  100% { opacity: 1; filter: blur(0); transform: perspective(800px) rotateX(0deg) translateZ(0px) scale(1); }
+}
+
+/* ===== 结果框 ===== */
+.result-box {
+  text-align: center;
+  padding: 28px;
+  animation: result3DGlassIn 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes result3DGlassIn {
+  0% { opacity: 0; transform: perspective(1200px) rotateY(-30deg) rotateX(15deg) translateZ(-180px) scale(0.7); filter: blur(6px); }
+  40% { opacity: 1; filter: blur(0); transform: perspective(1200px) rotateY(5deg) rotateX(-2deg) translateZ(30px) scale(1.04); }
+  100% { opacity: 1; transform: perspective(1200px) rotateY(0deg) rotateX(0deg) translateZ(0px) scale(1); }
+}
+
+/* ===== Logo 3D 浮动 ===== */
+.menu-logo-title {
+  transform-style: preserve-3d;
+  animation: logo3DGlassGlow 5s ease-in-out infinite;
+}
+
+@keyframes logo3DGlassGlow {
+  0%,100% { transform: perspective(800px) rotateX(0deg) translateZ(0px); text-shadow: 0 0 10px rgba(0,212,255,0.8), 0 0 30px rgba(0,212,255,0.4); }
+  25% { transform: perspective(800px) rotateX(2deg) rotateY(2deg) translateZ(12px); text-shadow: 0 0 15px rgba(0,212,255,1), 0 0 40px rgba(0,212,255,0.5), 0 0 60px rgba(168,85,247,0.3); }
+  50% { transform: perspective(800px) rotateX(4deg) translateZ(20px); text-shadow: 0 0 20px rgba(0,212,255,1), 0 0 50px rgba(0,212,255,0.6), 0 0 80px rgba(168,85,247,0.4); }
+  75% { transform: perspective(800px) rotateX(2deg) rotateY(-2deg) translateZ(12px); text-shadow: 0 0 15px rgba(0,212,255,1), 0 0 40px rgba(0,212,255,0.5), 0 0 60px rgba(168,85,247,0.3); }
+}
+
+/* ===== 背景视差 ===== */
+#bgCanvas {
+  transform: translateZ(-200px) scale(1.2);
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 420px) {
+  .quiz-opt, .scenario-opt { padding: 14px 16px; font-size: 0.88em; gap: 10px; }
+  .quiz-opt .opt-label, .scenario-opt .opt-label { width: 28px; height: 28px; min-width: 28px; font-size: 0.8em; }
+  .quiz-card, .quiz-content, .scenario-card { padding: 20px 16px; border-radius: 16px; }
+  .disaster-icon, .quiz-disaster-icon, .scenario-icon { font-size: 2.5em; }
+  .quiz-question { font-size: 1.05em; }
+  .quiz-opt:hover, .scenario-opt:hover { transform: perspective(var(--perspective)) rotateX(-1deg) rotateY(1deg) translateZ(8px) scale(1.01); }
+  .mode-btn:hover { transform: perspective(1000px) rotateX(-2deg) rotateY(2deg) translateZ(8px) scale(1.03); }
+}
+
+/* ===== 无障碍 ===== */
+@media (prefers-reduced-motion: reduce) {
+  .quiz-opt, .scenario-opt, .mode-btn, .btn-primary, .quiz-next-btn,
+  .disaster-icon, .quiz-disaster-icon, .scenario-icon, .menu-logo-title {
+    transform: none !important;
+    animation: none !important;
+  }
+  .quiz-card, .quiz-content, .scenario-card, .quiz-exp-box, .explanation-box,
+  .result-box, .scenario-feedback, .combo-celebration { animation: none !important; }
+}
+
+/* ============================================
+   液态玻璃 + 3D 增强 v2.0 — 新增
+   ============================================ */
+
+/* 菜单 Logo 3D 悬浮 */
+.menu-logo {
+  transform-style: preserve-3d;
+  animation: menuLogoFloat 8s ease-in-out infinite;
+}
+@keyframes menuLogoFloat {
+  0%, 100% { transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0); }
+  25% { transform: perspective(1000px) rotateX(2deg) rotateY(-3deg) translateY(-8px); }
+  50% { transform: perspective(1000px) rotateX(-1deg) rotateY(2deg) translateY(-4px); }
+  75% { transform: perspective(1000px) rotateX(-2deg) rotateY(-1deg) translateY(-12px); }
+}
+
+/* 菜单标题霓虹发光 */
+.menu-logo-title {
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple), var(--accent-cyan));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 4s linear infinite;
+  filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.3));
+}
+@keyframes gradientShift {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* 分区标题液态玻璃条 */
+.menu-section-title {
+  position: relative;
+  padding: 12px 24px;
+  background: linear-gradient(90deg, rgba(0, 212, 255, 0.08), rgba(168, 85, 247, 0.08), rgba(0, 230, 118, 0.08));
+  backdrop-filter: blur(12px) saturate(1.4);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* 网格布局增强 */
+.menu-grid {
+  gap: 12px;
+}
+
+/* 底部导航栏液态玻璃增强 */
+.menu-toolbar {
+  background: linear-gradient(180deg, rgba(12, 12, 35, 0.92) 0%, rgba(8, 8, 24, 0.96) 100%) !important;
+  backdrop-filter: blur(28px) saturate(220%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(220%) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.5), 0 -10px 50px rgba(0, 212, 255, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+.menu-toolbar::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 212, 255, 0.2) 50%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 工具按钮 3D 增强 */
+.tool-btn {
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border-radius: 12px !important;
+}
+.tool-btn:hover {
+  transform: translateY(-3px) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+.tool-btn:active {
+  transform: translateY(0) scale(0.95) !important;
+}
+.tool-btn.active {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(124, 77, 255, 0.1) 100%) !important;
+  border: 1px solid rgba(0, 212, 255, 0.3) !important;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 3D 页面切换过渡 */
+.page {
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease;
+}
+.page.active {
+  transform: perspective(1000px) translateZ(0) rotateX(0);
+  opacity: 1;
+}
+
+/* 答题选项 3D 翻转 hover */
+.quiz-opt:hover {
+  transform: perspective(800px) rotateX(-3deg) rotateY(2deg) translateZ(8px) scale(1.01);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 0 25px rgba(0, 212, 255, 0.12);
+}
+
+/* 情景卡片 3D 深度 */
+.scenario-card {
+  transform-style: preserve-3d;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.scenario-card:hover {
+  transform: perspective(800px) rotateX(-2deg) translateY(-4px);
+}
+
+/* 进度条液态玻璃 */
+.quiz-progress-bar {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.quiz-progress-fill {
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.4);
+  transition: width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 加载条 3D 增强 */
+.ls-bar-fill {
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* HP 血条液态玻璃 */
+.hp-bar-container {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.hp-bar-fill {
+  background: linear-gradient(90deg, #ff1744, #ff9800, #4caf50);
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+}
+
+/* 结果面板 3D 弹出 */
+.result-box {
+  transform-style: preserve-3d;
+  animation: resultPop3D 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes resultPop3D {
+  0% { transform: perspective(800px) scale(0.3) rotateX(20deg); opacity: 0; }
+  100% { transform: perspective(800px) scale(1) rotateX(0deg); opacity: 1; }
+}
+
+/* 成就/统计卡片 3D */
+.stat-card {
+  transform-style: preserve-3d;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.stat-card:hover {
+  transform: perspective(800px) rotateY(-5deg) translateZ(15px) translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 212, 255, 0.1);
+}
+
+/* 版本标签 3D 霓虹 */
+.version-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(168, 85, 247, 0.2));
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent-cyan);
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+  animation: versionPulse 2s ease-in-out infinite;
+}
+@keyframes versionPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(0, 212, 255, 0.2); }
+  50% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.4), 0 0 40px rgba(0, 212, 255, 0.1); }
+}
+
+/* 返回按钮液态玻璃 */
+.back-float {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
+  backdrop-filter: blur(12px) saturate(1.4);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.back-float:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
+  border-color: rgba(0, 212, 255, 0.3);
+  transform: translateX(-4px) scale(1.05);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 212, 255, 0.1);
+}
+
+/* 模态弹窗 3D 液态玻璃 */
+#modalContent > div, #themeModal > div, .modal-overlay-content {
+  transform-style: preserve-3d;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 212, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
