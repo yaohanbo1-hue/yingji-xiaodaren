@@ -17,18 +17,17 @@
   'use strict';
   
   // ===== 1. 页面切换时自动切换 BGM =====
-  var originalNavigate = null;
   
   function hookPageManager() {
     if (typeof PageManager === 'undefined') return;
     
-    // 保存原始 navigate
-    originalNavigate = PageManager.navigate.bind(PageManager);
+    // 保存原始 navigate（使用闭包保存）
+    var _originalNavigate = PageManager.navigate.bind(PageManager);
     
     // 包装 navigate
     PageManager.navigate = function(pageId) {
       // 调用原始导航
-      originalNavigate(pageId);
+      _originalNavigate(pageId);
       
       // 播放页面切换音效
       if (typeof SFXEngine !== 'undefined') {
