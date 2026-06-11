@@ -6,7 +6,7 @@
 /* ===== 浮动按钮 ===== */
 .ai-fab {
   position: fixed !important;
-  bottom: 80px !important;
+  bottom: 140px !important;
   right: 20px !important;
   z-index: 9998 !important;
   width: 56px !important;
@@ -60,7 +60,7 @@
 /* ===== 浮动面板 ===== */
 .ai-float-panel {
   position: fixed !important;
-  bottom: 150px !important;
+  bottom: 210px !important;
   right: 20px !important;
   width: 380px !important;
   max-height: 520px !important;
