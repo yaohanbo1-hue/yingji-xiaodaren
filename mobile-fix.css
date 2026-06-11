@@ -1,0 +1,16 @@
+/* 移动端滚动修复 */
+@media (max-width: 768px) {
+  html, body {
+    overflow: visible !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  .page {
+    -webkit-overflow-scrolling: touch !important;
+    overflow-y: auto !important;
+  }
+  
+  #app {
+    -webkit-overflow-scrolling: touch !important;
+  }
+}
