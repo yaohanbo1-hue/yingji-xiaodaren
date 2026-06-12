@@ -145,6 +145,17 @@
   display: none !important;
 }
 
+/* 修复：非展开状态的菜单隐藏内容 */
+.menu-section:not(.expanded) {
+  height: 0 !important;
+  overflow: hidden !important;
+  min-height: 0 !important;
+}
+
+.menu-section:not(.expanded) .menu-grid {
+  display: none !important;
+}
+
 /* ===== 菜单分类按钮 ===== */
 .menu-cat-btn {
   pointer-events: auto !important;
