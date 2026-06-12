@@ -64,6 +64,9 @@ const AITutorEngine = {
   recordAnswer(cardId, correct, disaster) {
     if (!cardId || !disaster) return;
     
+    // 确保数据已初始化
+    if (!this._data) this.loadData();
+    
     this._data.quizHistory.push({
       cardId, correct,
       timestamp: Date.now(),
