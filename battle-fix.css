@@ -1,0 +1,42 @@
+/* 防灾大擂台布局修复 */
+
+/* 减小战斗舞台高度 */
+.battle-stage {
+  min-height: 200px !important;
+  padding: 20px 20px 10px !important;
+}
+
+/* 减小头像大小 */
+.avatar {
+  width: 100px !important;
+  height: 100px !important;
+  font-size: 50px !important;
+}
+
+/* 减小 VS 标志 */
+.vs-badge {
+  font-size: 36px !important;
+}
+
+/* 减小名字大小 */
+.avatar-name {
+  font-size: 16px !important;
+}
+
+/* 减小题目卡片边距 */
+.battle-quiz-card {
+  margin: 15px auto !important;
+  padding: 20px !important;
+}
+
+/* 减小战斗HUD padding */
+.battle-hud {
+  padding: 12px 16px !important;
+  gap: 12px !important;
+}
+
+/* 确保页面可滚动 */
+#page-battle {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+}
