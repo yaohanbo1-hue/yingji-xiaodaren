@@ -170,9 +170,14 @@ const DisasterSimEngine = {
             <h4>${correct ? '正确！' : '错误！'}</h4>
             <p>${this._getExplanation(correct)}</p>
           </div>
-          <button class="sim-continue-btn" onclick="DisasterSimEngine.continuePractice()">
-            ${correct ? '🎯 继续练习' : '💪 再试一次'}
-          </button>
+          <div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;">
+            <button class="sim-continue-btn" onclick="DisasterSimEngine.continuePractice()" style="flex:1;min-width:120px;">
+              ${correct ? '🎯 继续练习' : '💪 再试一次'}
+            </button>
+            <button class="sim-continue-btn" onclick="DisasterSimEngine.nextDisaster()" style="flex:1;min-width:120px;background:linear-gradient(135deg,#3b82f6,#2563eb);">
+              ➡️ 下一题 →
+            </button>
+          </div>
         </div>
       `;
     }
@@ -195,6 +200,14 @@ const DisasterSimEngine = {
       typhoon: correct ? '台风天应躲在室内最安全的小房间，远离窗户和广告牌。' : '台风天靠近窗户、在树下或外出都非常危险！应该躲在室内最安全的地方。'
     };
     return explanations[this._currentDisaster] || '';
+  },
+  
+  nextDisaster() {
+    // Go to next disaster type
+    const types = Object.keys(this._disasters);
+    const currentIdx = types.indexOf(this._currentDisaster);
+    const nextIdx = (currentIdx + 1) % types.length;
+    this.init(types[nextIdx]);
   },
   
   continuePractice() {

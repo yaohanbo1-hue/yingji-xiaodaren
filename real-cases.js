@@ -389,11 +389,16 @@ const RealCasesEngine = {
       );
     }
     
-    // 显示知识总结按钮
+    // 显示知识总结按钮和下一题按钮
     result.innerHTML += `
-      <button class="case-next-btn" onclick="RealCasesEngine.showKnowledge()">
-        📚 查看防灾知识总结 →
-      </button>
+      <div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;">
+        <button class="case-next-btn" onclick="RealCasesEngine.showKnowledge()" style="flex:1;min-width:140px;">
+          📚 查看防灾知识总结 →
+        </button>
+        <button class="case-next-btn" onclick="RealCasesEngine.nextCase()" style="flex:1;min-width:140px;background:linear-gradient(135deg,#3b82f6,#2563eb);">
+          ➡️ 下一题 →
+        </button>
+      </div>
     `;
   },
   
@@ -426,6 +431,13 @@ const RealCasesEngine = {
         </button>
       </div>
     `;
+  },
+  
+  nextCase() {
+    // Find next case in the list
+    const currentIdx = this._cases.findIndex(c => c.id === this._currentCase.id);
+    const nextIdx = (currentIdx + 1) % this._cases.length;
+    this.init(this._cases[nextIdx].id);
   },
   
   backToSelect() {

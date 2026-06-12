@@ -12,8 +12,23 @@
   padding: 0 !important;
   max-width: 100%;
   margin: 0 auto;
-  overflow-y: auto;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
   background: transparent;
+  -webkit-overflow-scrolling: touch;
+  height: 100%;
+}
+
+#page-ai-tutor > * {
+  pointer-events: auto;
+}
+
+/* Ensure close button is always clickable */
+#page-ai-tutor .back-float,
+#page-ai-tutor button[onclick*="navigate"] {
+  position: relative !important;
+  z-index: 10000 !important;
+  pointer-events: auto !important;
 }
 
 #aiTutorContent {

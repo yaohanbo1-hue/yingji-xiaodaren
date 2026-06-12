@@ -9,8 +9,15 @@
   padding: 0 !important;
   max-width: 100%;
   margin: 0 auto;
-  overflow-y: auto;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
   background: transparent;
+  -webkit-overflow-scrolling: touch;
+  height: 100%;
+}
+
+#page-certification > * {
+  pointer-events: auto;
 }
 
 #certContent {
