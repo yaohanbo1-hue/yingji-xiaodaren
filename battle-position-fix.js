@@ -12,9 +12,10 @@
       return;
     }
     
-    // 检查 page-battle 是否在 #app 内
-    if (!app.contains(battlePage)) {
-      // 将 page-battle 移到 #app 内部
+    // 检查 page-battle 是否直接作为 #app 的子元素
+    var parent = battlePage.parentElement;
+    if (parent !== app) {
+      // 将 page-battle 移到 #app 内部（作为直接子元素）
       app.appendChild(battlePage);
       console.log('✅ page-battle 已移到 #app 内部');
     }
