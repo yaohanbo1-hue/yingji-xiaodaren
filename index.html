@@ -731,10 +731,10 @@ body:not(.app-ready) #menuToolbar{display:none!important}
           <span class="mode-desc">数据可视化 · 一键导出打印</span>
         </div>
         <div class="mode-btn" onclick="StoryEngine.init()" style="border-color:rgba(155,89,182,0.3);">
-          <span class="mode-badge" style="background:linear-gradient(135deg,#9B59B6,#7C4DFF);color:#fff;">📖 剧情</span>
+          <span class="mode-badge" style="background:linear-gradient(135deg,#9B59B6,#7C4DFF);color:#fff;">📖 故事</span>
           <span class="mode-icon">📖</span>
           <span class="mode-name">故事模式</span>
-          <span class="mode-desc">在故事中学习防灾知识</span>
+          <span class="mode-desc">阅读故事学习防灾知识</span>
         </div>
       </div>
     </div>
@@ -1552,17 +1552,6 @@ body:not(.app-ready) #menuToolbar{display:none!important}
   <div id="timedContent" class="game-container"></div>
 </div>
 
-<!-- ======== 故事模式页 ======== -->
-<div id="page-story" class="page page-content">
-  <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
-  <div class="preview-header">
-    <span class="preview-icon">📖</span>
-    <h2 class="preview-title">故事模式</h2>
-    <p class="preview-desc">做出正确选择，守护城市安全</p>
-  </div>
-  <div id="storyContent" class="game-container"></div>
-</div>
-
 <!-- ======== 闪电问答页 ======== -->
 <div id="page-disasterquiz" class="page page-content">
   <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
@@ -1622,24 +1611,6 @@ body:not(.app-ready) #menuToolbar{display:none!important}
     <div id="precisionQuestion" class="quiz-q">题目加载中...</div>
     <div id="precisionOptions" class="quiz-options"></div>
     <div id="precisionExplanation" class="quiz-explanation" class="hidden"></div>
-  </div>
-</div>
-
-<!-- ======== 防灾大冒险页 ======== -->
-<div id="page-story-adventure" class="page page-content">
-  <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
-  <div class="game-header">
-    <div class="mode-label" style="color:var(--neon-purple);">📖 防灾大冒险</div>
-    <div id="storyAdvChapter" style="font-size:14px;color:rgba(255,255,255,0.5);">第1章</div>
-  </div>
-  <div style="position:relative;z-index:1;">
-    <div id="storyAdvProgress" style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:24px;overflow:hidden;">
-      <div id="storyAdvProgressFill" style="height:100%;background:linear-gradient(90deg,#AB47BC,#FF006E);width:0%;transition:width 0.3s;border-radius:2px;"></div>
-    </div>
-    <div id="storyAdvNarration" style="background:rgba(255,255,255,0.03);border-radius:12px;padding:20px;margin-bottom:24px;border-left:3px solid var(--neon-purple);font-size:14px;line-height:1.8;color:rgba(255,255,255,0.8);min-height:60px;">故事加载中...</div>
-    <div id="storyAdvQuestion" class="quiz-q">题目加载中...</div>
-    <div id="storyAdvOptions" class="quiz-options"></div>
-    <div id="storyAdvExplanation" class="quiz-explanation" class="hidden"></div>
   </div>
 </div>
 
@@ -1973,10 +1944,10 @@ body:not(.app-ready) #menuToolbar{display:none!important}
   <div id="precisionContent" style="width:100%;max-width:480px;margin:0 auto;padding:var(--space-md);"></div>
 </div>
 
-<!-- ======== 剧情模式 ======== -->
-<div id="page-story_mode" class="page page-content">
+<!-- ======== 故事书库页 ======== -->
+<div id="page-story-book" class="page page-content">
   <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
-  <div id="storyModeContent" style="width:100%;max-width:480px;margin:0 auto;padding:var(--space-md);"></div>
+  <div id="storyBookContent" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md);"></div>
 </div>
 
 
@@ -2079,8 +2050,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <script src="scenarios.js"></script>
 <script src="kit_data.js"></script>
 <script src="game.js?v=14"></script>
-<link rel="stylesheet" href="story-v2.css?v=5">
-<script src="story-v2.js?v=5"></script>
+<script src="story-book.js?v=1"></script>
 <script src="v10-interactions.js" defer></script>
 
 <script src="encyclopedia_extra.js"></script>
