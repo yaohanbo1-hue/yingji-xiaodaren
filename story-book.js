@@ -6,13 +6,24 @@ const StoryBookEngine = {
   _totalPages: 0,
   
   init() {
+    console.log('StoryBookEngine.init() called');
     PageManager.navigate('story-book');
-    setTimeout(() => this._renderLibrary(), 300);
+    setTimeout(() => {
+      console.log('Rendering library...');
+      const container = document.getElementById('storyBookContent');
+      console.log('Container:', container);
+      this._renderLibrary();
+    }, 500);
   },
   
   _renderLibrary() {
+    console.log('_renderLibrary called');
     const container = document.getElementById('storyBookContent');
-    if (!container) return;
+    if (!container) {
+      console.error('storyBookContent not found!');
+      return;
+    }
+    console.log('Container found, rendering...');
     
     const books = [
       { id: 1, title: '地震求生记', icon: '🌍', color: '#E74C3C', chapters: 5 },
