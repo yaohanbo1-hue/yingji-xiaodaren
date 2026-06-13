@@ -367,7 +367,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
   @font-face { font-family: 'Rajdhani'; font-style: normal; font-weight: 700; font-display: swap; src: local('Rajdhani Bold'), local('Segoe UI Bold'), local('Microsoft YaHei Bold'); }
 </style>
 <!-- 性能优化：预加载关键资源 -->
-<link rel="preload" href="game.js?v=10" as="script">
+<link rel="preload" href="game.js?v=11" as="script">
 <link rel="preload" href="cards.js" as="script">
 
 <style>
@@ -621,7 +621,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
       <div class="menu-cat-btn battle-btn" onclick="MenuManager.toggleCategory('battle')" id="catBtnBattle">
         <span class="cat-icon">⚔️</span>
         <span class="cat-title">闯关挑战</span>
-        <span class="cat-count">19 个模式</span>
+        <span class="cat-count">18 个模式</span>
       </div>
     </div>
     
@@ -727,6 +727,12 @@ body:not(.app-ready) #menuToolbar{display:none!important}
           <span class="mode-name">学习报告</span>
           <span class="mode-desc">数据可视化 · 一键导出打印</span>
         </div>
+        <div class="mode-btn" onclick="StoryEngine.init()" style="border-color:rgba(155,89,182,0.3);">
+          <span class="mode-badge" style="background:linear-gradient(135deg,#9B59B6,#7C4DFF);color:#fff;">📖 剧情</span>
+          <span class="mode-icon">📖</span>
+          <span class="mode-name">故事模式</span>
+          <span class="mode-desc">沉浸式防灾故事，做出关键选择</span>
+        </div>
       </div>
     </div>
 
@@ -775,12 +781,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
           <span class="mode-name">限时挑战</span>
           <span class="mode-desc">30秒内答对尽可能多</span>
         </div>
-        <div class="mode-btn" onclick="StoryEngine.init()" style="border-color:rgba(155,89,182,0.3);">
-          <span class="mode-badge" style="background:linear-gradient(135deg,#9B59B6,#7C4DFF);color:#fff;">📖 新</span>
-          <span class="mode-icon">📖</span>
-          <span class="mode-name">故事模式</span>
-          <span class="mode-desc">守护城市，做出正确选择</span>
-        </div>
+
         <div class="mode-btn" onclick="DisasterQuizGame.init()" style="border-color:rgba(255,152,0,0.3);">
           <span class="mode-badge" style="background:linear-gradient(135deg,#FF9800,#FF5722);color:#fff;">⚡ 新</span>
           <span class="mode-icon">⚡</span>
@@ -2074,7 +2075,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <script src="cards.js"></script>
 <script src="scenarios.js"></script>
 <script src="kit_data.js"></script>
-<script src="game.js?v=10"></script>
+<script src="game.js?v=11"></script>
 <script src="v10-interactions.js" defer></script>
 
 <script src="encyclopedia_extra.js"></script>
