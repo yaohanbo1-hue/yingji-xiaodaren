@@ -269,4 +269,32 @@ button:focus-visible,
     padding: 12px !important;
     font-size: 14px !important;
   }
+  
+  /* 底部导航栏优化 */
+  .menu-toolbar {
+    gap: 0 !important;
+    padding: 2px 0 calc(2px + env(safe-area-inset-bottom,0px)) !important;
+  }
+  
+  .tool-btn {
+    min-width: 36px !important;
+    padding: 4px 6px !important;
+    font-size: 8px !important;
+  }
+  
+  .tool-btn .icon {
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .tool-btn {
+    min-width: 32px !important;
+    padding: 3px 4px !important;
+    font-size: 7px !important;
+  }
+  
+  .tool-btn .icon {
+    font-size: 13px !important;
+  }
 }
