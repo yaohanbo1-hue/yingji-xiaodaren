@@ -358,6 +358,5 @@ const StoryV2Engine = {
   }
 };
 
-if (typeof StoryEngine !== 'undefined') {
-  StoryEngine.init = function() { StoryV2Engine.init(); };
-}
+// 完全覆盖旧的 StoryEngine
+window.StoryEngine = StoryV2Engine;
