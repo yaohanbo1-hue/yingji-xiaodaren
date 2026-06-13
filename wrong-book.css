@@ -217,11 +217,30 @@
 .wb-review-opt:hover:not(:disabled) {
   background: rgba(255,255,255,0.12);
   border-color: rgba(99,102,241,0.4);
+  transform: translateX(4px);
 }
 
 .wb-review-opt:disabled {
   cursor: not-allowed;
   opacity: 0.7;
+}
+
+.wb-opt-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  font-size: 12px;
+  font-weight: 700;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.wb-opt-text {
+  flex: 1;
 }
 
 .wb-review-opt.correct {

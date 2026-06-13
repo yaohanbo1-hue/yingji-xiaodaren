@@ -1,22 +1,12 @@
 /**
- * ===========================================================================
- * 应急小达人 v1.2.0 — 错题本引擎
- * ===========================================================================
- * 
- * 功能：
- * 1. 自动收集答错的题目
- * 2. 记录错误次数和最后错误时间
- * 3. 错题复习模式（专项练习薄弱项）
- * 4. 错题统计分析
- * 5. 数据持久化（localStorage）
- * 
- * @version 1.2.0
- * ===========================================================================
+ * 应急小达人 v1.2.0 — 错题本引擎 (v2 修复版)
+ * 修复: 复习模式选项点击无响应 + 答案匹配逻辑
  */
-
 const WrongBookEngine = {
   _storageKey: 'disaster_hq_wrong_book',
   _wrongItems: [],
+  _reviewQueue: [],
+  _reviewIdx: 0,
   
   init() {
     this._load();
@@ -24,7 +14,6 @@ const WrongBookEngine = {
     console.log('📕 错题本引擎已加载 (' + this._wrongItems.length + ' 道错题)');
   },
   
-  // 从 localStorage 加载
   _load() {
     try {
       var data = localStorage.getItem(this._storageKey);
@@ -34,18 +23,13 @@ const WrongBookEngine = {
     }
   },
   
-  // 保存到 localStorage
   _save() {
     try {
       localStorage.setItem(this._storageKey, JSON.stringify(this._wrongItems));
-    } catch (e) {
-      console.warn('错题本保存失败');
-    }
+    } catch (e) {}
   },
   
-  // 添加错题
   addWrong(question, options, correctAnswer, userAnswer, explanation, category) {
-    // 检查是否已存在
     var existing = null;
     for (var i = 0; i < this._wrongItems.length; i++) {
       if (this._wrongItems[i].question === question) {
@@ -53,7 +37,6 @@ const WrongBookEngine = {
         break;
       }
     }
-    
     if (existing) {
       existing.wrongCount++;
       existing.lastWrongTime = Date.now();
@@ -64,6 +47,7 @@ const WrongBookEngine = {
         question: question,
         options: options,
         correctAnswer: correctAnswer,
+        correctIndex: -1,
         userAnswer: userAnswer,
         explanation: explanation || '',
         category: category || 'general',
@@ -74,12 +58,10 @@ const WrongBookEngine = {
         reviewCount: 0
       });
     }
-    
     this._save();
     this._updateBadge();
   },
   
-  // 标记为已掌握（复习时答对）
   markMastered(id) {
     for (var i = 0; i < this._wrongItems.length; i++) {
       if (this._wrongItems[i].id === id) {
@@ -94,69 +76,33 @@ const WrongBookEngine = {
     this._updateBadge();
   },
   
-  // 移除错题
   removeWrong(id) {
-    this._wrongItems = this._wrongItems.filter(function(item) {
-      return item.id !== id;
-    });
+    this._wrongItems = this._wrongItems.filter(function(item) { return item.id !== id; });
     this._save();
     this._updateBadge();
   },
   
-  // 清空错题本
   clearAll() {
     this._wrongItems = [];
     this._save();
     this._updateBadge();
   },
   
-  // 获取未掌握的错题
   getUnmastered() {
-    return this._wrongItems.filter(function(item) {
-      return !item.mastered;
-    });
+    return this._wrongItems.filter(function(item) { return !item.mastered; });
   },
   
-  // 按分类统计
-  getStatsByCategory() {
-    var stats = {};
-    this._wrongItems.forEach(function(item) {
-      var cat = item.category || 'general';
-      if (!stats[cat]) {
-        stats[cat] = { total: 0, mastered: 0, wrongCount: 0 };
-      }
-      stats[cat].total++;
-      stats[cat].wrongCount += item.wrongCount;
-      if (item.mastered) stats[cat].mastered++;
-    });
-    return stats;
-  },
-  
-  // 获取最薄弱的题目（错误次数最多）
-  getWeakestTopics(count) {
-    count = count || 5;
-    return this._wrongItems
-      .filter(function(item) { return !item.mastered; })
-      .sort(function(a, b) { return b.wrongCount - a.wrongCount; })
-      .slice(0, count);
-  },
-  
-  // 获取总统计
   getStats() {
     var total = this._wrongItems.length;
     var mastered = this._wrongItems.filter(function(i) { return i.mastered; }).length;
     var totalWrongCount = this._wrongItems.reduce(function(sum, i) { return sum + i.wrongCount; }, 0);
-    
     return {
-      total: total,
-      mastered: mastered,
-      unmastered: total - mastered,
+      total: total, mastered: mastered, unmastered: total - mastered,
       totalWrongCount: totalWrongCount,
       masteryRate: total > 0 ? Math.round(mastered / total * 100) : 0
     };
   },
   
-  // 更新角标
   _updateBadge() {
     var badge = document.getElementById('wrongBookBadge');
     if (badge) {
@@ -166,16 +112,11 @@ const WrongBookEngine = {
     }
   },
   
-  // 钩入答题系统（自动收集错题）
   _hookQuizSystem() {
     var self = this;
-    
-    // 监听答题结果
     document.addEventListener('click', function(e) {
       var opt = e.target.closest('.quiz-opt, .choice-btn');
       if (!opt) return;
-      
-      // 延迟检查（等游戏逻辑处理完）
       setTimeout(function() {
         if (opt.classList.contains('wrong')) {
           self._captureWrongAnswer(opt);
@@ -184,46 +125,38 @@ const WrongBookEngine = {
     });
   },
   
-  // 捕获错误答案
   _captureWrongAnswer(wrongOpt) {
-    // 获取当前题目信息
     var questionEl = document.querySelector('.quiz-question, .scenario-desc, .quiz-content');
     if (!questionEl) return;
-    
     var question = questionEl.textContent.trim().substring(0, 200);
     var userAnswer = wrongOpt.textContent.trim().substring(0, 100);
-    
-    // 获取正确答案
     var correctOpt = document.querySelector('.quiz-opt.correct, .choice-btn.correct');
     var correctAnswer = correctOpt ? correctOpt.textContent.trim().substring(0, 100) : '';
-    
-    // 获取选项列表
     var options = [];
-    document.querySelectorAll('.quiz-opt, .choice-btn').forEach(function(opt) {
+    var correctIndex = -1;
+    document.querySelectorAll('.quiz-opt, .choice-btn').forEach(function(opt, idx) {
       options.push(opt.textContent.trim().substring(0, 100));
+      if (opt.classList.contains('correct')) correctIndex = idx;
     });
-    
-    // 获取解析
     var expEl = document.querySelector('.quiz-explanation, .scenario-exp');
     var explanation = expEl ? expEl.textContent.trim().substring(0, 300) : '';
-    
-    // 获取分类
     var category = 'general';
     var activePage = document.querySelector('.page.active');
-    if (activePage) {
-      category = activePage.id.replace('page-', '');
-    }
-    
+    if (activePage) category = activePage.id.replace('page-', '');
     if (question) {
       this.addWrong(question, options, correctAnswer, userAnswer, explanation, category);
+      // Also store correctIndex
+      var last = this._wrongItems[this._wrongItems.length - 1];
+      if (last && correctIndex >= 0) {
+        last.correctIndex = correctIndex;
+        this._save();
+      }
     }
   },
   
-  // 渲染错题本页面
   renderPage() {
     var container = document.getElementById('wrongBookContent');
     if (!container) return;
-    
     var stats = this.getStats();
     var items = this._wrongItems;
     
@@ -257,15 +190,11 @@ const WrongBookEngine = {
       html += '</div>';
       html += '<div class="wb-item-question">' + item.question + '</div>';
       if (item.correctAnswer) {
-        html += '<div class="wb-item-answer">正确答案: ' + item.correctAnswer + '</div>';
+        html += '<div class="wb-item-answer">✅ 正确答案: ' + item.correctAnswer + '</div>';
       }
       if (item.explanation) {
         html += '<div class="wb-item-exp">💡 ' + item.explanation + '</div>';
       }
-      if (!item.mastered) {
-        html += '<button class="wb-btn wb-btn-small" onclick="WrongBookEngine.markMastered(\'' + item.id + '\')">✅ 标记已掌握</button>';
-      }
-      html += '<button class="wb-btn wb-btn-small wb-btn-del" onclick="WrongBookEngine.removeWrong(\'' + item.id + '\')">删除</button>';
       html += '</div>';
     });
     html += '</div>';
@@ -273,7 +202,6 @@ const WrongBookEngine = {
     container.innerHTML = html;
   },
   
-  // 开始复习模式
   startReview() {
     var unmastered = this.getUnmastered();
     if (unmastered.length === 0) {
@@ -282,64 +210,141 @@ const WrongBookEngine = {
       }
       return;
     }
-    
-    // 随机选一道错题进行复习
-    var item = unmastered[Math.floor(Math.random() * unmastered.length)];
-    this._showReviewQuestion(item);
+    // Build review queue - shuffle unmastered items
+    this._reviewQueue = unmastered.slice().sort(function() { return Math.random() - 0.5; });
+    this._reviewIdx = 0;
+    this._showReviewQuestion(this._reviewQueue[0]);
   },
   
   _showReviewQuestion(item) {
     var container = document.getElementById('wrongBookContent');
     if (!container) return;
     
+    var totalQ = this._reviewQueue.length;
+    var currentQ = this._reviewIdx + 1;
+    
     var html = '<div class="wb-review">';
-    html += '<h3>📝 错题复习</h3>';
+    html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">';
+    html += '<span style="color:rgba(255,255,255,0.5);font-size:0.85rem;">📝 错题复习</span>';
+    html += '<span style="color:rgba(255,255,255,0.5);font-size:0.85rem;">' + currentQ + ' / ' + totalQ + '</span>';
+    html += '</div>';
     html += '<div class="wb-review-question">' + item.question + '</div>';
-    html += '<div class="wb-review-options">';
+    html += '<div class="wb-review-options" id="wbReviewOptions">';
     
     if (item.options && item.options.length > 0) {
       var letters = ['A', 'B', 'C', 'D'];
       item.options.forEach(function(opt, i) {
-        html += '<button class="wb-review-opt" onclick="WrongBookEngine._checkReviewAnswer(this, \'' + item.id + '\', \'' + 
-          (item.correctAnswer || '').replace(/'/g, "\\'") + '\')">' + 
-          letters[i] + '. ' + opt + '</button>';
+        html += '<button class="wb-review-opt" data-idx="' + i + '">' + 
+          '<span class="wb-opt-letter">' + letters[i] + '</span>' +
+          '<span class="wb-opt-text">' + opt + '</span>' +
+          '</button>';
       });
     }
     
     html += '</div>';
-    html += '<button class="wb-btn" onclick="WrongBookEngine.renderPage()">← 返回错题本</button>';
+    html += '<div id="wbReviewFeedback" style="display:none;margin-top:12px;"></div>';
+    html += '<div style="margin-top:16px;text-align:center;">';
+    html += '<button class="wb-btn" onclick="WrongBookEngine.renderPage()" style="margin-right:8px;">← 返回错题本</button>';
+    html += '<button class="wb-btn wb-btn-primary" id="wbNextBtn" style="display:none;" onclick="WrongBookEngine._nextReview()">下一题 →</button>';
+    html += '</div>';
     html += '</div>';
     
     container.innerHTML = html;
+    
+    // Bind click events via JS (not inline onclick) to avoid `this` issues
+    var self = this;
+    var optBtns = container.querySelectorAll('.wb-review-opt');
+    optBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        self._handleReviewClick(btn, item);
+      });
+    });
   },
   
-  _checkReviewAnswer(btn, id, correctAnswer) {
-    var allOpts = btn.parentElement.querySelectorAll('.wb-review-opt');
+  _handleReviewClick(btn, item) {
+    // Prevent double-click
+    var allOpts = document.querySelectorAll('.wb-review-opt');
+    var alreadyAnswered = false;
     allOpts.forEach(function(opt) {
-      opt.disabled = true;
-      if (opt.textContent.includes(correctAnswer)) {
-        opt.classList.add('correct');
+      if (opt.classList.contains('correct') || opt.classList.contains('wrong')) {
+        alreadyAnswered = true;
       }
     });
+    if (alreadyAnswered) return;
     
-    if (btn.textContent.includes(correctAnswer)) {
-      btn.classList.add('correct');
-      this.markMastered(id);
-      if (typeof SFXEngine !== 'undefined') SFXEngine.correct();
-    } else {
-      btn.classList.add('wrong');
-      if (typeof SFXEngine !== 'undefined') SFXEngine.wrong();
+    var clickedIdx = parseInt(btn.getAttribute('data-idx'));
+    var correctIdx = item.correctIndex;
+    
+    // If correctIndex not stored, try to match by text
+    if (correctIdx < 0 && item.correctAnswer) {
+      for (var i = 0; i < item.options.length; i++) {
+        if (item.options[i] === item.correctAnswer || item.correctAnswer.includes(item.options[i])) {
+          correctIdx = i;
+          break;
+        }
+      }
     }
     
-    // 2秒后显示下一题
-    var self = this;
-    setTimeout(function() {
-      self.startReview();
-    }, 2000);
+    // Disable all options
+    allOpts.forEach(function(opt) { opt.style.pointerEvents = 'none'; });
+    
+    // Highlight correct answer
+    if (correctIdx >= 0 && correctIdx < allOpts.length) {
+      allOpts[correctIdx].classList.add('correct');
+    }
+    
+    var feedbackEl = document.getElementById('wbReviewFeedback');
+    var nextBtn = document.getElementById('wbNextBtn');
+    
+    if (clickedIdx === correctIdx) {
+      btn.classList.add('correct');
+      this.markMastered(item.id);
+      if (feedbackEl) {
+        feedbackEl.innerHTML = '<div style="color:#4ade80;text-align:center;font-size:1.1rem;">✅ 正确！已掌握</div>';
+        feedbackEl.style.display = 'block';
+      }
+    } else {
+      btn.classList.add('wrong');
+      if (feedbackEl) {
+        var expHtml = item.explanation ? '<div style="margin-top:8px;font-size:0.85rem;color:rgba(255,255,255,0.6);">💡 ' + item.explanation + '</div>' : '';
+        feedbackEl.innerHTML = '<div style="color:#f87171;text-align:center;font-size:1.1rem;">❌ 还是错了！</div>' + expHtml;
+        feedbackEl.style.display = 'block';
+      }
+      // Increment wrong count
+      for (var i = 0; i < this._wrongItems.length; i++) {
+        if (this._wrongItems[i].id === item.id) {
+          this._wrongItems[i].wrongCount++;
+          break;
+        }
+      }
+      this._save();
+    }
+    
+    // Show next button
+    if (nextBtn) nextBtn.style.display = 'inline-block';
+  },
+  
+  _nextReview() {
+    this._reviewIdx++;
+    if (this._reviewIdx >= this._reviewQueue.length) {
+      // All done
+      var container = document.getElementById('wrongBookContent');
+      if (container) {
+        var stats = this.getStats();
+        container.innerHTML = '<div style="text-align:center;padding:40px 20px;">' +
+          '<div style="font-size:64px;margin-bottom:20px;">🎉</div>' +
+          '<h2 style="color:#fff;margin-bottom:16px;">复习完成！</h2>' +
+          '<p style="color:rgba(255,255,255,0.7);margin-bottom:24px;">总错题: ' + stats.total + ' | 掌握率: ' + stats.masteryRate + '%</p>' +
+          '<button class="wb-btn wb-btn-primary" onclick="WrongBookEngine.renderPage()" style="margin-right:8px;">← 返回错题本</button>' +
+          '<button class="wb-btn" onclick="WrongBookEngine.startReview()">🔄 再来一轮</button>' +
+          '</div>';
+      }
+      return;
+    }
+    this._showReviewQuestion(this._reviewQueue[this._reviewIdx]);
   }
 };
 
-// 初始化
 document.addEventListener('DOMContentLoaded', function() {
   WrongBookEngine.init();
 });
