@@ -48,8 +48,8 @@ const StoryBookEngine = {
     h += '</div></div></div>';
     c.innerHTML = h;
   },
-  nextPage() { this._page++; this._renderChapter(); },
-  prevPage() { this._page--; this._renderChapter(); },
-  nextChapter() { this._chapter++; this._page = 0; this._renderChapter(); }
+  nextPage() { if (this._page < this._book.chapters[this._chapter].pages.length - 1) { this._page++; this._renderChapter(); } },
+  prevPage() { if (this._page > 0) { this._page--; this._renderChapter(); } },
+  nextChapter() { if (this._chapter < this._book.chapters.length - 1) { this._chapter++; this._page = 0; this._renderChapter(); } }
 };
 // 故事数据在 story-data-1.js, story-data-2.js, story-data-3.js 中定义
