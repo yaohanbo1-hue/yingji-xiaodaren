@@ -167,3 +167,28 @@
   pointer-events: auto !important;
   cursor: pointer !important;
 }
+
+/* ===== 移动端底部导航栏优化 ===== */
+@media (max-width: 480px) {
+  .menu-toolbar .tool-btn {
+    min-width: 36px !important;
+    padding: 3px 4px !important;
+    font-size: 8px !important;
+  }
+  
+  .menu-toolbar .tool-btn .icon {
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .menu-toolbar .tool-btn {
+    min-width: 32px !important;
+    padding: 2px 3px !important;
+    font-size: 7px !important;
+  }
+  
+  .menu-toolbar .tool-btn .icon {
+    font-size: 13px !important;
+  }
+}
