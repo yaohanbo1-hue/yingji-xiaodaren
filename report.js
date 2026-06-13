@@ -114,7 +114,7 @@ const ReportEngine = {
   },
   
   _getWeakAreas() {
-    if (typeof WrongBookEngine !== 'undefined') {
+    if (typeof WrongBookEngine !== 'undefined' && typeof WrongBookEngine.getWeakestTopics === 'function') {
       var weakest = WrongBookEngine.getWeakestTopics(3);
       return weakest.map(function(item) {
         return {
@@ -140,7 +140,7 @@ const ReportEngine = {
   },
   
   _getWrongBookStats() {
-    if (typeof WrongBookEngine !== 'undefined') {
+    if (typeof WrongBookEngine !== 'undefined' && typeof WrongBookEngine.getStats === 'function') {
       return WrongBookEngine.getStats();
     }
     return { total: 0, mastered: 0, unmastered: 0, masteryRate: 0 };
