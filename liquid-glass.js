@@ -34,12 +34,14 @@
     // 初始化
     init() {
       this._addStyles();
+      this._addGlobalEffects();
       this._initTilt();
       this._initSpotlight();
       this._initMagnetic();
       this._initParallax();
       this._initSmoothTransitions();
       this._initEntranceAnimations();
+      this._enhanceTextGlow();
       console.log('💎 Liquid Glass + 3D 系统已加载');
     },
 
@@ -374,8 +376,136 @@
         @keyframes rippleAnim {
           to { transform: scale(4); opacity: 0; }
         }
+
+        /* ===== 修复音乐按钮：右上角，液态玻璃 ===== */
+        #bgmMuteBtn {
+          position: fixed !important;
+          top: 16px !important;
+          right: 16px !important;
+          bottom: auto !important;
+          left: auto !important;
+          width: 44px !important;
+          height: 44px !important;
+          border-radius: 50% !important;
+          background: rgba(255, 255, 255, 0.03) !important;
+          backdrop-filter: blur(20px) saturate(1.8) !important;
+          -webkit-backdrop-filter: blur(20px) saturate(1.8) !important;
+          border: 1px solid rgba(255, 255, 255, 0.08) !important;
+          z-index: 99999 !important;
+          font-size: 1.2rem !important;
+          cursor: pointer !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1) !important;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.05) !important;
+          animation: btnFloat 4s ease-in-out infinite !important;
+        }
+        #bgmMuteBtn:hover {
+          background: rgba(255, 255, 255, 0.08) !important;
+          border-color: rgba(0, 212, 255, 0.3) !important;
+          box-shadow: 0 0 20px rgba(0, 212, 255, 0.3), 0 4px 16px rgba(0,0,0,0.3) !important;
+          transform: scale(1.15) !important;
+          animation: none !important;
+        }
+        #bgmMuteBtn.muted {
+          opacity: 0.5 !important;
+          filter: grayscale(0.8) !important;
+        }
+        @keyframes btnFloat {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-4px); }
+        }
+
+        /* ===== 全局霓虹扫描线 ===== */
+        .liquid-scanline {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.4), transparent);
+          z-index: 9998;
+          pointer-events: none;
+          animation: scanlineMove 6s linear infinite;
+          opacity: 0.3;
+        }
+        @keyframes scanlineMove {
+          0% { transform: translateY(-100vh); }
+          100% { transform: translateY(100vh); }
+        }
+
+        /* ===== 文字霓虹发光 ===== */
+        .liquid-glow-text {
+          text-shadow: 0 0 10px rgba(0, 212, 255, 0.5), 0 0 20px rgba(0, 212, 255, 0.3), 0 0 40px rgba(0, 212, 255, 0.1);
+          animation: glowPulse 3s ease-in-out infinite;
+        }
+        @keyframes glowPulse {
+          0%, 100% { text-shadow: 0 0 10px rgba(0, 212, 255, 0.5), 0 0 20px rgba(0, 212, 255, 0.3), 0 0 40px rgba(0, 212, 255, 0.1); }
+          50% { text-shadow: 0 0 15px rgba(0, 212, 255, 0.7), 0 0 30px rgba(0, 212, 255, 0.4), 0 0 60px rgba(0, 212, 255, 0.2); }
+        }
+
+        /* ===== 全局背景极光 ===== */
+        .liquid-aurora {
+          position: fixed;
+          inset: 0;
+          pointer-events: none;
+          z-index: -1;
+          opacity: 0.4;
+          background: 
+            radial-gradient(ellipse 80% 50% at 20% 40%, rgba(0, 212, 255, 0.08) 0%, transparent 60%),
+            radial-gradient(ellipse 60% 60% at 80% 60%, rgba(155, 89, 182, 0.06) 0%, transparent 60%),
+            radial-gradient(ellipse 50% 40% at 50% 20%, rgba(255, 45, 149, 0.04) 0%, transparent 60%);
+          background-size: 200% 200%;
+          animation: auroraShift 15s ease-in-out infinite;
+        }
+        @keyframes auroraShift {
+          0%, 100% { background-position: 0% 0%, 100% 100%, 50% 50%; }
+          33% { background-position: 100% 0%, 0% 100%, 70% 30%; }
+          66% { background-position: 100% 100%, 0% 0%, 30% 70%; }
+        }
+
+        /* ===== 选择高亮 ===== */
+        ::selection {
+          background: rgba(0, 212, 255, 0.3);
+          color: #fff;
+          text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
       `;
       document.head.appendChild(style);
+    },
+
+    // 添加全局视觉效果
+    _addGlobalEffects() {
+      // 1. 扫描线
+      const scanline = document.createElement('div');
+      scanline.className = 'liquid-scanline';
+      document.body.appendChild(scanline);
+      
+      // 2. 极光背景
+      const aurora = document.createElement('div');
+      aurora.className = 'liquid-aurora';
+      document.body.insertBefore(aurora, document.body.firstChild);
+    },
+
+    // 文字发光增强
+    _enhanceTextGlow() {
+      // 为标题添加发光
+      const titles = document.querySelectorAll('.menu-logo-title, .preview-title, .game-header .mode-label');
+      titles.forEach(el => el.classList.add('liquid-glow-text'));
+      
+      // 观察新添加的元素
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach(m => {
+          m.addedNodes.forEach(node => {
+            if (node.nodeType === 1) {
+              const newTitles = node.querySelectorAll?.('.menu-logo-title, .preview-title, .game-header .mode-label') || [];
+              newTitles.forEach(el => el.classList.add('liquid-glow-text'));
+            }
+          });
+        });
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
     },
 
     // 3D 倾斜系统
