@@ -742,7 +742,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
           <span class="mode-name">急救模拟</span>
           <span class="mode-desc">8个场景学急救</span>
         </div>
-        <div class="mode-btn" onclick="UniversalSystemViewer.museum()" style="border-color:rgba(155,89,182,0.3);">
+        <div class="mode-btn" onclick="PageManager.navigate('museum')" style="border-color:rgba(155,89,182,0.3);">
           <span class="mode-icon">🏛️</span>
           <span class="mode-name">防灾馆</span>
           <span class="mode-desc">4个展区学知识</span>
@@ -890,17 +890,17 @@ body:not(.app-ready) #menuToolbar{display:none!important}
           <span class="mode-name">扭蛋机</span>
           <span class="mode-desc">投币扭蛋，惊喜不断</span>
         </div> -->
-        <div class="mode-btn" onclick="UniversalSystemViewer.music()" style="border-color:rgba(233,30,99,0.3);">
+        <div class="mode-btn" onclick="PageManager.navigate('music')" style="border-color:rgba(233,30,99,0.3);">
           <span class="mode-icon">🎵</span>
           <span class="mode-name">音乐</span>
           <span class="mode-desc">10首防灾音乐</span>
         </div>
-        <div class="mode-btn" onclick="UniversalSystemViewer.eggs()" style="border-color:rgba(255,255,255,0.2);">
+        <div class="mode-btn" onclick="PageManager.navigate('eggs')" style="border-color:rgba(255,255,255,0.2);">
           <span class="mode-icon">🥚</span>
           <span class="mode-name">彩蛋</span>
           <span class="mode-desc">15个隐藏彩蛋</span>
         </div>
-        <div class="mode-btn" onclick="UniversalSystemViewer.base()" style="border-color:rgba(255,255,255,0.15);">
+        <div class="mode-btn" onclick="PageManager.navigate('base')" style="border-color:rgba(255,255,255,0.15);">
           <span class="mode-icon">🏠</span>
           <span class="mode-name">基地</span>
           <span class="mode-desc">布置基地+换装</span>
@@ -1763,6 +1763,30 @@ body:not(.app-ready) #menuToolbar{display:none!important}
 <div id="page-firstaid" class="page page-content">
   <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
   <div id="firstaid-content" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md) 0"></div>
+</div>
+
+<!-- ======== 音乐页 ======== -->
+<div id="page-music" class="page page-content">
+  <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+  <div id="music-content" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md) 0"></div>
+</div>
+
+<!-- ======== 彩蛋页 ======== -->
+<div id="page-eggs" class="page page-content">
+  <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+  <div id="eggs-content" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md) 0"></div>
+</div>
+
+<!-- ======== 基地页 ======== -->
+<div id="page-base" class="page page-content">
+  <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+  <div id="base-content" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md) 0"></div>
+</div>
+
+<!-- ======== 博物馆页 ======== -->
+<div id="page-museum" class="page page-content">
+  <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+  <div id="museum-content" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md) 0"></div>
 </div>
 
 <!-- ======== 每日挑战页 ======== -->
