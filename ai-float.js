@@ -176,7 +176,9 @@
       
       // 通用按钮
       html += '<button class="ai-quick-btn" onclick="AITutorFloat.quickAsk(\'推荐我练习什么\')">💡 推荐练习</button>';
-      html += '<button class="ai-quick-btn" onclick="AITutorFloat.quickAsk(\'有什么学习技巧\')">📚 学习技巧</button>';
+      html += '<button class="ai-quick-btn" onclick="AITutorFloat.quickAsk(\'我的学习进度\')">📊 学习进度</button>';
+      html += '<button class="ai-quick-btn" onclick="AITutorFloat.quickAsk(\'讲个防灾冷知识\')">🧠 冷知识</button>';
+      html += '<button class="ai-quick-btn" onclick="AITutorFloat.quickAsk(\'讲个真实故事\')">📖 真实故事</button>';
       html += '<button class="ai-quick-btn" onclick="AITutorFloat.quickAsk(\'防灾基础知识\')">🛡️ 基础知识</button>';
       
       html += '</div>';
@@ -400,24 +402,21 @@
 
     quickAsk: function(question) {
       this.addUserMessage(question);
-      
-      // 渲染用户消息
       var body = document.getElementById('aiFloatBody');
       if (body) this.renderChat(body);
       
-      // 使用 LLM 生成回复（异步）
-      if (window.AITutorLLM) {
-        AITutorLLM.generateReply(question).then(function(reply) {
-          AITutorFloat.addBotMessage(reply, true); // typing = true
+      var engine = window.AITutorBrain || window.AITutorLLM;
+      if (engine && engine.generateReply) {
+        engine.generateReply(question).then(function(reply) {
+          AITutorFloat.addBotMessage(reply, true);
           var body = document.getElementById('aiFloatBody');
           if (body) AITutorFloat.renderChat(body);
         });
       } else {
-        // 回退到旧版同步回复
         var reply = this.generateReply(question);
         if (body) {
           setTimeout(function() {
-            AITutorFloat.addBotMessage(reply, true); // typing = true
+            AITutorFloat.addBotMessage(reply, true);
             AITutorFloat.renderChat(body);
           }, 500);
         }
