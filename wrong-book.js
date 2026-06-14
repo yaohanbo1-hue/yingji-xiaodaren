@@ -317,6 +317,9 @@ const WrongBookEngine = {
     win.document.write(html);
     win.document.close();
   },
+  
+  // 开始复习错题
+  startReview() {
     var unmastered = this.getUnmastered();
     if (unmastered.length === 0) {
       if (typeof Modal !== 'undefined') {
