@@ -1071,7 +1071,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
 
   <!-- ======== 双人PK页 ======== -->
   <div id="page-pk" class="page page-content">
-    <button class="btn back-float" onclick="if(PKEngine.active){PKEngine.quit()}else{PageManager.navigate('menu')}">←</button>
+    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="preview-header" id="pkHeader">
       <span class="preview-icon">👥</span>
       <h2 class="preview-title">双人PK</h2>
@@ -1576,7 +1576,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
 
   <!-- ======== 防灾大擂台 (Battle Arena) ======== -->
   <div id="page-battle" class="page page-content" style="overflow-y:auto">
-    <button class="btn back-float" onclick="if(QuizEngine.active){QuizEngine.quit()}else{PageManager.navigate('battle-lobby')}">← 返回</button>
+    <button class="btn back-float" onclick="PageManager.navigate('menu')">← 返回</button>
     
     <!-- 战斗 HUD -->
     <div class="battle-hud">
@@ -1660,7 +1660,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
 
 <!-- ======== 答题页 ======== -->
 <div id="page-quiz" class="page page-content">
-  <button class="btn back-float" onclick="if(QuizEngine.active){QuizEngine.quit()}else{PageManager.navigate('menu')}">←</button>
+  <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
   
   <!--  生存模式：HP 血条 -->
   <div class="survival-hud" id="survivalHud" class="hidden">
@@ -1708,7 +1708,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
 
 <!-- ======== 情景模拟页 ======== -->
 <div id="page-scenario" class="page page-content">
-  <button class="btn back-float" onclick="if(ScenarioEngine.active){ScenarioEngine.quit()}else{PageManager.navigate('menu')}">←</button>
+  <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
   <div class="scenario-header">
     <span class="quiz-progress-text" id="scenarioProgress">情景 1/25</span>
     <span class="quiz-score-text" id="scenarioScore">🏆 0 分</span>
