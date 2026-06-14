@@ -1,0 +1,247 @@
+/**
+ * ===========================================================================
+ * 应急小达人 v1.1.0 Premium — 高级背景系统
+ * ===========================================================================
+ * 设计方向：Deep Command Center（深邃指挥中心）
+ * 美学特征：温暖深空 / 层次光晕 / 呼吸感 / 非纯黑
+ * 参考：Linear / Apple / Vercel 背景美学
+ * ===========================================================================
+ */
+
+/* ===== 0. 强制覆盖旧背景（防止纯黑） ===== */
+html, body {
+  background: transparent !important;
+}
+
+.bg-gradient {
+  background: none !important;
+}
+
+#bgCanvas {
+  background: none !important;
+}
+
+/* ===== 1. 基础渐变 — 深空而非纯黑 ===== */
+.bg-gradient {
+  background: 
+    /* 顶部暖蓝光晕 */
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(59, 130, 246, 0.18) 0%, transparent 60%),
+    /* 左下琥珀色光 */
+    radial-gradient(ellipse 60% 40% at 15% 85%, rgba(251, 146, 60, 0.08) 0%, transparent 50%),
+    /* 右上紫罗兰光 */
+    radial-gradient(ellipse 50% 40% at 85% 15%, rgba(167, 139, 250, 0.10) 0%, transparent 50%),
+    /* 中心微暖光 */
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(56, 189, 248, 0.05) 0%, transparent 60%),
+    /* 基础深蓝渐变（非纯黑！） */
+    linear-gradient(180deg, 
+      #0F172A 0%,     /* 深蓝灰 */
+      #111827 20%,    /* 炭蓝 */
+      #0F172A 50%,    /* 深蓝灰 */
+      #1A1F2E 80%,    /* 暖灰蓝 */
+      #0F172A 100%    /* 深蓝灰 */
+    ) !important;
+  animation: bgShift 40s ease-in-out infinite !important;
+}
+
+@keyframes bgShift {
+  0%, 100% { 
+    background-position: 0% 0%, 0% 100%, 100% 0%, 50% 50%, 0% 0%;
+  }
+  50% { 
+    background-position: 0% 5%, 0% 95%, 100% 5%, 50% 55%, 0% 0%;
+  }
+}
+
+/* ===== 2. 动态光球（CSS blur，比 Canvas 柔和 10 倍） ===== */
+.bg-orb {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(140px);
+  opacity: 0.5;
+}
+
+.bg-orb-1 {
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.18) 0%, rgba(99, 102, 241, 0.05) 40%, transparent 70%);
+  top: -15%;
+  left: 25%;
+  animation: orbFloat1 30s ease-in-out infinite;
+}
+
+.bg-orb-2 {
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, rgba(251, 146, 60, 0.09) 0%, rgba(245, 158, 11, 0.03) 40%, transparent 70%);
+  bottom: -10%;
+  right: -5%;
+  animation: orbFloat2 40s ease-in-out infinite;
+}
+
+.bg-orb-3 {
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.10) 0%, rgba(139, 92, 246, 0.03) 40%, transparent 70%);
+  top: 35%;
+  left: -10%;
+  animation: orbFloat3 35s ease-in-out infinite;
+}
+
+.bg-orb-4 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.07) 0%, rgba(14, 165, 233, 0.02) 40%, transparent 70%);
+  bottom: 20%;
+  left: 30%;
+  animation: orbFloat4 25s ease-in-out infinite;
+}
+
+@keyframes orbFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(50px, 40px) scale(1.15); }
+  66% { transform: translate(-30px, 50px) scale(0.95); }
+}
+
+@keyframes orbFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-40px, -30px) scale(1.1); }
+  66% { transform: translate(30px, -50px) scale(0.9); }
+}
+
+@keyframes orbFloat3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, -40px) scale(1.2); }
+}
+
+@keyframes orbFloat4 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-20px, 30px) scale(1.1); }
+  75% { transform: translate(30px, -20px) scale(0.95); }
+}
+
+/* ===== 3. 微妙几何网格 ===== */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  /* 超细网格 */
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px),
+    /* 粗网格（每 4 格一条稍亮的线） */
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 
+    40px 40px, 40px 40px,
+    160px 160px, 160px 160px;
+  mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 10%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 10%, transparent 70%);
+}
+
+/* ===== 4. 噪点质感（模拟胶片颗粒） ===== */
+.bg-noise {
+  opacity: 0.035 !important;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E") !important;
+  background-size: 512px 512px;
+  mix-blend-mode: overlay;
+}
+
+/* ===== 5. 顶部极光条（Apple 风格发光边） ===== */
+.bg-top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(59, 130, 246, 0.5) 15%, 
+    rgba(56, 189, 248, 0.6) 35%, 
+    rgba(167, 139, 250, 0.5) 65%, 
+    rgba(251, 146, 60, 0.4) 85%, 
+    transparent 100%
+  );
+  z-index: 10;
+  pointer-events: none;
+  box-shadow: 
+    0 0 15px rgba(59, 130, 246, 0.3),
+    0 1px 3px rgba(56, 189, 248, 0.2);
+  animation: topBarPulse 8s ease-in-out infinite;
+}
+
+@keyframes topBarPulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+/* ===== 6. 暗角（Vignette）—— 聚焦中心 ===== */
+.bg-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: 
+    radial-gradient(ellipse 85% 65% at 50% 45%, transparent 25%, rgba(6, 8, 12, 0.55) 100%);
+}
+
+/* ===== 6b. 底部微暖光晕（增加深度感） ===== */
+.bg-bottom-glow {
+  position: fixed;
+  bottom: -5%;
+  left: 20%;
+  right: 20%;
+  height: 200px;
+  background: radial-gradient(ellipse 100% 100% at 50% 100%, rgba(59, 130, 246, 0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(60px);
+}
+
+/* ===== 7. Canvas 粒子层 ===== */
+#bgCanvas {
+  opacity: 0.8 !important;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== 8. 主菜单专属聚光灯 ===== */
+#page-menu {
+  position: relative;
+  z-index: 2;
+}
+
+#page-menu::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 900px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: -1;
+  animation: menuSpotlight 12s ease-in-out infinite;
+}
+
+@keyframes menuSpotlight {
+  0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.08); }
+}
+
+/* ===== 9. 隐藏旧元素 ===== */
+.menu-particles { display: none !important; }
+.menu-logo-glow { display: none !important; }
+
+/* ===== 10. 移动端优化 ===== */
+@media (max-width: 768px) {
+  .bg-orb { filter: blur(80px) !important; opacity: 0.5 !important; }
+  .bg-orb-1 { width: 350px; height: 350px; }
+  .bg-orb-2 { width: 300px; height: 300px; }
+  .bg-orb-3 { width: 250px; height: 250px; }
+  .bg-orb-4 { width: 200px; height: 200px; }
+  .bg-grid { background-size: 25px 25px, 25px 25px, 100px 100px, 100px 100px; }
+}

@@ -1,0 +1,272 @@
+/**
+ * ===========================================================================
+ * 应急小达人 v1.2.0 — 无障碍样式
+ * ===========================================================================
+ * 
+ * 1. 高对比度模式
+ * 2. 减少动画模式
+ * 3. 键盘焦点样式
+ * 4. 触摸设备优化
+ * 5. 低性能模式
+ * 
+ * @version 1.2.0
+ * ===========================================================================
+ */
+
+/* ===== 1. 键盘焦点样式 ===== */
+*:focus-visible {
+  outline: 3px solid #3b82f6 !important;
+  outline-offset: 2px !important;
+  border-radius: 4px;
+}
+
+button:focus-visible,
+.mode-btn:focus-visible,
+.menu-cat-btn:focus-visible,
+.tool-btn:focus-visible,
+.quiz-opt:focus-visible,
+.choice-btn:focus-visible {
+  outline: 3px solid #3b82f6 !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3) !important;
+}
+
+/* ===== 2. 高对比度模式 ===== */
+.high-contrast {
+  --text-primary: #ffffff;
+  --text-secondary: #e0e0e0;
+  --bg-primary: #000000;
+  --bg-secondary: #1a1a1a;
+  --border-color: #ffffff;
+  --accent-color: #ffff00;
+}
+
+.high-contrast body {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+.high-contrast .page {
+  background: #000000 !important;
+}
+
+.high-contrast .mode-btn,
+.high-contrast .menu-cat-btn,
+.high-contrast .tool-btn {
+  border: 2px solid #ffffff !important;
+  background: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+.high-contrast .mode-btn:hover,
+.high-contrast .menu-cat-btn:hover,
+.high-contrast .tool-btn:hover {
+  background: #333333 !important;
+  border-color: #ffff00 !important;
+}
+
+.high-contrast .quiz-opt,
+.high-contrast .choice-btn {
+  border: 2px solid #ffffff !important;
+  background: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+.high-contrast .quiz-opt:hover,
+.high-contrast .choice-btn:hover {
+  background: #333333 !important;
+  border-color: #ffff00 !important;
+}
+
+.high-contrast .quiz-opt.correct,
+.high-contrast .choice-btn.correct {
+  background: #006400 !important;
+  border-color: #00ff00 !important;
+}
+
+.high-contrast .quiz-opt.wrong,
+.high-contrast .choice-btn.wrong {
+  background: #640000 !important;
+  border-color: #ff0000 !important;
+}
+
+.high-contrast .menu-toolbar {
+  background: #000000 !important;
+  border-top: 2px solid #ffffff !important;
+}
+
+.high-contrast .tool-btn {
+  color: #ffffff !important;
+}
+
+.high-contrast .tool-btn.active {
+  color: #ffff00 !important;
+}
+
+/* ===== 3. 减少动画模式 ===== */
+.reduced-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+.reduced-motion .bg-orb {
+  animation: none !important;
+}
+
+.reduced-motion .bg-gradient {
+  animation: none !important;
+}
+
+.reduced-motion .page {
+  transition: none !important;
+}
+
+/* ===== 4. 触摸设备优化 ===== */
+.touch-device .mode-btn,
+.touch-device .menu-cat-btn,
+.touch-device .tool-btn,
+.touch-device .quiz-opt,
+.touch-device .choice-btn {
+  min-height: 48px; /* Apple HIG 推荐最小触摸目标 */
+  min-width: 48px;
+}
+
+.touch-device .menu-toolbar {
+  padding: 8px !important;
+}
+
+.touch-device .tool-btn {
+  padding: 8px 12px !important;
+}
+
+/* 禁用触摸设备上的 hover 效果 */
+.touch-device .mode-btn:hover,
+.touch-device .menu-cat-btn:hover,
+.touch-device .tool-btn:hover {
+  transform: none !important;
+}
+
+/* 触摸反馈 */
+.touch-device .mode-btn:active,
+.touch-device .menu-cat-btn:active,
+.touch-device .tool-btn:active,
+.touch-device .quiz-opt:active,
+.touch-device .choice-btn:active {
+  transform: scale(0.95) !important;
+  opacity: 0.8 !important;
+}
+
+/* ===== 5. 低性能模式 ===== */
+.low-perf-mode .bg-orb {
+  display: none !important;
+}
+
+.low-perf-mode .bg-gradient {
+  animation: none !important;
+}
+
+.low-perf-mode .bg-grid {
+  display: none !important;
+}
+
+.low-perf-mode .bg-noise {
+  display: none !important;
+}
+
+.low-perf-mode .page::before,
+.low-perf-mode .page::after {
+  display: none !important;
+}
+
+.low-perf-mode .mode-btn,
+.low-perf-mode .menu-cat-btn {
+  animation: none !important;
+}
+
+/* ===== 6. 屏幕阅读器专用（视觉隐藏） ===== */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* ===== 7. 打印样式 ===== */
+@media print {
+  .bg-orb,
+  .bg-gradient,
+  .bg-grid,
+  .bg-noise,
+  .menu-toolbar,
+  .back-float {
+    display: none !important;
+  }
+  
+  .page {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .mode-btn,
+  .menu-cat-btn {
+    border: 1px solid #ccc !important;
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* ===== 8. 响应式优化 ===== */
+@media (max-width: 768px) {
+  .menu-category-btns {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .menu-cat-btn {
+    width: 100%;
+  }
+  
+  .menu-grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .mode-btn {
+    width: 100%;
+  }
+  
+  .menu-toolbar {
+    padding: 4px !important;
+  }
+  
+  .tool-btn {
+    font-size: 9px !important;
+    min-width: 40px !important;
+  }
+  
+  .tool-btn .icon {
+    font-size: 16px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 12px !important;
+  }
+  
+  .game-header {
+    font-size: 1.2em !important;
+  }
+  
+  .quiz-opt,
+  .choice-btn {
+    padding: 12px !important;
+    font-size: 14px !important;
+  }
+}

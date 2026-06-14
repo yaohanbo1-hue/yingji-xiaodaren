@@ -1,0 +1,662 @@
+/**
+ * ===========================================================================
+ * 应急小达人 v1.1.0 — 简洁版界面优化
+ * ===========================================================================
+ * 
+ * 设计理念：
+ * - 去掉赛博朋克霓虹感，改用干净柔和的现代风格
+ * - 统一配色，减少花里胡哨的发光
+ * - 保留液态玻璃但更克制
+ * - 加载界面干净利落
+ * 
+ * @version 1.1.0-clean
+ * @date 2026-06-09
+ * ===========================================================================
+ */
+
+/* ===== 更干净的全局配色 ===== */
+:root {
+  /* 柔和的主色调，去掉刺眼的霓虹色 */
+  --cyber-blue: #5BA4CF;
+  --cyber-blue-hover: #6BB8E0;
+  --cyber-blue-dim: rgba(91,164,207,0.12);
+  --cyber-blue-glow: rgba(91,164,207,0.2);
+  --neon-pink: #D47B9C;
+  --neon-green: #6BC47A;
+  --gold: #C9A84C;
+  --gold-dim: rgba(201,168,76,0.15);
+  --bg-deep: #0F1117;
+  --bg-card: rgba(25,27,35,0.8);
+  --bg-card-solid: #191B23;
+  --text-primary: #E8EAED;
+  --text-secondary: #9AA0AB;
+  --text-dim: #5F6570;
+  
+  /* 玻璃效果更柔和 */
+  --glass-blur: 12px;
+  --glass-saturate: 1.2;
+  --glass-bg: rgba(255,255,255,0.04);
+  --glass-border: rgba(255,255,255,0.08);
+  --glass-highlight: rgba(255,255,255,0.06);
+}
+
+/* ===== 简洁背景 ===== */
+.bg-gradient {
+  background: 
+    radial-gradient(ellipse 60% 50% at 20% 20%, rgba(91,164,207,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 80%, rgba(201,168,76,0.04) 0%, transparent 50%),
+    linear-gradient(180deg, #0F1117 0%, #141620 50%, #0F1117 100%) !important;
+  animation: none !important;
+}
+
+.bg-noise {
+  opacity: 0.015 !important;
+}
+
+/* ===== 去掉过度的 3D 透视 ===== */
+body {
+  perspective: none !important;
+}
+
+.page {
+  transform: none !important;
+  transition: opacity 0.3s ease !important;
+}
+
+.page.active {
+  transform: none !important;
+  animation: none !important;
+}
+
+.page.exit {
+  transform: none !important;
+}
+
+/* ===== 加载界面 — 简洁版 ===== */
+#loadingScreen {
+  background: linear-gradient(180deg, #0F1117, #141620, #0F1117) !important;
+}
+
+.loading-screen {
+  background: linear-gradient(180deg, #0F1117, #141620, #0F1117) !important;
+}
+
+.ls-particles { display: none !important; }
+.ls-ring-outer, .ls-ring-spin, .ls-ring-inner { display: none !important; }
+.ls-scanline { display: none !important; }
+.ls-glitch-line { display: none !important; }
+
+.ls-icon {
+  font-size: 48px;
+  filter: none !important;
+  animation: none !important;
+}
+
+.ls-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--cyber-blue);
+  text-shadow: none !important;
+  animation: none !important;
+}
+
+.ls-title::before, .ls-title::after { display: none !important; }
+
+.ls-subtitle {
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: var(--text-secondary) !important;
+  animation: none !important;
+}
+
+/* 加载进度条简洁化 */
+.ls-progress {
+  width: 120px;
+  height: 3px;
+  background: rgba(255,255,255,0.08) !important;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: none !important;
+}
+
+.ls-progress-fill {
+  background: var(--cyber-blue) !important;
+  box-shadow: none !important;
+  height: 100%;
+  border-radius: 2px;
+}
+
+.ls-version {
+  font-size: 10px !important;
+  color: var(--text-dim) !important;
+  animation: none !important;
+}
+
+/* ===== 菜单区域 — 简洁统一 ===== */
+.menu-particles { display: none !important; }
+.menu-logo-glow { display: none !important; }
+
+.menu-logo {
+  padding: 16px 0 8px !important;
+}
+
+.menu-logo-icon {
+  font-size: 32px !important;
+  filter: none !important;
+  animation: none !important;
+}
+
+.menu-logo-title {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  letter-spacing: 2px !important;
+  background: linear-gradient(135deg, var(--cyber-blue), var(--gold)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  text-shadow: none !important;
+  animation: none !important;
+}
+
+.menu-logo-sub {
+  font-size: 12px !important;
+  color: var(--text-secondary) !important;
+  letter-spacing: 1px !important;
+}
+
+.version-tag {
+  background: rgba(255,255,255,0.06) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  color: var(--text-secondary) !important;
+  font-size: 10px !important;
+  padding: 2px 8px !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+}
+
+/* ===== 分类按钮 — 简洁统一 ===== */
+.menu-category-btns {
+  gap: 8px !important;
+}
+
+.menu-cat-btn {
+  background: var(--glass-bg) !important;
+  border: 1px solid var(--glass-border) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border-radius: 12px !important;
+  padding: 12px 16px !important;
+  box-shadow: none !important;
+  transition: all 0.2s ease !important;
+}
+
+.menu-cat-btn:hover {
+  background: rgba(255,255,255,0.08) !important;
+  border-color: rgba(255,255,255,0.15) !important;
+  transform: none !important;
+}
+
+.learn-btn, .battle-btn {
+  /* 去掉原有的渐变色 */
+}
+
+.cat-icon {
+  font-size: 18px !important;
+}
+
+.cat-title {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: var(--text-primary) !important;
+}
+
+.cat-count {
+  font-size: 11px !important;
+  color: var(--text-dim) !important;
+}
+
+/* ===== 分区标题 ===== */
+.menu-section-title {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: var(--text-secondary) !important;
+  padding: 8px 0 !important;
+}
+
+.menu-section-title::before {
+  display: none !important;
+}
+
+.menu-section-title::after {
+  display: none !important;
+}
+
+.collapse-arrow {
+  font-size: 10px !important;
+  color: var(--text-dim) !important;
+}
+
+/* ===== 模式按钮 — 统一简洁 ===== */
+.mode-btn {
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: 10px !important;
+  padding: 14px 12px !important;
+  box-shadow: none !important;
+  transition: all 0.2s ease !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.mode-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+}
+
+.mode-btn:hover {
+  background: rgba(255,255,255,0.08) !important;
+  border-color: rgba(255,255,255,0.15) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+}
+
+.mode-btn:active {
+  transform: scale(0.98) !important;
+}
+
+/* 去掉按钮上的独立颜色发光 */
+.mode-btn[style*="border-color"],
+.mode-btn[style*="box-shadow"],
+.mode-btn[style*="animation"] {
+  border-color: var(--glass-border) !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+.mode-icon {
+  font-size: 20px !important;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.mode-name {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: var(--text-primary) !important;
+  display: block;
+}
+
+.mode-desc {
+  font-size: 11px !important;
+  color: var(--text-dim) !important;
+  display: block;
+  margin-top: 2px;
+}
+
+.mode-badge {
+  font-size: 10px !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  background: rgba(255,255,255,0.08) !important;
+  color: var(--text-secondary) !important;
+  box-shadow: none !important;
+}
+
+/* ===== 液态玻璃卡片 — 更克制 ===== */
+.quiz-opt, .scenario-opt, .quiz-card, .scenario-card,
+.survival-hud, .result-box, .scenario-feedback,
+.quiz-exp-box, .explanation-box {
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate)) !important;
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate)) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+}
+
+.quiz-opt:hover, .scenario-opt:hover {
+  background: rgba(255,255,255,0.08) !important;
+  border-color: rgba(255,255,255,0.15) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+  transform: translateX(2px) !important;
+}
+
+/* ===== 去掉闪烁动画 ===== */
+@keyframes pulse-glow { 0%,100%{box-shadow:none} 50%{box-shadow:none} }
+@keyframes neonPulse { 0%,100%{box-shadow:none} 50%{box-shadow:none} }
+@keyframes glassShimmer { 0%{opacity:0} 50%{opacity:0} 100%{opacity:0} }
+@keyframes float3D { 0%,100%{transform:none} 50%{transform:none} }
+
+/* 去掉所有按钮上的 pulse-glow 动画 */
+.mode-btn {
+  animation: none !important;
+}
+
+/* ===== 进度条 — 简洁 ===== */
+.quiz-progress-bar, .progress-track {
+  height: 4px !important;
+  background: rgba(255,255,255,0.06) !important;
+  border-radius: 2px !important;
+  box-shadow: none !important;
+}
+
+.quiz-progress-fill, .progress-fill {
+  background: var(--cyber-blue) !important;
+  box-shadow: none !important;
+  border-radius: 2px !important;
+}
+
+/* ===== 按钮 — 简洁 ===== */
+.btn {
+  background: rgba(255,255,255,0.06) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.btn:hover {
+  background: rgba(255,255,255,0.1) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.btn-primary {
+  background: var(--cyber-blue) !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(91,164,207,0.3) !important;
+}
+
+.btn-primary:hover {
+  background: var(--cyber-blue-hover) !important;
+  box-shadow: 0 4px 12px rgba(91,164,207,0.4) !important;
+}
+
+.btn-gold {
+  background: var(--gold) !important;
+  color: #191B23 !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(201,168,76,0.3) !important;
+}
+
+/* ===== 模态框 — 简洁 ===== */
+.modal-box {
+  background: rgba(20,22,30,0.95) !important;
+  backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4) !important;
+  border-radius: 16px !important;
+}
+
+/* ===== 玻璃卡片通用 ===== */
+.glass-card {
+  background: rgba(25,27,35,0.7) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+  border-radius: 10px !important;
+}
+
+.glass-card:hover {
+  background: rgba(25,27,35,0.8) !important;
+  border-color: rgba(255,255,255,0.1) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ===== 标题 — 简洁 ===== */
+.title-glow {
+  font-size: clamp(1.4rem,4vw,2rem) !important;
+  font-weight: 700 !important;
+  background: linear-gradient(135deg, var(--cyber-blue), var(--gold)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  filter: none !important;
+  letter-spacing: 1px !important;
+}
+
+.title-section {
+  font-size: clamp(1rem,2.5vw,1.3rem) !important;
+  font-weight: 600 !important;
+  color: var(--text-primary) !important;
+}
+
+/* ===== 返回按钮 ===== */
+.back-float {
+  background: rgba(255,255,255,0.06) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+}
+
+.back-float:hover {
+  background: rgba(255,255,255,0.1) !important;
+  border-color: rgba(255,255,255,0.15) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+  transform: none !important;
+  color: var(--cyber-blue) !important;
+}
+
+/* ===== 滚动条 ===== */
+::-webkit-scrollbar {
+  width: 4px !important;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1) !important;
+  border-radius: 2px !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.15) !important;
+}
+
+/* ===== BGM 按钮 ===== */
+#bgmMuteBtn {
+  background: rgba(20,22,30,0.8) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+}
+
+#bgmMuteBtn:hover {
+  border-color: rgba(255,255,255,0.2) !important;
+  transform: none !important;
+}
+
+/* ===== 吉祥物 ===== */
+.mascot-bubble {
+  background: rgba(20,22,30,0.85) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+}
+
+/* ===== 返回分类 ===== */
+.back-to-categories {
+  font-size: 13px !important;
+  color: var(--text-secondary) !important;
+  padding: 6px 12px !important;
+}
+
+.back-to-categories:hover {
+  color: var(--cyber-blue) !important;
+}
+
+/* ===== 底部导航栏 ===== */
+.nav-bar {
+  background: rgba(15,17,23,0.95) !important;
+  border-top: 1px solid rgba(255,255,255,0.06) !important;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.2) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+.nav-item {
+  color: var(--text-secondary) !important;
+}
+
+.nav-item.active {
+  color: var(--cyber-blue) !important;
+}
+
+.nav-item:hover {
+  color: var(--cyber-blue) !important;
+}
+
+/* ===== 徽章 ===== */
+.badge {
+  box-shadow: none !important;
+}
+
+/* ===== 答题正确/错误反馈 ===== */
+.quiz-opt.correct .opt-label {
+  background: var(--neon-green) !important;
+  box-shadow: none !important;
+}
+
+.quiz-opt.wrong .opt-label {
+  background: #E57373 !important;
+  box-shadow: none !important;
+}
+
+/* ===== 故事模式卡片 ===== */
+.story-card {
+  background: rgba(20,22,30,0.95) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3) !important;
+}
+
+.story-icon {
+  filter: none !important;
+  animation: none !important;
+}
+
+.story-title {
+  background: linear-gradient(135deg, var(--cyber-blue), var(--gold)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.story-btn {
+  background: var(--cyber-blue) !important;
+  box-shadow: 0 2px 8px rgba(91,164,207,0.3) !important;
+}
+
+.story-btn:hover {
+  box-shadow: 0 4px 12px rgba(91,164,207,0.4) !important;
+}
+
+/* ===== 成就弹窗 ===== */
+.achieve-popup-inner {
+  background: rgba(20,22,30,0.95) !important;
+  border: 1px solid var(--gold) !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3) !important;
+}
+
+/* ===== 设置面板 ===== */
+.settings-panel {
+  background: rgba(20,22,30,0.95) !important;
+}
+
+/* ===== 难度选择 ===== */
+.diff-btn {
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  background: transparent !important;
+}
+
+.diff-btn.active {
+  background: var(--cyber-blue-dim) !important;
+  border-color: var(--cyber-blue) !important;
+  color: var(--cyber-blue) !important;
+}
+
+/* ===== 通用动画简化 ===== */
+.cardSlideIn {
+  animation: none !important;
+}
+
+@keyframes cardSlideIn {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== 应急包 ===== */
+.kit-item {
+  background: rgba(255,255,255,0.03) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  box-shadow: none !important;
+}
+
+.kit-item:hover {
+  background: rgba(255,255,255,0.06) !important;
+  border-color: rgba(255,255,255,0.12) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.kit-item.selected {
+  background: var(--cyber-blue-dim) !important;
+  border-color: var(--cyber-blue) !important;
+  box-shadow: none !important;
+}
+
+/* ===== 战斗 HUD ===== */
+.battle-hud {
+  background: rgba(15,17,23,0.9) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+  backdrop-filter: none !important;
+}
+
+.hp-bar-container {
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.3) !important;
+}
+
+/* ===== 地图节点 ===== */
+.map-node {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+}
+
+.map-node.current {
+  box-shadow: 0 0 12px rgba(201,168,76,0.4) !important;
+}
+
+/* ===== 分割线 ===== */
+.divider {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent) !important;
+  box-shadow: none !important;
+}
+
+/* ===== 学习卡片 ===== */
+.study-card-front, .study-card-back {
+  background: var(--bg-card-solid) !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+}
+
+/* ===== 签到日历 ===== */
+.daily-day {
+  background: rgba(255,255,255,0.03) !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+}
+
+.daily-day.done {
+  background: rgba(107,196,122,0.15) !important;
+  border-color: rgba(107,196,122,0.25) !important;
+}
+
+.daily-day.today {
+  background: rgba(201,168,76,0.1) !important;
+  border-color: rgba(201,168,76,0.25) !important;
+  animation: none !important;
+}

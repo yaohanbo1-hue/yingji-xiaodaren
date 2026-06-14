@@ -1,0 +1,478 @@
+/**
+ * ===========================================================================
+ * 界面终极优化 v2.0 — 设置/成就/角色/统计 全面美化
+ * ===========================================================================
+ */
+
+/* ===== 通用页面容器优化 ===== */
+.page-content {
+  padding: 20px 16px 100px !important;
+  max-width: 800px !important;
+  margin: 0 auto !important;
+}
+
+.page-content .game-header {
+  text-align: center !important;
+  margin-bottom: 24px !important;
+  padding: 20px 0 !important;
+}
+
+.page-content .game-header .mode-label {
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  margin-bottom: 8px !important;
+}
+
+/* ===== 设置页 — 卡片式布局 ===== */
+#page-settings {
+  padding: 20px 16px 100px !important;
+  max-width: 600px !important;
+  margin: 0 auto !important;
+}
+
+#page-settings .game-header {
+  text-align: center !important;
+  margin-bottom: 24px !important;
+  padding: 20px 0 !important;
+}
+
+#page-settings .game-header > div:first-child {
+  font-size: 48px !important;
+  margin-bottom: 8px !important;
+}
+
+#page-settings .game-header h2 {
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  color: rgba(255,255,255,0.9) !important;
+  margin: 0 !important;
+}
+
+/* 设置项容器 */
+#page-settings > div:not(.game-header):not(.back-float) {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+
+/* 每个设置项 */
+#page-settings h4 {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin: 0 !important;
+  padding: 16px 20px !important;
+  background: rgba(255,255,255,0.03) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 14px !important;
+  color: rgba(255,255,255,0.9) !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+#page-settings h4:hover {
+  background: rgba(255,255,255,0.06) !important;
+  border-color: rgba(59,130,246,0.3) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* 设置项描述 */
+#page-settings h4 + p,
+#page-settings p {
+  display: none !important;
+}
+
+/* 设置项右侧按钮/状态 */
+#page-settings .btn,
+#page-settings button,
+#page-settings [onclick] {
+  margin-left: auto !important;
+  padding: 6px 16px !important;
+  background: rgba(59,130,246,0.15) !important;
+  border: 1px solid rgba(59,130,246,0.2) !important;
+  border-radius: 8px !important;
+  color: #60a5fa !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+#page-settings .btn:hover,
+#page-settings button:hover {
+  background: rgba(59,130,246,0.25) !important;
+}
+
+/* 开关状态 */
+#page-settings .toggle-on,
+#page-settings [data-on="true"] {
+  color: #34d399 !important;
+}
+
+/* 音量滑块 */
+#page-settings input[type="range"] {
+  width: 120px !important;
+  margin-left: auto !important;
+  accent-color: #3b82f6 !important;
+}
+
+/* ===== 成就页 — 网格卡片布局 ===== */
+#page-achievements {
+  padding: 20px 16px 100px !important;
+  max-width: 900px !important;
+  margin: 0 auto !important;
+}
+
+#page-achievements .game-header {
+  text-align: center !important;
+  margin-bottom: 24px !important;
+}
+
+#page-achievements .game-header > div:first-child {
+  font-size: 48px !important;
+  margin-bottom: 8px !important;
+}
+
+/* 成就列表容器 — 强制网格 */
+#page-achievements > div:not(.game-header):not(.back-float):not(.menu-toolbar) {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important;
+  gap: 12px !important;
+  padding: 0 !important;
+}
+
+/* 每个成就卡片 */
+#page-achievements .achievement-item,
+#page-achievements [class*="achievement"] {
+  background: rgba(255,255,255,0.03) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 14px !important;
+  padding: 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  transition: all 0.2s ease !important;
+}
+
+#page-achievements .achievement-item:hover,
+#page-achievements [class*="achievement"]:hover {
+  background: rgba(255,255,255,0.06) !important;
+  border-color: rgba(59,130,246,0.3) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* 已解锁成就 */
+#page-achievements .achievement-item.unlocked,
+#page-achievements [class*="achievement"].unlocked {
+  border-color: rgba(52,211,153,0.3) !important;
+  background: rgba(52,211,153,0.05) !important;
+}
+
+/* 成就图标 */
+#page-achievements .achievement-icon {
+  font-size: 28px !important;
+  flex-shrink: 0 !important;
+  width: 44px !important;
+  height: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(255,255,255,0.05) !important;
+  border-radius: 12px !important;
+}
+
+/* 成就信息 */
+#page-achievements .achievement-info {
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+#page-achievements .achievement-name {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: rgba(255,255,255,0.9) !important;
+  margin-bottom: 4px !important;
+}
+
+#page-achievements .achievement-desc {
+  font-size: 12px !important;
+  color: rgba(255,255,255,0.5) !important;
+}
+
+/* ===== 角色页 — 网格卡片布局 ===== */
+#page-character {
+  padding: 20px 16px 100px !important;
+  max-width: 900px !important;
+  margin: 0 auto !important;
+}
+
+#page-character .game-header {
+  text-align: center !important;
+  margin-bottom: 24px !important;
+}
+
+/* 角色列表容器 */
+#page-character > div:not(.game-header):not(.back-float):not(.menu-toolbar) {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+  gap: 16px !important;
+  padding: 0 !important;
+}
+
+/* 每个角色卡片 */
+#page-character .character-card,
+#page-character [class*="character"] {
+  background: rgba(255,255,255,0.03) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 16px !important;
+  padding: 20px !important;
+  text-align: center !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+}
+
+#page-character .character-card:hover,
+#page-character [class*="character"]:hover {
+  background: rgba(255,255,255,0.06) !important;
+  border-color: rgba(59,130,246,0.3) !important;
+  transform: translateY(-4px) !important;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2) !important;
+}
+
+/* 已选择角色 */
+#page-character .character-card.selected,
+#page-character [class*="character"].selected {
+  border-color: rgba(59,130,246,0.5) !important;
+  background: rgba(59,130,246,0.08) !important;
+  box-shadow: 0 0 20px rgba(59,130,246,0.2) !important;
+}
+
+/* 角色图标 */
+#page-character .character-icon {
+  font-size: 48px !important;
+  margin-bottom: 12px !important;
+}
+
+/* 角色名称 */
+#page-character .character-name {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: rgba(255,255,255,0.9) !important;
+  margin-bottom: 8px !important;
+}
+
+/* 角色技能 */
+#page-character .character-skill {
+  font-size: 12px !important;
+  color: rgba(255,255,255,0.5) !important;
+  line-height: 1.5 !important;
+}
+
+/* ===== 统计页 — 数据卡片布局 ===== */
+#page-stats {
+  padding: 20px 16px 100px !important;
+  max-width: 800px !important;
+  margin: 0 auto !important;
+}
+
+#page-stats .game-header {
+  text-align: center !important;
+  margin-bottom: 24px !important;
+}
+
+/* 等级进度条 */
+#page-stats .level-bar,
+#page-stats [class*="level"] {
+  background: rgba(255,255,255,0.03) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 14px !important;
+  padding: 20px !important;
+  margin-bottom: 20px !important;
+  text-align: center !important;
+}
+
+/* 统计数据网格 */
+#page-stats > div:not(.game-header):not(.back-float):not(.menu-toolbar):not(.level-bar) {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
+  gap: 12px !important;
+  padding: 0 !important;
+}
+
+/* 每个统计卡片 */
+#page-stats .stat-card,
+#page-stats [class*="stat"] {
+  background: rgba(255,255,255,0.03) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 14px !important;
+  padding: 16px !important;
+  text-align: center !important;
+  transition: all 0.2s ease !important;
+}
+
+#page-stats .stat-card:hover,
+#page-stats [class*="stat"]:hover {
+  background: rgba(255,255,255,0.06) !important;
+  border-color: rgba(59,130,246,0.2) !important;
+}
+
+/* 统计数值 */
+#page-stats .stat-value {
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  color: rgba(255,255,255,0.9) !important;
+  margin-bottom: 4px !important;
+}
+
+/* 统计标签 */
+#page-stats .stat-label {
+  font-size: 12px !important;
+  color: rgba(255,255,255,0.5) !important;
+}
+
+/* ===== 商城页优化 ===== */
+#page-shop {
+  padding: 20px 16px 100px !important;
+  max-width: 800px !important;
+  margin: 0 auto !important;
+}
+
+#page-shop .game-header {
+  text-align: center !important;
+  margin-bottom: 24px !important;
+}
+
+/* 商品网格 */
+#page-shop > div:not(.game-header):not(.back-float):not(.menu-toolbar) {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
+  gap: 12px !important;
+  padding: 0 !important;
+}
+
+/* 商品卡片 */
+#page-shop .shop-item,
+#page-shop [class*="shop-item"] {
+  background: rgba(255,255,255,0.03) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 14px !important;
+  padding: 16px !important;
+  text-align: center !important;
+  transition: all 0.2s ease !important;
+}
+
+#page-shop .shop-item:hover,
+#page-shop [class*="shop-item"]:hover {
+  background: rgba(255,255,255,0.06) !important;
+  border-color: rgba(59,130,246,0.3) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ===== 百科页优化 ===== */
+#page-encyclopedia {
+  padding: 20px 16px 100px !important;
+  max-width: 800px !important;
+  margin: 0 auto !important;
+}
+
+/* ===== 日历页优化 ===== */
+#page-calendar {
+  padding: 20px 16px 100px !important;
+  max-width: 600px !important;
+  margin: 0 auto !important;
+}
+
+/* ===== 排行榜优化 ===== */
+#page-leaderboard {
+  padding: 20px 16px 100px !important;
+  max-width: 600px !important;
+  margin: 0 auto !important;
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 768px) {
+  #page-achievements > div:not(.game-header):not(.back-float):not(.menu-toolbar) {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
+  }
+  
+  #page-character > div:not(.game-header):not(.back-float):not(.menu-toolbar) {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  #page-stats > div:not(.game-header):not(.back-float):not(.menu-toolbar):not(.level-bar) {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  #page-shop > div:not(.game-header):not(.back-float):not(.menu-toolbar) {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  #page-character > div:not(.game-header):not(.back-float):not(.menu-toolbar) {
+    grid-template-columns: 1fr !important;
+  }
+  
+  #page-stats > div:not(.game-header):not(.back-float):not(.menu-toolbar):not(.level-bar) {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ===== 通用动画 ===== */
+.page-content > div:not(.game-header):not(.back-float):not(.menu-toolbar) > * {
+  animation: fadeInUp 0.3s ease backwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 交错动画 */
+.page-content > div:not(.game-header):not(.back-float):not(.menu-toolbar) > *:nth-child(1) { animation-delay: 0.02s; }
+.page-content > div:not(.game-header):not(.back-float):not(.menu-toolbar) > *:nth-child(2) { animation-delay: 0.04s; }
+.page-content > div:not(.game-header):not(.back-float):not(.menu-toolbar) > *:nth-child(3) { animation-delay: 0.06s; }
+.page-content > div:not(.game-header):not(.back-float):not(.menu-toolbar) > *:nth-child(4) { animation-delay: 0.08s; }
+.page-content > div:not(.game-header):not(.back-float):not(.menu-toolbar) > *:nth-child(5) { animation-delay: 0.10s; }
+.page-content > div:not(.game-header):not(.back-float):not(.menu-toolbar) > *:nth-child(6) { animation-delay: 0.12s; }
+.page-content > div:not(.game-header):not(.back-float):not(.menu-toolbar) > *:nth-child(7) { animation-delay: 0.14s; }
+.page-content > div:not(.game-header):not(.back-float):not(.menu-toolbar) > *:nth-child(8) { animation-delay: 0.16s; }
+.page-content > div:not(.game-header):not(.back-float):not(.menu-toolbar) > *:nth-child(9) { animation-delay: 0.18s; }
+.page-content > div:not(.game-header):not(.back-float):not(.menu-toolbar) > *:nth-child(10) { animation-delay: 0.20s; }
+
+/* ===== 返回按钮美化 ===== */
+.back-float {
+  position: fixed !important;
+  top: 16px !important;
+  left: 16px !important;
+  z-index: 100 !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  background: rgba(255,255,255,0.08) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  color: rgba(255,255,255,0.7) !important;
+  font-size: 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  padding: 0 !important;
+  min-width: auto !important;
+}
+
+.back-float:hover {
+  background: rgba(255,255,255,0.15) !important;
+  color: rgba(255,255,255,0.9) !important;
+  transform: scale(1.05) !important;
+}

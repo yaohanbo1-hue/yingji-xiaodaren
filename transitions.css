@@ -1,0 +1,281 @@
+/**
+ * ===========================================================================
+ * 应急小达人 v1.2.0 — 转场动画增强
+ * ===========================================================================
+ * 
+ * 优化内容：
+ * 1. 更流畅的页面切换动画（淡入淡出 + 轻微缩放）
+ * 2. 高级毛玻璃转场效果
+ * 3. 页面进入/退出的差异化动画
+ * 4. 更柔和的光晕过渡
+ * 
+ * @version 1.2.0
+ * ===========================================================================
+ */
+
+/* ===== 页面切换基础动画 ===== */
+.page {
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.page:not(.active) {
+  opacity: 0;
+  transform: scale(0.98) translateY(10px);
+  pointer-events: none;
+}
+
+.page.active {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* ===== 菜单页专属动画 ===== */
+#page-menu.active .mode-btn {
+  animation: menuItemSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+}
+
+#page-menu.active .mode-btn:nth-child(1) { animation-delay: 0.05s; }
+#page-menu.active .mode-btn:nth-child(2) { animation-delay: 0.1s; }
+#page-menu.active .mode-btn:nth-child(3) { animation-delay: 0.15s; }
+#page-menu.active .mode-btn:nth-child(4) { animation-delay: 0.2s; }
+#page-menu.active .mode-btn:nth-child(5) { animation-delay: 0.25s; }
+#page-menu.active .mode-btn:nth-child(6) { animation-delay: 0.3s; }
+#page-menu.active .mode-btn:nth-child(7) { animation-delay: 0.35s; }
+#page-menu.active .mode-btn:nth-child(8) { animation-delay: 0.4s; }
+#page-menu.active .mode-btn:nth-child(9) { animation-delay: 0.45s; }
+#page-menu.active .mode-btn:nth-child(10) { animation-delay: 0.5s; }
+#page-menu.active .mode-btn:nth-child(11) { animation-delay: 0.55s; }
+#page-menu.active .mode-btn:nth-child(12) { animation-delay: 0.6s; }
+
+@keyframes menuItemSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ===== 分类按钮切换动画 ===== */
+.menu-cat-btn {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.menu-cat-btn.active {
+  transform: scale(1.02);
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.3),
+              inset 0 0 20px rgba(59, 130, 246, 0.1);
+}
+
+/* ===== 卡片进入动画 ===== */
+.case-card,
+.cert-level-card {
+  animation: cardFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+}
+
+.case-card:nth-child(1) { animation-delay: 0.1s; }
+.case-card:nth-child(2) { animation-delay: 0.2s; }
+.case-card:nth-child(3) { animation-delay: 0.3s; }
+.case-card:nth-child(4) { animation-delay: 0.4s; }
+.case-card:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ===== 弹窗进入动画 ===== */
+.modal-overlay {
+  transition: opacity 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.modal-overlay:not(.active) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+}
+
+.modal-content {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.3s ease;
+}
+
+.modal-overlay:not(.active) .modal-content {
+  transform: scale(0.9) translateY(20px);
+  opacity: 0;
+}
+
+.modal-overlay.active .modal-content {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* ===== 按钮点击反馈 ===== */
+.mode-btn:active,
+.tool-btn:active,
+button:active {
+  transform: scale(0.96);
+  transition: transform 0.1s ease;
+}
+
+/* ===== 底部导航栏切换高亮 ===== */
+.menu-toolbar .tool-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-toolbar .tool-btn::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #3b82f6, #06b6d4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.menu-toolbar .tool-btn.active::before {
+  width: 60%;
+}
+
+.menu-toolbar .tool-btn:hover::before {
+  width: 40%;
+}
+
+/* ===== 标题进入动画 ===== */
+.game-header,
+.page-header {
+  animation: headerSlideDown 0.5s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+}
+
+@keyframes headerSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== 列表项交错动画 ===== */
+.quiz-opt,
+.scenario-opt,
+.choice-btn {
+  animation: optionFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+}
+
+.quiz-opt:nth-child(1),
+.choice-btn:nth-child(1) { animation-delay: 0.1s; }
+.quiz-opt:nth-child(2),
+.choice-btn:nth-child(2) { animation-delay: 0.2s; }
+.quiz-opt:nth-child(3),
+.choice-btn:nth-child(3) { animation-delay: 0.3s; }
+.quiz-opt:nth-child(4),
+.choice-btn:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes optionFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ===== 进度条动画 ===== */
+.hp-bar,
+.exp-bar,
+.level-bar {
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== 数字变化动画 ===== */
+.score-display,
+.coin-display {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.score-display.updated,
+.coin-display.updated {
+  transform: scale(1.2);
+}
+
+/* ===== 加载状态脉冲 ===== */
+@keyframes loadingPulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+.loading {
+  animation: loadingPulse 1.5s ease-in-out infinite;
+}
+
+/* ===== 成功/失败反馈增强 ===== */
+@keyframes successBounce {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.1); }
+  50% { transform: scale(0.95); }
+  70% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes errorShake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+.correct {
+  animation: successBounce 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.wrong {
+  animation: errorShake 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== 悬浮卡片效果 ===== */
+.mode-btn:hover,
+.case-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== 滚动条美化 ===== */
+.page::-webkit-scrollbar {
+  width: 6px;
+}
+
+.page::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 3px;
+}
+
+.page::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+
+.page::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
