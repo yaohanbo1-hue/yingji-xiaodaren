@@ -105,23 +105,15 @@
 
 <title>应急小达人 — 防灾教育互动游戏</title>
 
-<!-- ===== 预加载关键 CSS（非阻塞渲染） ===== -->
-<link rel="preload" href="all-styles.css" as="style">
-<link rel="preload" href="v5-glass-3d.css" as="style">
-<link rel="preload" href="clean-ui.css" as="style">
-<link rel="preload" href="fx-effects.css" as="style">
-<link rel="preload" href="loading.css" as="style">
-<link rel="preload" href="transitions.css" as="style">
-<link rel="preload" href="ui-ultimate.css" as="style">
+<!-- ===== 资源预连接：字体 CDN ===== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<!-- ===== 预加载关键 JS ===== -->
+<!-- ===== 预加载最关键资源（不超过5个，避免带宽竞争） ===== -->
+<link rel="preload" href="all-styles.css" as="style">
 <link rel="preload" href="game.js" as="script">
 <link rel="preload" href="cards.js" as="script">
 <link rel="preload" href="scenarios.js" as="script">
-<link rel="preload" href="juice.js" as="script">
-<link rel="preload" href="visual-fx.js" as="script">
-<link rel="preload" href="bgm.js" as="script">
-<link rel="preload" href="kit_data.js" as="script">
 
 <!-- 加载画面最简样式：确保第一帧就覆盖全屏 -->
 <style>
@@ -401,7 +393,6 @@ body:not(.app-ready) #menuToolbar{display:none!important}
   <link rel="stylesheet" href="guide-enhance.css">
   <link rel="stylesheet" href="cert-enhance.css">
   <link rel="stylesheet" href="menu-enhance.css">
-  <link rel="stylesheet" href="demo-mode.css">
   <link rel="stylesheet" href="share.css">
   <link rel="stylesheet" href="i18n.css">
   <link rel="stylesheet" href="layout-fix.css">
@@ -553,6 +544,23 @@ body:not(.app-ready) #menuToolbar{display:none!important}
 }
 .back-to-categories.show {
   display: flex;
+}
+</style>
+<style>
+/* ===== 减少动画偏好：对眩晕/敏感用户友好 ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .ls-hexgrid, .ls-particles, .ls-scanline, .ls-glitch-line,
+  .ls-ring-outer, .ls-ring-spin, .ls-ring-inner,
+  .dust, .light-sweep, .geo-ring, .pulse-ring, .meteor,
+  .gradient-bar, .data-stream, .bg-orb, .bg-grid {
+    display: none !important;
+  }
 }
 </style>
 </head>
@@ -2133,18 +2141,18 @@ document.addEventListener('DOMContentLoaded', function() {
 })();
 </script>
 
-<script src="juice.js"></script>
-<script src="visual-fx.js"></script>
-<script src="bgm.js"></script>
-<script src="cards.js"></script>
-<script src="scenarios.js"></script>
-<script src="kit_data.js"></script>
-<script src="game.js"></script>
+<script src="juice.js" defer></script>
+<script src="visual-fx.js" defer></script>
+<script src="bgm.js" defer></script>
+<script src="cards.js" defer></script>
+<script src="scenarios.js" defer></script>
+<script src="kit_data.js" defer></script>
+<script src="game.js" defer></script>
 <script src="v10-interactions.js" defer></script>
 
-<script src="encyclopedia_extra.js"></script>
-  <script src="encyclopedia_final.js"></script>
-  <script src="bg-premium.js" defer></script>
+<script src="encyclopedia_extra.js" defer></script>
+<script src="encyclopedia_final.js" defer></script>
+<script src="bg-premium.js" defer></script>
 <script src="ui-polish.js" defer></script>
 <script src="tilt3d.js" defer></script>
 <script src="ai-tutor.js" defer></script>
@@ -2164,10 +2172,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <script src="cert-enhance.js" defer></script>
 <script src="disaster-particles.js" defer></script>
 <script src="menu-enhance.js" defer></script>
-<script src="demo-mode.js" defer></script>
 <script src="share.js" defer></script>
 <script src="i18n.js" defer></script>
-<script src="demo-showcase.js" defer></script>
 
 <!-- ===== Service Worker 注册（离线可用） ===== -->
 <script>
