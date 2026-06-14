@@ -685,7 +685,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
 <!-- ====== APP ====== -->
 <div id="app">
 
-  <!-- ======== 主菜单（简化版） ======== -->
+  <!-- ======== 主菜单 ======== -->
   <div id="page-menu" class="page active">
     <div class="menu-particles" id="menuParticles"></div>
     <div class="menu-logo">
@@ -696,312 +696,258 @@ body:not(.app-ready) #menuToolbar{display:none!important}
       <span class="version-tag">✨ v1.2.0 Premium</span>
     </div>
 
-    <!-- 两个大入口按钮 -->
-    <div class="menu-category-btns" style="gap:20px;max-width:380px;margin:0 auto;padding:0 20px;">
-      <div class="menu-cat-btn learn-btn" onclick="PageManager.navigate('learn')" style="min-height:140px;flex-direction:column;justify-content:center;gap:10px;padding:24px;">
-        <span class="cat-icon" style="font-size:42px;margin:0">📚</span>
-        <span class="cat-title" style="font-size:20px">学习中心</span>
-        <span class="cat-count" style="font-size:13px;opacity:0.7">14 个模块</span>
+    <!-- 主分类按钮 -->
+    <div class="menu-category-btns">
+      <div class="menu-cat-btn learn-btn" onclick="MenuManager.toggleCategory('learn')" id="catBtnLearn">
+        <span class="cat-icon">📚</span>
+        <span class="cat-title">学习中心</span>
+        <span class="cat-count">9 个模块</span>
       </div>
-      <div class="menu-cat-btn battle-btn" onclick="PageManager.navigate('battle')" style="min-height:140px;flex-direction:column;justify-content:center;gap:10px;padding:24px;">
-        <span class="cat-icon" style="font-size:42px;margin:0">⚔️</span>
-        <span class="cat-title" style="font-size:20px">闯关挑战</span>
-        <span class="cat-count" style="font-size:13px;opacity:0.7">20 个模式</span>
+      <div class="menu-cat-btn battle-btn" onclick="MenuManager.toggleCategory('battle')" id="catBtnBattle">
+        <span class="cat-icon">⚔️</span>
+        <span class="cat-title">闯关挑战</span>
+        <span class="cat-count">20 个模式</span>
+      </div>
+    </div>
+    
+    <div id="backToCategories" class="back-to-categories" onclick="MenuManager.collapseAll()">
+      <span>←</span> 返回分类
+    </div>
+
+
+
+    <!-- 📚 学习区 -->
+    <div class="menu-section">
+      <h2 class="menu-section-title learn-title" onclick="MenuManager.toggleCategory('learn')">📚 学习中心<span class="collapse-arrow">▼</span></h2>
+      <div class="menu-grid learn-grid">
+        <div class="mode-btn" onclick="BlindBoxEngine.open('daily')" style="border-color: rgba(255,215,0,0.4); box-shadow: 0 0 25px rgba(255,215,0,0.15); animation: pulse-glow 2s infinite;">
+          <span class="mode-badge" style="background:linear-gradient(135deg,#ffd700,#ff6b00);color:#000;font-size:11px;">🎁 免费</span>
+          <span class="mode-icon">🎁</span>
+          <span class="mode-name">开盲盒</span>
+          <span class="mode-desc" id="blindboxDesc">每日免费！稀有卡牌等你拿</span>
+        </div>
+        <div class="mode-btn" onclick="CheckinEngine.checkin()" style="border-color: rgba(0,212,255,0.3);">
+          <span class="mode-icon">📅</span>
+          <span class="mode-name">每日签到</span>
+          <span class="mode-desc" id="checkinDesc">连续签到得大奖</span>
+        </div>
+        <div class="mode-btn" onclick="StudyEngine.start()">
+          <span class="mode-badge" style="background:linear-gradient(135deg,#2196F3,#1976D2);color:#fff;">📚</span>
+          <span class="mode-icon">📚</span>
+          <span class="mode-name">学习模式</span>
+          <span class="mode-desc">系统学习防灾知识</span>
+        </div>
+        <div class="mode-btn" onclick="UniversalSystemViewer.firstaid()" style="border-color:rgba(255,82,82,0.3);">
+          <span class="mode-icon">🩺</span>
+          <span class="mode-name">急救模拟</span>
+          <span class="mode-desc">8个场景学急救</span>
+        </div>
+        <div class="mode-btn" onclick="UniversalSystemViewer.museum()" style="border-color:rgba(155,89,182,0.3);">
+          <span class="mode-icon">🏛️</span>
+          <span class="mode-name">防灾馆</span>
+          <span class="mode-desc">4个展区学知识</span>
+        </div>
+        <!-- 隐藏：功能开发中 -->
+        <!-- <div class="mode-btn" onclick="UniversalSystemViewer.pets()" style="border-color:rgba(0,230,118,0.3);">
+          <span class="mode-icon">🐉</span>
+          <span class="mode-name">宠物</span>
+          <span class="mode-desc">8种宠物陪你学</span>
+        </div> -->
+        <!-- 隐藏：功能开发中 -->
+        <!-- <div class="mode-btn" onclick="UniversalSystemViewer.diary()" style="border-color:rgba(255,193,7,0.3);">
+          <span class="mode-icon">📓</span>
+          <span class="mode-name">防灾日记</span>
+          <span class="mode-desc">每天写日记得奖励</span>
+        </div> -->
+        <!-- 隐藏：功能开发中 -->
+        <!-- <div class="mode-btn" onclick="UniversalSystemViewer.synthesis()" style="border-color:rgba(0,150,255,0.3);">
+          <span class="mode-icon">🧩</span>
+          <span class="mode-name">卡牌工坊</span>
+          <span class="mode-desc">合成强化碎片套装</span>
+        </div> -->
+        <div class="mode-btn" onclick="PageManager.navigate('encyclopedia')">
+          <span class="mode-icon">🌍</span>
+          <span class="mode-name">百科</span>
+          <span class="mode-desc">35+防灾百科文章</span>
+        </div>
+        <div class="mode-btn" onclick="GuideEngine.init()" style="border-color:rgba(255,215,0,0.3);">
+          <span class="mode-icon">🎓</span>
+          <span class="mode-name">新手引导</span>
+          <span class="mode-desc">6步学会基本操作</span>
+        </div>
+        <div class="mode-btn" onclick="PageManager.navigate('ai-tutor')" style="border-color:rgba(96,165,250,0.4); box-shadow: 0 0 20px rgba(96,165,250,0.1);">
+          <span class="mode-badge" style="background:linear-gradient(135deg,#60A5FA,#A78BFA);color:#fff;">🤖 新</span>
+          <span class="mode-icon">🤖</span>
+          <span class="mode-name">AI 导师</span>
+          <span class="mode-desc">智能分析薄弱项，推荐练习</span>
+        </div>
+        <div class="mode-btn" onclick="PageManager.navigate('certification')" style="border-color:rgba(245,158,11,0.4); box-shadow: 0 0 20px rgba(245,158,11,0.1);">
+          <span class="mode-badge" style="background:linear-gradient(135deg,#F59E0B,#EF4444);color:#fff;">🏅 新</span>
+          <span class="mode-icon">🏅</span>
+          <span class="mode-name">能力认证</span>
+          <span class="mode-desc">5 级认证体系，可打印证书</span>
+        </div>
+        <div class="mode-btn" onclick="PageManager.navigate('disaster-sim')" style="border-color:rgba(239,68,68,0.4); box-shadow: 0 0 20px rgba(239,68,68,0.1);">
+          <span class="mode-badge" style="background:linear-gradient(135deg,#EF4444,#F59E0B);color:#fff;">🎬 新</span>
+          <span class="mode-icon">🎬</span>
+          <span class="mode-name">灾害模拟</span>
+          <span class="mode-desc">沉浸式体验真实灾害场景</span>
+        </div>
+        <div class="mode-btn" onclick="PageManager.navigate('real-cases')" style="border-color:rgba(245,158,11,0.4); box-shadow: 0 0 20px rgba(245,158,11,0.1);">
+          <span class="mode-badge" style="background:linear-gradient(135deg,#F59E0B,#EF4444);color:#fff;">📖 新</span>
+          <span class="mode-icon">📖</span>
+          <span class="mode-name">真实案例</span>
+          <span class="mode-desc">历史灾害事件还原与知识总结</span>
+        </div>
+        <div class="mode-btn" onclick="PageManager.navigate('wrong-book');WrongBookEngine.renderPage()" style="border-color:rgba(248,113,113,0.4); box-shadow: 0 0 20px rgba(248,113,113,0.1);">
+          <span class="mode-badge" style="background:linear-gradient(135deg,#f87171,#ef4444);color:#fff;">📕 新</span>
+          <span class="mode-icon">📕</span>
+          <span class="mode-name">错题本</span>
+          <span class="mode-desc">自动收集错题 · 专项复习</span>
+          <span id="wrongBookBadge" style="display:none;"></span>
+        </div>
+        <div class="mode-btn" onclick="PageManager.navigate('report')" style="border-color:rgba(52,211,153,0.4); box-shadow: 0 0 20px rgba(52,211,153,0.1);">
+          <span class="mode-badge" style="background:linear-gradient(135deg,#34d399,#059669);color:#fff;">📊 新</span>
+          <span class="mode-icon">📊</span>
+          <span class="mode-name">学习报告</span>
+          <span class="mode-desc">数据可视化 · 一键导出打印</span>
+        </div>
       </div>
     </div>
 
-    <div class="menu-stats" id="menuStats" style="margin-top:24px;">
+    <!-- ⚔️ 闯关区 -->
+    <div class="menu-section">
+      <h2 class="menu-section-title battle-title" onclick="MenuManager.toggleCategory('battle')">⚔️ 闯关挑战<span class="collapse-arrow">▼</span></h2>
+      <div class="menu-grid battle-grid">
+        <div class="mode-btn" onclick="PageManager.navigate('battle-lobby')" style="border-color: rgba(255,215,0,0.3); box-shadow: 0 0 20px rgba(255,215,0,0.1), inset 0 1px 0 rgba(255,215,0,0.15);">
+          <span class="mode-badge mode-badge-hot">🔥 推荐</span>
+          <span class="mode-icon">👾</span>
+          <span class="mode-name">防灾大擂台</span>
+          <span class="mode-desc">回合制打怪兽！答题就是攻击！</span>
+        </div>
+        <div class="mode-btn" onclick="PageManager.navigate('free')">
+          <span class="mode-icon">🎯</span>
+          <span class="mode-name">自由模式</span>
+          <span class="mode-desc">自选灾害类型，无限练习</span>
+        </div>
+        <div class="mode-btn" onclick="PageManager.navigate('speed')">
+          <span class="mode-icon">⚡</span>
+          <span class="mode-name">速答挑战</span>
+          <span class="mode-desc">10题限时竞答，挑战手速</span>
+        </div>
+        <div class="mode-btn" onclick="PageManager.navigate('pk')">
+          <span class="mode-badge mode-badge-new">👥 新</span>
+          <span class="mode-icon">👥</span>
+          <span class="mode-name">双人PK</span>
+          <span class="mode-desc">朋友对战，看谁更懂防灾</span>
+        </div>
+        <div class="mode-btn daily-challenge-btn" onclick="PageManager.navigate('daily')">
+          <span class="mode-badge mode-badge-new" style="background:linear-gradient(135deg,#ffd700,#ff9100);color:#000;">📅 每日</span>
+          <span class="mode-icon">📅</span>
+          <span class="mode-name">每日挑战</span>
+          <span class="mode-desc">每天10题，连续打卡得奖励</span>
+        </div>
+        <div class="mode-btn" onclick="SurvivalEngine.init()" style="border-color:rgba(255,107,53,0.3);">
+          <span class="mode-badge" style="background:linear-gradient(135deg,#FF6B35,#FF9100);color:#fff;">♾️ 新</span>
+          <span class="mode-icon">♾️</span>
+          <span class="mode-name">生存模式</span>
+          <span class="mode-desc">无限答题，答错3次结束</span>
+        </div>
+        <div class="mode-btn" onclick="BossRushEngine.init()" style="border-color:rgba(244,67,54,0.3);">
+          <span class="mode-badge" style="background:linear-gradient(135deg,#F44336,#D32F2F);color:#fff;">💀 新</span>
+          <span class="mode-icon">💀</span>
+          <span class="mode-name">Boss Rush</span>
+          <span class="mode-desc">连续挑战5个Boss！</span>
+        </div>
+        <div class="mode-btn" onclick="TimedChallengeEngine.init()" style="border-color:rgba(0,212,255,0.3);">
+          <span class="mode-badge" style="background:linear-gradient(135deg,#00D4FF,#7C4DFF);color:#fff;">⏱️ 新</span>
+          <span class="mode-icon">⏱️</span>
+          <span class="mode-name">限时挑战</span>
+          <span class="mode-desc">30秒内答对尽可能多</span>
+        </div>
+        <div class="mode-btn" onclick="StoryEngine.init()" style="border-color:rgba(155,89,182,0.3);">
+          <span class="mode-badge" style="background:linear-gradient(135deg,#9B59B6,#7C4DFF);color:#fff;">📖 新</span>
+          <span class="mode-icon">📖</span>
+          <span class="mode-name">故事模式</span>
+          <span class="mode-desc">守护城市，做出正确选择</span>
+        </div>
+        <div class="mode-btn" onclick="DisasterQuizGame.init()" style="border-color:rgba(255,152,0,0.3);">
+          <span class="mode-badge" style="background:linear-gradient(135deg,#FF9800,#FF5722);color:#fff;">⚡ 新</span>
+          <span class="mode-icon">⚡</span>
+          <span class="mode-name">闪电问答</span>
+          <span class="mode-desc">5秒内选出正确答案</span>
+        </div>
+        <div class="mode-btn" onclick="SupplyDropGame.init()" style="border-color:rgba(76,175,80,0.3);">
+          <span class="mode-badge" style="background:linear-gradient(135deg,#4CAF50,#8BC34A);color:#fff;">🎯 新</span>
+          <span class="mode-icon">🎯</span>
+          <span class="mode-name">精准投放</span>
+          <span class="mode-desc">将物资投放到正确区域</span>
+        </div>
+        <!-- 隐藏：功能开发中 -->
+        <!-- <div class="mode-btn" onclick="PageManager.navigate('gacha')" style="border-color:rgba(255,107,0,0.3);">
+          <span class="mode-badge" style="background:linear-gradient(135deg,#FF6B00,#FFD700);color:#fff;">🎰 新</span>
+          <span class="mode-icon">🎰</span>
+          <span class="mode-name">扭蛋机</span>
+          <span class="mode-desc">投币扭蛋，惊喜不断</span>
+        </div> -->
+        <div class="mode-btn" onclick="UniversalSystemViewer.music()" style="border-color:rgba(233,30,99,0.3);">
+          <span class="mode-icon">🎵</span>
+          <span class="mode-name">音乐</span>
+          <span class="mode-desc">10首防灾音乐</span>
+        </div>
+        <div class="mode-btn" onclick="UniversalSystemViewer.eggs()" style="border-color:rgba(255,255,255,0.2);">
+          <span class="mode-icon">🥚</span>
+          <span class="mode-name">彩蛋</span>
+          <span class="mode-desc">15个隐藏彩蛋</span>
+        </div>
+        <div class="mode-btn" onclick="UniversalSystemViewer.base()" style="border-color:rgba(255,255,255,0.15);">
+          <span class="mode-icon">🏠</span>
+          <span class="mode-name">基地</span>
+          <span class="mode-desc">布置基地+换装</span>
+        </div>
+        <div class="mode-btn" onclick="TimeEscapeEngine.init()" style="border-color:rgba(255,0,110,0.4);">
+          <span class="mode-badge" style="background:linear-gradient(135deg,#FF006E,#FF6B35);color:#fff;">🔥 新</span>
+          <span class="mode-icon">⏰</span>
+          <span class="mode-name">限时逃生</span>
+          <span class="mode-desc">60秒内答完20题！</span>
+        </div>
+        <div class="mode-btn" onclick="PrecisionEngine.init()" style="border-color:rgba(0,230,118,0.4);">
+          <span class="mode-badge" style="background:linear-gradient(135deg,#00E676,#00D4FF);color:#fff;">🎯 新</span>
+          <span class="mode-icon">🎯</span>
+          <span class="mode-name">精准打击</span>
+          <span class="mode-desc">10题精准答题挑战</span>
+        </div>
+        <div class="mode-btn" onclick="StoryAdventureEngine.init()" style="border-color:rgba(171,71,188,0.4);">
+          <span class="mode-badge" style="background:linear-gradient(135deg,#AB47BC,#FF006E);color:#fff;">📖 新</span>
+          <span class="mode-icon">📖</span>
+          <span class="mode-name">防灾大冒险</span>
+          <span class="mode-desc">5章剧情，成为英雄！</span>
+        </div>
+        <div class="mode-btn" onclick="MemoryCardEngine.init()" style="border-color:rgba(0,212,255,0.4);">
+          <span class="mode-badge" style="background:linear-gradient(135deg,#00D4FF,#AB47BC);color:#fff;">🧠 新</span>
+          <span class="mode-icon">🧠</span>
+          <span class="mode-name">记忆翻牌</span>
+          <span class="mode-desc">翻牌配对，考验记忆力</span>
+        </div>
+        <div class="mode-btn" onclick="ReactionEngine.init()" style="border-color:rgba(255,0,110,0.4);">
+          <span class="mode-badge" style="background:linear-gradient(135deg,#FF006E,#FFD700);color:#fff;">⚡ 新</span>
+          <span class="mode-icon">⚡</span>
+          <span class="mode-name">反应速度</span>
+          <span class="mode-desc">测试你的反应神经</span>
+        </div>
+        <div class="mode-btn" onclick="KnowledgeRaceEngine.init()" style="border-color:rgba(255,215,0,0.4);">
+          <span class="mode-badge" style="background:linear-gradient(135deg,#FFD700,#FF6B35);color:#fff;">🏁 新</span>
+          <span class="mode-icon">🏁</span>
+          <span class="mode-name">知识竞速</span>
+          <span class="mode-desc">15题限时+生命值挑战</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-stats" id="menuStats">
       <span>📦 收集：0/70</span>
       <span>🏅 成就：0/22</span>
       <span>🔥 最高分：0</span>
-    </div>
-  </div>
-
-  <!-- ======== 学习中心详情页 ======== -->
-  <div id="page-learn" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
-    <div class="preview-header">
-      <span class="preview-icon">📚</span>
-      <h2 class="preview-title">学习中心</h2>
-      <p class="preview-desc">系统学习防灾知识，掌握应对技能</p>
-    </div>
-    <div class="feature-list">
-      <div class="feature-item" onclick="BlindBoxEngine.open('daily')">
-        <span class="feature-icon">🎁</span>
-        <div class="feature-text">
-          <h4>开盲盒</h4>
-          <p>每日免费！稀有卡牌等你拿</p>
-        </div>
-        <span class="feature-status feature-ready">🎁 免费</span>
-      </div>
-      <div class="feature-item" onclick="CheckinEngine.checkin()">
-        <span class="feature-icon">📅</span>
-        <div class="feature-text">
-          <h4>每日签到</h4>
-          <p>连续签到得大奖</p>
-        </div>
-        <span class="feature-status feature-ready">✅</span>
-      </div>
-      <div class="feature-item" onclick="StudyEngine.start()">
-        <span class="feature-icon">📚</span>
-        <div class="feature-text">
-          <h4>学习模式</h4>
-          <p>系统学习防灾知识</p>
-        </div>
-        <span class="feature-status feature-ready">📚</span>
-      </div>
-      <div class="feature-item" onclick="UniversalSystemViewer.firstaid()">
-        <span class="feature-icon">🩺</span>
-        <div class="feature-text">
-          <h4>急救模拟</h4>
-          <p>8个场景学急救</p>
-        </div>
-        <span class="feature-status feature-ready">🩺</span>
-      </div>
-      <div class="feature-item" onclick="UniversalSystemViewer.museum()">
-        <span class="feature-icon">🏛️</span>
-        <div class="feature-text">
-          <h4>防灾馆</h4>
-          <p>4个展区学知识</p>
-        </div>
-        <span class="feature-status feature-ready">🏛️</span>
-      </div>
-      <div class="feature-item" onclick="PageManager.navigate('encyclopedia')">
-        <span class="feature-icon">🌍</span>
-        <div class="feature-text">
-          <h4>百科</h4>
-          <p>35+防灾百科文章</p>
-        </div>
-        <span class="feature-status feature-ready">🌍</span>
-      </div>
-      <div class="feature-item" onclick="GuideEngine.init()">
-        <span class="feature-icon">🎓</span>
-        <div class="feature-text">
-          <h4>新手引导</h4>
-          <p>6步学会基本操作</p>
-        </div>
-        <span class="feature-status feature-ready">🎓</span>
-      </div>
-      <div class="feature-item" onclick="PageManager.navigate('ai-tutor')">
-        <span class="feature-icon">🤖</span>
-        <div class="feature-text">
-          <h4>AI 导师</h4>
-          <p>智能分析薄弱项，推荐练习</p>
-        </div>
-        <span class="feature-status feature-ready" style="background:linear-gradient(135deg,#60A5FA,#A78BFA);color:#fff;">🤖 新</span>
-      </div>
-      <div class="feature-item" onclick="PageManager.navigate('certification')">
-        <span class="feature-icon">🏅</span>
-        <div class="feature-text">
-          <h4>能力认证</h4>
-          <p>5 级认证体系，可打印证书</p>
-        </div>
-        <span class="feature-status feature-ready" style="background:linear-gradient(135deg,#F59E0B,#EF4444);color:#fff;">🏅 新</span>
-      </div>
-      <div class="feature-item" onclick="PageManager.navigate('disaster-sim')">
-        <span class="feature-icon">🎬</span>
-        <div class="feature-text">
-          <h4>灾害模拟</h4>
-          <p>沉浸式体验真实灾害场景</p>
-        </div>
-        <span class="feature-status feature-ready" style="background:linear-gradient(135deg,#EF4444,#F59E0B);color:#fff;">🎬 新</span>
-      </div>
-      <div class="feature-item" onclick="PageManager.navigate('real-cases')">
-        <span class="feature-icon">📖</span>
-        <div class="feature-text">
-          <h4>真实案例</h4>
-          <p>历史灾害事件还原与知识总结</p>
-        </div>
-        <span class="feature-status feature-ready" style="background:linear-gradient(135deg,#F59E0B,#EF4444);color:#fff;">📖 新</span>
-      </div>
-      <div class="feature-item" onclick="PageManager.navigate('wrong-book');WrongBookEngine.renderPage()">
-        <span class="feature-icon">📕</span>
-        <div class="feature-text">
-          <h4>错题本</h4>
-          <p>自动收集错题 · 专项复习</p>
-        </div>
-        <span class="feature-status feature-ready" style="background:linear-gradient(135deg,#f87171,#ef4444);color:#fff;">📕 新</span>
-      </div>
-      <div class="feature-item" onclick="PageManager.navigate('report')">
-        <span class="feature-icon">📊</span>
-        <div class="feature-text">
-          <h4>学习报告</h4>
-          <p>数据可视化 · 一键导出打印</p>
-        </div>
-        <span class="feature-status feature-ready" style="background:linear-gradient(135deg,#34d399,#059669);color:#fff;">📊 新</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ======== 闯关挑战详情页 ======== -->
-  <div id="page-battle" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
-    <div class="preview-header">
-      <span class="preview-icon">⚔️</span>
-      <h2 class="preview-title">闯关挑战</h2>
-      <p class="preview-desc">挑战各种模式，检验你的防灾知识</p>
-    </div>
-    <div class="feature-list">
-      <div class="feature-item" onclick="PageManager.navigate('battle-lobby')">
-        <span class="feature-icon">👾</span>
-        <div class="feature-text">
-          <h4>防灾大擂台</h4>
-          <p>回合制打怪兽！答题就是攻击！</p>
-        </div>
-        <span class="feature-status feature-ready" style="background:linear-gradient(135deg,#ffd700,#ff9100);color:#000;">🔥 推荐</span>
-      </div>
-      <div class="feature-item" onclick="PageManager.navigate('free')">
-        <span class="feature-icon">🎯</span>
-        <div class="feature-text">
-          <h4>自由模式</h4>
-          <p>自选灾害类型，无限练习</p>
-        </div>
-        <span class="feature-status feature-ready">✅</span>
-      </div>
-      <div class="feature-item" onclick="PageManager.navigate('speed')">
-        <span class="feature-icon">⚡</span>
-        <div class="feature-text">
-          <h4>速答挑战</h4>
-          <p>10题限时竞答，挑战手速</p>
-        </div>
-        <span class="feature-status feature-ready">⚡</span>
-      </div>
-      <div class="feature-item" onclick="PageManager.navigate('pk')">
-        <span class="feature-icon">👥</span>
-        <div class="feature-text">
-          <h4>双人PK</h4>
-          <p>朋友对战，看谁更懂防灾</p>
-        </div>
-        <span class="feature-status feature-ready">👥</span>
-      </div>
-      <div class="feature-item" onclick="PageManager.navigate('daily')">
-        <span class="feature-icon">📅</span>
-        <div class="feature-text">
-          <h4>每日挑战</h4>
-          <p>每天10题，连续打卡得奖励</p>
-        </div>
-        <span class="feature-status feature-ready" style="background:linear-gradient(135deg,#ffd700,#ff9100);color:#000;">📅</span>
-      </div>
-      <div class="feature-item" onclick="SurvivalEngine.init()">
-        <span class="feature-icon">♾️</span>
-        <div class="feature-text">
-          <h4>生存模式</h4>
-          <p>无限答题，答错3次结束</p>
-        </div>
-        <span class="feature-status feature-ready">♾️</span>
-      </div>
-      <div class="feature-item" onclick="BossRushEngine.init()">
-        <span class="feature-icon">💀</span>
-        <div class="feature-text">
-          <h4>Boss Rush</h4>
-          <p>连续挑战5个Boss！</p>
-        </div>
-        <span class="feature-status feature-ready">💀</span>
-      </div>
-      <div class="feature-item" onclick="TimedChallengeEngine.init()">
-        <span class="feature-icon">⏱️</span>
-        <div class="feature-text">
-          <h4>限时挑战</h4>
-          <p>30秒内答对尽可能多</p>
-        </div>
-        <span class="feature-status feature-ready">⏱️</span>
-      </div>
-      <div class="feature-item" onclick="StoryEngine.init()">
-        <span class="feature-icon">📖</span>
-        <div class="feature-text">
-          <h4>故事模式</h4>
-          <p>守护城市，做出正确选择</p>
-        </div>
-        <span class="feature-status feature-ready">📖</span>
-      </div>
-      <div class="feature-item" onclick="DisasterQuizGame.init()">
-        <span class="feature-icon">⚡</span>
-        <div class="feature-text">
-          <h4>闪电问答</h4>
-          <p>5秒内选出正确答案</p>
-        </div>
-        <span class="feature-status feature-ready">⚡</span>
-      </div>
-      <div class="feature-item" onclick="SupplyDropGame.init()">
-        <span class="feature-icon">🎯</span>
-        <div class="feature-text">
-          <h4>精准投放</h4>
-          <p>将物资投放到正确区域</p>
-        </div>
-        <span class="feature-status feature-ready">🎯</span>
-      </div>
-      <div class="feature-item" onclick="TimeEscapeEngine.init()">
-        <span class="feature-icon">⏰</span>
-        <div class="feature-text">
-          <h4>限时逃生</h4>
-          <p>60秒内答完20题！</p>
-        </div>
-        <span class="feature-status feature-ready">⏰</span>
-      </div>
-      <div class="feature-item" onclick="PrecisionEngine.init()">
-        <span class="feature-icon">🎯</span>
-        <div class="feature-text">
-          <h4>精准打击</h4>
-          <p>10题精准答题挑战</p>
-        </div>
-        <span class="feature-status feature-ready">🎯</span>
-      </div>
-      <div class="feature-item" onclick="StoryAdventureEngine.init()">
-        <span class="feature-icon">📖</span>
-        <div class="feature-text">
-          <h4>防灾大冒险</h4>
-          <p>5章剧情，成为英雄！</p>
-        </div>
-        <span class="feature-status feature-ready">📖</span>
-      </div>
-      <div class="feature-item" onclick="MemoryCardEngine.init()">
-        <span class="feature-icon">🧠</span>
-        <div class="feature-text">
-          <h4>记忆翻牌</h4>
-          <p>翻牌配对，考验记忆力</p>
-        </div>
-        <span class="feature-status feature-ready">🧠</span>
-      </div>
-      <div class="feature-item" onclick="ReactionEngine.init()">
-        <span class="feature-icon">⚡</span>
-        <div class="feature-text">
-          <h4>反应速度</h4>
-          <p>测试你的反应神经</p>
-        </div>
-        <span class="feature-status feature-ready">⚡</span>
-      </div>
-      <div class="feature-item" onclick="KnowledgeRaceEngine.init()">
-        <span class="feature-icon">🏁</span>
-        <div class="feature-text">
-          <h4>知识竞速</h4>
-          <p>15题限时+生命值挑战</p>
-        </div>
-        <span class="feature-status feature-ready">🏁</span>
-      </div>
-      <div class="feature-item" onclick="UniversalSystemViewer.music()">
-        <span class="feature-icon">🎵</span>
-        <div class="feature-text">
-          <h4>音乐</h4>
-          <p>10首防灾音乐</p>
-        </div>
-        <span class="feature-status feature-ready">🎵</span>
-      </div>
-      <div class="feature-item" onclick="UniversalSystemViewer.eggs()">
-        <span class="feature-icon">🥚</span>
-        <div class="feature-text">
-          <h4>彩蛋</h4>
-          <p>15个隐藏彩蛋等你发现</p>
-        </div>
-        <span class="feature-status feature-ready">🥚</span>
-      </div>
-      <div class="feature-item" onclick="UniversalSystemViewer.base()">
-        <span class="feature-icon">🏠</span>
-        <div class="feature-text">
-          <h4>基地</h4>
-          <p>布置基地+换装</p>
-        </div>
-        <span class="feature-status feature-ready">🏠</span>
-      </div>
     </div>
   </div>
 
