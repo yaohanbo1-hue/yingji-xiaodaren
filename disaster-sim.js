@@ -5,7 +5,7 @@
  * 
  * 【功能】
  * 1. Canvas 动画重现真实灾害场景
- * 2. 4 种灾害模拟：地震/洪水/山火/台风
+ * 2. 5 种灾害模拟：地震/洪水/山火/火山爆发/台风
  * 3. 用户在动画进行中做出决策，增强紧迫感
  * 4. 真实案例标注（如"2008 汶川地震"）
  * 
@@ -48,6 +48,13 @@ const DisasterSimEngine = {
       case: '2019 澳洲山火 · 烧毁千万公顷',
       desc: '远处浓烟滚滚，火势正在向你的方向蔓延...'
     },
+    volcano: {
+      name: '火山爆发',
+      icon: '🌋',
+      color: '#DC2626',
+      case: '2010 冰岛艾雅法拉火山',
+      desc: '远处火山口冒出浓烟，地面开始震动，红色的岩浆正在喷发...'
+    },
     typhoon: {
       name: '台风',
       icon: '🌀',
@@ -65,6 +72,7 @@ const DisasterSimEngine = {
     this._waterLevel = 0;
     this._fireSpread = 0;
     this._windSpeed = 0;
+    this._volcanoIntensity = 0;
     
     // 隐藏选择器，显示模拟内容
     const selector = document.getElementById('simSelector');
@@ -147,6 +155,12 @@ const DisasterSimEngine = {
         { text: '🪟 靠近窗户观望', correct: false },
         { text: '🌳 在树下避风', correct: false },
         { text: '🚶 外出查看情况', correct: false }
+      ],
+      volcano: [
+        { text: '🚗 立即驾车撤离', correct: true },
+        { text: '🌋 近距离观察拍照', correct: false },
+        { text: '🏠 待在家里关门窗', correct: false },
+        { text: '⛰️ 向火山方向跑', correct: false }
       ]
     };
     
@@ -196,7 +210,8 @@ const DisasterSimEngine = {
       earthquake: correct ? '地震时"伏地、遮挡、手抓牢"是国际通用的避险姿势，躲在坚固的桌子下可以防止被掉落物砸伤。' : '地震时不要跑向门口或窗户，这些地方最容易被掉落物砸伤。应该立即躲在坚固的桌子下。',
       flood: correct ? '洪水来临时应立即向高地转移，不要待在家里或游泳过河，非常危险！' : '洪水上涨时待在家里或游泳过河都非常危险！应该立即向高地转移。',
       wildfire: correct ? '山火逃生时应逆风向跑，用湿毛巾捂住口鼻，避开浓烟区域。' : '顺着火势跑会被火追上，开车可能被倒下的树阻挡。应该逆风向跑。',
-      typhoon: correct ? '台风天应躲在室内最安全的小房间，远离窗户和广告牌。' : '台风天靠近窗户、在树下或外出都非常危险！应该躲在室内最安全的地方。'
+      typhoon: correct ? '台风天应躲在室内最安全的小房间，远离窗户和广告牌。' : '台风天靠近窗户、在树下或外出都非常危险！应该躲在室内最安全的地方。',
+      volcano: correct ? '火山爆发时应立即撤离到安全区域，驾车远离火山，避开火山灰和岩浆流。' : '火山爆发时近距离观察、待在家里或向火山方向跑都非常危险！应立即撤离。'
     };
     return explanations[this._currentDisaster] || '';
   },
@@ -227,6 +242,7 @@ const DisasterSimEngine = {
         case 'flood': this._drawFlood(); break;
         case 'wildfire': this._drawWildfire(); break;
         case 'typhoon': this._drawTyphoon(); break;
+        case 'volcano': this._drawVolcano(); break;
       }
       
       // 更新阶段文字
@@ -581,6 +597,143 @@ const DisasterSimEngine = {
       ctx.fillStyle = '#8B5CF6';
       ctx.textAlign = 'center';
       ctx.fillText('🌀 台风警报！', W / 2, H / 2);
+    }
+  },
+
+  // ===== 火山爆发模拟 =====
+  _drawVolcano() {
+    const ctx = this._ctx;
+    const W = this._canvas.width;
+    const H = this._canvas.height;
+    const p = this._scenePhase;
+
+    ctx.clearRect(0, 0, W, H);
+
+    // 天空（火山灰）
+    const sky = ctx.createLinearGradient(0, 0, 0, H);
+    sky.addColorStop(0, '#2D1B1B');
+    sky.addColorStop(0.5, '#4A2C2C');
+    sky.addColorStop(1, '#1F1414');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, W, H);
+
+    // 地面震动
+    this._shakeIntensity = Math.min(1, p * 2) * 4;
+    const shakeX = (Math.random() - 0.5) * this._shakeIntensity;
+    const shakeY = (Math.random() - 0.5) * this._shakeIntensity;
+    ctx.save();
+    ctx.translate(shakeX, shakeY);
+
+    // 火山锥（山体）
+    const volcX = W / 2;
+    const volcBase = H - 40;
+    const volcPeak = H - 220;
+    const volcWidth = 160;
+
+    ctx.fillStyle = '#3D2923';
+    ctx.beginPath();
+    ctx.moveTo(volcX - volcWidth, volcBase);
+    ctx.lineTo(volcX - 40, volcPeak);
+    ctx.lineTo(volcX + 40, volcPeak);
+    ctx.lineTo(volcX + volcWidth, volcBase);
+    ctx.closePath();
+    ctx.fill();
+
+    // 火山锥纹理（暗色条纹）
+    ctx.strokeStyle = 'rgba(0,0,0,0.2)';
+    ctx.lineWidth = 2;
+    for (let i = 0; i < 5; i++) {
+      const x = volcX - volcWidth + i * (volcWidth * 2 / 5);
+      ctx.beginPath();
+      ctx.moveTo(x, volcBase);
+      ctx.lineTo(volcX, volcPeak + 40);
+      ctx.stroke();
+    }
+
+    // 火山口发光
+    this._volcanoIntensity = Math.min(1, p * 1.5);
+    const glowSize = 20 + this._volcanoIntensity * 40;
+    const glow = ctx.createRadialGradient(volcX, volcPeak, 5, volcX, volcPeak, glowSize);
+    glow.addColorStop(0, 'rgba(239, 68, 68, 0.9)');
+    glow.addColorStop(0.3, 'rgba(245, 158, 11, 0.6)');
+    glow.addColorStop(1, 'rgba(239, 68, 68, 0)');
+    ctx.fillStyle = glow;
+    ctx.fillRect(volcX - glowSize, volcPeak - glowSize, glowSize * 2, glowSize * 2);
+
+    // 岩浆喷射（向上喷发的粒子）
+    if (p > 0.1) {
+      const particleCount = Math.floor(this._volcanoIntensity * 30) + 10;
+      for (let i = 0; i < particleCount; i++) {
+        const angle = -Math.PI / 2 + (Math.random() - 0.5) * 1.2;
+        const speed = 2 + Math.random() * 5 * this._volcanoIntensity;
+        const dist = (p * 200 + i * 30) % 250;
+        const x = volcX + Math.cos(angle) * dist;
+        const y = volcPeak - Math.sin(angle) * dist;
+        const size = 3 + Math.random() * 6;
+        const alpha = Math.max(0, 1 - dist / 250);
+
+        const magma = ctx.createRadialGradient(x, y, 0, x, y, size);
+        magma.addColorStop(0, `rgba(255, 255, 0, ${alpha})`);
+        magma.addColorStop(0.5, `rgba(245, 158, 11, ${alpha})`);
+        magma.addColorStop(1, `rgba(239, 68, 68, 0)`);
+        ctx.fillStyle = magma;
+        ctx.beginPath();
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    // 岩浆流（从火山口向下流淌）
+    if (p > 0.2) {
+      const flowCount = 3;
+      for (let f = 0; f < flowCount; f++) {
+        const startX = volcX - 30 + f * 30;
+        const flowLen = this._volcanoIntensity * (volcBase - volcPeak - 20);
+        const flowPath = ctx.createLinearGradient(startX, volcPeak, startX, volcPeak + flowLen);
+        flowPath.addColorStop(0, 'rgba(239, 68, 68, 0.8)');
+        flowPath.addColorStop(0.5, 'rgba(245, 158, 11, 0.6)');
+        flowPath.addColorStop(1, 'rgba(239, 68, 68, 0.2)');
+        ctx.fillStyle = flowPath;
+        ctx.beginPath();
+        ctx.moveTo(startX - 8, volcPeak);
+        ctx.lineTo(startX + 8, volcPeak);
+        ctx.lineTo(startX + 12 + Math.sin(p * 3 + f) * 5, volcPeak + flowLen);
+        ctx.lineTo(startX - 12 + Math.sin(p * 3 + f) * 5, volcPeak + flowLen);
+        ctx.closePath();
+        ctx.fill();
+      }
+    }
+
+    // 火山灰烟雾（灰色烟云扩散）
+    ctx.fillStyle = 'rgba(75, 85, 99, 0.25)';
+    for (let i = 0; i < 12; i++) {
+      const drift = p * 30 + i * 20;
+      const x = volcX + (Math.sin(p * 0.5 + i) * 60) + (i % 2 === 0 ? drift : -drift) * 0.3;
+      const y = volcPeak - 20 - drift * 0.5;
+      const r = 20 + drift * 0.4 + Math.sin(p * 2 + i) * 10;
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // 火山灰飘落
+    ctx.fillStyle = 'rgba(100, 100, 100, 0.4)';
+    for (let i = 0; i < 40; i++) {
+      const x = (i * 17 + p * 50) % W;
+      const y = (i * 23 + p * 200) % H;
+      ctx.beginPath();
+      ctx.arc(x, y, 1 + Math.random() * 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.restore();
+
+    // 预警文字
+    if (p < 0.3) {
+      ctx.font = 'bold 22px sans-serif';
+      ctx.fillStyle = '#EF4444';
+      ctx.textAlign = 'center';
+      ctx.fillText('🌋 火山警报！', W / 2, H / 2);
     }
   }
 };

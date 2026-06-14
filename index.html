@@ -1000,10 +1000,10 @@ body:not(.app-ready) #menuToolbar{display:none!important}
         <div class="feature-text"><h4>台风</h4><p>5张知识卡 · 掌握度 0%</p></div>
         <span class="feature-status feature-ready">🆓 自由</span>
       </div>
-      <div class="feature-item" style="opacity:0.5">
+      <div class="feature-item" onclick="StudyEngine.start('volcano')" class="cursor-pointer">
         <span class="feature-icon">🌋</span>
-        <div class="feature-text"><h4>火山爆发</h4><p>5张知识卡 · 即将开放</p></div>
-        <span class="feature-status feature-soon">📅 即将上线</span>
+        <div class="feature-text"><h4>火山爆发</h4><p>5张知识卡 · 掌握度 0%</p></div>
+        <span class="feature-status feature-ready">🆓 自由</span>
       </div>
     </div>
     <button class="btn btn-gold btn-lg" style="margin-top:var(--space-sm);width:100%;max-width:360px" onclick="BattleEngine.init()">
@@ -1832,6 +1832,11 @@ body:not(.app-ready) #menuToolbar{display:none!important}
         <div class="sim-selector-icon">🌀</div>
         <div class="sim-selector-name">台风</div>
         <div class="sim-selector-case">2023 杜苏芮</div>
+      </div>
+      <div class="sim-selector-btn" onclick="DisasterSimEngine.init('volcano')">
+        <div class="sim-selector-icon">🌋</div>
+        <div class="sim-selector-name">火山爆发</div>
+        <div class="sim-selector-case">2010 冰岛火山</div>
       </div>
     </div>
     <!-- Canvas 动画容器 -->
