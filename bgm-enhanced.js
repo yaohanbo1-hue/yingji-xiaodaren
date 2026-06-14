@@ -142,11 +142,16 @@ const BGMEngineV2 = {
     filter.Q.value = 0.8;
     
     // ADSR 包络：Attack-Decay-Sustain-Release
+    const attackTime = startTime + 0.04;
+    const decayTime = startTime + 0.2;
+    const sustainTime = Math.max(decayTime, startTime + duration - 0.1);
+    const releaseTime = Math.max(sustainTime, startTime + duration);
+    
     gain.gain.setValueAtTime(0, startTime);
-    gain.gain.linearRampToValueAtTime(volume, startTime + 0.04);      // Attack
-    gain.gain.linearRampToValueAtTime(volume * 0.6, startTime + 0.2); // Decay
-    gain.gain.setValueAtTime(volume * 0.6, startTime + duration - 0.1); // Sustain
-    gain.gain.linearRampToValueAtTime(0, startTime + duration);     // Release
+    gain.gain.linearRampToValueAtTime(volume, attackTime);      // Attack
+    gain.gain.linearRampToValueAtTime(volume * 0.6, decayTime); // Decay
+    gain.gain.setValueAtTime(volume * 0.6, sustainTime);       // Sustain
+    gain.gain.linearRampToValueAtTime(0, releaseTime);          // Release
     
     osc.connect(filter);
     filter.connect(gain);
