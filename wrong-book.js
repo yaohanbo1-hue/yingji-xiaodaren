@@ -243,6 +243,7 @@ const WrongBookEngine = {
     
     html += '<div class="wrong-book-actions">';
     html += '<button class="wb-btn wb-btn-primary" onclick="WrongBookEngine.startReview()">📝 开始复习</button>';
+    html += '<button class="wb-btn wb-btn-print" onclick="WrongBookEngine.printWrongBook()">🖨️ 打印错题</button>';
     html += '<button class="wb-btn wb-btn-danger" onclick="WrongBookEngine.clearAll()">🗑️ 清空</button>';
     html += '</div>';
     
@@ -273,8 +274,49 @@ const WrongBookEngine = {
     container.innerHTML = html;
   },
   
-  // 开始复习模式
-  startReview() {
+  // 打印错题本
+  printWrongBook() {
+    var items = this._wrongItems;
+    if (items.length === 0) {
+      if (typeof Modal !== 'undefined') Modal.show('📕 错题本为空', '没有错题可以打印，继续保持！', '🎉');
+      return;
+    }
+    var win = window.open('', '_blank');
+    var html = '<html><head><title>错题本打印</title><style>';
+    html += 'body{font-family:"Microsoft YaHei",sans-serif;max-width:800px;margin:0 auto;padding:40px 20px;background:#fff;color:#333;}';
+    html += 'h1{text-align:center;color:#ef4444;border-bottom:3px solid #ef4444;padding-bottom:15px;margin-bottom:30px;}';
+    html += '.meta{text-align:center;color:#666;margin-bottom:30px;font-size:14px;}';
+    html += '.item{border:1px solid #e5e7eb;border-radius:12px;padding:20px;margin-bottom:20px;background:#fafafa;}';
+    html += '.item.mastered{border-left:4px solid #10b981;}';
+    html += '.item.unmastered{border-left:4px solid #ef4444;}';
+    html += '.status{font-size:12px;font-weight:700;margin-bottom:8px;}';
+    html += '.status.mastered{color:#10b981;}';
+    html += '.status.unmastered{color:#ef4444;}';
+    html += '.question{font-size:16px;font-weight:600;margin-bottom:10px;color:#1f2937;}';
+    html += '.answer{font-size:14px;color:#059669;margin-bottom:8px;}';
+    html += '.exp{font-size:13px;color:#6b7280;background:#f3f4f6;padding:10px 14px;border-radius:8px;}';
+    html += '.count{font-size:12px;color:#9ca3af;float:right;}';
+    html += '.footer{text-align:center;margin-top:40px;color:#9ca3af;font-size:12px;border-top:1px solid #e5e7eb;padding-top:20px;}';
+    html += '@media print{body{padding:0;}.item{break-inside:avoid;}}';
+    html += '</style></head><body>';
+    html += '<h1>📕 应急小达人 — 错题本</h1>';
+    html += '<div class="meta">共 ' + items.length + ' 道错题 · 打印时间：' + new Date().toLocaleString() + '</div>';
+    items.forEach(function(item) {
+      var cls = item.mastered ? 'mastered' : 'unmastered';
+      var status = item.mastered ? '✅ 已掌握' : '❌ 待复习';
+      html += '<div class="item ' + cls + '">';
+      html += '<div class="status ' + cls + '">' + status + '<span class="count">错 ' + item.wrongCount + ' 次</span></div>';
+      html += '<div class="question">' + item.question + '</div>';
+      if (item.correctAnswer) html += '<div class="answer">正确答案：' + item.correctAnswer + '</div>';
+      if (item.explanation) html += '<div class="exp">💡 ' + item.explanation + '</div>';
+      html += '</div>';
+    });
+    html += '<div class="footer">应急小达人 v1.2.0 · 全国青少年安全与应急科普创新大赛</div>';
+    html += '<script>window.onload=function(){window.print();}</script>';
+    html += '</body></html>';
+    win.document.write(html);
+    win.document.close();
+  },
     var unmastered = this.getUnmastered();
     if (unmastered.length === 0) {
       if (typeof Modal !== 'undefined') {

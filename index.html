@@ -399,6 +399,20 @@ body:not(.app-ready) #menuToolbar{display:none!important}
   <link rel="stylesheet" href="layout-fix.css">
   <link rel="stylesheet" href="ai-float.css">
   <link rel="stylesheet" href="ui-ultimate.css">
+<style>
+/* ===== 标题与图标可见性优化 ===== */
+.menu-logo-title { font-weight: 900 !important; text-shadow: 0 0 20px rgba(255,255,255,0.3), 0 2px 4px rgba(0,0,0,0.5) !important; letter-spacing: 2px !important; }
+.menu-logo-icon { font-size: 52px !important; text-shadow: 0 0 30px rgba(0,212,255,0.4) !important; filter: drop-shadow(0 0 8px rgba(0,212,255,0.3)); }
+.menu-logo-sub { font-weight: 600 !important; text-shadow: 0 0 10px rgba(255,255,255,0.2) !important; }
+.preview-title { font-weight: 800 !important; font-size: 1.6rem !important; text-shadow: 0 0 12px rgba(255,255,255,0.15) !important; }
+.preview-icon { font-size: 3.2rem !important; text-shadow: 0 0 20px rgba(255,255,255,0.2) !important; filter: drop-shadow(0 0 10px rgba(0,212,255,0.2)); }
+.game-header .mode-label { font-size: 18px !important; font-weight: 800 !important; text-shadow: 0 0 12px rgba(255,255,255,0.15) !important; }
+.cat-icon { font-size: 28px !important; filter: drop-shadow(0 0 6px rgba(255,255,255,0.2)); }
+.cat-title { font-weight: 700 !important; font-size: 15px !important; }
+.menu-section-title { font-weight: 800 !important; font-size: 1.2rem !important; text-shadow: 0 0 8px rgba(255,255,255,0.1) !important; }
+.mode-icon { font-size: 32px !important; filter: drop-shadow(0 0 8px rgba(0,212,255,0.2)); }
+.mode-name { font-weight: 700 !important; font-size: 15px !important; }
+</style>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet"></noscript>
 <style>
@@ -791,7 +805,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
     <div class="menu-section">
       <h2 class="menu-section-title battle-title" onclick="MenuManager.toggleCategory('battle')">⚔️ 闯关挑战<span class="collapse-arrow">▼</span></h2>
       <div class="menu-grid battle-grid">
-        <div class="mode-btn" onclick="BattleEngine.init()" style="border-color: rgba(255,215,0,0.3); box-shadow: 0 0 20px rgba(255,215,0,0.1), inset 0 1px 0 rgba(255,215,0,0.15);">
+        <div class="mode-btn" onclick="PageManager.navigate('battle-lobby')" style="border-color: rgba(255,215,0,0.3); box-shadow: 0 0 20px rgba(255,215,0,0.1), inset 0 1px 0 rgba(255,215,0,0.15);">
           <span class="mode-badge mode-badge-hot">🔥 推荐</span>
           <span class="mode-icon">👾</span>
           <span class="mode-name">防灾大擂台</span>
@@ -1006,7 +1020,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
         <span class="feature-status feature-ready">🆓 自由</span>
       </div>
     </div>
-    <button class="btn btn-gold btn-lg" style="margin-top:var(--space-sm);width:100%;max-width:360px" onclick="BattleEngine.init()">
+    <button class="btn btn-gold btn-lg" style="margin-top:var(--space-sm);width:100%;max-width:360px" onclick="PageManager.navigate('battle-lobby')">
       ⚔️ 开始对战
     </button>
   </div>
@@ -1392,9 +1406,50 @@ body:not(.app-ready) #menuToolbar{display:none!important}
   </div>
 </div>
 
+  <!-- ======== 闯关挑战大厅 ======== -->
+  <div id="page-battle-lobby" class="page page-content">
+    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <div class="game-header">
+      <div class="mode-label" style="color:#FFD700;font-size:18px;font-weight:800;text-shadow:0 0 12px rgba(255,215,0,0.4);">⚔️ 闯关挑战</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.5);">选择挑战模式 · 击败怪兽</div>
+    </div>
+    <div class="feature-list" style="padding:20px;max-width:480px;margin:0 auto;">
+      <div class="feature-item" onclick="PageManager.navigate('battle-lobby')" style="cursor:pointer;border-color:rgba(255,215,0,0.3);">
+        <span class="feature-icon" style="font-size:36px;">👾</span>
+        <div class="feature-text"><h4>防灾大擂台</h4><p>回合制打怪兽！答题就是攻击！</p></div>
+        <span class="feature-status" style="background:linear-gradient(135deg,#ffd700,#ff6b00);color:#000;">🔥 推荐</span>
+      </div>
+      <div class="feature-item" onclick="PageManager.navigate('free')" style="cursor:pointer;">
+        <span class="feature-icon" style="font-size:36px;">🎯</span>
+        <div class="feature-text"><h4>自由模式</h4><p>自选灾害类型，无限练习</p></div>
+        <span class="feature-status feature-ready">🆓 自由</span>
+      </div>
+      <div class="feature-item" onclick="PageManager.navigate('speed')" style="cursor:pointer;">
+        <span class="feature-icon" style="font-size:36px;">⚡</span>
+        <div class="feature-text"><h4>速答挑战</h4><p>10题限时竞答，挑战手速</p></div>
+        <span class="feature-status feature-ready">🆓 自由</span>
+      </div>
+      <div class="feature-item" onclick="PageManager.navigate('pk')" style="cursor:pointer;">
+        <span class="feature-icon" style="font-size:36px;">👥</span>
+        <div class="feature-text"><h4>双人PK</h4><p>邀请好友，同台竞技</p></div>
+        <span class="feature-status" style="background:linear-gradient(135deg,#a78bfa,#7c3aed);color:#fff;">👥 对战</span>
+      </div>
+      <div class="feature-item" onclick="PageManager.navigate('survival')" style="cursor:pointer;">
+        <span class="feature-icon" style="font-size:36px;">♾️</span>
+        <div class="feature-text"><h4>生存挑战</h4><p>无限答题，看你能撑多久</p></div>
+        <span class="feature-status" style="background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;">💀 极限</span>
+      </div>
+      <div class="feature-item" onclick="PageManager.navigate('bossrush')" style="cursor:pointer;">
+        <span class="feature-icon" style="font-size:36px;">💀</span>
+        <div class="feature-text"><h4>Boss Rush</h4><p>连续击败Boss，挑战极限</p></div>
+        <span class="feature-status" style="background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;">💀 极限</span>
+      </div>
+    </div>
+  </div>
+
   <!-- ======== 防灾大擂台 (Battle Arena) ======== -->
   <div id="page-battle" class="page page-content" style="overflow-y:auto">
-    <button class="btn back-float" onclick="QuizEngine.quit()">← 逃跑</button>
+    <button class="btn back-float" onclick="if(QuizEngine.active){QuizEngine.quit()}else{PageManager.navigate('battle-lobby')}">← 返回</button>
     
     <!-- 战斗 HUD -->
     <div class="battle-hud">
@@ -1876,17 +1931,27 @@ body:not(.app-ready) #menuToolbar{display:none!important}
   <div id="page-report" class="page page-content">
     <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="game-header">
-      <div class="mode-label" style="color:#34d399;">📊 学习报告</div>
-      <div style="font-size:12px;color:rgba(255,255,255,0.4);">数据可视化 · 一键导出</div>
+      <div class="mode-label" style="color:#34d399;font-size:18px;font-weight:800;text-shadow:0 0 12px rgba(52,211,153,0.4);">📊 学习报告</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.5);">数据可视化 · 一键导出</div>
     </div>
     <div style="text-align:center;padding:40px 20px;">
-      <div style="font-size:64px;margin-bottom:20px;">📊</div>
-      <h3 style="color:rgba(255,255,255,0.9);margin-bottom:10px;">生成学习报告</h3>
-      <p style="color:rgba(255,255,255,0.5);margin-bottom:30px;font-size:14px;">包含学习时长、答题统计、薄弱项分析等</p>
-      <button class="wb-btn wb-btn-primary" onclick="ReportEngine.showReport()" style="font-size:16px;padding:14px 32px;">
+      <div style="font-size:72px;margin-bottom:20px;text-shadow:0 0 30px rgba(52,211,153,0.3);">📊</div>
+      <h3 style="color:rgba(255,255,255,0.95);margin-bottom:10px;font-size:20px;font-weight:700;">生成学习报告</h3>
+      <p style="color:rgba(255,255,255,0.55);margin-bottom:30px;font-size:14px;">包含学习时长、答题统计、薄弱项分析等</p>
+      <button class="wb-btn wb-btn-primary" onclick="PageManager.navigate('report-detail');ReportEngine.showDetailReport()" style="font-size:16px;padding:14px 32px;">
         ✨ 生成报告
       </button>
     </div>
+  </div>
+
+  <!-- ======== 学习报告详情页 ======== -->
+  <div id="page-report-detail" class="page page-content">
+    <button class="btn back-float" onclick="PageManager.navigate('report')">←</button>
+    <div class="game-header">
+      <div class="mode-label" style="color:#34d399;font-size:18px;font-weight:800;text-shadow:0 0 12px rgba(52,211,153,0.4);">📊 学习报告</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.5);">数据可视化 · 一键导出</div>
+    </div>
+    <div id="reportDetailContent" style="text-align:center;padding:20px;"></div>
   </div>
 
   <!-- ======== 宠物页 ======== -->

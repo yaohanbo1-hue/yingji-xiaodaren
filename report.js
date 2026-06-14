@@ -372,8 +372,10 @@ const ReportEngine = {
     printBtn.style.cssText = 'padding:12px 24px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.9);font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;';
     printBtn.textContent = '🖨️ 打印报告';
     printBtn.onclick = function() {
+      overlay.remove();
       var win = window.open('', '_blank');
       win.document.write('<html><head><title>学习报告</title><style>body{margin:0;background:#0F172A;display:flex;justify-content:center;}img{max-width:100%;}</style></head><body><img src="' + canvas.toDataURL() + '" onload="window.print()"></body></html>');
+      win.document.close();
     };
     
     var closeBtn = document.createElement('button');
@@ -392,6 +394,49 @@ const ReportEngine = {
     });
     
     document.body.appendChild(overlay);
+  },
+
+  // 在报告详情页显示报告
+  showDetailReport() {
+    var canvas = this.generateReport();
+    var container = document.getElementById('reportDetailContent');
+    if (!container) return;
+    
+    canvas.style.cssText = 'max-width:100%;height:auto;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.3);margin-bottom:20px;';
+    container.innerHTML = '';
+    container.appendChild(canvas);
+    
+    var btnRow = document.createElement('div');
+    btnRow.style.cssText = 'display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap;';
+    
+    var downloadBtn = document.createElement('button');
+    downloadBtn.style.cssText = 'padding:12px 24px;border-radius:10px;border:none;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:white;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;';
+    downloadBtn.textContent = '💾 保存图片';
+    downloadBtn.onclick = function() {
+      var link = document.createElement('a');
+      link.download = '防灾学习报告_' + new Date().toISOString().slice(0,10) + '.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    };
+    
+    var printBtn = document.createElement('button');
+    printBtn.style.cssText = 'padding:12px 24px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.9);font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;';
+    printBtn.textContent = '🖨️ 打印报告';
+    printBtn.onclick = function() {
+      var win = window.open('', '_blank');
+      win.document.write('<html><head><title>学习报告</title><style>body{margin:0;background:#0F172A;display:flex;justify-content:center;}img{max-width:100%;}</style></head><body><img src="' + canvas.toDataURL() + '" onload="window.print()"></body></html>');
+      win.document.close();
+    };
+    
+    var backBtn = document.createElement('button');
+    backBtn.style.cssText = 'padding:12px 24px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.9);font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;';
+    backBtn.textContent = '← 返回';
+    backBtn.onclick = function() { if(typeof PageManager!=='undefined') PageManager.navigate('report'); };
+    
+    btnRow.appendChild(downloadBtn);
+    btnRow.appendChild(printBtn);
+    btnRow.appendChild(backBtn);
+    container.appendChild(btnRow);
   }
 };
 
