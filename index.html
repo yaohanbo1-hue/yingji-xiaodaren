@@ -2413,7 +2413,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- 补丁脚本：修复缺失的方法 -->
 <script>
 (function() {
-  window.addEventListener('load', function() {
+  function patch() {
     // 修复 KitEngine 缺失方法
     if (typeof KitEngine !== 'undefined') {
       if (!KitEngine.quit) {
@@ -2429,7 +2429,12 @@ document.addEventListener('DOMContentLoaded', function() {
         };
       }
     }
-  });
+  }
+  if (document.readyState === 'loading') {
+    window.addEventListener('load', patch);
+  } else {
+    setTimeout(patch, 2000);
+  }
 })();
 </script>
 
