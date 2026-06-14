@@ -62,6 +62,7 @@ const STATIC_ASSETS = [
   './menu-enhance.js',
   './share.js',
   './i18n.js',
+  './liquid-glass.js',
   './fix-click.js',
   './menu-manager.js'
 ];

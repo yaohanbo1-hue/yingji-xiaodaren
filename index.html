@@ -114,6 +114,7 @@
 <link rel="preload" href="game.js" as="script">
 <link rel="preload" href="cards.js" as="script">
 <link rel="preload" href="scenarios.js" as="script">
+<link rel="preload" href="liquid-glass.js" as="script">
 
 <!-- 加载画面最简样式：确保第一帧就覆盖全屏 -->
 <style>
@@ -128,7 +129,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
   position: fixed; inset: 0; z-index: 999999;
   background: #05050f;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  transition: opacity 0.8s ease, visibility 0.8s;
+  transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.8s ease;
   overflow: hidden;
   font-family: 'Courier New', monospace;
 }
@@ -2153,6 +2154,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <script src="menu-enhance.js" defer></script>
 <script src="share.js" defer></script>
 <script src="i18n.js" defer></script>
+<script src="liquid-glass.js" defer></script>
 
 <!-- ===== Service Worker 注册（离线可用） ===== -->
 <script>
@@ -2313,6 +2315,10 @@ document.addEventListener('DOMContentLoaded', function() {
       setTimeout(function(){
         screen.classList.add('hidden');
         document.body.classList.add('app-ready');
+        // 触发 Liquid Glass 系统初始化
+        if (typeof LiquidGlass !== 'undefined') {
+          LiquidGlass.createParticles(20);
+        }
       }, 300);
       setTimeout(function(){ screen.remove(); }, 1100);
       return;
