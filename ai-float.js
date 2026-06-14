@@ -89,6 +89,21 @@
   window.AITutorFloat = {
     currentTab: 'chat',
     messages: [],
+    
+    close: function() {
+      var panel = document.getElementById('aiFloatPanel');
+      if (panel) panel.classList.remove('active');
+    },
+    open: function() {
+      var panel = document.getElementById('aiFloatPanel');
+      if (panel) panel.classList.add('active');
+      var badge = document.querySelector('.ai-fab-badge');
+      if (badge) badge.style.display = 'none';
+      if (!window._aiFloatLoaded) {
+        window._aiFloatLoaded = true;
+        this.switchTab('chat');
+      }
+    },
 
     switchTab: function(tab) {
       this.currentTab = tab;

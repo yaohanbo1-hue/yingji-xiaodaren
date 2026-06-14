@@ -2410,6 +2410,29 @@ document.addEventListener('DOMContentLoaded', function() {
 <script src="bg-themes.js" defer></script>
 <script src="liquid-glass.js" defer></script>
 
+<!-- 补丁脚本：修复缺失的方法 -->
+<script>
+(function() {
+  window.addEventListener('load', function() {
+    // 修复 KitEngine 缺失方法
+    if (typeof KitEngine !== 'undefined') {
+      if (!KitEngine.quit) {
+        KitEngine.quit = function() {
+          this.clearTimer && this.clearTimer();
+          this.active = !1;
+          PageManager.navigate('campaign');
+        };
+      }
+      if (!KitEngine.confirm) {
+        KitEngine.confirm = function() {
+          this.finish && this.finish();
+        };
+      }
+    }
+  });
+})();
+</script>
+
 <!-- ===== Service Worker 注册（离线可用） ===== -->
 <script>
 (function() {
