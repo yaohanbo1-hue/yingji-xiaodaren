@@ -69,7 +69,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>应急小达人</title>
+<meta name="theme-color" content="#00d4ff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="应急小达人">
+<meta name="description" content="面向中小学生的防灾教育互动游戏，通过盲盒开箱、答题闯关、情景模拟等趣味方式学习防灾知识。覆盖12种自然灾害，369张知识卡牌，32种游戏模式。">
+<meta name="keywords" content="防灾教育,应急科普,灾害模拟,互动游戏,中小学生,安全教育">
+<meta name="author" content="应急小达人开发团队">
+<meta name="generator" content="应急小达人 v1.2.0">
+<meta name="robots" content="index, follow">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- ===== Open Graph / 社交媒体分享标签 ===== -->
+<meta property="og:title" content="应急小达人 — 防灾教育互动游戏">
+<meta property="og:description" content="面向中小学生的防灾教育互动游戏，盲盒开箱、答题闯关、情景模拟，32种游戏模式，12类自然灾害，369张知识卡牌。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://github.com/yaohanbo1-hue/yingji-xiaodaren">
+<meta property="og:image" content="https://github.com/yaohanbo1-hue/yingji-xiaodaren/raw/main/favicon.svg">
+<meta property="og:image:type" content="image/svg+xml">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="应急小达人">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="应急小达人 — 防灾教育互动游戏">
+<meta name="twitter:description" content="面向中小学生的防灾教育互动游戏，32种游戏模式，12类自然灾害，369张知识卡牌。">
+<meta name="twitter:image" content="https://github.com/yaohanbo1-hue/yingji-xiaodaren/raw/main/favicon.svg">
+
+<!-- ===== Favicon + PWA 图标 ===== -->
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="shortcut icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="favicon.svg">
+<link rel="mask-icon" href="favicon.svg" color="#00d4ff">
+<link rel="manifest" href="manifest.json">
+
+<title>应急小达人 — 防灾教育互动游戏</title>
+
+<!-- ===== 预加载关键 CSS（非阻塞渲染） ===== -->
+<link rel="preload" href="all-styles.css" as="style">
+<link rel="preload" href="v5-glass-3d.css" as="style">
+<link rel="preload" href="clean-ui.css" as="style">
+<link rel="preload" href="fx-effects.css" as="style">
+<link rel="preload" href="loading.css" as="style">
+<link rel="preload" href="transitions.css" as="style">
+<link rel="preload" href="ui-ultimate.css" as="style">
+
+<!-- ===== 预加载关键 JS ===== -->
+<link rel="preload" href="game.js" as="script">
+<link rel="preload" href="cards.js" as="script">
+<link rel="preload" href="scenarios.js" as="script">
+<link rel="preload" href="juice.js" as="script">
+<link rel="preload" href="visual-fx.js" as="script">
+<link rel="preload" href="bgm.js" as="script">
+<link rel="preload" href="kit_data.js" as="script">
+
 <!-- 加载画面最简样式：确保第一帧就覆盖全屏 -->
 <style>
 #loadingScreen{position:fixed;inset:0;z-index:999999;background:#05050f;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Courier New',monospace}
@@ -2114,6 +2167,33 @@ document.addEventListener('DOMContentLoaded', function() {
 <script src="demo-mode.js" defer></script>
 <script src="share.js" defer></script>
 <script src="i18n.js" defer></script>
+<script src="demo-showcase.js" defer></script>
+
+<!-- ===== Service Worker 注册（离线可用） ===== -->
+<script>
+(function() {
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('sw.js')
+        .then(function(registration) {
+          console.log('[SW] 注册成功:', registration.scope);
+          // 监听更新
+          registration.addEventListener('updatefound', function() {
+            var newWorker = registration.installing;
+            newWorker.addEventListener('statechange', function() {
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                console.log('[SW] 新版本可用，刷新页面后生效');
+              }
+            });
+          });
+        })
+        .catch(function(err) {
+          console.log('[SW] 注册失败:', err);
+        });
+    });
+  }
+})();
+</script>
 
 <!-- ===== 加载动画 + AudioContext 解锁 ===== -->
 <script>
