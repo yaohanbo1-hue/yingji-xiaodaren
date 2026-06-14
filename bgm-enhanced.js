@@ -92,6 +92,8 @@ const BGMEngineV2 = {
   
   stop() {
     this._playing = false;
+    this._wasPlaying = false;
+    this._pausedTrack = null;
     if (this._timeoutId) {
       clearTimeout(this._timeoutId);
       this._timeoutId = null;
@@ -100,6 +102,27 @@ const BGMEngineV2 = {
       try { n.stop(); } catch(e) {}
     });
     this._nodes = [];
+  },
+
+  pause() {
+    if (this._playing) {
+      this._wasPlaying = true;
+      this._pausedTrack = this._currentTrack;
+      this.stop();
+    }
+  },
+
+  resume() {
+    if (this._wasPlaying && this._pausedTrack) {
+      this._wasPlaying = false;
+      switch (this._pausedTrack) {
+        case 'menu': this.playMenu(); break;
+        case 'battle': this.playBattle(); break;
+        case 'scenario': this.playScenario(); break;
+        case 'victory': this.playVictory(); break;
+      }
+      this._pausedTrack = null;
+    }
   },
   
   // 播放单个音符（带 ADSR 包络）

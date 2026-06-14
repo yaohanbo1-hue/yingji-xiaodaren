@@ -2297,43 +2297,70 @@ document.addEventListener('DOMContentLoaded', function() {
   setInterval(rotateTip, 3500);
   tip.textContent = tips[0];
 
-  // 加载进度 — 更快更流畅
+  // 加载进度 — 基于真实资源加载
+  var resources = Array.from(document.querySelectorAll('link[rel="stylesheet"], script[src], img[src]'));
+  var total = resources.length || 1;
+  var loaded = 0;
   var progress = 0;
-  var steps = [
-    { to: 12, delay: 300 },
-    { to: 28, delay: 400 },
-    { to: 45, delay: 350 },
-    { to: 62, delay: 450 },
-    { to: 78, delay: 300 },
-    { to: 90, delay: 350 },
-    { to: 97, delay: 250 },
-    { to: 100, delay: 200 }
-  ];
-  var stepIdx = 0;
-  function nextStep() {
-    if (stepIdx >= steps.length) {
-      setTimeout(function(){
-        screen.classList.add('hidden');
-        document.body.classList.add('app-ready');
-        // 触发 Liquid Glass 系统初始化
-        if (typeof LiquidGlass !== 'undefined') {
-          LiquidGlass.createParticles(20);
-        }
-      }, 300);
-      setTimeout(function(){ screen.remove(); }, 1100);
-      return;
-    }
-    var s = steps[stepIdx++];
-    setTimeout(function() {
-      progress = s.to;
-      bar.style.width = progress + '%';
-      pct.textContent = progress + '%';
-      nextStep();
-    }, s.delay);
-  }
-  nextStep();
+  var bar = document.getElementById('loadBar');
+  var pct = document.getElementById('loadPct');
+  var screen = document.getElementById('loadingScreen');
 
-  // AudioContext 解锁
+  function updateProgress() {
+    var target = Math.min(100, Math.round((loaded / total) * 100));
+    var animate = function() {
+      if (progress < target) {
+        progress += Math.max(1, Math.ceil((target - progress) / 3));
+        bar.style.width = progress + '%';
+        pct.textContent = progress + '%';
+        requestAnimationFrame(animate);
+      } else if (target === 100 && !screen.classList.contains('hidden')) {
+        setTimeout(function(){
+          screen.classList.add('hidden');
+          document.body.classList.add('app-ready');
+          if (typeof LiquidGlass !== 'undefined') {
+            LiquidGlass.createParticles(20);
+          }
+        }, 400);
+        setTimeout(function(){ screen.remove(); }, 1200);
+      }
+    };
+    requestAnimationFrame(animate);
+  }
+
+  resources.forEach(function(r) {
+    if (r.complete && r.naturalWidth !== undefined && r.naturalWidth !== 0) {
+      loaded++;
+    } else if (r.readyState === 'complete') {
+      loaded++;
+    } else {
+      r.addEventListener('load', function() { loaded++; updateProgress(); });
+      r.addEventListener('error', function() { loaded++; updateProgress(); });
+    }
+  });
+  updateProgress();
+
+  window.addEventListener('load', function() {
+    loaded = total;
+    updateProgress();
+  });
+
+  // 备用：最长 4 秒强制完成
+  setTimeout(function() {
+    if (!screen.classList.contains('hidden')) {
+      loaded = total;
+      updateProgress();
+    }
+  }, 4000);
+
+  // 页面可见性优化：隐藏时暂停音频和 Canvas 动画
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+      if (typeof BGMEngineV2 !== 'undefined') BGMEngineV2.pause();
+    } else {
+      if (typeof BGMEngineV2 !== 'undefined') BGMEngineV2.resume();
+    }
+  });
   function unlockAudio() {
     try {
       if (typeof BGMEngine !== 'undefined') BGMEngine.init();

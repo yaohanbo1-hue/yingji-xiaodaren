@@ -16,7 +16,11 @@ function resize() {
   H = bgCanvas.height = window.innerHeight;
 }
 resize();
-window.addEventListener('resize', resize);
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(resize, 100);
+});
 
 const PARTICLE_COUNT = 70;
 const LINE_DIST = 130;
@@ -92,6 +96,7 @@ function drawLines() {
 }
 
 function animate() {
+  if (document.hidden) { requestAnimationFrame(animate); return; }
   frame++;
   ctx.clearRect(0, 0, W, H);
   ctx.globalAlpha = 1;

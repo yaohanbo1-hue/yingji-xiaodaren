@@ -85,7 +85,11 @@ const DisasterSimEngine = {
     this._ctx = this._canvas.getContext('2d');
     this.resize();
     
-    window.addEventListener('resize', () => this.resize());
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => this.resize(), 100);
+    });
     
     this.renderUI();
     this.startAnimation();
@@ -215,6 +219,7 @@ const DisasterSimEngine = {
   // ===== 动画循环 =====
   startAnimation() {
     const animate = () => {
+      if (document.hidden) { this._animFrame = requestAnimationFrame(animate); return; }
       this._scenePhase += 0.005;
       
       switch (this._currentDisaster) {

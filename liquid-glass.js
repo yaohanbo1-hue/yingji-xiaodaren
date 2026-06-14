@@ -752,7 +752,11 @@
         h = canvas.height = window.innerHeight;
       }
       resize();
-      window.addEventListener('resize', resize);
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(resize, 100);
+      });
       
       // 创建连线粒子
       const particles = [];
@@ -774,6 +778,7 @@
       });
       
       function draw() {
+        if (document.hidden) { requestAnimationFrame(draw); return; }
         ctx.clearRect(0, 0, w, h);
         
         // 更新位置
