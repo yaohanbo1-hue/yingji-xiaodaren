@@ -1,25 +1,51 @@
 /**
  * ===========================================================================
- * 应急小达人 v1.2.0 — BGM 增强引擎
+ * 应急小达人 v1.2.0 — 防灾主题 BGM 引擎
  * ===========================================================================
  * 
- * 优化内容：
- * 1. 更丰富的和弦进行
- * 2. 多层音色叠加（钢琴+弦乐+环境音）
- * 3. 动态音量包络
- * 4. 场景自适应BGM切换
+ * 【主题音乐设计】
+ * 专为防灾教育游戏设计，风格：勇敢、希望、使命感
+ * 适合11岁小学生，不吓人、不紧张，充满正能量
  * 
- * @version 1.2.0
+ * 🎵 菜单音乐 — 《小勇士出发》
+ * - 调性: C大调（明亮、希望）
+ * - BPM: 88（轻快但不急躁）
+ * - 风格: 像冒险队出发，有使命感
+ * - 乐器: 钢琴(sine) + 铃铛(triangle) + 稳定低音
+ * 
+ * 🎵 挑战音乐 — 《快速反应》
+ * - 调性: D大调（活力、进取）
+ * - BPM: 112（答题节奏，刺激但可控）
+ * - 风格: 像解谜闯关，有成就感
+ * - 乐器: 明亮方波 + 行走低音 + 轻快节奏
+ * 
+ * 🎵 情景音乐 — 《安全演练》
+ * - 调性: A小调→C大调（从谨慎到希望）
+ * - BPM: 76（沉浸、专注）
+ * - 风格: 像老师在讲解，认真但不害怕
+ * - 乐器: 柔和长音 + 环境氛围 + 偶尔铃音
+ * 
+ * 🎵 胜利音乐 — 《救援成功》
+ * - 调性: C大调（ triumphant ）
+ * - 风格: 明亮欢呼，像完成任务获得勋章
+ * 
+ * 【技术特点】
+ * - 纯 Web Audio API 生成，零外部文件
+ * - 自适应音量，不会太吵
+ * - 循环播放，无缝衔接
  * ===========================================================================
  */
 
 const BGMEngineV2 = {
   _ctx: null,
   _masterGain: null,
+  _reverb: null,
+  _reverbGain: null,
   _currentTrack: null,
   _playing: false,
   _volume: 0.15,
   _nodes: [],
+  _timeoutId: null,
   
   init() {
     if (this._ctx) return;
@@ -28,10 +54,10 @@ const BGMEngineV2 = {
       this._masterGain = this._ctx.createGain();
       this._masterGain.gain.value = this._volume;
       
-      // 添加混响效果
+      // 添加混响效果，让音乐更有空间感
       this._reverb = this._createReverb();
       this._reverbGain = this._ctx.createGain();
-      this._reverbGain.gain.value = 0.3;
+      this._reverbGain.gain.value = 0.25;
       this._reverb.connect(this._reverbGain);
       this._reverbGain.connect(this._ctx.destination);
       
@@ -44,13 +70,13 @@ const BGMEngineV2 = {
   _createReverb() {
     const convolver = this._ctx.createConvolver();
     const rate = this._ctx.sampleRate;
-    const length = rate * 2;
+    const length = rate * 1.5;
     const impulse = this._ctx.createBuffer(2, length, rate);
     
     for (let channel = 0; channel < 2; channel++) {
       const data = impulse.getChannelData(channel);
       for (let i = 0; i < length; i++) {
-        data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, 2.5);
+        data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, 3);
       }
     }
     convolver.buffer = impulse;
@@ -66,15 +92,19 @@ const BGMEngineV2 = {
   
   stop() {
     this._playing = false;
+    if (this._timeoutId) {
+      clearTimeout(this._timeoutId);
+      this._timeoutId = null;
+    }
     this._nodes.forEach(n => {
       try { n.stop(); } catch(e) {}
     });
     this._nodes = [];
   },
   
-  // 播放单个音符（带包络）
+  // 播放单个音符（带 ADSR 包络）
   _playNote(freq, startTime, duration, type = 'sine', volume = 0.1) {
-    if (!this._ctx) return;
+    if (!this._ctx || !this._playing) return;
     
     const osc = this._ctx.createOscillator();
     const gain = this._ctx.createGain();
@@ -83,17 +113,17 @@ const BGMEngineV2 = {
     osc.type = type;
     osc.frequency.value = freq;
     
-    // 低通滤波，让声音更柔和
+    // 低通滤波，让声音更柔和，不刺耳
     filter.type = 'lowpass';
-    filter.frequency.value = 2000;
-    filter.Q.value = 1;
+    filter.frequency.value = 2500;
+    filter.Q.value = 0.8;
     
-    // ADSR 包络
+    // ADSR 包络：Attack-Decay-Sustain-Release
     gain.gain.setValueAtTime(0, startTime);
-    gain.gain.linearRampToValueAtTime(volume, startTime + 0.05); // Attack
-    gain.gain.linearRampToValueAtTime(volume * 0.7, startTime + 0.15); // Decay
-    gain.gain.setValueAtTime(volume * 0.7, startTime + duration - 0.1); // Sustain
-    gain.gain.linearRampToValueAtTime(0, startTime + duration); // Release
+    gain.gain.linearRampToValueAtTime(volume, startTime + 0.04);      // Attack
+    gain.gain.linearRampToValueAtTime(volume * 0.6, startTime + 0.2); // Decay
+    gain.gain.setValueAtTime(volume * 0.6, startTime + duration - 0.1); // Sustain
+    gain.gain.linearRampToValueAtTime(0, startTime + duration);     // Release
     
     osc.connect(filter);
     filter.connect(gain);
@@ -106,190 +136,263 @@ const BGMEngineV2 = {
     this._nodes.push(osc);
   },
   
-  // 菜单BGM - 轻松愉快的钢琴旋律
+  // ===== 🎵 菜单音乐 — 《小勇士出发》 =====
+  // 明亮、希望、有使命感，像救援队准备出发
   playMenu() {
     this.stop();
     this.init();
     this._playing = true;
     this._currentTrack = 'menu';
     
-    const bpm = 90;
-    const beatDuration = 60 / bpm;
+    const bpm = 88;
+    const beat = 60 / bpm;
     
-    // C大调钢琴和弦进行: C - Am - F - G
-    const chordProgression = [
-      [261.63, 329.63, 392.00], // C major
-      [220.00, 261.63, 329.63], // A minor
-      [174.61, 220.00, 261.63], // F major
-      [196.00, 246.94, 293.66]  // G major
+    // C大调 希望感和弦：C - G - Am - F
+    const chords = [
+      [261.63, 329.63, 392.00],      // C major (do mi sol)
+      [196.00, 246.94, 293.66],      // G major (sol ti re)
+      [220.00, 261.63, 329.63],      // A minor (la do mi)
+      [174.61, 220.00, 261.63]       // F major (fa la do)
     ];
     
-    // 旋律音符
+    // 主旋律 — "小勇士出发" 上行音阶，有前进感
     const melody = [
-      523.25, 587.33, 659.25, 783.99, // C5 D5 E5 G5
-      659.25, 587.33, 523.25, 493.88, // E5 D5 C5 B4
-      440.00, 523.25, 587.33, 659.25, // A4 C5 D5 E5
-      587.33, 523.25, 493.88, 440.00  // D5 C5 B4 A4
+      523.25, 587.33, 659.25, 783.99,  // C5 D5 E5 G5 — "出发！"
+      659.25, 587.33, 523.25, 493.88,  // E5 D5 C5 B4 — "向前冲"
+      440.00, 523.25, 587.33, 659.25,  // A4 C5 D5 E5 — "不怕难"
+      783.99, 659.25, 587.33, 523.25   // G5 E5 D5 C5 — "我最棒"
+    ];
+    
+    // 铃铛装饰音 — 模拟警报/希望之光（偶尔出现）
+    const bell = [
+      1046.50, 0, 0, 0, 0, 0, 1318.51, 0, 0, 0, 0, 0, 1174.66, 0, 0, 0
     ];
     
     const loop = () => {
-      if (!this._playing) return;
+      if (!this._playing || this._currentTrack !== 'menu') return;
       
       const now = this._ctx.currentTime;
       
-      // 和弦（每4拍换一次）
-      chordProgression.forEach((chord, i) => {
-        chord.forEach(freq => {
-          this._playNote(freq * 0.5, now + i * 4 * beatDuration, 3.5 * beatDuration, 'triangle', 0.04);
+      // 和弦铺垫（每4拍换一次，温暖饱满）
+      chords.forEach((chord, i) => {
+        chord.forEach((freq, j) => {
+          // 根音更响，其他音柔和
+          const vol = j === 0 ? 0.05 : 0.03;
+          this._playNote(freq * 0.5, now + i * 4 * beat, 3.8 * beat, 'triangle', vol);
         });
       });
       
-      // 旋律（每拍一个音）
+      // 主旋律（每拍一个音，明亮清晰）
       melody.forEach((freq, i) => {
-        this._playNote(freq, now + i * beatDuration, beatDuration * 0.8, 'sine', 0.06);
+        this._playNote(freq, now + i * beat, beat * 0.9, 'sine', 0.07);
       });
       
-      // 低音
-      const bassNotes = [130.81, 110.00, 87.31, 98.00]; // C3 A2 F2 G2
-      bassNotes.forEach((freq, i) => {
-        this._playNote(freq, now + i * 4 * beatDuration, 3.5 * beatDuration, 'triangle', 0.05);
+      // 低音进行（稳定的脚步感）
+      const bass = [130.81, 98.00, 110.00, 87.31]; // C3 G2 A2 F2
+      bass.forEach((freq, i) => {
+        this._playNote(freq, now + i * 4 * beat, 3.8 * beat, 'triangle', 0.05);
       });
       
-      // 循环
-      setTimeout(loop, 16 * beatDuration * 1000);
+      // 铃铛装饰音（轻盈闪烁）
+      bell.forEach((freq, i) => {
+        if (freq > 0) {
+          this._playNote(freq, now + i * beat, 0.15, 'sine', 0.04);
+        }
+      });
+      
+      // 16拍后循环
+      this._timeoutId = setTimeout(loop, 16 * beat * 1000);
     };
     
     loop();
   },
   
-  // 战斗BGM - 紧张刺激
+  // ===== 🎵 挑战音乐 — 《快速反应》 =====
+  // 活力、有节奏，像答题闯关时的兴奋感
   playBattle() {
     this.stop();
     this.init();
     this._playing = true;
     this._currentTrack = 'battle';
     
-    const bpm = 130;
-    const beatDuration = 60 / bpm;
+    const bpm = 112;
+    const beat = 60 / bpm;
     
-    // A小调和弦进行: Am - F - C - G
-    const chordProgression = [
-      [220.00, 261.63, 329.63], // A minor
-      [174.61, 220.00, 261.63], // F major
-      [130.81, 164.81, 196.00], // C major
-      [98.00, 123.47, 146.83]   // G major
+    // D大调 进取感和弦：D - Bm - G - A
+    const chords = [
+      [293.66, 369.99, 440.00],      // D major
+      [246.94, 293.66, 369.99],      // B minor
+      [196.00, 246.94, 293.66],      // G major
+      [220.00, 261.63, 329.63]       // A major
     ];
     
-    // 紧张的旋律
+    // 快节奏旋律 — 有跳跃感，像"快速答题"
     const melody = [
-      440, 493.88, 523.25, 587.33,
-      523.25, 493.88, 440, 392,
-      349.23, 392, 440, 523.25,
-      493.88, 440, 392, 349.23
+      587.33, 0, 659.25, 587.33,  // D5 空 E5 D5
+      0, 523.25, 587.33, 659.25,   // 空 C5 D5 E5
+      783.99, 0, 659.25, 587.33,   // G5 空 E5 D5
+      0, 523.25, 587.33, 0         // 空 C5 D5 空
     ];
     
     const loop = () => {
-      if (!this._playing) return;
+      if (!this._playing || this._currentTrack !== 'battle') return;
       
       const now = this._ctx.currentTime;
       
-      // 和弦（每2拍换一次，更紧凑）
-      chordProgression.forEach((chord, i) => {
-        chord.forEach(freq => {
-          this._playNote(freq, now + i * 2 * beatDuration, 1.8 * beatDuration, 'sawtooth', 0.02);
-          this._playNote(freq, now + i * 2 * beatDuration, 1.8 * beatDuration, 'triangle', 0.03);
+      // 和弦（每2拍，更紧凑）
+      chords.forEach((chord, i) => {
+        chord.forEach((freq, j) => {
+          const vol = j === 0 ? 0.04 : 0.025;
+          this._playNote(freq, now + i * 2 * beat, 1.9 * beat, 'triangle', vol);
         });
       });
       
-      // 旋律（半拍节奏）
+      // 旋律（半拍节奏，跳跃感）
       melody.forEach((freq, i) => {
-        this._playNote(freq, now + i * beatDuration, beatDuration * 0.6, 'square', 0.03);
+        if (freq > 0) {
+          this._playNote(freq, now + i * beat * 0.5, beat * 0.4, 'sine', 0.06);
+        }
       });
       
-      // 鼓点模拟（低频脉冲）
+      // 行走低音（有推进感）
+      const bass = [146.83, 123.47, 98.00, 110.00]; // D3 B2 G2 A2
+      bass.forEach((freq, i) => {
+        this._playNote(freq, now + i * 2 * beat, 1.9 * beat, 'triangle', 0.05);
+      });
+      
+      // 轻快节奏（模拟鼓点，用短促低频）
       for (let i = 0; i < 8; i++) {
-        this._playNote(60, now + i * 2 * beatDuration, 0.1, 'sine', 0.08);
-        this._playNote(80, now + i * 2 * beatDuration + beatDuration, 0.08, 'sine', 0.05);
+        this._playNote(80, now + i * beat, 0.08, 'sine', 0.06);  // 重拍
+        this._playNote(100, now + i * beat + beat * 0.5, 0.06, 'sine', 0.03); // 轻拍
       }
       
-      // 低音
-      const bassNotes = [110, 87.31, 65.41, 73.42];
-      bassNotes.forEach((freq, i) => {
-        this._playNote(freq, now + i * 2 * beatDuration, 1.8 * beatDuration, 'sawtooth', 0.04);
-      });
-      
-      setTimeout(loop, 16 * beatDuration * 1000);
+      this._timeoutId = setTimeout(loop, 16 * beat * 1000);
     };
     
     loop();
   },
   
-  // 情景BGM - 沉浸氛围
+  // ===== 🎵 情景音乐 — 《安全演练》 =====
+  // 沉浸、专注，像认真听老师讲解防灾知识
   playScenario() {
     this.stop();
     this.init();
     this._playing = true;
     this._currentTrack = 'scenario';
     
-    const bpm = 70;
-    const beatDuration = 60 / bpm;
+    const bpm = 76;
+    const beat = 60 / bpm;
     
-    // 氛围和弦（加九和弦）
+    // A小调→C大调：从谨慎到希望，表示"危险但可控"
     const chords = [
-      [261.63, 329.63, 392.00, 493.88], // Cmaj9
-      [220.00, 261.63, 329.63, 440.00], // Am9
-      [174.61, 220.00, 261.63, 349.23], // Fmaj9
-      [196.00, 246.94, 293.66, 392.00]  // G9
+      [220.00, 261.63, 329.63],      // A minor
+      [261.63, 329.63, 392.00],      // C major (希望出现)
+      [174.61, 220.00, 261.63],      // F major
+      [196.00, 246.94, 293.66]       // G major
+    ];
+    
+    // 稀疏旋律 — 像认真思考时的脑内声音
+    const sparseMelody = [
+      440.00, 0, 523.25, 0, 659.25, 0, 0, 0,
+      587.33, 0, 523.25, 0, 440.00, 0, 493.88, 0
+    ];
+    
+    // 环境音 — 模拟风声/远处声音（用非常低的音量）
+    const ambient = [
+      329.63, 0, 0, 392.00, 0, 0, 293.66, 0,
+      0, 349.23, 0, 0, 261.63, 0, 0, 0
     ];
     
     const loop = () => {
-      if (!this._playing) return;
+      if (!this._playing || this._currentTrack !== 'scenario') return;
       
       const now = this._ctx.currentTime;
       
-      // 长音和弦垫
+      // 长音和弦（缓慢、温暖，像老师温柔的讲解）
       chords.forEach((chord, i) => {
-        chord.forEach(freq => {
-          this._playNote(freq * 0.5, now + i * 4 * beatDuration, 3.8 * beatDuration, 'sine', 0.03);
-          this._playNote(freq, now + i * 4 * beatDuration, 3.8 * beatDuration, 'triangle', 0.02);
+        chord.forEach((freq, j) => {
+          const vol = j === 0 ? 0.04 : 0.025;
+          this._playNote(freq * 0.5, now + i * 4 * beat, 3.8 * beat, 'sine', vol);
+          // 八度叠加，增加厚度
+          this._playNote(freq, now + i * 4 * beat, 3.8 * beat, 'triangle', vol * 0.6);
         });
       });
       
-      // 稀疏的旋律点缀
-      const sparseMelody = [523.25, 0, 659.25, 0, 783.99, 0, 659.25, 0];
+      // 稀疏旋律（偶尔出现，不打扰思考）
       sparseMelody.forEach((freq, i) => {
         if (freq > 0) {
-          this._playNote(freq, now + i * 2 * beatDuration, 1.5 * beatDuration, 'sine', 0.04);
+          this._playNote(freq, now + i * beat, 1.5 * beat, 'sine', 0.04);
         }
       });
       
-      setTimeout(loop, 16 * beatDuration * 1000);
+      // 环境音（极轻，营造氛围）
+      ambient.forEach((freq, i) => {
+        if (freq > 0) {
+          this._playNote(freq, now + i * beat * 2, 2.5 * beat, 'sine', 0.015);
+        }
+      });
+      
+      // 偶尔铃音（像警报声但很柔和，提醒注意安全）
+      if (Math.random() > 0.6) {
+        this._playNote(880, now + 8 * beat, 0.2, 'sine', 0.02);
+      }
+      
+      this._timeoutId = setTimeout(loop, 16 * beat * 1000);
     };
     
     loop();
   },
   
-  // 胜利BGM
+  // ===== 🎵 胜利音乐 — 《救援成功》 =====
+  // 明亮、欢呼，像完成任务获得勋章
   playVictory() {
     this.stop();
     this.init();
     this._playing = true;
+    this._currentTrack = 'victory';
     
     const now = this._ctx.currentTime;
-    const fanfare = [523.25, 659.25, 783.99, 1046.50, 783.99, 1046.50, 1318.51];
     
+    // 明亮上行琶音 — "你做到了！"
+    const fanfare = [
+      523.25, 659.25, 783.99, 1046.50,   // C5 E5 G5 C6
+      783.99, 1046.50, 1318.51, 1567.98  // G5 C6 E6 G6
+    ];
+    
+    // 和弦伴奏
+    const chordNotes = [261.63, 329.63, 392.00, 523.25];
+    
+    // 主旋律
     fanfare.forEach((freq, i) => {
-      this._playNote(freq, now + i * 0.15, 0.3, 'sine', 0.08);
-      this._playNote(freq * 0.5, now + i * 0.15, 0.3, 'triangle', 0.04);
+      this._playNote(freq, now + i * 0.12, 0.35, 'sine', 0.09);
+      this._playNote(freq * 0.5, now + i * 0.12, 0.35, 'triangle', 0.05);
     });
     
-    setTimeout(() => this.playMenu(), fanfare.length * 150 + 500);
+    // 和弦
+    chordNotes.forEach((freq, i) => {
+      this._playNote(freq, now + i * 0.12, 0.5, 'triangle', 0.04);
+    });
+    
+    // 最后长音
+    this._playNote(1046.50, now + 1.2, 0.8, 'sine', 0.08);
+    this._playNote(1318.51, now + 1.4, 0.6, 'sine', 0.06);
+    
+    // 胜利音乐播完后，自动回到菜单音乐
+    this._timeoutId = setTimeout(() => {
+      if (this._currentTrack === 'victory') {
+        this.playMenu();
+      }
+    }, 2500);
   }
 };
 
-// 自动初始化
-document.addEventListener('click', () => BGMEngineV2.init(), { once: true });
-document.addEventListener('touchstart', () => BGMEngineV2.init(), { once: true });
+// 自动初始化：用户第一次点击或触摸时启动音频
+function initAudio() {
+  BGMEngineV2.init();
+}
 
-// 导出
+document.addEventListener('click', initAudio, { once: true });
+document.addEventListener('touchstart', initAudio, { once: true });
+
+// 导出到全局
 window.BGMEngineV2 = BGMEngineV2;
