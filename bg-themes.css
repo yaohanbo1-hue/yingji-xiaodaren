@@ -1,0 +1,425 @@
+/**
+ * ===========================================================================
+ * 应急小达人 — 背景主题系统（多主题切换）
+ * ===========================================================================
+ *
+ * 6 种主题：
+ * 1. deep-space    — 深空指挥官（默认，蓝紫冷色调）
+ * 2. starry-night  — 星空极夜（深蓝黑 + 闪烁星星）
+ * 3. aurora-flow   — 极光流动（绿/紫/青渐变流动）
+ * 4. dawn-light    — 自然晨曦（暖色调，日出渐变）
+ * 5. digital-matrix— 数字矩阵（绿色数据流，黑客帝国风格）
+ * 6. warm-light    — 温馨暖光（暖白/米色，低饱和度护眼）
+ *
+ * 切换方式：给 body 添加/移除 class，例如 body.classList.add('theme-aurora-flow')
+ * 保存：localStorage.setItem('bg_theme', 'aurora-flow')
+ * ===========================================================================
+ */
+
+/* ===== 基础层（所有主题共用） ===== */
+body, html {
+  transition: background 1.2s ease, color 0.8s ease;
+}
+
+/* 背景过渡层 */
+.bg-theme-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  transition: all 1.2s ease;
+}
+
+/* ===== 主题 1：深空指挥官（默认） ===== */
+body.theme-deep-space .bg-theme-layer {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(59, 130, 246, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 15% 85%, rgba(251, 146, 60, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 40% at 85% 15%, rgba(167, 139, 250, 0.10) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(56, 189, 248, 0.05) 0%, transparent 60%),
+    linear-gradient(180deg, #0F172A 0%, #111827 20%, #0F172A 50%, #1A1F2E 80%, #0F172A 100%);
+}
+
+/* 光球 */
+body.theme-deep-space .bg-orb-1 { background: radial-gradient(circle, rgba(59, 130, 246, 0.18) 0%, transparent 70%); }
+body.theme-deep-space .bg-orb-2 { background: radial-gradient(circle, rgba(251, 146, 60, 0.09) 0%, transparent 70%); }
+body.theme-deep-space .bg-orb-3 { background: radial-gradient(circle, rgba(167, 139, 250, 0.10) 0%, transparent 70%); }
+body.theme-deep-space .bg-orb-4 { background: radial-gradient(circle, rgba(56, 189, 248, 0.07) 0%, transparent 70%); }
+
+/* ===== 主题 2：星空极夜 ===== */
+body.theme-starry-night {
+  --text-primary: #E8EAF6;
+  --text-secondary: rgba(232, 234, 246, 0.7);
+}
+body.theme-starry-night .bg-theme-layer {
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 30%, rgba(99, 102, 241, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 30% at 80% 70%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+    linear-gradient(180deg, #020617 0%, #0B1120 30%, #0F172A 60%, #0B1120 100%);
+}
+
+/* 星星 */
+body.theme-starry-night .bg-stars {
+  position: fixed;
+  inset: 0;
+  z-index: -9;
+  pointer-events: none;
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.7), transparent),
+    radial-gradient(2px 2px at 160px 120px, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 230px 80px, rgba(255,255,255,0.5), transparent),
+    radial-gradient(2px 2px at 300px 150px, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 350px 50px, rgba(255,255,255,0.6), transparent),
+    radial-gradient(2px 2px at 450px 100px, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 500px 200px, rgba(255,255,255,0.5), transparent),
+    radial-gradient(2px 2px at 600px 60px, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 700px 180px, rgba(255,255,255,0.6), transparent),
+    radial-gradient(2px 2px at 80px 250px, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 200px 300px, rgba(255,255,255,0.5), transparent),
+    radial-gradient(2px 2px at 400px 280px, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 550px 320px, rgba(255,255,255,0.6), transparent),
+    radial-gradient(2px 2px at 680px 260px, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 750px 350px, rgba(255,255,255,0.5), transparent),
+    radial-gradient(2px 2px at 100px 400px, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 300px 420px, rgba(255,255,255,0.6), transparent),
+    radial-gradient(2px 2px at 500px 450px, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 650px 480px, rgba(255,255,255,0.5), transparent),
+    radial-gradient(2px 2px at 250px 500px, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 450px 520px, rgba(255,255,255,0.6), transparent),
+    radial-gradient(2px 2px at 580px 550px, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 720px 580px, rgba(255,255,255,0.5), transparent),
+    radial-gradient(2px 2px at 150px 600px, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 350px 620px, rgba(255,255,255,0.6), transparent),
+    radial-gradient(2px 2px at 480px 650px, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 620px 680px, rgba(255,255,255,0.5), transparent),
+    radial-gradient(2px 2px at 80px 700px, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 280px 720px, rgba(255,255,255,0.6), transparent),
+    radial-gradient(2px 2px at 420px 750px, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 560px 780px, rgba(255,255,255,0.5), transparent),
+    radial-gradient(2px 2px at 200px 800px, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 380px 820px, rgba(255,255,255,0.6), transparent),
+    radial-gradient(2px 2px at 520px 850px, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 660px 880px, rgba(255,255,255,0.5), transparent),
+    radial-gradient(2px 2px at 120px 900px, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 320px 920px, rgba(255,255,255,0.6), transparent),
+    radial-gradient(2px 2px at 460px 950px, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 600px 980px, rgba(255,255,255,0.5), transparent);
+  background-size: 800px 1000px;
+  animation: starTwinkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes starTwinkle {
+  0% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+/* 流星 */
+body.theme-starry-night .bg-meteor {
+  position: fixed;
+  width: 2px;
+  height: 2px;
+  background: rgba(255,255,255,0.8);
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(255,255,255,0.4), 0 0 12px rgba(168, 85, 247, 0.2);
+  z-index: -8;
+  pointer-events: none;
+}
+body.theme-starry-night .bg-meteor-1 {
+  top: 10%; right: 30%;
+  animation: meteorFall1 8s ease-in infinite 2s;
+}
+body.theme-starry-night .bg-meteor-2 {
+  top: 20%; right: 60%;
+  animation: meteorFall2 12s ease-in infinite 5s;
+}
+body.theme-starry-night .bg-meteor-3 {
+  top: 5%; right: 80%;
+  animation: meteorFall3 10s ease-in infinite 8s;
+}
+@keyframes meteorFall1 {
+  0% { transform: translate(0,0); opacity: 0; }
+  5% { opacity: 1; }
+  20% { transform: translate(-120px, 80px); opacity: 0; }
+  100% { transform: translate(-120px, 80px); opacity: 0; }
+}
+@keyframes meteorFall2 {
+  0% { transform: translate(0,0); opacity: 0; }
+  5% { opacity: 1; }
+  20% { transform: translate(-80px, 60px); opacity: 0; }
+  100% { transform: translate(-80px, 60px); opacity: 0; }
+}
+@keyframes meteorFall3 {
+  0% { transform: translate(0,0); opacity: 0; }
+  5% { opacity: 1; }
+  20% { transform: translate(-150px, 100px); opacity: 0; }
+  100% { transform: translate(-150px, 100px); opacity: 0; }
+}
+
+body.theme-starry-night .bg-orb-1 { background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%); }
+body.theme-starry-night .bg-orb-2 { background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%); }
+body.theme-starry-night .bg-orb-3 { background: radial-gradient(circle, rgba(168, 85, 247, 0.10) 0%, transparent 70%); }
+body.theme-starry-night .bg-orb-4 { display: none; }
+
+/* ===== 主题 3：极光流动 ===== */
+body.theme-aurora-flow {
+  --text-primary: #E0F2F1;
+  --text-secondary: rgba(224, 242, 241, 0.7);
+}
+body.theme-aurora-flow .bg-theme-layer {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0, 255, 150, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 20% 80%, rgba(168, 85, 247, 0.10) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 30% at 80% 20%, rgba(0, 212, 255, 0.10) 0%, transparent 50%),
+    linear-gradient(180deg, #0B1A1A 0%, #0A1F2E 30%, #0B1A2E 60%, #0D1F1F 100%);
+}
+
+/* 极光带 */
+body.theme-aurora-flow .bg-aurora {
+  position: fixed;
+  inset: 0;
+  z-index: -9;
+  pointer-events: none;
+  overflow: hidden;
+}
+body.theme-aurora-flow .aurora-band {
+  position: absolute;
+  width: 200%;
+  height: 60px;
+  left: -50%;
+  filter: blur(40px);
+  opacity: 0.6;
+  animation: auroraWave 8s ease-in-out infinite;
+}
+body.theme-aurora-flow .aurora-band-1 {
+  top: 15%;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 150, 0.3), rgba(0, 212, 255, 0.2), transparent);
+  animation-delay: 0s;
+}
+body.theme-aurora-flow .aurora-band-2 {
+  top: 25%;
+  background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.25), rgba(0, 255, 150, 0.15), transparent);
+  animation-delay: -3s;
+  animation-duration: 10s;
+}
+body.theme-aurora-flow .aurora-band-3 {
+  top: 40%;
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), rgba(168, 85, 247, 0.15), transparent);
+  animation-delay: -6s;
+  animation-duration: 12s;
+}
+@keyframes auroraWave {
+  0%, 100% { transform: translateX(-10%) skewY(0deg); opacity: 0.5; }
+  50% { transform: translateX(10%) skewY(2deg); opacity: 0.7; }
+}
+
+body.theme-aurora-flow .bg-orb-1 { background: radial-gradient(circle, rgba(0, 255, 150, 0.15) 0%, transparent 70%); }
+body.theme-aurora-flow .bg-orb-2 { background: radial-gradient(circle, rgba(168, 85, 247, 0.10) 0%, transparent 70%); }
+body.theme-aurora-flow .bg-orb-3 { background: radial-gradient(circle, rgba(0, 212, 255, 0.12) 0%, transparent 70%); }
+body.theme-aurora-flow .bg-orb-4 { background: radial-gradient(circle, rgba(0, 255, 150, 0.08) 0%, transparent 70%); }
+
+/* ===== 主题 4：自然晨曦 ===== */
+body.theme-dawn-light {
+  --text-primary: #1E293B;
+  --text-secondary: rgba(30, 41, 59, 0.7);
+}
+body.theme-dawn-light .bg-theme-layer {
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(251, 146, 60, 0.20) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 20%, rgba(245, 158, 11, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 30% at 20% 80%, rgba(59, 130, 246, 0.10) 0%, transparent 50%),
+    linear-gradient(180deg, #FFF7ED 0%, #FEF3C7 15%, #FDE68A 35%, #BFDBFE 60%, #93C5FD 80%, #60A5FA 100%);
+}
+body.theme-dawn-light .bg-orb-1 { background: radial-gradient(circle, rgba(251, 146, 60, 0.20) 0%, transparent 70%); }
+body.theme-dawn-light .bg-orb-2 { background: radial-gradient(circle, rgba(245, 158, 11, 0.12) 0%, transparent 70%); }
+body.theme-dawn-light .bg-orb-3 { background: radial-gradient(circle, rgba(59, 130, 246, 0.10) 0%, transparent 70%); }
+body.theme-dawn-light .bg-orb-4 { background: radial-gradient(circle, rgba(251, 146, 60, 0.08) 0%, transparent 70%); }
+body.theme-dawn-light .bg-grid { display: none; }
+body.theme-dawn-light .bg-noise { opacity: 0.02 !important; }
+body.theme-dawn-light .bg-top-bar {
+  background: linear-gradient(90deg, transparent, rgba(251, 146, 60, 0.5), rgba(245, 158, 11, 0.6), rgba(59, 130, 246, 0.5), transparent);
+}
+
+/* ===== 主题 5：数字矩阵 ===== */
+body.theme-digital-matrix {
+  --text-primary: #E8F5E9;
+  --text-secondary: rgba(232, 245, 233, 0.7);
+}
+body.theme-digital-matrix .bg-theme-layer {
+  background:
+    radial-gradient(ellipse 60% 40% at 30% 50%, rgba(0, 230, 118, 0.06) 0%, transparent 50%),
+    linear-gradient(180deg, #000000 0%, #001a00 30%, #000a00 60%, #001200 100%);
+}
+
+/* 矩阵雨 */
+body.theme-digital-matrix .bg-matrix {
+  position: fixed;
+  inset: 0;
+  z-index: -9;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.15;
+}
+body.theme-digital-matrix .matrix-col {
+  position: absolute;
+  top: -100%;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #00E676;
+  text-shadow: 0 0 8px rgba(0, 230, 118, 0.5);
+  white-space: pre;
+  animation: matrixFall linear infinite;
+}
+@keyframes matrixFall {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(200vh); }
+}
+
+body.theme-digital-matrix .bg-orb-1 { background: radial-gradient(circle, rgba(0, 230, 118, 0.10) 0%, transparent 70%); }
+body.theme-digital-matrix .bg-orb-2 { background: radial-gradient(circle, rgba(0, 230, 118, 0.06) 0%, transparent 70%); }
+body.theme-digital-matrix .bg-orb-3 { background: radial-gradient(circle, rgba(0, 230, 118, 0.08) 0%, transparent 70%); }
+body.theme-digital-matrix .bg-orb-4 { display: none; }
+body.theme-digital-matrix .bg-grid {
+  background-image:
+    linear-gradient(rgba(0, 230, 118, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 230, 118, 0.04) 1px, transparent 1px);
+  mask-image: none;
+  -webkit-mask-image: none;
+  opacity: 0.3;
+}
+body.theme-digital-matrix .bg-top-bar {
+  background: linear-gradient(90deg, transparent, rgba(0, 230, 118, 0.5), transparent);
+  box-shadow: 0 0 15px rgba(0, 230, 118, 0.3);
+}
+
+/* ===== 主题 6：温馨暖光 ===== */
+body.theme-warm-light {
+  --text-primary: #3E2723;
+  --text-secondary: rgba(62, 39, 35, 0.7);
+}
+body.theme-warm-light .bg-theme-layer {
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(251, 191, 36, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 20% 80%, rgba(245, 158, 11, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 30% at 80% 30%, rgba(251, 146, 60, 0.06) 0%, transparent 50%),
+    linear-gradient(180deg, #FFF8F0 0%, #FFEDD5 20%, #FED7AA 40%, #FDBA74 60%, #FB923C 80%, #F97316 100%);
+}
+body.theme-warm-light .bg-orb-1 { background: radial-gradient(circle, rgba(251, 191, 36, 0.15) 0%, transparent 70%); }
+body.theme-warm-light .bg-orb-2 { background: radial-gradient(circle, rgba(245, 158, 11, 0.10) 0%, transparent 70%); }
+body.theme-warm-light .bg-orb-3 { background: radial-gradient(circle, rgba(251, 146, 60, 0.08) 0%, transparent 70%); }
+body.theme-warm-light .bg-orb-4 { background: radial-gradient(circle, rgba(251, 191, 36, 0.06) 0%, transparent 70%); }
+body.theme-warm-light .bg-grid { display: none; }
+body.theme-warm-light .bg-noise { opacity: 0.015 !important; }
+body.theme-warm-light .bg-top-bar {
+  background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.5), rgba(245, 158, 11, 0.6), rgba(251, 146, 60, 0.5), transparent);
+}
+
+/* ===== 通用：文字颜色适应 ===== */
+body.theme-starry-night .game-header .mode-label,
+body.theme-aurora-flow .game-header .mode-label,
+body.theme-digital-matrix .game-header .mode-label {
+  color: #fff;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+body.theme-dawn-light .game-header .mode-label,
+body.theme-warm-light .game-header .mode-label {
+  color: #1E293B;
+  text-shadow: none;
+}
+body.theme-dawn-light .mode-desc,
+body.theme-warm-light .mode-desc {
+  color: rgba(30, 41, 59, 0.6);
+}
+body.theme-starry-night .mode-desc,
+body.theme-aurora-flow .mode-desc,
+body.theme-digital-matrix .mode-desc {
+  color: rgba(255,255,255,0.6);
+}
+
+/* ===== 通用：卡片颜色适应（浅色主题） ===== */
+body.theme-dawn-light .mode-btn,
+body.theme-warm-light .mode-btn {
+  background: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.4) 100%);
+  border: 1px solid rgba(255,255,255,0.5);
+  color: #1E293B;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8);
+}
+body.theme-dawn-light .mode-btn:hover,
+body.theme-warm-light .mode-btn:hover {
+  background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.6) 100%);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.9);
+}
+body.theme-dawn-light .menu-toolbar,
+body.theme-warm-light .menu-toolbar {
+  background: linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.95) 100%) !important;
+  border-top: 1px solid rgba(0,0,0,0.08) !important;
+  box-shadow: 0 -4px 30px rgba(0,0,0,0.1) !important;
+}
+body.theme-dawn-light .back-float,
+body.theme-warm-light .back-float {
+  background: rgba(255,255,255,0.6) !important;
+  border: 1px solid rgba(0,0,0,0.1) !important;
+  color: #1E293B !important;
+}
+body.theme-dawn-light .ai-float-panel,
+body.theme-warm-light .ai-float-panel {
+  background: rgba(255,255,255,0.85) !important;
+  border: 1px solid rgba(0,0,0,0.1) !important;
+}
+body.theme-dawn-light .ai-float-title,
+body.theme-warm-light .ai-float-title {
+  color: #1E293B !important;
+}
+body.theme-dawn-light .ai-float-subtitle,
+body.theme-warm-light .ai-float-subtitle {
+  color: rgba(30,41,59,0.5) !important;
+}
+body.theme-dawn-light .ai-msg-bot .ai-msg-bubble,
+body.theme-warm-light .ai-msg-bot .ai-msg-bubble {
+  background: rgba(0,0,0,0.05) !important;
+  color: #1E293B !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+}
+body.theme-dawn-light .ai-msg-user .ai-msg-bubble,
+body.theme-warm-light .ai-msg-user .ai-msg-bubble {
+  background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(167,139,250,0.15)) !important;
+  color: #1E293B !important;
+  border: 1px solid rgba(59,130,246,0.2) !important;
+}
+body.theme-dawn-light .ai-quick-btn,
+body.theme-warm-light .ai-quick-btn {
+  background: rgba(0,0,0,0.04) !important;
+  border: 1px solid rgba(0,0,0,0.1) !important;
+  color: #1E293B !important;
+}
+body.theme-dawn-light .ai-quick-btn:hover,
+body.theme-warm-light .ai-quick-btn:hover {
+  background: rgba(59,130,246,0.1) !important;
+  border-color: rgba(59,130,246,0.3) !important;
+  color: #3B82F6 !important;
+}
+body.theme-dawn-light .ai-float-input,
+body.theme-warm-light .ai-float-input {
+  background: rgba(0,0,0,0.04) !important;
+  border: 1px solid rgba(0,0,0,0.1) !important;
+  color: #1E293B !important;
+}
+body.theme-dawn-light .ai-float-input::placeholder,
+body.theme-warm-light .ai-float-input::placeholder {
+  color: rgba(30,41,59,0.4) !important;
+}
+
+/* ===== 移动端优化 ===== */
+@media (max-width: 768px) {
+  body.theme-starry-night .bg-stars {
+    background-size: 400px 500px;
+  }
+  body.theme-aurora-flow .aurora-band {
+    filter: blur(20px);
+  }
+  body.theme-digital-matrix .matrix-col {
+    font-size: 10px;
+  }
+}
