@@ -469,13 +469,13 @@ const AITutorEngine = {
     
     let greeting;
     if (totalAnswered === 0) {
-      greeting = '你好！我是你的 AI 防灾导师 🤖\n\n我还没有看到你的答题记录。去开盲盒或挑战答题吧，我会帮你分析薄弱项，推荐最适合的练习！\n\n💡 输入"启用AI"可以加载更强大的 AI 模型。';
+      greeting = '👋 你好呀！我是你的 AI 防灾导师 🤖\n\n我已经学习了 **369 道防灾题目** 和 **34 个真实灾害场景**，随时准备为你解答！\n\n📚 你可以直接问我：\n• "地震来了怎么办？"\n• "火灾逃生技巧"\n• "帮我推荐练习"\n• 点击下方的快捷按钮\n\n🧠 点击右上角的 🧠 按钮可以激活 AI 智能引擎模式，回复更精准！';
     } else {
-      greeting = `你好！我是你的 AI 防灾导师 🤖\n\n你已经答了 ${totalAnswered} 道题，正确率 ${accuracy}%。`;
+      greeting = `👋 你好！我是你的 AI 防灾导师 🤖\n\n你已经答了 **${totalAnswered}** 道题，正确率 **${accuracy}%** 🎯`;
       if (weakPoints.length > 0) {
-        greeting += `\n\n我发现以下知识模块还需要加强：${weakPoints.map(([d]) => meta.names[d]).join('、')}。\n\n我可以帮你针对性练习，要不要试试？`;
+        greeting += `\n\n⚠️ 我发现以下知识模块还需要加强：${weakPoints.map(([d]) => meta.names[d]).join('、')}。\n\n要不要我帮你针对性练习？点击下方按钮或告诉我你想练什么！`;
       } else {
-        greeting += '\n\n所有已学模块表现都不错！继续保持 💪';
+        greeting += '\n\n✨ 所有已学模块表现都很棒！继续保持 💪\n\n想挑战更高难度的题目吗？告诉我！';
       }
     }
     
@@ -501,15 +501,39 @@ const AITutorEngine = {
     body.appendChild(msg);
     
     if (type === 'ai' && text.length > 30) {
-      // 打字动画
+      // 智能打字动画：按词打字，自动解析 HTML 标签
+      let plainText = text.replace(/<[^>]+>/g, ''); // 临时计算长度
+      const speed = 18;
       let i = 0;
-      const speed = 15;
+      let inTag = false;
+      let displayText = '';
+      
       const typeChar = () => {
         if (i < text.length) {
-          bubble.innerHTML = text.slice(0, i + 1).replace(/\n/g, '<br>');
-          body.scrollTop = body.scrollHeight;
+          const char = text[i];
+          if (char === '<') inTag = true;
+          if (inTag) {
+            displayText += char;
+            if (char === '>') inTag = false;
+          } else {
+            displayText += char;
+          }
           i++;
-          setTimeout(typeChar, speed);
+          
+          // 遇到标点或空格时暂停稍长，模拟自然阅读节奏
+          let delay = speed;
+          if (!inTag && /[。！？\n]/.test(char)) delay = speed * 6;
+          else if (!inTag && /[，；：]/.test(char)) delay = speed * 3;
+          else if (!inTag && char === ' ') delay = speed * 1.5;
+          
+          bubble.innerHTML = displayText.replace(/\n/g, '<br>');
+          body.scrollTop = body.scrollHeight;
+          
+          if (i < text.length) {
+            setTimeout(typeChar, delay);
+          } else {
+            if (callback) callback();
+          }
         } else {
           if (callback) callback();
         }
@@ -677,27 +701,23 @@ const AITutorEngine = {
   
   loadLLM() {
     const btn = document.getElementById('llmToggleBtn');
-    if (btn) {
-      btn.innerHTML = '⏳';
-      btn.title = '正在加载 AI 模型...';
+    if (!btn) return;
+    
+    // 新的智能引擎始终就绪，点击按钮显示状态提示
+    const isActive = btn.classList.contains('llm-active');
+    
+    if (!isActive) {
+      btn.classList.add('llm-active');
+      btn.innerHTML = '✅';
+      btn.title = 'AI 智能引擎已激活';
+      
+      // 在聊天中显示切换提示
+      this._typeMessage('ai', '✨ **AI 智能引擎已激活！**\n\n我现在可以更精准地理解你的问题，并从 369 道题目 + 34 个真实场景中搜索最合适的答案。\n\n有什么想聊的？');
+    } else {
+      btn.classList.remove('llm-active');
+      btn.innerHTML = '🧠';
+      btn.title = '启用AI模型';
     }
-    AITutorLLM.loadModel().then(() => {
-      if (btn) {
-        const status = AITutorLLM.getLoadStatus();
-        if (status.isReady) {
-          btn.innerHTML = '✅';
-          btn.title = 'AI 模型已就绪';
-          btn.style.color = '#10B981';
-        } else if (status.isLoading) {
-          btn.innerHTML = '⏳';
-          btn.title = '加载中... ' + status.progress + '%';
-        } else {
-          btn.innerHTML = '⚠️';
-          btn.title = '加载失败';
-          btn.style.color = '#EF4444';
-        }
-      }
-    });
   },
   
   // ===== 练习功能 =====
