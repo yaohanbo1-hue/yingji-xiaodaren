@@ -765,3 +765,187 @@
     padding: 5px 10px;
   }
 }
+/* ===== LLM / AI 模型相关样式 ===== */
+
+/* LLM 加载状态 */
+.ai-llm-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(96, 165, 250, 0.06);
+  border: 1px solid rgba(96, 165, 250, 0.15);
+  animation: msgFadeIn 0.3s ease-out;
+}
+
+.ai-llm-loading-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(167, 139, 250, 0.2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  animation: pulse-ring 2s ease-in-out infinite;
+}
+
+.ai-llm-loading-text {
+  font-size: 12px;
+  color: rgba(148, 163, 184, 0.8);
+  line-height: 1.5;
+}
+
+.ai-llm-loading-text .llm-progress {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  color: #60A5FA;
+  font-weight: 500;
+}
+
+/* LLM 消息气泡（AI 生成） */
+.ai-msg.ai-llm .msg-bubble {
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.08), rgba(167, 139, 250, 0.06));
+  border: 1px solid rgba(96, 165, 250, 0.15);
+  border-top-left-radius: 4px;
+}
+
+/* LLM 消息标识 */
+.ai-msg.ai-llm .msg-avatar {
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.3), rgba(167, 139, 250, 0.25));
+  border: 1px solid rgba(96, 165, 250, 0.4);
+  box-shadow: 0 0 10px rgba(96, 165, 250, 0.2);
+}
+
+/* 知识库消息 */
+.ai-msg.ai-kb .msg-bubble {
+  background: rgba(16, 185, 129, 0.04);
+  border: 1px solid rgba(16, 185, 129, 0.1);
+  border-top-left-radius: 4px;
+}
+
+.ai-msg.ai-kb .msg-avatar {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(52, 211, 153, 0.15));
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+/* LLM 启用按钮 */
+.ai-llm-toggle-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(148, 163, 184, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+  margin-right: 4px;
+}
+
+.ai-llm-toggle-btn:hover {
+  background: rgba(96, 165, 250, 0.1);
+  border-color: rgba(96, 165, 250, 0.3);
+  color: #60A5FA;
+}
+
+.ai-llm-toggle-btn.llm-active {
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(167, 139, 250, 0.15));
+  border-color: rgba(96, 165, 250, 0.4);
+  color: #60A5FA;
+  box-shadow: 0 0 8px rgba(96, 165, 250, 0.2);
+}
+
+.ai-llm-toggle-btn.llm-loading {
+  animation: pulse-ring 1.5s ease-in-out infinite;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* 浮动面板启用 AI 按钮 */
+.ai-quick-btn-llm {
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.1), rgba(167, 139, 250, 0.08)) !important;
+  border-color: rgba(96, 165, 250, 0.25) !important;
+  color: #93C5FD !important;
+  font-weight: 500;
+}
+
+.ai-quick-btn-llm:hover {
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(167, 139, 250, 0.15)) !important;
+  border-color: rgba(96, 165, 250, 0.4) !important;
+  color: #BFDBFE !important;
+}
+
+/* 终端操作区布局（加入 LLM 按钮） */
+.terminal-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+/* LLM 系统提示消息 */
+.ai-llm-system {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  margin: 4px 0;
+}
+
+.ai-llm-system-text {
+  font-size: 11px;
+  color: rgba(148, 163, 184, 0.5);
+  text-align: center;
+  padding: 4px 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* 知识库引用标记 */
+.ai-kb-source {
+  display: inline-block;
+  font-size: 10px;
+  color: rgba(16, 185, 129, 0.6);
+  margin-top: 6px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: rgba(16, 185, 129, 0.06);
+  border: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+/* LLM 响应错误/回退提示 */
+.ai-llm-fallback {
+  font-size: 11px;
+  color: rgba(251, 191, 36, 0.7);
+  margin-top: 6px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: rgba(251, 191, 36, 0.06);
+  border: 1px solid rgba(251, 191, 36, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ===== 响应式补充 ===== */
+@media (max-width: 480px) {
+  .ai-llm-toggle-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+  
+  .ai-llm-loading {
+    padding: 10px 12px;
+  }
+  
+  .ai-llm-loading-text {
+    font-size: 11px;
+  }
+}

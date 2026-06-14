@@ -227,6 +227,7 @@ const AITutorEngine = {
             AI 导师对话
           </div>
           <div class="terminal-actions">
+            <div class="terminal-action-btn" onclick="AITutorEngine.loadLLM()" title="启用AI模型" id="llmToggleBtn">🧠</div>
             <div class="terminal-action-btn" onclick="AITutorEngine.clearChat()" title="清空对话">🗑</div>
           </div>
         </div>
@@ -468,9 +469,9 @@ const AITutorEngine = {
     
     let greeting;
     if (totalAnswered === 0) {
-      greeting = '你好！我是你的 AI 防灾导师 🎯\n\n我还没有看到你的答题记录。去开盲盒或挑战答题吧，我会帮你分析薄弱项，推荐最适合的练习！';
+      greeting = '你好！我是你的 AI 防灾导师 🤖\n\n我还没有看到你的答题记录。去开盲盒或挑战答题吧，我会帮你分析薄弱项，推荐最适合的练习！\n\n💡 输入"启用AI"可以加载更强大的 AI 模型。';
     } else {
-      greeting = `你好！我是你的 AI 防灾导师 🎯\n\n你已经答了 ${totalAnswered} 道题，正确率 ${accuracy}%。`;
+      greeting = `你好！我是你的 AI 防灾导师 🤖\n\n你已经答了 ${totalAnswered} 道题，正确率 ${accuracy}%。`;
       if (weakPoints.length > 0) {
         greeting += `\n\n我发现以下知识模块还需要加强：${weakPoints.map(([d]) => meta.names[d]).join('、')}。\n\n我可以帮你针对性练习，要不要试试？`;
       } else {
@@ -556,11 +557,20 @@ const AITutorEngine = {
     input.value = '';
     
     this.showTyping();
-    setTimeout(() => {
+    
+    // 使用 LLM 生成回复（异步）
+    AITutorLLM.generateReply(text, this._chatHistory || []).then(response => {
       this.hideTyping();
-      const response = this.analyzeIntent(text);
       this._typeMessage('ai', response);
-    }, 800 + Math.random() * 400);
+      // 记录对话历史
+      if (!this._chatHistory) this._chatHistory = [];
+      this._chatHistory.push({ role: 'user', content: text });
+      this._chatHistory.push({ role: 'assistant', content: response });
+      // 限制历史长度
+      if (this._chatHistory.length > 20) {
+        this._chatHistory = this._chatHistory.slice(-20);
+      }
+    });
   },
   
   quickAsk(type) {
@@ -574,11 +584,17 @@ const AITutorEngine = {
     this._typeMessage('user', questions[type]);
     
     this.showTyping();
-    setTimeout(() => {
+    
+    AITutorLLM.generateReply(questions[type], this._chatHistory || []).then(response => {
       this.hideTyping();
-      const response = this.getResponse(type);
       this._typeMessage('ai', response);
-    }, 600 + Math.random() * 400);
+      if (!this._chatHistory) this._chatHistory = [];
+      this._chatHistory.push({ role: 'user', content: questions[type] });
+      this._chatHistory.push({ role: 'assistant', content: response });
+      if (this._chatHistory.length > 20) {
+        this._chatHistory = this._chatHistory.slice(-20);
+      }
+    });
   },
   
   analyzeIntent(text) {
@@ -655,7 +671,33 @@ const AITutorEngine = {
   clearChat() {
     const body = document.getElementById('terminalBody');
     if (body) body.innerHTML = '';
+    this._chatHistory = [];
     setTimeout(() => this.startConversation(), 200);
+  },
+  
+  loadLLM() {
+    const btn = document.getElementById('llmToggleBtn');
+    if (btn) {
+      btn.innerHTML = '⏳';
+      btn.title = '正在加载 AI 模型...';
+    }
+    AITutorLLM.loadModel().then(() => {
+      if (btn) {
+        const status = AITutorLLM.getLoadStatus();
+        if (status.isReady) {
+          btn.innerHTML = '✅';
+          btn.title = 'AI 模型已就绪';
+          btn.style.color = '#10B981';
+        } else if (status.isLoading) {
+          btn.innerHTML = '⏳';
+          btn.title = '加载中... ' + status.progress + '%';
+        } else {
+          btn.innerHTML = '⚠️';
+          btn.title = '加载失败';
+          btn.style.color = '#EF4444';
+        }
+      }
+    });
   },
   
   // ===== 练习功能 =====

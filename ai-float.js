@@ -175,6 +175,7 @@
       // 通用按钮
       html += '<button class="ai-quick-btn" onclick="AITutorFloat.quickAsk(\'推荐我练习什么\')">💡 推荐练习</button>';
       html += '<button class="ai-quick-btn" onclick="AITutorFloat.quickAsk(\'有什么学习技巧\')">📚 学习技巧</button>';
+      html += '<button class="ai-quick-btn ai-quick-btn-llm" onclick="AITutorFloat.quickAsk(\'启用AI\')">🧠 启用AI模型</button>';
       
       html += '</div>';
 
@@ -372,17 +373,26 @@
     quickAsk: function(question) {
       this.addUserMessage(question);
       
-      // 智能回复
-      var reply = this.generateReply(question);
-      
-      // 模拟打字延迟
+      // 渲染用户消息
       var body = document.getElementById('aiFloatBody');
-      if (body) {
-        this.renderChat(body);
-        setTimeout(function() {
+      if (body) this.renderChat(body);
+      
+      // 使用 LLM 生成回复（异步）
+      if (window.AITutorLLM) {
+        AITutorLLM.generateReply(question).then(function(reply) {
           AITutorFloat.addBotMessage(reply);
-          AITutorFloat.renderChat(body);
-        }, 500);
+          var body = document.getElementById('aiFloatBody');
+          if (body) AITutorFloat.renderChat(body);
+        });
+      } else {
+        // 回退到旧版同步回复
+        var reply = this.generateReply(question);
+        if (body) {
+          setTimeout(function() {
+            AITutorFloat.addBotMessage(reply);
+            AITutorFloat.renderChat(body);
+          }, 500);
+        }
       }
     },
 
