@@ -94,10 +94,15 @@ const DisasterSimEngine = {
     this.resize();
     
     let resizeTimer;
-    window.addEventListener('resize', () => {
+    const resizeHandler = () => {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(() => this.resize(), 100);
-    });
+    };
+    window.addEventListener('resize', resizeHandler);
+    
+    // 保存清理引用
+    this._resizeHandler = resizeHandler;
+    this._resizeTimer = resizeTimer;
     
     this.renderUI();
     this.startAnimation();

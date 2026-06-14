@@ -184,6 +184,8 @@
     });
   }
   
+  var _initialized = false;
+  
   // ===== 初始化 =====
   function init() {
     // 等待游戏引擎加载
@@ -191,6 +193,8 @@
       setTimeout(init, 100);
       return;
     }
+    if (_initialized) return;
+    _initialized = true;
     
     hookPageManager();
     hookQuizEngine();

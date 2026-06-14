@@ -87,8 +87,9 @@
     },
     
     _setupMemoryMonitor() {
-      // 定期检查内存使用
-      setInterval(function() {
+      var self = this;
+      // 定期检查内存使用，保存引用以便清理
+      this._memoryInterval = setInterval(function() {
         if (performance.memory) {
           var used = performance.memory.usedJSHeapSize;
           var total = performance.memory.jsHeapSizeLimit;
@@ -97,10 +98,18 @@
           if (ratio > 0.9) {
             // 内存使用过高，清理缓存
             console.warn('⚠️ High memory usage: ' + (ratio * 100).toFixed(1) + '%');
-            PerformanceEngine._cleanupMemory();
+            self._cleanupMemory();
           }
         }
       }, 10000); // 每 10 秒检查一次
+      
+      // 页面卸载时清理定时器
+      window.addEventListener('beforeunload', function() {
+        if (self._memoryInterval) {
+          clearInterval(self._memoryInterval);
+          self._memoryInterval = null;
+        }
+      });
     },
     
     _cleanupMemory() {

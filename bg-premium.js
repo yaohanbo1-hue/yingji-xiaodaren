@@ -21,6 +21,7 @@ window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(resize, 100);
 });
+window.addEventListener('beforeunload', () => clearTimeout(resizeTimer));
 
 const PARTICLE_COUNT = 70;
 const LINE_DIST = 130;

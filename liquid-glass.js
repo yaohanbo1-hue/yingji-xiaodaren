@@ -753,9 +753,17 @@
       }
       resize();
       let resizeTimer;
-      window.addEventListener('resize', () => {
+      const resizeHandler = () => {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(resize, 100);
+      };
+      window.addEventListener('resize', resizeHandler);
+      
+      // 清理函数
+      LiquidGlass._cleanupFns = LiquidGlass._cleanupFns || [];
+      LiquidGlass._cleanupFns.push(() => {
+        window.removeEventListener('resize', resizeHandler);
+        clearTimeout(resizeTimer);
       });
       
       // 创建连线粒子

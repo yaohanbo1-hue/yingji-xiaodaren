@@ -80,4 +80,9 @@
     });
   });
   observer.observe(document.body, {childList: true, subtree: true});
+  
+  // 页面卸载时清理
+  window.addEventListener('beforeunload', function() {
+    observer.disconnect();
+  });
 })();

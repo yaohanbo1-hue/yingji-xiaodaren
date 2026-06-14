@@ -30,6 +30,8 @@ const STATIC_ASSETS = [
   './layout-fix.css',
   './ai-float.css',
   './ui-ultimate.css',
+  './settings.css',
+  './bg-themes.css',
   './game.js',
   './cards.js',
   './scenarios.js',
@@ -44,6 +46,7 @@ const STATIC_ASSETS = [
   './ui-polish.js',
   './tilt3d.js',
   './ai-tutor.js',
+  './ai-tutor-llm.js',
   './ai-float.js',
   './certification.js',
   './disaster-sim.js',
@@ -63,6 +66,7 @@ const STATIC_ASSETS = [
   './share.js',
   './i18n.js',
   './liquid-glass.js',
+  './bg-themes.js',
   './fix-click.js',
   './menu-manager.js'
 ];

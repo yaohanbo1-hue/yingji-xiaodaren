@@ -35,12 +35,6 @@
   📂 文件结构
   index.html            - 主页面 (23 个子页面模块)
   all-styles.css        - 核心样式表 (合并版)
-  <link rel="stylesheet" href="v5-glass-3d.css">
-  <link rel="stylesheet" href="clean-ui.css">
-  <link rel="stylesheet" href="bg-premium.css">
-  <link rel="stylesheet" href="bg-themes.css">
-  <link rel="stylesheet" href="menu-premium.css">
-  <link rel="stylesheet" href="fx-effects.css">
   game.js               - 游戏引擎 (50+ 模块)
   cards.js              - 卡牌数据 (369 张)
   scenarios.js          - 情景数据 (12 类灾害，34 个场景)
@@ -425,9 +419,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
   @font-face { font-family: 'Rajdhani'; font-style: normal; font-weight: 400; font-display: swap; src: local('Rajdhani'), local('Segoe UI'), local('Microsoft YaHei'); }
   @font-face { font-family: 'Rajdhani'; font-style: normal; font-weight: 700; font-display: swap; src: local('Rajdhani Bold'), local('Segoe UI Bold'), local('Microsoft YaHei Bold'); }
 </style>
-<!-- 性能优化：预加载关键资源 -->
-<link rel="preload" href="game.js" as="script">
-<link rel="preload" href="cards.js" as="script">
+<!-- 性能优化：预加载关键资源（避免重复） -->
 
 <style>
 /* ===== 折叠式主菜单 ===== */
