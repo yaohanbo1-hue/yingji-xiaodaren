@@ -1,0 +1,357 @@
+/**
+ * ===========================================================================
+ * 设置页样式 — 现代卡片式布局
+ * ===========================================================================
+ */
+
+/* ===== 设置页容器 ===== */
+#page-settings {
+  padding: 0 16px 100px !important;
+  max-width: 600px !important;
+  margin: 0 auto !important;
+  overflow-y: auto !important;
+}
+
+/* ===== 头部 ===== */
+.settings-header {
+  text-align: center;
+  padding: 24px 0 20px;
+  margin-bottom: 8px;
+}
+.settings-header-icon {
+  font-size: 48px;
+  margin-bottom: 8px;
+  animation: settingsIconFloat 4s ease-in-out infinite;
+}
+@keyframes settingsIconFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-6px) rotate(3deg); }
+  75% { transform: translateY(-3px) rotate(-3deg); }
+}
+.settings-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #F8FAFC;
+  margin: 0 0 4px;
+}
+.settings-subtitle {
+  font-size: 13px;
+  color: rgba(148, 163, 184, 0.7);
+  margin: 0;
+}
+
+/* ===== 容器 ===== */
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ===== 分组标题 ===== */
+.settings-section {
+  animation: settingsFadeIn 0.4s ease backwards;
+}
+.settings-section:nth-child(1) { animation-delay: 0s; }
+.settings-section:nth-child(2) { animation-delay: 0.05s; }
+.settings-section:nth-child(3) { animation-delay: 0.1s; }
+.settings-section:nth-child(4) { animation-delay: 0.15s; }
+.settings-section:nth-child(5) { animation-delay: 0.2s; }
+
+@keyframes settingsFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.settings-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(148, 163, 184, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+  padding-left: 4px;
+}
+.settings-section-icon {
+  font-size: 14px;
+}
+
+/* ===== 设置卡片 ===== */
+.settings-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-bottom: 8px;
+}
+.settings-card:last-child {
+  margin-bottom: 0;
+}
+.settings-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+.settings-card:active {
+  transform: scale(0.995);
+}
+
+/* 危险卡片 */
+.settings-card-danger {
+  border-color: rgba(239, 68, 68, 0.1);
+}
+.settings-card-danger:hover {
+  border-color: rgba(239, 68, 68, 0.2);
+  background: rgba(239, 68, 68, 0.03);
+}
+
+/* 左侧 */
+.settings-card-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+.settings-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+.settings-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.settings-card-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #F8FAFC;
+  line-height: 1.4;
+}
+.settings-card-desc {
+  font-size: 12px;
+  color: rgba(148, 163, 184, 0.6);
+  line-height: 1.4;
+}
+
+/* 右侧 */
+.settings-card-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+.settings-card-value {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(148, 163, 184, 0.7);
+  white-space: nowrap;
+}
+.settings-chevron {
+  font-size: 18px;
+  color: rgba(148, 163, 184, 0.4);
+  font-weight: 300;
+  transition: color 0.2s, transform 0.2s;
+}
+.settings-card:hover .settings-chevron {
+  color: rgba(148, 163, 184, 0.7);
+  transform: translateX(2px);
+}
+
+/* ===== Toggle 开关 ===== */
+.settings-toggle {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 28px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.settings-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.settings-toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 28px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.settings-toggle-slider::before {
+  content: '';
+  position: absolute;
+  height: 22px;
+  width: 22px;
+  left: 2px;
+  bottom: 2px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+.settings-toggle input:checked + .settings-toggle-slider {
+  background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+.settings-toggle input:checked + .settings-toggle-slider::before {
+  transform: translateX(20px);
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+}
+.settings-toggle input:focus + .settings-toggle-slider {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* ===== 音量滑块 ===== */
+.settings-volume-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.settings-volume-slider {
+  width: 100px;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+.settings-volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.settings-volume-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+.settings-volume-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+  cursor: pointer;
+  border: none;
+}
+.settings-volume-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(148, 163, 184, 0.7);
+  min-width: 36px;
+  text-align: right;
+}
+
+/* ===== 浅色主题适配 ===== */
+body.theme-dawn-light .settings-title,
+body.theme-warm-light .settings-title {
+  color: #1E293B;
+}
+body.theme-dawn-light .settings-subtitle,
+body.theme-warm-light .settings-subtitle {
+  color: rgba(30, 41, 59, 0.5);
+}
+body.theme-dawn-light .settings-section-title,
+body.theme-warm-light .settings-section-title {
+  color: rgba(30, 41, 59, 0.4);
+}
+body.theme-dawn-light .settings-card,
+body.theme-warm-light .settings-card {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+body.theme-dawn-light .settings-card:hover,
+body.theme-warm-light .settings-card:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+body.theme-dawn-light .settings-card-name,
+body.theme-warm-light .settings-card-name {
+  color: #1E293B;
+}
+body.theme-dawn-light .settings-card-desc,
+body.theme-warm-light .settings-card-desc {
+  color: rgba(30, 41, 59, 0.5);
+}
+body.theme-dawn-light .settings-card-value,
+body.theme-warm-light .settings-card-value {
+  color: rgba(30, 41, 59, 0.5);
+}
+body.theme-dawn-light .settings-chevron,
+body.theme-warm-light .settings-chevron {
+  color: rgba(30, 41, 59, 0.3);
+}
+body.theme-dawn-light .settings-toggle-slider,
+body.theme-warm-light .settings-toggle-slider {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+body.theme-dawn-light .settings-toggle-slider::before,
+body.theme-warm-light .settings-toggle-slider::before {
+  background: rgba(0, 0, 0, 0.3);
+}
+body.theme-dawn-light .settings-volume-slider,
+body.theme-warm-light .settings-volume-slider {
+  background: rgba(0, 0, 0, 0.08);
+}
+body.theme-dawn-light .settings-volume-value,
+body.theme-warm-light .settings-volume-value {
+  color: rgba(30, 41, 59, 0.5);
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 480px) {
+  .settings-header {
+    padding: 16px 0 12px;
+  }
+  .settings-header-icon {
+    font-size: 36px;
+  }
+  .settings-title {
+    font-size: 20px;
+  }
+  .settings-card {
+    padding: 12px 14px;
+  }
+  .settings-card-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+  .settings-card-name {
+    font-size: 13px;
+  }
+  .settings-card-desc {
+    font-size: 11px;
+  }
+  .settings-volume-slider {
+    width: 80px;
+  }
+}

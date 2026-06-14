@@ -401,6 +401,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
   <link rel="stylesheet" href="layout-fix.css">
   <link rel="stylesheet" href="ai-float.css">
   <link rel="stylesheet" href="ui-ultimate.css">
+  <link rel="stylesheet" href="settings.css">
 <style>
 /* ===== 标题与图标可见性优化 ===== */
 .menu-logo-title { font-weight: 900 !important; text-shadow: 0 0 20px rgba(255,255,255,0.3), 0 2px 4px rgba(0,0,0,0.5) !important; letter-spacing: 2px !important; }
@@ -1289,72 +1290,185 @@ body:not(.app-ready) #menuToolbar{display:none!important}
   <!-- ======== 设置页 ======== -->
   <div id="page-settings" class="page page-content">
     <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
-    <div class="preview-header">
-      <span class="preview-icon">⚙️</span>
-      <h2 class="preview-title">设置</h2>
+    <div class="settings-header">
+      <div class="settings-header-icon">⚙️</div>
+      <h2 class="settings-title">设置</h2>
+      <p class="settings-subtitle">自定义你的防灾学习体验</p>
     </div>
-    <div class="feature-list">
-      <div class="feature-item" onclick="TutorialEngine.reset()" class="cursor-pointer">
-        <span class="feature-icon">🎓</span>
-        <div class="feature-text"><h4>重新引导</h4><p>重新体验新手教程</p></div>
-        <span class="feature-status feature-ready">▶ 开始</span>
-      </div>
-      <div class="feature-item" onclick="document.getElementById('themeModal').style.display='flex';ThemeEngine.render()" class="cursor-pointer">
-        <span class="feature-icon">🎨</span>
-        <div class="feature-text"><h4>主题设置</h4><p>切换游戏配色主题</p></div>
-        <span class="feature-status feature-ready">▶ 选择</span>
-      </div>
-      <div class="feature-item" onclick="I18nEngine.toggle()" class="cursor-pointer">
-        <span class="feature-icon">🌐</span>
-        <div class="feature-text"><h4>语言 / Language</h4><p>中文 ↔ English</p></div>
-        <span class="feature-status feature-ready" id="langStatus">🇨🇳 中文</span>
-      </div>
-      <div class="feature-item">
-        <span class="feature-icon">🔊</span>
-        <div class="feature-text"><h4>音效</h4><p>游戏音效开关</p></div>
-        <span class="feature-status feature-ready">✅ 开</span>
-      </div>
-      <div class="feature-item">
-        <span class="feature-icon">🗣️</span>
-        <div class="feature-text"><h4>语音教学</h4><p>Web Speech API 语音朗读</p></div>
-        <span class="feature-status feature-ready">✅ 开</span>
-      </div>
-      <div class="feature-item">
-        <span class="feature-icon">💾</span>
-        <div class="feature-text"><h4>自动保存</h4><p>进度自动保存至本地</p></div>
-        <span class="feature-status feature-ready">✅ 开</span>
-      </div>
-      <div class="feature-item" onclick="if(confirm('确定要重置所有数据吗？')){GameState.reset();location.reload()}" class="cursor-pointer">
-        <span class="feature-icon">🗑️</span>
-        <div class="feature-text"><h4>重置数据</h4><p>清除所有进度和存档</p></div>
-        <span class="feature-status" style="color:#f44336">⚠️ 危险</span>
-      </div>
-      <!-- v8 新增设置项 -->
-      <div class="feature-item" id="volumeItem">
-        <span class="feature-icon">🎚️</span>
-        <div class="feature-text"><h4>音量控制</h4><p>调整背景音乐和音效音量</p></div>
-        <div style="display:flex;align-items:center;gap:8px;margin-left:auto">
-          <input type="range" min="0" max="100" value="50" id="volumeSlider"
-            style="width:100px;accent-color:var(--gold)"
-            oninput="BGMEngine.setVolume(this.value/100);document.getElementById('volumeVal').textContent=this.value+'%'">
-          <span id="volumeVal" style="font-size:0.8rem;color:var(--text-dim);min-width:35px">50%</span>
+    <div class="settings-container">
+      <!-- 外观 -->
+      <div class="settings-section">
+        <div class="settings-section-title">
+          <span class="settings-section-icon">🎨</span>外观
+        </div>
+        <div class="settings-card" onclick="document.getElementById('themeModal').style.display='flex'">
+          <div class="settings-card-left">
+            <div class="settings-card-icon" style="background:linear-gradient(135deg,#3B82F6,#A855F7)">🎨</div>
+            <div class="settings-card-info">
+              <div class="settings-card-name">背景主题</div>
+              <div class="settings-card-desc" id="currentThemeDesc">切换游戏背景风格</div>
+            </div>
+          </div>
+          <div class="settings-card-right">
+            <span class="settings-card-value" id="currentThemeName">🌌 深空指挥官</span>
+            <span class="settings-chevron">›</span>
+          </div>
+        </div>
+        <div class="settings-card">
+          <div class="settings-card-left">
+            <div class="settings-card-icon" style="background:linear-gradient(135deg,#F59E0B,#EF4444)">🔊</div>
+            <div class="settings-card-info">
+              <div class="settings-card-name">音效</div>
+              <div class="settings-card-desc">游戏音效开关</div>
+            </div>
+          </div>
+          <div class="settings-card-right">
+            <label class="settings-toggle">
+              <input type="checkbox" id="sfxToggle" checked onchange="SettingsEngine.toggleSFX(this)">
+              <span class="settings-toggle-slider"></span>
+            </label>
+          </div>
         </div>
       </div>
-      <div class="feature-item" onclick="SettingsEngine.exportData()" class="cursor-pointer">
-        <span class="feature-icon">📤</span>
-        <div class="feature-text"><h4>导出数据</h4><p>将游戏进度导出为JSON文件</p></div>
-        <span class="feature-status feature-ready">▶ 导出</span>
+      <!-- 音频 -->
+      <div class="settings-section">
+        <div class="settings-section-title">
+          <span class="settings-section-icon">🔊</span>音频
+        </div>
+        <div class="settings-card">
+          <div class="settings-card-left">
+            <div class="settings-card-icon" style="background:linear-gradient(135deg,#8B5CF6,#EC4899)">🎵</div>
+            <div class="settings-card-info">
+              <div class="settings-card-name">背景音乐</div>
+              <div class="settings-card-desc">调节背景音量</div>
+            </div>
+          </div>
+          <div class="settings-card-right">
+            <div class="settings-volume-wrap">
+              <input type="range" min="0" max="100" value="50" class="settings-volume-slider" id="bgmVolumeSlider"
+                oninput="BGMEngine.setVolume(this.value/100);document.getElementById('bgmVolumeVal').textContent=this.value+'%'">
+              <span class="settings-volume-value" id="bgmVolumeVal">50%</span>
+            </div>
+          </div>
+        </div>
+        <div class="settings-card">
+          <div class="settings-card-left">
+            <div class="settings-card-icon" style="background:linear-gradient(135deg,#10B981,#06B6D4)">🗣️</div>
+            <div class="settings-card-info">
+              <div class="settings-card-name">语音教学</div>
+              <div class="settings-card-desc">朗读题目和解析</div>
+            </div>
+          </div>
+          <div class="settings-card-right">
+            <label class="settings-toggle">
+              <input type="checkbox" id="voiceToggle" checked onchange="SettingsEngine.toggleVoice(this)">
+              <span class="settings-toggle-slider"></span>
+            </label>
+          </div>
+        </div>
       </div>
-      <div class="feature-item" onclick="SettingsEngine.importData()" class="cursor-pointer">
-        <span class="feature-icon">📥</span>
-        <div class="feature-text"><h4>导入数据</h4><p>从JSON文件恢复游戏进度</p></div>
-        <span class="feature-status feature-ready">▶ 导入</span>
+      <!-- 学习 -->
+      <div class="settings-section">
+        <div class="settings-section-title">
+          <span class="settings-section-icon">📚</span>学习
+        </div>
+        <div class="settings-card" onclick="TutorialEngine.reset()">
+          <div class="settings-card-left">
+            <div class="settings-card-icon" style="background:linear-gradient(135deg,#F59E0B,#D97706)">🎓</div>
+            <div class="settings-card-info">
+              <div class="settings-card-name">重新引导</div>
+              <div class="settings-card-desc">重新体验新手教程</div>
+            </div>
+          </div>
+          <div class="settings-card-right">
+            <span class="settings-chevron">›</span>
+          </div>
+        </div>
+        <div class="settings-card">
+          <div class="settings-card-left">
+            <div class="settings-card-icon" style="background:linear-gradient(135deg,#06B6D4,#3B82F6)">🌐</div>
+            <div class="settings-card-info">
+              <div class="settings-card-name">语言</div>
+              <div class="settings-card-desc">中文 / English</div>
+            </div>
+          </div>
+          <div class="settings-card-right">
+            <span class="settings-card-value" id="langStatus">🇨🇳 中文</span>
+            <span class="settings-chevron">›</span>
+          </div>
+        </div>
       </div>
-      <div class="feature-item" onclick="SettingsEngine.showAbout()" class="cursor-pointer">
-        <span class="feature-icon">ℹ️</span>
-        <div class="feature-text"><h4>关于</h4><p>版本信息与致谢</p></div>
-        <span class="feature-status feature-ready">▶ 查看</span>
+      <!-- 数据 -->
+      <div class="settings-section">
+        <div class="settings-section-title">
+          <span class="settings-section-icon">💾</span>数据
+        </div>
+        <div class="settings-card" onclick="SettingsEngine.exportData()">
+          <div class="settings-card-left">
+            <div class="settings-card-icon" style="background:linear-gradient(135deg,#10B981,#34D399)">📤</div>
+            <div class="settings-card-info">
+              <div class="settings-card-name">导出数据</div>
+              <div class="settings-card-desc">将进度导出为 JSON</div>
+            </div>
+          </div>
+          <div class="settings-card-right">
+            <span class="settings-chevron">›</span>
+          </div>
+        </div>
+        <div class="settings-card" onclick="SettingsEngine.importData()">
+          <div class="settings-card-left">
+            <div class="settings-card-icon" style="background:linear-gradient(135deg,#3B82F6,#60A5FA)">📥</div>
+            <div class="settings-card-info">
+              <div class="settings-card-name">导入数据</div>
+              <div class="settings-card-desc">从 JSON 恢复进度</div>
+            </div>
+          </div>
+          <div class="settings-card-right">
+            <span class="settings-chevron">›</span>
+          </div>
+        </div>
+        <div class="settings-card settings-card-danger" onclick="if(confirm('确定要重置所有数据吗？此操作不可撤销！')){GameState.reset();location.reload()}">
+          <div class="settings-card-left">
+            <div class="settings-card-icon" style="background:linear-gradient(135deg,#EF4444,#F87171)">🗑️</div>
+            <div class="settings-card-info">
+              <div class="settings-card-name">重置所有数据</div>
+              <div class="settings-card-desc">清除所有进度和存档 ⚠️</div>
+            </div>
+          </div>
+          <div class="settings-card-right">
+            <span class="settings-chevron" style="color:#EF4444">›</span>
+          </div>
+        </div>
       </div>
+      <!-- 关于 -->
+      <div class="settings-section">
+        <div class="settings-section-title">
+          <span class="settings-section-icon">ℹ️</span>关于
+        </div>
+        <div class="settings-card" onclick="SettingsEngine.showAbout()">
+          <div class="settings-card-left">
+            <div class="settings-card-icon" style="background:linear-gradient(135deg,#6366F1,#8B5CF6)">ℹ️</div>
+            <div class="settings-card-info">
+              <div class="settings-card-name">关于应急小达人</div>
+              <div class="settings-card-desc">版本信息与致谢</div>
+            </div>
+          </div>
+          <div class="settings-card-right">
+            <span class="settings-chevron">›</span>
+          </div>
+        </div>
+        <div class="settings-card">
+          <div class="settings-card-left">
+            <div class="settings-card-icon" style="background:linear-gradient(135deg,#8B5CF6,#EC4899)">📊</div>
+            <div class="settings-card-info">
+              <div class="settings-card-name">游戏版本</div>
+              <div class="settings-card-desc">v1.3.0 · 369 题 · 34 场景</div>
+            </div>
+          </div>
+          <div class="settings-card-right">
+            <span class="settings-card-value">v1.3.0</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>

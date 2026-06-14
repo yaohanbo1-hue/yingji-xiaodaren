@@ -15,6 +15,27 @@ const BGTheme = {
       this._current = saved;
     }
     this.apply(this._current);
+    // 更新设置页显示
+    const names = {
+      'deep-space': '深空指挥官',
+      'starry-night': '星空极夜',
+      'aurora-flow': '极光流动',
+      'dawn-light': '自然晨曦',
+      'digital-matrix': '数字矩阵',
+      'warm-light': '温馨暖光'
+    };
+    const icons = {
+      'deep-space': '🌌',
+      'starry-night': '⭐',
+      'aurora-flow': '🌈',
+      'dawn-light': '🌅',
+      'digital-matrix': '💻',
+      'warm-light': '☀️'
+    };
+    const nameEl = document.getElementById('currentThemeName');
+    const descEl = document.getElementById('currentThemeDesc');
+    if (nameEl) nameEl.textContent = icons[this._current] + ' ' + names[this._current];
+    if (descEl) descEl.textContent = '当前主题：' + names[this._current];
     console.log('🎨 背景主题系统已启动：' + this._current);
   },
 
@@ -33,9 +54,22 @@ const BGTheme = {
       'digital-matrix': '数字矩阵',
       'warm-light': '温馨暖光'
     };
+    const icons = {
+      'deep-space': '🌌',
+      'starry-night': '⭐',
+      'aurora-flow': '🌈',
+      'dawn-light': '🌅',
+      'digital-matrix': '💻',
+      'warm-light': '☀️'
+    };
     if (typeof V10Toast !== 'undefined') {
       V10Toast.show('已切换主题：' + names[theme], 'success', 2000);
     }
+    // 更新设置页显示
+    const nameEl = document.getElementById('currentThemeName');
+    const descEl = document.getElementById('currentThemeDesc');
+    if (nameEl) nameEl.textContent = icons[theme] + ' ' + names[theme];
+    if (descEl) descEl.textContent = '当前主题：' + names[theme];
   },
 
   apply(theme) {
