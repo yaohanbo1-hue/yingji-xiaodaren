@@ -960,7 +960,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
       <p class="preview-desc">身临其境的灾害情景模拟！25个真实场景，3选1决策，看看你的防灾意识有多强！</p>
     </div>
     <div class="feature-list">
-      <div class="feature-item" onclick="ScenarioEngine.start()" class="cursor-pointer">
+      <div class="feature-item cursor-pointer" onclick="ScenarioEngine.start()" >
         <span class="feature-icon">🌊</span>
         <div class="feature-text">
           <h4>洪水来袭 🌊</h4>
@@ -968,7 +968,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
         </div>
         <span class="feature-status feature-ready">✅ 已解锁</span>
       </div>
-      <div class="feature-item" onclick="ScenarioEngine.start()" class="cursor-pointer">
+      <div class="feature-item cursor-pointer" onclick="ScenarioEngine.start()" >
         <span class="feature-icon">🌍</span>
         <div class="feature-text">
           <h4>地震惊魂 🌍</h4>
@@ -976,7 +976,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
         </div>
         <span class="feature-status feature-ready">✅ 已解锁</span>
       </div>
-      <div class="feature-item" onclick="ScenarioEngine.start()" class="cursor-pointer">
+      <div class="feature-item cursor-pointer" onclick="ScenarioEngine.start()" >
         <span class="feature-icon">🌪️</span>
         <div class="feature-text">
           <h4>台风过境 🌪️</h4>
@@ -984,7 +984,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
         </div>
         <span class="feature-status feature-ready">✅ 已解锁</span>
       </div>
-      <div class="feature-item" onclick="ScenarioEngine.start()" class="cursor-pointer">
+      <div class="feature-item cursor-pointer" onclick="ScenarioEngine.start()" >
         <span class="feature-icon">🌋</span>
         <div class="feature-text">
           <h4>火山喷发 🌋</h4>
@@ -1013,22 +1013,22 @@ body:not(.app-ready) #menuToolbar{display:none!important}
     </div>
     
     <div class="feature-list">
-      <div class="feature-item" onclick="StudyEngine.start('earthquake')" class="cursor-pointer">
+      <div class="feature-item cursor-pointer" onclick="StudyEngine.start('earthquake')" >
         <span class="feature-icon">🌍</span>
         <div class="feature-text"><h4>地震</h4><p>5张知识卡 · 掌握度 0%</p></div>
         <span class="feature-status feature-ready">🆓 自由</span>
       </div>
-      <div class="feature-item" onclick="StudyEngine.start('flood')" class="cursor-pointer">
+      <div class="feature-item cursor-pointer" onclick="StudyEngine.start('flood')" >
         <span class="feature-icon">🌊</span>
         <div class="feature-text"><h4>洪水</h4><p>5张知识卡 · 掌握度 0%</p></div>
         <span class="feature-status feature-ready">🆓 自由</span>
       </div>
-      <div class="feature-item" onclick="StudyEngine.start('typhoon')" class="cursor-pointer">
+      <div class="feature-item cursor-pointer" onclick="StudyEngine.start('typhoon')" >
         <span class="feature-icon">🌪️</span>
         <div class="feature-text"><h4>台风</h4><p>5张知识卡 · 掌握度 0%</p></div>
         <span class="feature-status feature-ready">🆓 自由</span>
       </div>
-      <div class="feature-item" onclick="StudyEngine.start('volcano')" class="cursor-pointer">
+      <div class="feature-item cursor-pointer" onclick="StudyEngine.start('volcano')" >
         <span class="feature-icon">🌋</span>
         <div class="feature-text"><h4>火山爆发</h4><p>5张知识卡 · 掌握度 0%</p></div>
         <span class="feature-status feature-ready">🆓 自由</span>
@@ -1128,9 +1128,9 @@ body:not(.app-ready) #menuToolbar{display:none!important}
         <div class="pk-card-icon" id="pkCardIcon">🌍</div>
         <div class="pk-question" id="pkQuestion">题目</div>
         <div class="pk-options" id="pkOptions"></div>
-        <div class="pk-feedback" id="pkFeedback" class="hidden"></div>
+        <div class="pk-feedback hidden" id="pkFeedback" ></div>
       </div>
-      <button class="quiz-next-btn" id="pkNextBtn" class="hidden" onclick="PKEngine.nextQuestion()">下一题 →</button>
+      <button class="quiz-next-btn hidden" id="pkNextBtn" onclick="PKEngine.nextQuestion()" >下一题 →</button>
     </div>
     <!-- 结果页 -->
     <div id="pkResult" style="display:none;width:100%;max-width:500px">
@@ -1594,7 +1594,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
           <div id="energyBar" class="energy-bar-fill"></div>
         </div>
         <div class="hud-label">能量</div>
-        <button id="battleUltBtn" class="btn btn-ultimate" onclick="BattleEngine.ultimateAttack()" class="hidden">
+        <button id="battleUltBtn" class="btn btn-ultimate hidden" onclick="BattleEngine.ultimateAttack()" >
           <span class="ult-icon">🔥</span>
           <span class="ult-text">释放必杀技！</span>
         </button>
@@ -1645,16 +1645,16 @@ body:not(.app-ready) #menuToolbar{display:none!important}
         <div id="battleQuizOptions" class="quiz-options"></div>
       </div>
       
-      <div id="battleQuizExpBox" class="explanation-box" class="hidden">
+      <div id="battleQuizExpBox" class="explanation-box hidden" >
         <div id="battleQuizExpText" class="exp-text"></div>
         <div id="battleQuizTipText" class="tip-text"></div>
-        <div id="battleQuizExpCard" class="exp-card" class="hidden">
+        <div id="battleQuizExpCard" class="exp-card hidden" >
           <div id="battleQuizExpScenario" class="exp-scenario"></div>
         </div>
       </div>
-      <button id="battleQuizNextBtn" class="btn btn-primary" class="hidden" onclick="QuizEngine.next()">下一题 →</button>
+      <button id="battleQuizNextBtn" class="btn btn-primary hidden" onclick="QuizEngine.next()" >下一题 →</button>
       
-      <div id="battleQuizResult" class="result-box" class="hidden"></div>
+      <div id="battleQuizResult" class="result-box hidden" ></div>
     </div>
   </div>
 
@@ -1663,47 +1663,47 @@ body:not(.app-ready) #menuToolbar{display:none!important}
   <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
   
   <!--  生存模式：HP 血条 -->
-  <div class="survival-hud" id="survivalHud" class="hidden">
+  <div class="survival-hud hidden" id="survivalHud" >
     <div class="hud-row">
       <span class="hud-label">❤️ 生命值</span>
       <span class="hud-value" id="hudHpValue">100/100</span>
     </div>
     <div class="hp-bar-container">
-      <div class="hp-bar-fill" id="hpBarFill" class="w-full"></div>
+      <div class="hp-bar-fill w-full" id="hpBarFill" ></div>
     </div>
   </div>
 
-  <div class="quiz-header" id="quizHeader" class="hidden">
+  <div class="quiz-header hidden" id="quizHeader" >
     <span class="quiz-progress-text" id="quizProgressTxt">第 1/10 题</span>
-    <span class="quiz-streak" id="quizStreak" class="hidden">🔥 0x 连击</span>
+    <span class="quiz-streak hidden" id="quizStreak" >🔥 0x 连击</span>
     <span class="quiz-score-text" id="quizScoreTxt">🏆 0 分</span>
   </div>
-  <div class="quiz-progress-bar" id="quizProgressBar" class="hidden">
+  <div class="quiz-progress-bar hidden" id="quizProgressBar" >
     <div class="quiz-progress-fill" id="quizProgressFill" style="width:0%"></div>
   </div>
-  <div class="quiz-timer" id="quizTimer" class="hidden">
-    <div class="quiz-timer-fill" id="quizTimerFill" class="w-full"></div>
+  <div class="quiz-timer hidden" id="quizTimer" >
+    <div class="quiz-timer-fill w-full" id="quizTimerFill" ></div>
   </div>
   <!-- 答题区域 -->
   <div id="quizArea" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:var(--space-md)">
     <!-- 题目卡片 -->
-    <div class="quiz-card" id="quizCard" class="hidden">
+    <div class="quiz-card hidden" id="quizCard" >
       <div class="quiz-disaster-icon" id="quizDisasterIcon">🌍</div>
       <div class="quiz-question" id="quizQuestion">加载中...</div>
       <div class="quiz-options" id="quizOptions"></div>
     </div>
     <!-- 解析区 -->
-    <div class="quiz-exp-box" id="quizExpBox" class="hidden">
+    <div class="quiz-exp-box hidden" id="quizExpBox" >
       <div id="quizExpText" class="exp-text"></div>
       <div id="quizTipText" class="tip-text"></div>
-      <div id="quizExpCard" class="exp-card" class="hidden">
+      <div id="quizExpCard" class="exp-card hidden" >
         <div id="quizExpScenario" class="exp-scenario"></div>
       </div>
     </div>
-    <button class="quiz-next-btn" id="quizNextBtn" class="hidden" onclick="QuizEngine.next()">下一题 →</button>
+    <button class="quiz-next-btn hidden" id="quizNextBtn" onclick="QuizEngine.next()" >下一题 →</button>
   </div>
   <!-- 结果区 -->
-  <div class="quiz-result" id="quizResult" class="hidden"></div>
+  <div class="quiz-result hidden" id="quizResult" ></div>
 </div>
 
 <!-- ======== 情景模拟页 ======== -->
@@ -1726,8 +1726,8 @@ body:not(.app-ready) #menuToolbar{display:none!important}
       </div>
       <div class="scenario-desc" id="scenarioDesc">情景描述...</div>
       <div class="scenario-options" id="scenarioOptions"></div>
-      <div class="scenario-feedback" id="scenarioFeedback" class="hidden"></div>
-      <button class="quiz-next-btn" id="scenarioNextBtn" class="hidden" onclick="ScenarioEngine.next()">下一幕 →</button>
+      <div class="scenario-feedback hidden" id="scenarioFeedback" ></div>
+      <button class="quiz-next-btn hidden" id="scenarioNextBtn" onclick="ScenarioEngine.next()" >下一幕 →</button>
     </div>
   </div>
 </div>
@@ -1882,7 +1882,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
     </div>
     <div id="escapeQuestion" class="quiz-q">题目加载中...</div>
     <div id="escapeOptions" class="quiz-options"></div>
-    <div id="escapeExplanation" class="quiz-explanation" class="hidden"></div>
+    <div id="escapeExplanation" class="quiz-explanation hidden" ></div>
   </div>
 </div>
 
@@ -1902,7 +1902,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
     </div>
     <div id="precisionQuestion" class="quiz-q">题目加载中...</div>
     <div id="precisionOptions" class="quiz-options"></div>
-    <div id="precisionExplanation" class="quiz-explanation" class="hidden"></div>
+    <div id="precisionExplanation" class="quiz-explanation hidden" ></div>
   </div>
 </div>
 
@@ -1920,7 +1920,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
     <div id="storyAdvNarration" style="background:rgba(255,255,255,0.03);border-radius:12px;padding:20px;margin-bottom:24px;border-left:3px solid var(--neon-purple);font-size:14px;line-height:1.8;color:rgba(255,255,255,0.8);min-height:60px;">故事加载中...</div>
     <div id="storyAdvQuestion" class="quiz-q">题目加载中...</div>
     <div id="storyAdvOptions" class="quiz-options"></div>
-    <div id="storyAdvExplanation" class="quiz-explanation" class="hidden"></div>
+    <div id="storyAdvExplanation" class="quiz-explanation hidden" ></div>
   </div>
 </div>
 
