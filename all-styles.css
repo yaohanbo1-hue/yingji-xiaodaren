@@ -157,3 +157,12 @@
 .tool-btn:hover{transform:translateY(-3px) !important;background:rgba(255,255,255,0.08) !important}
 .tool-btn:active{transform:translateY(0) scale(0.95) !important}
 .tool-btn.active{background:linear-gradient(135deg,rgba(0,212,255,0.15) 0%,rgba(124,77,255,0.1) 100%) !important;border:1px solid rgba(0,212,255,0.3) !important;box-shadow:0 0 20px rgba(0,212,255,0.15),inset 0 1px 0 rgba(255,255,255,0.1) !important}
+
+/* ===== 滚动修复：防止内容被上下裁剪 ===== */
+.page {
+  box-sizing: border-box !important;
+  height: 100dvh !important;
+  height: 100vh !important;
+  padding-top: 70px !important;
+  padding-bottom: 80px !important;
+}
