@@ -737,7 +737,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
           <span class="mode-name">学习模式</span>
           <span class="mode-desc">系统学习防灾知识</span>
         </div>
-        <div class="mode-btn" onclick="UniversalSystemViewer.firstaid()" style="border-color:rgba(255,82,82,0.3);">
+        <div class="mode-btn" onclick="PageManager.navigate('firstaid');setTimeout(function(){var el=document.getElementById('firstaid-content');if(el)el.innerHTML=FirstAidEngine.render()},100)" style="border-color:rgba(255,82,82,0.3);">
           <span class="mode-icon">🩺</span>
           <span class="mode-name">急救模拟</span>
           <span class="mode-desc">8个场景学急救</span>
@@ -1757,6 +1757,12 @@ body:not(.app-ready) #menuToolbar{display:none!important}
     <!-- 结果 -->
     <div id="kitResult" style="display:none;width:100%"></div>
   </div>
+</div>
+
+<!-- ======== 急救模拟器页 ======== -->
+<div id="page-firstaid" class="page page-content">
+  <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+  <div id="firstaid-content" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md) 0"></div>
 </div>
 
 <!-- ======== 每日挑战页 ======== -->
