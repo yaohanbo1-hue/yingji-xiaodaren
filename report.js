@@ -371,11 +371,15 @@ const ReportEngine = {
     var printBtn = document.createElement('button');
     printBtn.style.cssText = 'padding:12px 24px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.9);font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;';
     printBtn.textContent = '🖨️ 打印报告';
-    printBtn.onclick = function() {
-      overlay.remove();
+printBtn.onclick = function() {
       var win = window.open('', '_blank');
+      if (!win) {
+        Modal.show('⚠️ 打印失败', '浏览器拦截了弹窗，请允许弹窗后重试。', '❌');
+        return;
+      }
       win.document.write('<html><head><title>学习报告</title><style>body{margin:0;background:#0F172A;display:flex;justify-content:center;}img{max-width:100%;}</style></head><body><img src="' + canvas.toDataURL() + '" onload="window.print()"></body></html>');
       win.document.close();
+      overlay.remove();
     };
     
     var closeBtn = document.createElement('button');
@@ -424,6 +428,10 @@ const ReportEngine = {
     printBtn.textContent = '🖨️ 打印报告';
     printBtn.onclick = function() {
       var win = window.open('', '_blank');
+      if (!win) {
+        Modal.show('⚠️ 打印失败', '浏览器拦截了弹窗，请允许弹窗后重试。', '❌');
+        return;
+      }
       win.document.write('<html><head><title>学习报告</title><style>body{margin:0;background:#0F172A;display:flex;justify-content:center;}img{max-width:100%;}</style></head><body><img src="' + canvas.toDataURL() + '" onload="window.print()"></body></html>');
       win.document.close();
     };
