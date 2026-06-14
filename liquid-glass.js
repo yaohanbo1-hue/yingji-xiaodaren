@@ -20,9 +20,9 @@
   const LiquidGlass = {
     // 配置
     config: {
-      tiltMaxAngle: 12,           // 3D 倾斜最大角度
+      tiltMaxAngle: 18,           // 3D 倾斜最大角度（更大，更沉浸）
       tiltPerspective: 800,         // 3D 透视距离
-      tiltScale: 1.02,            // 悬停放大倍数
+      tiltScale: 1.04,            // 悬停放大倍数（稍大）
       spotlightIntensity: 0.15,   // 光追强度
       parallaxStrength: 0.08,     // 视差强度
       magneticRange: 60,          // 磁性吸附范围(px)
@@ -64,13 +64,13 @@
           transform-style: preserve-3d;
         }
 
-        /* ===== 液态玻璃卡片 ===== */
+        /* ===== 液态玻璃卡片（更透明、更磨砂） ===== */
         .liquid-card {
           position: relative;
-          background: rgba(255, 255, 255, 0.03) !important;
-          backdrop-filter: blur(24px) saturate(1.8) !important;
-          -webkit-backdrop-filter: blur(24px) saturate(1.8) !important;
-          border: 1px solid rgba(255, 255, 255, 0.08) !important;
+          background: rgba(255, 255, 255, 0.015) !important;
+          backdrop-filter: blur(40px) saturate(2.2) !important;
+          -webkit-backdrop-filter: blur(40px) saturate(2.2) !important;
+          border: 1px solid rgba(255, 255, 255, 0.06) !important;
           border-radius: 24px !important;
           overflow: hidden !important;
           transform-style: preserve-3d;
@@ -128,13 +128,13 @@
             inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
         }
 
-        /* ===== 液态玻璃按钮 ===== */
+        /* ===== 液态玻璃按钮（更透明、更磨砂） ===== */
         .liquid-btn {
           position: relative;
-          background: rgba(255, 255, 255, 0.06) !important;
-          backdrop-filter: blur(16px) saturate(1.5) !important;
-          -webkit-backdrop-filter: blur(16px) saturate(1.5) !important;
-          border: 1px solid rgba(255, 255, 255, 0.1) !important;
+          background: rgba(255, 255, 255, 0.03) !important;
+          backdrop-filter: blur(24px) saturate(2) !important;
+          -webkit-backdrop-filter: blur(24px) saturate(2) !important;
+          border: 1px solid rgba(255, 255, 255, 0.06) !important;
           border-radius: 16px !important;
           overflow: hidden !important;
           transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1) !important;
@@ -218,6 +218,12 @@
           10% { opacity: 0.6; }
           50% { transform: translateY(-100vh) translateX(50px); opacity: 0.3; }
           90% { opacity: 0.6; }
+        }
+        @keyframes orbFloat {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          25% { transform: translate(30px, -20px) scale(1.1); }
+          50% { transform: translate(-20px, 30px) scale(0.9); }
+          75% { transform: translate(20px, 20px) scale(1.05); }
         }
 
         /* ===== 入场动画 ===== */
@@ -509,10 +515,13 @@
       }, 500);
     },
 
-    // 创建浮动粒子
-    createParticles(count = 30) {
+    // 创建浮动粒子（增强版：更多粒子 + 鼠标拖尾）
+    createParticles(count = 40) {
       const container = document.createElement('div');
       container.className = 'liquid-particles';
+      container.id = 'liquidParticles';
+      
+      // 1. 环境浮动粒子
       for (let i = 0; i < count; i++) {
         const p = document.createElement('div');
         p.className = 'liquid-particle';
@@ -522,11 +531,166 @@
         p.style.animationDuration = `${6 + Math.random() * 6}s`;
         p.style.width = `${2 + Math.random() * 4}px`;
         p.style.height = p.style.width;
-        const colors = ['rgba(0,212,255,0.4)', 'rgba(155,89,182,0.4)', 'rgba(255,45,149,0.3)', 'rgba(0,230,118,0.3)'];
+        const colors = [
+          'rgba(0,212,255,0.5)', 'rgba(155,89,182,0.5)', 'rgba(255,45,149,0.4)', 
+          'rgba(0,230,118,0.4)', 'rgba(255,215,0,0.35)', 'rgba(255,107,53,0.35)'
+        ];
         p.style.background = colors[Math.floor(Math.random() * colors.length)];
         container.appendChild(p);
       }
+      
+      // 2. 大型光球粒子（慢速浮动）
+      for (let i = 0; i < 6; i++) {
+        const orb = document.createElement('div');
+        orb.style.cssText = `
+          position: absolute;
+          width: ${40 + Math.random() * 80}px;
+          height: ${40 + Math.random() * 80}px;
+          border-radius: 50%;
+          background: radial-gradient(circle, ${[
+            'rgba(0,212,255,0.08)', 'rgba(155,89,182,0.08)', 'rgba(255,45,149,0.06)'
+          ][i % 3]} 0%, transparent 70%);
+          left: ${Math.random() * 100}%;
+          top: ${Math.random() * 100}%;
+          animation: orbFloat ${15 + Math.random() * 10}s ease-in-out infinite;
+          animation-delay: ${Math.random() * 5}s;
+          pointer-events: none;
+          filter: blur(20px);
+        `;
+        container.appendChild(orb);
+      }
+      
       document.body.appendChild(container);
+      
+      // 3. 鼠标拖尾粒子系统
+      this._initCursorTrail();
+      
+      // 4. 粒子连线（神经网络效果）
+      this._initParticleLinks();
+    },
+
+    // 鼠标拖尾粒子
+    _initCursorTrail() {
+      const trail = [];
+      const maxTrail = 12;
+      const colors = ['#00d4ff', '#9b59b6', '#ff2d95', '#00e676', '#ffd700'];
+      
+      document.addEventListener('mousemove', (e) => {
+        const dot = document.createElement('div');
+        dot.style.cssText = `
+          position: fixed;
+          left: ${e.clientX}px;
+          top: ${e.clientY}px;
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: ${colors[Math.floor(Math.random() * colors.length)]};
+          pointer-events: none;
+          z-index: 9998;
+          box-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+          transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        `;
+        document.body.appendChild(dot);
+        trail.push(dot);
+        
+        // 渐隐
+        requestAnimationFrame(() => {
+          dot.style.transform = `translate(${(Math.random() - 0.5) * 30}px, ${(Math.random() - 0.5) * 30}px) scale(0)`;
+          dot.style.opacity = '0';
+        });
+        
+        // 清理
+        setTimeout(() => dot.remove(), 800);
+        if (trail.length > maxTrail) {
+          const old = trail.shift();
+          if (old.parentNode) old.remove();
+        }
+      });
+    },
+
+    // 粒子连线（附近粒子之间产生连线）
+    _initParticleLinks() {
+      const canvas = document.createElement('canvas');
+      canvas.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0.3;';
+      document.body.appendChild(canvas);
+      
+      const ctx = canvas.getContext('2d');
+      let w, h;
+      
+      function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+      
+      // 创建连线粒子
+      const particles = [];
+      for (let i = 0; i < 25; i++) {
+        particles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+          r: Math.random() * 1.5 + 0.5,
+          color: ['#00d4ff', '#9b59b6', '#ff2d95'][Math.floor(Math.random() * 3)]
+        });
+      }
+      
+      let mouseX = w / 2, mouseY = h / 2;
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+      
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        
+        // 更新位置
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0 || p.x > w) p.vx *= -1;
+          if (p.y < 0 || p.y > h) p.vy *= -1;
+          
+          // 鼠标排斥
+          const dx = p.x - mouseX;
+          const dy = p.y - mouseY;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 150) {
+            p.vx += dx / dist * 0.02;
+            p.vy += dy / dist * 0.02;
+          }
+          
+          // 绘制粒子
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.globalAlpha = 0.6;
+          ctx.fill();
+        });
+        
+        // 绘制连线
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 200) {
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = particles[i].color;
+              ctx.globalAlpha = (1 - dist / 200) * 0.15;
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
+          }
+        }
+        
+        requestAnimationFrame(draw);
+      }
+      draw();
     },
 
     // 水波纹点击
