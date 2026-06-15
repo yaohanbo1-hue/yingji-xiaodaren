@@ -173,7 +173,7 @@
   border-top: 1px solid rgba(0, 212, 255, 0.12) !important;
   border-top-left-radius: 24px;
   border-top-right-radius: 24px;
-  overflow: hidden;
+  overflow: visible;
   box-shadow: 0 -4px 24px rgba(0,0,0,0.4), 0 -1px 0 rgba(0,212,255,0.08) !important;
 }
 .menu-toolbar::before {
@@ -184,6 +184,20 @@
   background: linear-gradient(90deg, transparent 0%, rgba(0, 212, 255, 0.35) 50%, transparent 100%);
   pointer-events: none;
   z-index: 1;
+}
+.menu-toolbar::after {
+  content: '';
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: rgba(10, 10, 28, 0.92);
+  backdrop-filter: blur(28px) saturate(220%);
+  -webkit-backdrop-filter: blur(28px) saturate(220%);
+  border-top: 1px solid rgba(0, 212, 255, 0.12);
+  z-index: -1;
+  pointer-events: none;
 }
 
 /* 工具按钮 — 精致图标+微标签，带选中指示 */
@@ -267,5 +281,5 @@
   height: 100dvh !important;
   height: 100vh !important;
   padding-top: 70px !important;
-  padding-bottom: 80px !important;
+  padding-bottom: 120px !important;
 }
