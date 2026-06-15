@@ -107,6 +107,13 @@ const GuideEnhancer = {
     this.start();
   },
   
+  forceRestart() {
+    this._clearUI();
+    this._isRunning = false;
+    localStorage.removeItem(this._storageKey);
+    this.start();
+  },
+  
   start() {
     if (this._isRunning) return;
     this._isRunning = true;
@@ -352,6 +359,9 @@ const GuideEnhancer = {
     localStorage.removeItem(this._storageKey);
   }
 };
+
+// 立即挂载到全局，确保页面按钮可以直接调用
+window.GuideEnhancer = GuideEnhancer;
 
 // 自动初始化
 document.addEventListener('DOMContentLoaded', function() {
