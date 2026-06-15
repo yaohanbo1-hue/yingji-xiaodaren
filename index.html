@@ -121,13 +121,13 @@
 #loadingScreen.hidden{opacity:0;visibility:hidden;pointer-events:none}
 body:not(.app-ready) .page{display:none!important}
 body:not(.app-ready) #menuToolbar,body:not(.app-ready) .menu-toolbar{display:none!important}
-/* ===== 紧急修复：强制底部栏固定定位（绕过所有缓存） ===== */
-.menu-toolbar{display:flex;justify-content:space-around;align-items:center;gap:2px;padding:12px 6px calc(12px + env(safe-area-inset-bottom,0px));position:fixed!important;bottom:0!important;left:0!important;right:0!important;z-index:10000!important;background:linear-gradient(180deg,rgba(16,16,42,0.96) 0%,rgba(10,10,28,0.98) 100%)!important;border-top:1px solid rgba(255,255,255,0.15)!important;box-shadow:0 -8px 40px rgba(0,0,0,0.5)!important}
-.menu-toolbar .tool-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:10px 12px;min-width:68px;min-height:62px;border-radius:16px!important;border:none;background:transparent}
-.menu-toolbar .tool-btn .icon{font-size:26px!important}
-.menu-toolbar .tool-btn .label{font-size:11px!important;color:rgba(255,255,255,0.6)!important}
-.menu-toolbar .tool-btn.active{background:linear-gradient(135deg,rgba(0,212,255,0.2) 0%,rgba(124,77,255,0.15) 100%)!important;border:1px solid rgba(0,212,255,0.5)!important}
-.menu-toolbar .tool-btn.active .icon{color:#00D4FF!important;filter:drop-shadow(0 0 12px rgba(0,212,255,0.7))!important}
+/* ===== 紧急修复：底部栏极简设计（绕过所有缓存） ===== */
+.menu-toolbar{display:flex;justify-content:space-around;align-items:center;gap:0;padding:6px 0 calc(4px + env(safe-area-inset-bottom,0px));position:fixed!important;bottom:0!important;left:0!important;right:0!important;z-index:10000!important;background:linear-gradient(180deg,rgba(8,8,22,0.97) 0%,rgba(5,5,15,0.99) 100%)!important;border-top:1px solid rgba(255,255,255,0.06)!important;box-shadow:0 -2px 20px rgba(0,0,0,0.4)!important}
+.menu-toolbar .tool-btn{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;padding:4px 6px;min-width:56px;min-height:52px;border-radius:12px!important;border:none;background:transparent;color:rgba(255,255,255,0.45)}
+.menu-toolbar .tool-btn .icon{font-size:24px!important;transition:all 0.3s ease}
+.menu-toolbar .tool-btn .label{font-size:9px!important;color:inherit!important;font-weight:500!important}
+.menu-toolbar .tool-btn.active{color:#00D4FF!important}
+.menu-toolbar .tool-btn.active .icon{color:#00D4FF!important;filter:drop-shadow(0 0 10px rgba(0,212,255,0.6))!important;transform:translateY(-2px) scale(1.15)!important}
 .menu-toolbar .tool-btn.active .label{color:#00D4FF!important;font-weight:600!important}
 </style>
 <style>
