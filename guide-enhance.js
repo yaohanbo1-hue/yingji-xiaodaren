@@ -284,7 +284,12 @@ const GuideEnhancer = {
           return;
         }
       }
-      tooltip.style.top = Math.max(10, top) + 'px';
+      // 所有位置都进行垂直边界保护，防止target在视口边缘时tooltip被截断
+      top = Math.max(10, top);
+      if (top + tipRect.height > window.innerHeight - 10) {
+        top = window.innerHeight - tipRect.height - 10;
+      }
+      tooltip.style.top = top + 'px';
     }
     if (typeof left === 'number') {
       tooltip.style.left = Math.max(10, Math.min(left, window.innerWidth - tipRect.width - 10)) + 'px';
