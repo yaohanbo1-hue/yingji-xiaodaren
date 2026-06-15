@@ -112,6 +112,40 @@ const GuideEnhancer = {
     this._isRunning = true;
     this._currentStep = 0;
     
+    // 绑定键盘和resize事件
+    this._boundKeydown = function(e) {
+      if (!GuideEnhancer._isRunning) return;
+      switch(e.key) {
+        case 'ArrowRight':
+        case 'ArrowDown':
+        case 'Enter':
+          e.preventDefault();
+          GuideEnhancer.next();
+          break;
+        case 'ArrowLeft':
+        case 'ArrowUp':
+          e.preventDefault();
+          GuideEnhancer.prev();
+          break;
+        case 'Escape':
+          e.preventDefault();
+          GuideEnhancer.skip();
+          break;
+      }
+    };
+    this._boundResize = function() {
+      if (!GuideEnhancer._isRunning || !GuideEnhancer._tooltip) return;
+      var step = GuideEnhancer._steps[GuideEnhancer._currentStep];
+      if (step.target && step.position !== 'center') {
+        var target = document.querySelector(step.target);
+        if (target) {
+          GuideEnhancer._positionTooltip(target, step.position);
+        }
+      }
+    };
+    document.addEventListener('keydown', this._boundKeydown);
+    window.addEventListener('resize', this._boundResize);
+    
     // 确保在主菜单
     if (typeof PageManager !== 'undefined') {
       PageManager.navigate('menu');
@@ -270,6 +304,15 @@ const GuideEnhancer = {
     document.querySelectorAll('.guide-highlight').forEach(function(el) {
       el.classList.remove('guide-highlight');
     });
+    // 移除键盘和resize监听
+    if (this._boundKeydown) {
+      document.removeEventListener('keydown', this._boundKeydown);
+      this._boundKeydown = null;
+    }
+    if (this._boundResize) {
+      window.removeEventListener('resize', this._boundResize);
+      this._boundResize = null;
+    }
   },
   
   next() {
