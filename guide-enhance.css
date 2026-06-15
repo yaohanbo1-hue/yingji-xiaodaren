@@ -39,6 +39,21 @@
   }
 }
 
+/* 提示气泡滚动条美化 */
+.guide-tooltip::-webkit-scrollbar {
+  width: 4px;
+}
+.guide-tooltip::-webkit-scrollbar-track {
+  background: transparent;
+}
+.guide-tooltip::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+.guide-tooltip::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
 /* 提示气泡 */
 .guide-tooltip {
   position: fixed;
@@ -47,6 +62,8 @@
   min-width: 260px;
   max-height: 80vh;
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
   background: rgba(15, 23, 42, 0.95);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(59, 130, 246, 0.3);
