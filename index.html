@@ -116,7 +116,7 @@
 #loadingScreen{position:fixed;inset:0;z-index:999999;background:#05050f;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Courier New',monospace}
 #loadingScreen.hidden{opacity:0;visibility:hidden;pointer-events:none}
 body:not(.app-ready) .page{display:none!important}
-body:not(.app-ready) #menuToolbar{display:none!important}
+body:not(.app-ready) #menuToolbar,body:not(.app-ready) .menu-toolbar{display:none!important}
 </style>
 <style>
 /* ===== 加载界面 v4.0 — 赛博控制台 ===== */
@@ -2169,7 +2169,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
 </div><!-- /#app -->
 
 <!-- ======== 底部导航栏（独立于页面容器） ======== -->
-<div class="menu-toolbar">
+<div class="menu-toolbar" id="menuToolbar">
   <button class="tool-btn" onclick="PageManager.navigate('codex')" data-nav="codex">
     <span class="icon">📚</span>图鉴
   </button>

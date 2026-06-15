@@ -4,11 +4,11 @@
  * ===========================================================================
  */
 
-/* 遮罩层 */
+/* 遮罩层 — z-index 低于底部栏(100)但高于页面内容(1-2)，确保不遮挡底部栏 */
 .guide-overlay {
   position: fixed;
   inset: 0;
-  z-index: 99998;
+  z-index: 50;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
   animation: guideFadeIn 0.3s ease;

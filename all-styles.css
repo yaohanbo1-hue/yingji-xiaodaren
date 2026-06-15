@@ -148,8 +148,8 @@
 .mode-btn{transition:all 0.3s cubic-bezier(0.25,0.46,0.45,0.94);transform-style:preserve-3d}
 .mode-btn:hover{transform:translateY(-6px) translateZ(10px) scale(1.02);box-shadow:0 12px 40px rgba(0,0,0,0.4),0 0 30px var(--cyber-blue-dim)}
 
-/* 底部导航栏液态玻璃 */
-.menu-toolbar{background:linear-gradient(180deg,rgba(12,12,35,0.92) 0%,rgba(8,8,24,0.96) 100%) !important;backdrop-filter:blur(28px) saturate(220%) !important;-webkit-backdrop-filter:blur(28px) saturate(220%) !important;border-top:1px solid rgba(255,255,255,0.1) !important;box-shadow:0 -4px 30px rgba(0,0,0,0.5),0 -10px 50px rgba(0,212,255,0.04),inset 0 1px 0 rgba(255,255,255,0.05) !important}
+/* 底部导航栏液态玻璃 — z-index 提升到 10000，确保在所有元素之上 */
+.menu-toolbar{background:linear-gradient(180deg,rgba(12,12,35,0.92) 0%,rgba(8,8,24,0.96) 100%) !important;backdrop-filter:blur(28px) saturate(220%) !important;-webkit-backdrop-filter:blur(28px) saturate(220%) !important;border-top:1px solid rgba(255,255,255,0.1) !important;box-shadow:0 -4px 30px rgba(0,0,0,0.5),0 -10px 50px rgba(0,212,255,0.04),inset 0 1px 0 rgba(255,255,255,0.05) !important;z-index:10000 !important}
 .menu-toolbar::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,rgba(0,212,255,0.2) 50%,transparent 100%);pointer-events:none;z-index:1}
 
 /* 工具按钮液态玻璃 */
