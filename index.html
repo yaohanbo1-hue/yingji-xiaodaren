@@ -109,7 +109,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <!-- ===== 预加载最关键资源（不超过5个，避免带宽竞争） ===== -->
-<link rel="preload" href="all-styles.css?v=16" as="style">
+<link rel="preload" href="all-styles.css?v=17" as="style">
 <link rel="preload" href="game.js" as="script">
 <link rel="preload" href="cards.js" as="script">
 <link rel="preload" href="scenarios.js" as="script">
@@ -134,9 +134,9 @@ body:not(.app-ready) #menuToolbar,body:not(.app-ready) .menu-toolbar{display:non
 .menu-toolbar .tool-btn.active .label{color:#00D4FF!important;font-weight:600!important}
 .menu-toolbar .tool-btn.active::after{width:24px!important}
 /* ===== 页面内容底部渐变过渡 ===== */
-.page::after{content:'';position:fixed;bottom:70px;left:0;right:0;height:50px;background:linear-gradient(to top,rgba(8,8,24,0.95),transparent);pointer-events:none;z-index:9999}
+.page::after{content:'';position:fixed;bottom:70px;left:0;right:0;height:80px;background:linear-gradient(to top,rgba(8,8,24,0.98),rgba(8,8,24,0.95) 50%,transparent);pointer-events:none;z-index:9999}
 /* ===== 全局页面优化 ===== */
-.page{padding-bottom:100px!important}
+.page{padding-bottom:120px!important}
 /* ===== Logo区域紧凑优化 ===== */
 .menu-logo{padding:10px 0 6px!important;margin-bottom:4px!important}
 .menu-logo-icon{font-size:42px!important;margin-bottom:2px!important}
@@ -152,7 +152,7 @@ body:not(.app-ready) #menuToolbar,body:not(.app-ready) .menu-toolbar{display:non
 /* ===== 返回分类按钮优化 ===== */
 .back-to-categories{padding:10px 18px!important;margin:8px 12px 12px!important;border-radius:12px!important;font-size:14px!important;background:rgba(255,255,255,0.05)!important}
 /* ===== 模块区域优化 ===== */
-.menu-section.expanded{padding-bottom:100px!important;margin-bottom:20px!important}
+.menu-section.expanded{padding-bottom:120px!important;margin-bottom:20px!important}
 .menu-section-title{font-size:16px!important;padding:12px 16px!important;margin:8px 12px 10px!important;border-radius:14px!important;background:rgba(255,255,255,0.04)!important}
 .menu-grid{gap:16px!important;padding:0 12px 20px!important}
 .mode-btn{padding:18px 14px!important;border-radius:20px!important;min-height:120px!important;box-shadow:0 2px 12px rgba(0,0,0,0.18)!important}
@@ -163,7 +163,7 @@ body:not(.app-ready) #menuToolbar,body:not(.app-ready) .menu-toolbar{display:non
 /* ===== 底部统计栏优化 ===== */
 .menu-stats{padding:10px 14px!important;margin:8px 12px 20px!important;border-radius:12px!important;font-size:12px!important;gap:16px!important;background:rgba(255,255,255,0.03)!important}
 /* ===== 子页面通用优化 ===== */
-.page-content{padding:60px 12px 100px!important;overflow-y:auto!important;height:100vh!important}
+.page-content{padding:60px 12px 120px!important;overflow-y:auto!important;height:100vh!important}
 .back-float{top:12px!important;left:12px!important;padding:8px 14px!important;font-size:14px!important;border-radius:10px!important;background:rgba(255,255,255,0.08)!important;border:1px solid rgba(255,255,255,0.1)!important}
 .preview-header{padding:16px 0 12px!important;margin-bottom:8px!important}
 .preview-icon{font-size:36px!important;margin-bottom:4px!important}
@@ -462,7 +462,7 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
     }
   }
 </style>
-<link rel="stylesheet" href="all-styles.css?v=16">
+<link rel="stylesheet" href="all-styles.css?v=17">
   <link rel="stylesheet" href="v5-glass-3d.css?v=9">
   <link rel="stylesheet" href="clean-ui.css?v=9">
   <link rel="stylesheet" href="bg-premium.css?v=9">
