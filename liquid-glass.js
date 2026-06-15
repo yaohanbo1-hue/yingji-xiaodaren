@@ -137,21 +137,21 @@
           flex-direction: column !important;
           align-items: center !important;
           justify-content: center !important;
-          padding: 6px 8px !important;
-          min-width: 56px !important;
-          min-height: 48px !important;
-          gap: 4px !important;
+          padding: 8px 10px !important;
+          min-width: 60px !important;
+          min-height: 52px !important;
+          gap: 5px !important;
           font-size: 10px;
-          color: rgba(255, 255, 255, 0.45);
+          color: rgba(255, 255, 255, 0.55);
           background: transparent !important;
           border: none !important;
-          border-radius: 12px !important;
+          border-radius: 14px !important;
           overflow: hidden !important;
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
           cursor: pointer;
         }
         .liquid-btn .icon {
-          font-size: 22px !important;
+          font-size: 24px !important;
           line-height: 1 !important;
           transition: all 0.3s ease !important;
           filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3)) !important;
@@ -172,28 +172,25 @@
           filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3)) !important;
         }
         .liquid-btn:hover {
-          color: rgba(255, 255, 255, 0.75) !important;
+          color: rgba(255, 255, 255, 0.85) !important;
         }
         .liquid-btn:active {
           transform: scale(0.92) !important;
           transition-duration: 0.1s !important;
         }
-        .liquid-btn::before {
+        .liquid-btn::after {
           content: '';
           position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          background: radial-gradient(
-            200px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-            rgba(255, 255, 255, 0.2) 0%,
-            transparent 50%
-          );
-          pointer-events: none;
-          opacity: 0;
-          transition: opacity 0.3s ease;
+          bottom: 2px;
+          width: 0;
+          height: 3px;
+          border-radius: 2px;
+          background: #00D4FF;
+          transition: all 0.3s ease;
+          box-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
         }
-        .liquid-btn:hover::before {
-          opacity: 1;
+        .liquid-btn.active::after {
+          width: 20px !important;
         }
 
         /* ===== 全息霓虹边框 ===== */
