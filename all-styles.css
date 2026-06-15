@@ -155,20 +155,85 @@
 .mode-btn{transition:all 0.3s cubic-bezier(0.25,0.46,0.45,0.94);transform-style:preserve-3d}
 .mode-btn:hover{transform:translateY(-6px) translateZ(10px) scale(1.02);box-shadow:0 12px 40px rgba(0,0,0,0.4),0 0 30px var(--cyber-blue-dim)}
 
-/* 底部导航栏 — 全新设计 v3：简洁现代，往下移动 */
-.menu-toolbar{display:flex;justify-content:space-around;align-items:center;gap:0;padding:6px 0 calc(4px + env(safe-area-inset-bottom,0px));position:fixed;bottom:0;left:0;right:0;z-index:10000;background:linear-gradient(180deg,rgba(8,8,22,0.97) 0%,rgba(5,5,15,0.99) 100%) !important;border-top:1px solid rgba(255,255,255,0.06) !important;box-shadow:0 -2px 20px rgba(0,0,0,0.4) !important}
-.menu-toolbar::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,rgba(0,212,255,0.15) 30%,rgba(0,212,255,0.25) 50%,rgba(0,212,255,0.15) 70%,transparent 100%);pointer-events:none;z-index:1}
+/* 底部导航栏 — 最终设计：精致、通透、现代 */
+.menu-toolbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 0;
+  padding: 8px 0 calc(8px + env(safe-area-inset-bottom, 0px));
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 10000;
+  background: rgba(6, 6, 18, 0.85) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.menu-toolbar::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 212, 255, 0.3) 50%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
 
-/* 工具按钮 — 极简风格：无边框无背景，只有图标和微文字 */
-.tool-btn{position:relative;transition:all 0.3s ease;border-radius:12px !important;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;padding:4px 6px;min-width:56px;min-height:52px;border:none;background:transparent;cursor:pointer;color:rgba(255,255,255,0.45)}
-.tool-btn .icon{font-size:24px;line-height:1;transition:all 0.3s ease;filter:none}
-.tool-btn .label{font-size:9px;color:inherit;font-weight:500;letter-spacing:0.5px;transition:all 0.3s ease;line-height:1}
-.tool-btn:hover{color:rgba(255,255,255,0.8)}
-.tool-btn:hover .icon{transform:translateY(-2px) scale(1.1)}
-.tool-btn:active{transform:scale(0.92)}
-.tool-btn.active{color:#00D4FF}
-.tool-btn.active .icon{filter:drop-shadow(0 0 10px rgba(0,212,255,0.6));transform:translateY(-2px) scale(1.15)}
-.tool-btn.active .label{color:#00D4FF;font-weight:600}
+/* 工具按钮 — 精致图标+微标签 */
+.tool-btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 8px;
+  min-width: 56px;
+  min-height: 48px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.tool-btn .icon {
+  font-size: 22px;
+  line-height: 1;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+}
+.tool-btn .label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  color: inherit;
+  transition: all 0.3s ease;
+  line-height: 1;
+}
+.tool-btn:hover {
+  color: rgba(255, 255, 255, 0.75);
+}
+.tool-btn:hover .icon {
+  transform: translateY(-2px) scale(1.1);
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+}
+.tool-btn:active {
+  transform: scale(0.92);
+  transition-duration: 0.1s;
+}
+.tool-btn.active {
+  color: #00D4FF;
+}
+.tool-btn.active .icon {
+  filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.6));
+  transform: translateY(-1px);
+}
+.tool-btn.active .label {
+  color: #00D4FF;
+  font-weight: 600;
+}
 
 /* ===== 滚动修复：防止内容被上下裁剪 ===== */
 .page {
