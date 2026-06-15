@@ -149,14 +149,18 @@
 .mode-btn:hover{transform:translateY(-6px) translateZ(10px) scale(1.02);box-shadow:0 12px 40px rgba(0,0,0,0.4),0 0 30px var(--cyber-blue-dim)}
 
 /* 底部导航栏液态玻璃 — z-index 提升到 10000，确保在所有元素之上 */
-.menu-toolbar{background:linear-gradient(180deg,rgba(12,12,35,0.92) 0%,rgba(8,8,24,0.96) 100%) !important;backdrop-filter:blur(28px) saturate(220%) !important;-webkit-backdrop-filter:blur(28px) saturate(220%) !important;border-top:1px solid rgba(255,255,255,0.1) !important;box-shadow:0 -4px 30px rgba(0,0,0,0.5),0 -10px 50px rgba(0,212,255,0.04),inset 0 1px 0 rgba(255,255,255,0.05) !important;z-index:10000 !important}
+.menu-toolbar{display:flex;justify-content:space-around;align-items:center;gap:0;padding:8px 4px calc(8px + env(safe-area-inset-bottom,0px));position:fixed;bottom:0;left:0;right:0;z-index:10000;background:linear-gradient(180deg,rgba(12,12,35,0.92) 0%,rgba(8,8,24,0.96) 100%) !important;backdrop-filter:blur(28px) saturate(220%) !important;-webkit-backdrop-filter:blur(28px) saturate(220%) !important;border-top:1px solid rgba(255,255,255,0.1) !important;box-shadow:0 -4px 30px rgba(0,0,0,0.5),0 -10px 50px rgba(0,212,255,0.04),inset 0 1px 0 rgba(255,255,255,0.05) !important}
 .menu-toolbar::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,rgba(0,212,255,0.2) 50%,transparent 100%);pointer-events:none;z-index:1}
 
 /* 工具按钮液态玻璃 */
-.tool-btn{position:relative;transition:all 0.25s cubic-bezier(0.25,0.46,0.45,0.94);border-radius:12px !important}
+.tool-btn{position:relative;transition:all 0.25s cubic-bezier(0.25,0.46,0.45,0.94);border-radius:14px !important;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:6px 8px;min-width:56px;min-height:52px}
+.tool-btn .icon{font-size:22px;line-height:1;filter:drop-shadow(0 0 4px rgba(255,255,255,0.2))}
+.tool-btn .label{font-size:10px;color:rgba(255,255,255,0.65);font-weight:500;letter-spacing:0.3px}
 .tool-btn:hover{transform:translateY(-3px) !important;background:rgba(255,255,255,0.08) !important}
 .tool-btn:active{transform:translateY(0) scale(0.95) !important}
 .tool-btn.active{background:linear-gradient(135deg,rgba(0,212,255,0.15) 0%,rgba(124,77,255,0.1) 100%) !important;border:1px solid rgba(0,212,255,0.3) !important;box-shadow:0 0 20px rgba(0,212,255,0.15),inset 0 1px 0 rgba(255,255,255,0.1) !important}
+.tool-btn.active .icon{color:#00D4FF;filter:drop-shadow(0 0 8px rgba(0,212,255,0.5))}
+.tool-btn.active .label{color:#00D4FF}
 
 /* ===== 滚动修复：防止内容被上下裁剪 ===== */
 .page {
@@ -164,5 +168,5 @@
   height: 100dvh !important;
   height: 100vh !important;
   padding-top: 70px !important;
-  padding-bottom: 80px !important;
+  padding-bottom: 70px !important;
 }

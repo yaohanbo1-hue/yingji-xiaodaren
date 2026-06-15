@@ -101,7 +101,7 @@ self.addEventListener('activate', function(event) {
   );
 });
 
-// 拦截请求：Cache First 策略
+// 拦截请求：Network First 策略（优先获取最新资源）
 self.addEventListener('fetch', function(event) {
   const request = event.request;
   
@@ -113,29 +113,17 @@ self.addEventListener('fetch', function(event) {
   if (url.origin !== self.location.origin) return;
 
   event.respondWith(
-    caches.match(request).then(function(response) {
-      if (response) {
-        // 缓存命中，同时后台更新
-        fetch(request).then(function(networkResponse) {
-          if (networkResponse && networkResponse.status === 200) {
-            caches.open(CACHE_NAME).then(function(cache) {
-              cache.put(request, networkResponse);
-            });
-          }
-        }).catch(function(){});
-        return response;
-      }
-      // 缓存未命中，网络请求
-      return fetch(request).then(function(networkResponse) {
-        if (!networkResponse || networkResponse.status !== 200) {
-          return networkResponse;
-        }
+    fetch(request).then(function(networkResponse) {
+      if (networkResponse && networkResponse.status === 200) {
         var responseClone = networkResponse.clone();
         caches.open(CACHE_NAME).then(function(cache) {
           cache.put(request, responseClone);
         });
-        return networkResponse;
-      }).catch(function() {
+      }
+      return networkResponse;
+    }).catch(function() {
+      return caches.match(request).then(function(response) {
+        if (response) return response;
         // 离线且无缓存时返回离线页面
         if (request.mode === 'navigate') {
           return caches.match('./index.html');
