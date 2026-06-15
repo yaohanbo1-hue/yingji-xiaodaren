@@ -133,6 +133,16 @@
         /* ===== 液态玻璃按钮（更透明、更磨砂） ===== */
         .liquid-btn {
           position: relative;
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: center !important;
+          justify-content: center !important;
+          padding: 10px 12px !important;
+          min-width: 68px !important;
+          min-height: 62px !important;
+          gap: 5px !important;
+          font-size: 11px;
+          color: rgba(255, 255, 255, 0.6);
           background: rgba(255, 255, 255, 0.03) !important;
           backdrop-filter: blur(24px) saturate(2) !important;
           -webkit-backdrop-filter: blur(24px) saturate(2) !important;
@@ -142,6 +152,27 @@
           transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1) !important;
           transform-style: preserve-3d;
           will-change: transform;
+          cursor: pointer;
+        }
+        .liquid-btn .icon {
+          font-size: 26px !important;
+          line-height: 1 !important;
+          filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.2)) !important;
+          transition: all 0.3s ease !important;
+        }
+        .liquid-btn.active {
+          background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(124, 77, 255, 0.15) 100%) !important;
+          border: 1px solid rgba(0, 212, 255, 0.5) !important;
+          box-shadow: 0 0 24px rgba(0, 212, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+        }
+        .liquid-btn.active .icon {
+          color: #00D4FF !important;
+          filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.7)) !important;
+          transform: scale(1.2) !important;
+        }
+        .liquid-btn:hover .icon {
+          filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4)) !important;
+          transform: scale(1.15) !important;
         }
         .liquid-btn::before {
           content: '';
@@ -163,11 +194,11 @@
         .liquid-btn:hover {
           background: rgba(255, 255, 255, 0.1) !important;
           border-color: rgba(255, 255, 255, 0.2) !important;
-          transform: translateY(-2px) scale(1.02);
+          transform: translateY(-4px) scale(1.05) !important;
           box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
         }
         .liquid-btn:active {
-          transform: translateY(0) scale(0.98);
+          transform: translateY(0) scale(0.92) !important;
           transition-duration: 0.1s !important;
         }
 
