@@ -155,32 +155,33 @@
 .mode-btn{transition:all 0.3s cubic-bezier(0.25,0.46,0.45,0.94);transform-style:preserve-3d}
 .mode-btn:hover{transform:translateY(-6px) translateZ(10px) scale(1.02);box-shadow:0 12px 40px rgba(0,0,0,0.4),0 0 30px var(--cyber-blue-dim)}
 
-/* 底部导航栏 — 最终设计 v4：精致、通透、现代 */
+/* 底部导航栏 — 最终设计 v5：精致、通透、现代 */
 .menu-toolbar {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
-  gap: 4px;
-  padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+  gap: 2px;
+  padding: 8px 6px calc(8px + env(safe-area-inset-bottom, 0px));
   position: fixed;
   bottom: 0; left: 0; right: 0;
   z-index: 10000;
   max-width: 900px;
   margin: 0 auto;
-  background: rgba(10, 10, 28, 0.88) !important;
-  backdrop-filter: blur(24px) saturate(200%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(200%) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  background: rgba(10, 10, 28, 0.92) !important;
+  backdrop-filter: blur(28px) saturate(220%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(220%) !important;
+  border-top: 1px solid rgba(0, 212, 255, 0.12) !important;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
   overflow: hidden;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.4), 0 -1px 0 rgba(0,212,255,0.08) !important;
 }
 .menu-toolbar::before {
   content: '';
   position: absolute;
-  top: 0; left: 15%; right: 15%;
+  top: 0; left: 10%; right: 10%;
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(0, 212, 255, 0.25) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 212, 255, 0.35) 50%, transparent 100%);
   pointer-events: none;
   z-index: 1;
 }
@@ -189,31 +190,31 @@
 .tool-btn {
   position: relative;
   flex: 1;
-  max-width: 90px;
+  max-width: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  padding: 8px 6px;
-  min-height: 52px;
+  gap: 3px;
+  padding: 6px 2px;
+  min-height: 56px;
   border: none;
   border-radius: 14px;
   background: transparent;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.5);
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 .tool-btn .icon {
-  font-size: 24px;
+  font-size: 26px;
   line-height: 1;
   transition: all 0.3s ease;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
 }
 .tool-btn .label {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.4px;
   color: inherit;
   transition: all 0.3s ease;
   line-height: 1;
@@ -222,20 +223,23 @@
 .tool-btn::after {
   content: '';
   position: absolute;
-  bottom: 2px;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 0;
   height: 3px;
   border-radius: 2px;
   background: #00D4FF;
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  box-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.6);
 }
 .tool-btn:hover {
-  color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.75);
 }
 .tool-btn:hover .icon {
   transform: translateY(-2px) scale(1.1);
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
 }
 .tool-btn:active {
   transform: scale(0.92);
@@ -243,17 +247,18 @@
 }
 .tool-btn.active {
   color: #00D4FF;
+  background: rgba(0, 212, 255, 0.08);
 }
 .tool-btn.active .icon {
-  filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.6));
-  transform: translateY(-1px);
+  filter: drop-shadow(0 0 14px rgba(0, 212, 255, 0.7));
+  transform: translateY(-2px) scale(1.15);
 }
 .tool-btn.active .label {
   color: #00D4FF;
   font-weight: 600;
 }
 .tool-btn.active::after {
-  width: 20px;
+  width: 24px;
 }
 
 /* ===== 滚动修复：防止内容被上下裁剪 ===== */
@@ -262,5 +267,5 @@
   height: 100dvh !important;
   height: 100vh !important;
   padding-top: 70px !important;
-  padding-bottom: 70px !important;
+  padding-bottom: 80px !important;
 }

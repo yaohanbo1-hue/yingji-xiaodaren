@@ -130,50 +130,51 @@
             inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
         }
 
-        /* ===== 液态玻璃按钮（精致底部栏设计） ===== */
+        /* ===== 液态玻璃按钮（精致底部栏设计 v5） ===== */
         .liquid-btn {
           position: relative;
           display: flex !important;
           flex-direction: column !important;
           align-items: center !important;
           justify-content: center !important;
-          padding: 8px 6px !important;
+          padding: 6px 2px !important;
           flex: 1 !important;
-          max-width: 90px !important;
-          min-height: 52px !important;
-          gap: 5px !important;
-          font-size: 10px;
-          color: rgba(255, 255, 255, 0.55);
+          max-width: 100px !important;
+          min-height: 56px !important;
+          gap: 3px !important;
+          font-size: 11px;
+          color: rgba(255, 255, 255, 0.5);
           background: transparent !important;
           border: none !important;
           border-radius: 14px !important;
           overflow: hidden !important;
-          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+          transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
           cursor: pointer;
         }
         .liquid-btn .icon {
-          font-size: 24px !important;
+          font-size: 26px !important;
           line-height: 1 !important;
           transition: all 0.3s ease !important;
-          filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3)) !important;
+          filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4)) !important;
         }
         .liquid-btn.active {
           color: #00D4FF !important;
-          background: transparent !important;
+          background: rgba(0, 212, 255, 0.08) !important;
           border: none !important;
           box-shadow: none !important;
         }
         .liquid-btn.active .icon {
           color: #00D4FF !important;
-          filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.6)) !important;
-          transform: translateY(-1px) !important;
+          filter: drop-shadow(0 0 14px rgba(0, 212, 255, 0.7)) !important;
+          transform: translateY(-2px) scale(1.15) !important;
+        }
+        .liquid-btn:hover {
+          background: rgba(255, 255, 255, 0.05) !important;
+          color: rgba(255, 255, 255, 0.75) !important;
         }
         .liquid-btn:hover .icon {
           transform: translateY(-2px) scale(1.1) !important;
-          filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3)) !important;
-        }
-        .liquid-btn:hover {
-          color: rgba(255, 255, 255, 0.85) !important;
+          filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3)) !important;
         }
         .liquid-btn:active {
           transform: scale(0.92) !important;
@@ -182,16 +183,18 @@
         .liquid-btn::after {
           content: '';
           position: absolute;
-          bottom: 2px;
+          bottom: 3px;
+          left: 50%;
+          transform: translateX(-50%);
           width: 0;
           height: 3px;
           border-radius: 2px;
           background: #00D4FF;
           transition: all 0.3s ease;
-          box-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+          box-shadow: 0 0 10px rgba(0, 212, 255, 0.6);
         }
         .liquid-btn.active::after {
-          width: 20px !important;
+          width: 24px !important;
         }
 
         /* ===== 全息霓虹边框 ===== */
