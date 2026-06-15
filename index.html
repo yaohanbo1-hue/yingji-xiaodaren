@@ -1921,7 +1921,7 @@ body:not(.app-ready) #menuToolbar{display:none!important}
   <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
   <div class="game-header">
     <div class="mode-label" style="color:var(--neon-gold);">🎓 新手引导</div>
-    <div id="guideStep" style="font-size:14px;color:rgba(255,255,255,0.5);">1/6</div>
+    <div id="guideStep" style="font-size:14px;color:rgba(255,255,255,0.5);">8步引导</div>
   </div>
   <div style="position:relative;z-index:1;">
     <div id="guideProgress" style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:24px;overflow:hidden;">
@@ -1932,8 +1932,8 @@ body:not(.app-ready) #menuToolbar{display:none!important}
       <div id="guideIcon" style="font-size:64px;text-align:center;margin:20px 0;">📦</div>
     </div>
     <div style="display:flex;gap:12px;justify-content:center;">
-      <button class="btn btn-secondary" onclick="GuideEngine.prev()">上一步</button>
-      <button class="btn btn-primary" onclick="GuideEngine.next()">下一步</button>
+      <button class="btn btn-secondary" onclick="PageManager.navigate('menu')">返回菜单</button>
+      <button class="btn btn-primary" onclick="GuideEnhancer.restart()">开始引导</button>
     </div>
   </div>
 </div>

@@ -77,7 +77,7 @@ const GuideEnhancer = {
       title: '📕 底部工具栏',
       desc: '这里可以查看错题本、学习报告、分享成绩和设置。',
       target: '.menu-toolbar',
-      position: 'top',
+      position: 'center',
       action: null
     },
     {
@@ -175,6 +175,7 @@ const GuideEnhancer = {
       '<div class="guide-tooltip-footer">' +
         '<span class="guide-tooltip-progress">' + (this._currentStep + 1) + ' / ' + this._steps.length + '</span>' +
         '<div class="guide-tooltip-btns">' +
+          (!isFirst ? '<button class="guide-btn guide-btn-skip" onclick="GuideEnhancer.prev()">← 上一步</button>' : '') +
           (!isLast ? '<button class="guide-btn guide-btn-skip" onclick="GuideEnhancer.skip()">跳过</button>' : '') +
           '<button class="guide-btn guide-btn-next" onclick="GuideEnhancer.next()">' +
             (isLast ? '🚀 开始学习' : '下一步 →') +
@@ -230,10 +231,24 @@ const GuideEnhancer = {
     }
     
     if (typeof top === 'number') {
-      // 确保不超出屏幕
-      if (top < 10) top = rect.bottom + 15;
-      if (top + tipRect.height > window.innerHeight - 10) {
-        top = rect.top - tipRect.height - 15;
+      // 确保不超出屏幕，优先保持在计算位置，如果不合适则尝试反向，都不行则居中
+      var fitsAbove = rect.top - tipRect.height - 15 >= 10;
+      var fitsBelow = rect.bottom + 15 + tipRect.height <= window.innerHeight - 10;
+      
+      if (position === 'top' && !fitsAbove) {
+        if (fitsBelow) {
+          top = rect.bottom + 15;
+        } else {
+          this._tooltip.className = 'guide-tooltip guide-tooltip-center';
+          return;
+        }
+      } else if (position === 'bottom' && !fitsBelow) {
+        if (fitsAbove) {
+          top = rect.top - tipRect.height - 15;
+        } else {
+          this._tooltip.className = 'guide-tooltip guide-tooltip-center';
+          return;
+        }
       }
       tooltip.style.top = Math.max(10, top) + 'px';
     }
@@ -260,6 +275,13 @@ const GuideEnhancer = {
   next() {
     this._currentStep++;
     this._showStep();
+  },
+  
+  prev() {
+    if (this._currentStep > 0) {
+      this._currentStep--;
+      this._showStep();
+    }
   },
   
   skip() {
