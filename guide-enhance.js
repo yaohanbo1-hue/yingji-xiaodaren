@@ -165,75 +165,100 @@ const GuideEnhancer = {
   },
   
   _showStep() {
-    if (this._currentStep >= this._steps.length) {
-      this.complete();
-      return;
+    try {
+      if (this._currentStep >= this._steps.length) {
+        this.complete();
+        return;
+      }
+      
+      var step = this._steps[this._currentStep];
+      
+      // 清除之前的UI
+      this._clearUI();
+      
+      // 执行步骤动作（如展开菜单）
+      if (step.action) {
+        step.action();
+      }
+      
+      // 等待DOM更新
+      setTimeout(() => {
+        this._renderStep(step);
+      }, step.action ? 400 : 50);
+    } catch (e) {
+      console.error('GuideEnhancer._showStep error:', e);
+      // 出错时尝试跳到下一步，避免卡死
+      setTimeout(() => this.next(), 100);
     }
-    
-    var step = this._steps[this._currentStep];
-    
-    // 清除之前的UI
-    this._clearUI();
-    
-    // 执行步骤动作（如展开菜单）
-    if (step.action) {
-      step.action();
-    }
-    
-    // 等待DOM更新
-    setTimeout(() => {
-      this._renderStep(step);
-    }, step.action ? 400 : 50);
   },
   
   _renderStep(step) {
-    // 创建遮罩层
-    this._overlay = document.createElement('div');
-    this._overlay.className = 'guide-overlay';
-    // 不拦截点击 — 让用户可以正常操作
-    this._overlay.style.pointerEvents = 'none';
-    document.body.appendChild(this._overlay);
-    
-    // 高亮目标元素
-    if (step.target) {
-      var target = document.querySelector(step.target);
-      if (target) {
-        target.classList.add('guide-highlight');
-        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    try {
+      // 创建遮罩层
+      this._overlay = document.createElement('div');
+      this._overlay.className = 'guide-overlay';
+      // 不拦截点击 — 让用户可以正常操作
+      this._overlay.style.pointerEvents = 'none';
+      document.body.appendChild(this._overlay);
+      
+      // 高亮目标元素
+      if (step.target) {
+        var target = document.querySelector(step.target);
+        if (target) {
+          target.classList.add('guide-highlight');
+          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
       }
-    }
-    
-    // 创建提示气泡
-    this._tooltip = document.createElement('div');
-    this._tooltip.className = 'guide-tooltip guide-tooltip-' + step.position;
-    
-    var isLast = this._currentStep === this._steps.length - 1;
-    var isFirst = this._currentStep === 0;
-    
-    this._tooltip.innerHTML = 
-      '<div class="guide-tooltip-title">' + step.title + '</div>' +
-      '<div class="guide-tooltip-desc">' + step.desc + '</div>' +
-      '<div class="guide-tooltip-footer">' +
-        '<span class="guide-tooltip-progress">' + (this._currentStep + 1) + ' / ' + this._steps.length + '</span>' +
-        '<div class="guide-tooltip-btns">' +
-          (!isFirst ? '<button class="guide-btn guide-btn-skip" onclick="GuideEnhancer.prev()">← 上一步</button>' : '') +
-          (!isLast ? '<button class="guide-btn guide-btn-skip" onclick="GuideEnhancer.skip()">跳过</button>' : '') +
-          '<button class="guide-btn guide-btn-next" onclick="GuideEnhancer.next()">' +
-            (isLast ? '🚀 开始学习' : '下一步 →') +
-          '</button>' +
-        '</div>' +
-      '</div>';
-    document.body.appendChild(this._tooltip);
-    
-    // 定位提示气泡
-    if (step.target && step.position !== 'center') {
-      var target = document.querySelector(step.target);
-      if (target) {
-        this._positionTooltip(target, step.position);
-      } else {
-        // 目标不存在，居中显示
-        this._tooltip.className = 'guide-tooltip guide-tooltip-center';
+      
+      // 创建提示气泡
+      this._tooltip = document.createElement('div');
+      this._tooltip.className = 'guide-tooltip guide-tooltip-' + step.position;
+      
+      var isLast = this._currentStep === this._steps.length - 1;
+      var isFirst = this._currentStep === 0;
+      
+      this._tooltip.innerHTML = 
+        '<div class="guide-tooltip-title">' + step.title + '</div>' +
+        '<div class="guide-tooltip-desc">' + step.desc + '</div>' +
+        '<div class="guide-tooltip-footer">' +
+          '<span class="guide-tooltip-progress">' + (this._currentStep + 1) + ' / ' + this._steps.length + '</span>' +
+          '<div class="guide-tooltip-btns">' +
+            (!isFirst ? '<button class="guide-btn guide-btn-skip" onclick="GuideEnhancer.prev()">← 上一步</button>' : '') +
+            (!isLast ? '<button class="guide-btn guide-btn-skip" onclick="GuideEnhancer.skip()">跳过</button>' : '') +
+            '<button class="guide-btn guide-btn-next" onclick="GuideEnhancer.next()">' +
+              (isLast ? '🚀 开始学习' : '下一步 →') +
+            '</button>' +
+          '</div>' +
+        '</div>';
+      document.body.appendChild(this._tooltip);
+      
+      // 定位提示气泡
+      if (step.target && step.position !== 'center') {
+        var target = document.querySelector(step.target);
+        if (target) {
+          this._positionTooltip(target, step.position);
+        } else {
+          // 目标不存在，居中显示
+          this._tooltip.className = 'guide-tooltip guide-tooltip-center';
+        }
       }
+    } catch (e) {
+      console.error('GuideEnhancer._renderStep error:', e);
+      // 出错时居中显示，确保用户至少能看到引导
+      if (this._tooltip) this._tooltip.remove();
+      this._tooltip = document.createElement('div');
+      this._tooltip.className = 'guide-tooltip guide-tooltip-center';
+      this._tooltip.innerHTML = 
+        '<div class="guide-tooltip-title">引导提示</div>' +
+        '<div class="guide-tooltip-desc">继续下一步？</div>' +
+        '<div class="guide-tooltip-footer">' +
+          '<span class="guide-tooltip-progress">' + (this._currentStep + 1) + ' / ' + this._steps.length + '</span>' +
+          '<div class="guide-tooltip-btns">' +
+            '<button class="guide-btn guide-btn-skip" onclick="GuideEnhancer.skip()">跳过</button>' +
+            '<button class="guide-btn guide-btn-next" onclick="GuideEnhancer.next()">下一步 →</button>' +
+          '</div>' +
+        '</div>';
+      document.body.appendChild(this._tooltip);
     }
   },
   
