@@ -239,6 +239,13 @@ const GuideEnhancer = {
   
   _positionTooltip(target, position) {
     var rect = target.getBoundingClientRect();
+    
+    // 如果目标元素不可见（宽高为0），居中显示
+    if (rect.width === 0 || rect.height === 0) {
+      this._tooltip.className = 'guide-tooltip guide-tooltip-center';
+      return;
+    }
+    
     var tooltip = this._tooltip;
     
     // 先显示以获取尺寸
