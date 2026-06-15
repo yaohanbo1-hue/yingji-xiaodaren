@@ -137,8 +137,9 @@
           flex-direction: column !important;
           align-items: center !important;
           justify-content: center !important;
-          padding: 8px 10px !important;
-          min-width: 60px !important;
+          padding: 8px 6px !important;
+          flex: 1 !important;
+          max-width: 90px !important;
           min-height: 52px !important;
           gap: 5px !important;
           font-size: 10px;

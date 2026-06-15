@@ -158,17 +158,22 @@
 /* 底部导航栏 — 最终设计 v4：精致、通透、现代 */
 .menu-toolbar {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
-  gap: 0;
-  padding: 10px 0 calc(10px + env(safe-area-inset-bottom, 0px));
+  gap: 4px;
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
   position: fixed;
   bottom: 0; left: 0; right: 0;
   z-index: 10000;
+  max-width: 900px;
+  margin: 0 auto;
   background: rgba(10, 10, 28, 0.88) !important;
   backdrop-filter: blur(24px) saturate(200%) !important;
   -webkit-backdrop-filter: blur(24px) saturate(200%) !important;
   border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  overflow: hidden;
 }
 .menu-toolbar::before {
   content: '';
@@ -183,13 +188,14 @@
 /* 工具按钮 — 精致图标+微标签，带选中指示 */
 .tool-btn {
   position: relative;
+  flex: 1;
+  max-width: 90px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 5px;
-  padding: 8px 10px;
-  min-width: 60px;
+  padding: 8px 6px;
   min-height: 52px;
   border: none;
   border-radius: 14px;
