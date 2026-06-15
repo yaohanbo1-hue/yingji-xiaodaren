@@ -109,7 +109,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <!-- ===== 预加载最关键资源（不超过5个，避免带宽竞争） ===== -->
-<link rel="preload" href="all-styles.css?v=15" as="style">
+<link rel="preload" href="all-styles.css?v=16" as="style">
 <link rel="preload" href="game.js" as="script">
 <link rel="preload" href="cards.js" as="script">
 <link rel="preload" href="scenarios.js" as="script">
@@ -123,6 +123,7 @@ body:not(.app-ready) .page{display:none!important}
 body:not(.app-ready) #menuToolbar,body:not(.app-ready) .menu-toolbar{display:none!important}
 /* ===== 底部栏精致设计 v5（内联保底） ===== */
 .menu-toolbar{display:flex!important;justify-content:space-around!important;align-items:center!important;gap:2px!important;padding:8px 6px calc(8px + env(safe-area-inset-bottom,0px))!important;position:fixed!important;bottom:0!important;left:0!important;right:0!important;z-index:10000!important;max-width:900px!important;margin:0 auto!important;background:rgba(10,10,28,0.92)!important;backdrop-filter:blur(28px) saturate(220%)!important;-webkit-backdrop-filter:blur(28px) saturate(220%)!important;border-top:1px solid rgba(0,212,255,0.12)!important;border-top-left-radius:24px!important;border-top-right-radius:24px!important;overflow:hidden!important;box-shadow:0 -4px 24px rgba(0,0,0,0.4),0 -1px 0 rgba(0,212,255,0.08)!important}
+.menu-toolbar::before{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:100vw;height:100%;background:rgba(10,10,28,0.92);z-index:-1;pointer-events:none}
 .menu-toolbar .tool-btn{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:3px!important;padding:6px 2px!important;flex:1!important;max-width:100px!important;min-height:56px!important;border:none!important;border-radius:14px!important;background:transparent!important;color:rgba(255,255,255,0.5)!important;cursor:pointer;position:relative!important;transition:all 0.25s ease!important}
 .menu-toolbar .tool-btn .icon{font-size:26px!important;line-height:1!important;transition:all 0.3s ease!important;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.4))!important}
 .menu-toolbar .tool-btn .label{font-size:11px!important;font-weight:500!important;letter-spacing:0.4px!important;color:inherit!important;line-height:1!important}
@@ -133,7 +134,7 @@ body:not(.app-ready) #menuToolbar,body:not(.app-ready) .menu-toolbar{display:non
 .menu-toolbar .tool-btn.active .label{color:#00D4FF!important;font-weight:600!important}
 .menu-toolbar .tool-btn.active::after{width:24px!important}
 /* ===== 页面内容底部渐变过渡 ===== */
-.page::after{content:'';position:fixed;bottom:70px;left:0;right:0;height:30px;background:linear-gradient(to top,rgba(8,8,24,0.85),transparent);pointer-events:none;z-index:9999}
+.page::after{content:'';position:fixed;bottom:70px;left:0;right:0;height:50px;background:linear-gradient(to top,rgba(8,8,24,0.95),transparent);pointer-events:none;z-index:9999}
 /* ===== 全局页面优化 ===== */
 .page{padding-bottom:100px!important}
 /* ===== Logo区域紧凑优化 ===== */
@@ -461,7 +462,7 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
     }
   }
 </style>
-<link rel="stylesheet" href="all-styles.css?v=15">
+<link rel="stylesheet" href="all-styles.css?v=16">
   <link rel="stylesheet" href="v5-glass-3d.css?v=9">
   <link rel="stylesheet" href="clean-ui.css?v=9">
   <link rel="stylesheet" href="bg-premium.css?v=9">
