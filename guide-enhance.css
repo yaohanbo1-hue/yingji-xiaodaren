@@ -19,9 +19,21 @@
   to { opacity: 1; }
 }
 
-/* 高亮元素 */
+/* 高亮元素 — 不改变已有定位方式（fixed/absolute/sticky 保持原样） */
 .guide-highlight {
+  z-index: 99999 !important;
+  animation: guidePulse 1.5s ease-in-out infinite;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.5), 
+              0 0 20px rgba(59, 130, 246, 0.3) !important;
+}
+
+/* 非定位元素需要 position: relative 才能生效 z-index */
+.guide-highlight:not([style*="position: fixed"]):not([style*="position: absolute"]):not([style*="position: sticky"]) {
   position: relative;
+}
+
+/* 已定位元素的高亮（JS 动态添加） */
+.guide-highlight-positioned {
   z-index: 99999 !important;
   animation: guidePulse 1.5s ease-in-out infinite;
   box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.5), 

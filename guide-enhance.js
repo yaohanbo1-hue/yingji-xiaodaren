@@ -261,7 +261,14 @@ const GuideEnhancer = {
       if (step.target) {
         var target = document.querySelector(step.target);
         if (target) {
-          target.classList.add('guide-highlight');
+          var computedStyle = window.getComputedStyle(target);
+          var pos = computedStyle.position;
+          // 已定位元素（fixed/absolute/sticky）不改变 position，直接加样式
+          if (pos === 'fixed' || pos === 'absolute' || pos === 'sticky') {
+            target.classList.add('guide-highlight-positioned');
+          } else {
+            target.classList.add('guide-highlight');
+          }
           target.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       }
@@ -403,6 +410,10 @@ const GuideEnhancer = {
     // 移除高亮
     document.querySelectorAll('.guide-highlight').forEach(function(el) {
       el.classList.remove('guide-highlight');
+    });
+    // 移除定位元素的高亮
+    document.querySelectorAll('.guide-highlight-positioned').forEach(function(el) {
+      el.classList.remove('guide-highlight-positioned');
     });
     // 移除键盘和resize监听
     if (this._boundKeydown) {
