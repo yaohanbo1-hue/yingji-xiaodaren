@@ -35,10 +35,7 @@ const GuideEnhancer = {
       target: '#catBtnLearn',
       position: 'bottom',
       action: function() {
-        // 自动展开学习中心
-        if (typeof MenuManager !== 'undefined' && MenuManager.toggleCategory) {
-          MenuManager.toggleCategory('learn');
-        }
+        GuideEnhancer._expandMenu('learn');
       }
     },
     {
@@ -46,14 +43,18 @@ const GuideEnhancer = {
       desc: '每天免费开盲盒，收集369张防灾知识卡牌！点击即可开启。',
       target: '.learn-grid .mode-btn:first-child',
       position: 'bottom',
-      action: null
+      action: function() {
+        GuideEnhancer._expandMenu('learn');
+      }
     },
     {
       title: '📅 每日签到',
       desc: '每天打卡学习，连续签到获得额外奖励！',
       target: '.learn-grid .mode-btn:nth-child(2)',
       position: 'bottom',
-      action: null
+      action: function() {
+        GuideEnhancer._expandMenu('learn');
+      }
     },
     {
       title: '⚔️ 闯关挑战',
@@ -61,9 +62,7 @@ const GuideEnhancer = {
       target: '#catBtnBattle',
       position: 'bottom',
       action: function() {
-        if (typeof MenuManager !== 'undefined' && MenuManager.toggleCategory) {
-          MenuManager.toggleCategory('battle');
-        }
+        GuideEnhancer._expandMenu('battle');
       }
     },
     {
@@ -89,6 +88,49 @@ const GuideEnhancer = {
     }
   ],
   
+  _expandMenu(category) {
+    var MenuMgr = window.MenuManager;
+    if (!MenuMgr) return;
+    // 优先使用 _expandSection（直接展开，不切换）
+    if (typeof MenuMgr._expandSection === 'function') {
+      MenuMgr._expandSection(category);
+      return;
+    }
+    // 降级：直接操作 DOM
+    var sections = document.querySelectorAll('.menu-section');
+    var btnLearn = document.getElementById('catBtnLearn');
+    var btnBattle = document.getElementById('catBtnBattle');
+    if (category === 'learn') {
+      if (sections[0]) {
+        sections[0].classList.add('expanded');
+        sections[0].style.display = '';
+        var grid = sections[0].querySelector('.menu-grid');
+        if (grid) { grid.style.display = ''; grid.style.opacity = '1'; grid.style.maxHeight = 'none'; }
+      }
+      if (btnLearn) btnLearn.classList.add('active');
+      if (sections[1]) { sections[1].style.display = 'none'; sections[1].classList.remove('expanded'); }
+      if (btnBattle) btnBattle.classList.remove('active');
+    } else if (category === 'battle') {
+      if (sections[0]) { sections[0].style.display = 'none'; sections[0].classList.remove('expanded'); }
+      if (btnLearn) btnLearn.classList.remove('active');
+      if (sections[1]) {
+        sections[1].classList.add('expanded');
+        sections[1].style.display = '';
+        var grid = sections[1].querySelector('.menu-grid');
+        if (grid) { grid.style.display = ''; grid.style.opacity = '1'; grid.style.maxHeight = 'none'; }
+      }
+      if (btnBattle) btnBattle.classList.add('active');
+    }
+  },
+  
+  _checkTarget(step) {
+    if (!step.target) return true;
+    var el = document.querySelector(step.target);
+    if (!el) return false;
+    var rect = el.getBoundingClientRect();
+    return rect.width > 0 && rect.height > 0;
+  },
+
   init() {
     // 首次进入自动触发
     if (!localStorage.getItem(this._storageKey)) {
@@ -153,6 +195,9 @@ const GuideEnhancer = {
     document.addEventListener('keydown', this._boundKeydown);
     window.addEventListener('resize', this._boundResize);
     
+    // 确保学习中心展开，让后续步骤能定位到 .learn-grid 内的元素
+    this._expandMenu('learn');
+    
     // 确保在主菜单
     if (typeof PageManager !== 'undefined') {
       PageManager.navigate('menu');
@@ -181,13 +226,24 @@ const GuideEnhancer = {
         step.action();
       }
       
-      // 等待DOM更新
+      // 等待DOM更新后渲染
       setTimeout(() => {
-        this._renderStep(step);
+        // 如果目标元素不存在，尝试展开对应的菜单再检查一次
+        if (step.target && !this._checkTarget(step)) {
+          var targetSel = step.target;
+          if (targetSel.indexOf('learn-grid') >= 0 || targetSel === '#catBtnLearn') {
+            this._expandMenu('learn');
+          } else if (targetSel.indexOf('battle-grid') >= 0 || targetSel === '#catBtnBattle') {
+            this._expandMenu('battle');
+          }
+          // 再次延迟渲染，等待菜单展开动画
+          setTimeout(() => this._renderStep(step), 300);
+        } else {
+          this._renderStep(step);
+        }
       }, step.action ? 400 : 50);
     } catch (e) {
       console.error('GuideEnhancer._showStep error:', e);
-      // 出错时尝试跳到下一步，避免卡死
       setTimeout(() => this.next(), 100);
     }
   },
