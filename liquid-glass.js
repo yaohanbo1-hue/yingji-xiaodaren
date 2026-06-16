@@ -577,7 +577,7 @@
 
     // 磁性吸附按钮
     _initMagnetic() {
-      const buttons = document.querySelectorAll('.btn, .tool-btn, .mode-btn');
+      const buttons = document.querySelectorAll('.btn, .tool-btn');
       buttons.forEach(btn => {
         btn.classList.add('liquid-btn');
         btn.addEventListener('mousemove', (e) => {

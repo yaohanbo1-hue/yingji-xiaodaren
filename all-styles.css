@@ -3160,6 +3160,7 @@ body {
   overflow: hidden;
   min-height: 220px !important;
   width: 100% !important;
+  max-width: none !important;
   box-sizing: border-box !important;
 }
 
@@ -5431,6 +5432,7 @@ body {
   overflow: hidden;
   min-height: 220px !important;
   width: 100% !important;
+  max-width: none !important;
   box-sizing: border-box !important;
 }
 
@@ -7886,6 +7888,7 @@ body {
   transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px);
   min-height: 220px !important;
   width: 100% !important;
+  max-width: none !important;
   box-sizing: border-box !important;
 }
 

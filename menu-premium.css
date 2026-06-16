@@ -115,6 +115,7 @@
   overflow: hidden;
   min-height: 220px !important;
   width: 100% !important;
+  max-width: none !important;
   box-sizing: border-box !important;
 }
 
