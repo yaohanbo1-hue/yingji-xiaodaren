@@ -242,13 +242,34 @@ body {
   background: var(--glass-bg) !important;
   backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
-  border: 1px solid var(--glass-border) !important;
-  border-radius: 10px !important;
-  padding: 14px 12px !important;
+  border: 2px solid var(--glass-border) !important;
+  border-radius: 28px !important;
+  padding: 36px 24px !important;
   box-shadow: none !important;
   transition: all 0.2s ease !important;
   position: relative;
   overflow: hidden;
+  min-height: 180px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.mode-btn .mode-icon {
+  font-size: 56px !important;
+  margin-bottom: 10px !important;
+}
+
+.mode-btn .mode-name {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  margin-top: 8px !important;
+}
+
+.mode-btn .mode-desc {
+  font-size: 14px !important;
+  margin-top: 5px !important;
+  line-height: 1.4 !important;
+  color: rgba(255,255,255,0.6) !important;
 }
 
 .mode-btn::before {
