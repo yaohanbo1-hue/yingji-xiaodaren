@@ -453,13 +453,13 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
   }
   .learn-grid, .battle-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    grid-template-columns: 1fr;
+    gap: 14px;
     padding: 0 0 20px;
   }
-  @media (max-width: 480px) {
+  @media (min-width: 600px) {
     .learn-grid, .battle-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 </style>
