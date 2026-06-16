@@ -102,15 +102,15 @@
 <link rel="mask-icon" href="favicon.svg" color="#00d4ff">
 <link rel="manifest" href="manifest.json">
 
-<title>应急小达人 — 防灾教育互动游戏 v24</title>
-<meta name="version" content="v24">
+<title>应急小达人 — 防灾教育互动游戏 v39</title>
+<meta name="version" content="v39">
 
 <!-- ===== 资源预连接：字体 CDN ===== -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <!-- ===== 预加载最关键资源（不超过5个，避免带宽竞争） ===== -->
-<link rel="preload" href="all-styles.css?v=31" as="style">
+<link rel="preload" href="all-styles.css?v=39" as="style">
 <link rel="preload" href="game.js" as="script">
 <link rel="preload" href="cards.js" as="script">
 <link rel="preload" href="scenarios.js" as="script">
@@ -122,94 +122,102 @@
 #loadingScreen.hidden{opacity:0;visibility:hidden;pointer-events:none}
 body:not(.app-ready) .page{display:none!important}
 body:not(.app-ready) #menuToolbar,body:not(.app-ready) .menu-toolbar{display:none!important}
-/* ===== 底部栏精致设计 v6（内联保底） ===== */
-.menu-toolbar{display:flex!important;justify-content:space-around!important;align-items:center!important;gap:2px!important;padding:8px 6px calc(8px + env(safe-area-inset-bottom,0px))!important;position:fixed!important;bottom:0!important;left:0!important;right:0!important;z-index:10000!important;max-width:900px!important;margin:0 auto!important;background:rgba(10,10,28,0.92)!important;backdrop-filter:blur(28px) saturate(220%)!important;-webkit-backdrop-filter:blur(28px) saturate(220%)!important;border-top:1px solid rgba(0,212,255,0.12)!important;border-top-left-radius:24px!important;border-top-right-radius:24px!important;overflow:visible!important;box-shadow:0 -4px 24px rgba(0,0,0,0.4),0 -1px 0 rgba(0,212,255,0.08)!important;transform:translateZ(0)!important;-webkit-transform:translateZ(0)!important}
-.menu-toolbar .tool-btn{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:3px!important;padding:6px 2px!important;flex:1!important;max-width:100px!important;min-height:56px!important;border:none!important;border-radius:14px!important;background:transparent!important;color:rgba(255,255,255,0.5)!important;cursor:pointer;position:relative!important;transition:all 0.25s ease!important}
-.menu-toolbar .tool-btn .icon{font-size:26px!important;line-height:1!important;transition:all 0.3s ease!important;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.4))!important}
-.menu-toolbar .tool-btn .label{font-size:11px!important;font-weight:500!important;letter-spacing:0.4px!important;color:inherit!important;line-height:1!important}
-.menu-toolbar .tool-btn::after{content:''!important;position:absolute!important;bottom:3px!important;left:50%!important;transform:translateX(-50%)!important;width:0!important;height:3px!important;border-radius:2px!important;background:#00D4FF!important;transition:all 0.3s ease!important;box-shadow:0 0 10px rgba(0,212,255,0.6)!important}
-.menu-toolbar .tool-btn:hover{background:rgba(255,255,255,0.05)!important;color:rgba(255,255,255,0.75)!important}
-.menu-toolbar .tool-btn.active{color:#00D4FF!important;background:rgba(0,212,255,0.08)!important}
-.menu-toolbar .tool-btn.active .icon{filter:drop-shadow(0 0 14px rgba(0,212,255,0.7))!important;transform:translateY(-2px) scale(1.15)!important}
-.menu-toolbar .tool-btn.active .label{color:#00D4FF!important;font-weight:600!important}
-.menu-toolbar .tool-btn.active::after{width:24px!important}
+/* ===== 底部栏精致设计 v7（内联保底） ===== */
+.menu-toolbar{display:flex!important;justify-content:space-around!important;align-items:center!important;gap:4px!important;padding:10px 8px calc(10px + env(safe-area-inset-bottom,0px))!important;position:fixed!important;bottom:0!important;left:0!important;right:0!important;z-index:10000!important;max-width:900px!important;margin:0 auto!important;background:rgba(12,12,35,0.94)!important;backdrop-filter:blur(32px) saturate(240%)!important;-webkit-backdrop-filter:blur(32px) saturate(240%)!important;border-top:1px solid rgba(0,212,255,0.15)!important;border-top-left-radius:28px!important;border-top-right-radius:28px!important;overflow:visible!important;box-shadow:0 -6px 30px rgba(0,0,0,0.5),0 -2px 0 rgba(0,212,255,0.1)!important;transform:translateZ(0)!important;-webkit-transform:translateZ(0)!important}
+.menu-toolbar .tool-btn{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;padding:8px 3px!important;flex:1!important;max-width:100px!important;min-height:60px!important;border:none!important;border-radius:16px!important;background:transparent!important;color:rgba(255,255,255,0.55)!important;cursor:pointer;position:relative!important;transition:all 0.3s cubic-bezier(0.23,1,0.32,1)!important}
+.menu-toolbar .tool-btn .icon{font-size:28px!important;line-height:1!important;transition:all 0.3s ease!important;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.4))!important}
+.menu-toolbar .tool-btn .label{font-size:12px!important;font-weight:600!important;letter-spacing:0.5px!important;color:inherit!important;line-height:1!important}
+.menu-toolbar .tool-btn::after{content:''!important;position:absolute!important;bottom:4px!important;left:50%!important;transform:translateX(-50%)!important;width:0!important;height:4px!important;border-radius:3px!important;background:#00D4FF!important;transition:all 0.35s ease!important;box-shadow:0 0 12px rgba(0,212,255,0.8)!important}
+.menu-toolbar .tool-btn:hover{background:rgba(255,255,255,0.06)!important;color:rgba(255,255,255,0.8)!important;transform:translateY(-2px)!important}
+.menu-toolbar .tool-btn.active{color:#00D4FF!important;background:rgba(0,212,255,0.12)!important;box-shadow:0 0 20px rgba(0,212,255,0.15)!important}
+.menu-toolbar .tool-btn.active .icon{filter:drop-shadow(0 0 16px rgba(0,212,255,0.8))!important;transform:translateY(-3px) scale(1.2)!important}
+.menu-toolbar .tool-btn.active .label{color:#00D4FF!important;font-weight:700!important;letter-spacing:0.6px!important}
+.menu-toolbar .tool-btn.active::after{width:28px!important}
 /* ===== 页面内容底部渐变过渡 ===== */
-.page::after{content:'';position:fixed;bottom:70px;left:0;right:0;height:40px;background:linear-gradient(to top,rgba(8,8,24,0.6),transparent);pointer-events:none;z-index:9999}
+.page::after{content:'';position:fixed;bottom:75px;left:0;right:0;height:50px;background:linear-gradient(to top,rgba(10,10,30,0.7),transparent);pointer-events:none;z-index:9999}
 /* ===== 全局页面优化 ===== */
-.page{padding-bottom:120px!important}
-/* ===== Logo区域紧凑优化 ===== */
-.menu-logo{padding:10px 0 6px!important;margin-bottom:4px!important}
-.menu-logo-icon{font-size:42px!important;margin-bottom:2px!important}
-.menu-logo-title{font-size:22px!important;margin:2px 0!important;letter-spacing:1px!important}
-.menu-logo-sub{font-size:12px!important;margin:2px 0 4px!important;opacity:0.8!important}
-.version-tag{font-size:10px!important;padding:3px 10px!important;margin-top:2px!important}
-/* ===== 主分类按钮优化 ===== */
-.menu-category-btns{gap:12px!important;padding:10px 12px!important;margin-bottom:6px!important}
-.menu-cat-btn{padding:32px 24px!important;border-radius:28px!important;min-height:140px!important;box-shadow:0 8px 32px rgba(0,0,0,0.3),0 2px 8px rgba(0,0,0,0.15)!important;border:2px solid rgba(255,255,255,0.1)!important}
-.menu-cat-btn .cat-icon{font-size:52px!important;margin-bottom:10px!important}
-.menu-cat-btn .cat-title{font-size:20px!important;font-weight:700!important;margin-top:6px!important}
-.menu-cat-btn .cat-count{font-size:14px!important;margin-top:5px!important;color:rgba(255,255,255,0.6)!important}
+.page{padding-bottom:140px!important}
+/* ===== Logo区域大气优化 ===== */
+.menu-logo{padding:16px 0 10px!important;margin-bottom:8px!important}
+.menu-logo-icon{font-size:52px!important;margin-bottom:4px!important;filter:drop-shadow(0 0 16px rgba(0,212,255,0.3))!important}
+.menu-logo-title{font-size:28px!important;margin:4px 0!important;letter-spacing:2px!important;font-weight:800!important}
+.menu-logo-sub{font-size:14px!important;margin:4px 0 6px!important;opacity:0.85!important;letter-spacing:1px!important}
+.version-tag{font-size:11px!important;padding:4px 14px!important;margin-top:4px!important;border-radius:20px!important}
+/* ===== 主分类按钮大气优化 ===== */
+body #page-menu .menu-category-btns{gap:16px!important;padding:14px 16px!important;margin-bottom:10px!important}
+body #page-menu .menu-cat-btn{padding:42px 28px!important;border-radius:36px!important;min-height:160px!important;box-shadow:0 12px 48px rgba(0,0,0,0.35),0 4px 12px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.1)!important;border:2px solid rgba(255,255,255,0.14)!important;transition:all 0.35s cubic-bezier(0.23,1,0.32,1)!important}
+body #page-menu .menu-cat-btn:hover{transform:translateY(-4px)!important;box-shadow:0 16px 56px rgba(0,0,0,0.4),0 6px 16px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.12)!important}
+body #page-menu .menu-cat-btn .cat-icon{font-size:58px!important;margin-bottom:12px!important}
+body #page-menu .menu-cat-btn .cat-title{font-size:24px!important;font-weight:800!important;margin-top:8px!important;letter-spacing:0.5px!important}
+body #page-menu .menu-cat-btn .cat-count{font-size:15px!important;margin-top:6px!important;color:rgba(255,255,255,0.65)!important;font-weight:500!important}
 /* ===== 返回分类按钮优化 ===== */
-.back-to-categories{padding:12px 20px!important;margin:8px 12px 12px!important;border-radius:14px!important;font-size:15px!important;background:rgba(255,255,255,0.06)!important;border:1px solid rgba(255,255,255,0.1)!important}
-/* ===== 模块区域优化 ===== */
-.menu-section.expanded{padding-bottom:120px!important;margin-bottom:20px!important}
-.menu-section-title{font-size:16px!important;padding:12px 16px!important;margin:8px 12px 10px!important;border-radius:14px!important;background:rgba(255,255,255,0.04)!important}
-.menu-grid{gap:8px!important;padding:0 0 20px!important;display:grid!important;grid-template-columns:repeat(2,1fr)!important;justify-items:stretch!important;align-items:stretch!important}
-.mode-btn{padding:40px 28px!important;border-radius:32px!important;min-height:200px!important;width:100%!important;box-sizing:border-box!important;box-shadow:0 12px 50px rgba(0,0,0,0.3),0 4px 16px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.08)!important;border:2px solid rgba(255,255,255,0.12)!important}
-.mode-btn .mode-icon{font-size:64px!important;margin-bottom:12px!important}
-.mode-btn .mode-name{font-size:22px!important;font-weight:700!important;margin-top:10px!important}
-.mode-desc{font-size:15px!important;margin-top:6px!important;line-height:1.45!important;color:rgba(255,255,255,0.6)!important}
-.mode-btn .mode-badge{font-size:13px!important;padding:6px 14px!important;border-radius:12px!important;top:14px!important;right:14px!important}
+body #page-menu .back-to-categories{padding:14px 24px!important;margin:10px 16px 14px!important;border-radius:16px!important;font-size:16px!important;font-weight:600!important;background:rgba(255,255,255,0.07)!important;border:1px solid rgba(255,255,255,0.12)!important;transition:all 0.3s ease!important}
+body #page-menu .back-to-categories:hover{background:rgba(255,255,255,0.1)!important;transform:translateY(-2px)!important}
+/* ===== 模块区域大气优化（高特异性覆盖） ===== */
+body #page-menu .menu-section.expanded{padding-bottom:140px!important;margin-bottom:24px!important}
+body #page-menu .menu-section-title{font-size:18px!important;padding:14px 18px!important;margin:10px 16px 12px!important;border-radius:16px!important;background:rgba(255,255,255,0.05)!important;border:1px solid rgba(255,255,255,0.08)!important;font-weight:700!important;letter-spacing:0.5px!important}
+body #page-menu .menu-grid{gap:10px!important;padding:0 0 24px!important;display:grid!important;grid-template-columns:repeat(2,1fr)!important;justify-items:stretch!important;align-items:stretch!important}
+body #page-menu .mode-btn{padding:48px 24px!important;border-radius:36px!important;min-height:220px!important;width:100%!important;box-sizing:border-box!important;box-shadow:0 16px 56px rgba(0,0,0,0.35),0 6px 20px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.1)!important;border:2px solid rgba(255,255,255,0.14)!important;transition:all 0.35s cubic-bezier(0.23,1,0.32,1)!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important}
+body #page-menu .mode-btn:hover{transform:translateY(-4px)!important;box-shadow:0 20px 64px rgba(0,0,0,0.4),0 8px 24px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.12)!important;border-color:rgba(0,212,255,0.2)!important}
+body #page-menu .mode-btn:active{transform:translateY(-2px) scale(0.98)!important}
+body #page-menu .mode-btn .mode-icon{font-size:72px!important;margin-bottom:14px!important}
+body #page-menu .mode-btn .mode-name{font-size:24px!important;font-weight:800!important;margin-top:12px!important;letter-spacing:0.5px!important}
+body #page-menu .mode-desc{font-size:15px!important;margin-top:8px!important;line-height:1.5!important;color:rgba(255,255,255,0.65)!important;font-weight:500!important}
+body #page-menu .mode-btn .mode-badge{font-size:14px!important;padding:7px 16px!important;border-radius:14px!important;top:16px!important;right:16px!important;font-weight:700!important;box-shadow:0 2px 10px rgba(0,0,0,0.3)!important}
 /* ===== 底部统计栏优化 ===== */
-.menu-stats{padding:12px 16px!important;margin:8px 12px 20px!important;border-radius:14px!important;font-size:13px!important;gap:20px!important;background:rgba(255,255,255,0.05)!important;border:1px solid rgba(255,255,255,0.08)!important}
-/* ===== 子页面通用优化 ===== */
-.page-content{padding:60px 8px 120px!important;overflow-y:auto!important;height:100vh!important}
-.back-float{top:12px!important;left:12px!important;padding:10px 16px!important;font-size:15px!important;border-radius:12px!important;background:rgba(255,255,255,0.08)!important;border:1px solid rgba(255,255,255,0.1)!important}
-.preview-header{padding:20px 0 14px!important;margin-bottom:10px!important}
-.preview-icon{font-size:42px!important;margin-bottom:6px!important}
-.preview-title{font-size:22px!important;margin-bottom:6px!important;font-weight:700!important}
-.preview-desc{font-size:13px!important;max-width:320px!important;margin:6px auto!important;color:rgba(255,255,255,0.6)!important}
-.preview-container{padding:0 12px 40px!important}
-/* ===== 设置页面优化 ===== */
-.settings-header{padding:20px 0 14px!important;margin-bottom:10px!important}
-.settings-header-icon{font-size:42px!important;margin-bottom:6px!important}
-.settings-title{font-size:22px!important;margin-bottom:4px!important;font-weight:700!important}
-.settings-subtitle{font-size:13px!important;color:rgba(255,255,255,0.6)!important}
-.settings-container{padding:0 12px 40px!important}
-.settings-section{margin-bottom:24px!important}
-.settings-section-title{font-size:15px!important;padding:10px 0!important;margin-bottom:10px!important;color:rgba(255,255,255,0.7)!important;font-weight:600!important}
-.settings-card{padding:14px 16px!important;margin-bottom:12px!important;border-radius:16px!important;background:rgba(255,255,255,0.04)!important;border:1px solid rgba(255,255,255,0.08)!important}
-.settings-card-icon{font-size:24px!important;width:40px!important;height:40px!important;border-radius:12px!important}
-.settings-card-name{font-size:15px!important;font-weight:600!important}
-.settings-card-desc{font-size:12px!important;color:rgba(255,255,255,0.55)!important}
-.settings-card-value{font-size:14px!important;color:rgba(255,255,255,0.7)!important}
-/* ===== 游戏头部优化 ===== */
-.game-header{padding:14px 18px!important;margin-bottom:10px!important}
-.game-header-title{font-size:20px!important;font-weight:700!important}
-.game-header-sub{font-size:13px!important;color:rgba(255,255,255,0.6)!important}
+body #page-menu .menu-stats{padding:14px 20px!important;margin:10px 16px 24px!important;border-radius:18px!important;font-size:14px!important;gap:24px!important;background:rgba(255,255,255,0.06)!important;border:1px solid rgba(255,255,255,0.1)!important;font-weight:500!important}
+/* ===== 子页面通用大气优化 ===== */
+.page-content{padding:70px 12px 140px!important;overflow-y:auto!important;height:100vh!important}
+.back-float{top:14px!important;left:14px!important;padding:12px 18px!important;font-size:16px!important;border-radius:14px!important;font-weight:600!important;background:rgba(255,255,255,0.1)!important;border:1px solid rgba(255,255,255,0.12)!important;backdrop-filter:blur(12px)!important}
+.preview-header{padding:28px 0 18px!important;margin-bottom:14px!important}
+.preview-icon{font-size:48px!important;margin-bottom:8px!important}
+.preview-title{font-size:28px!important;margin-bottom:8px!important;font-weight:800!important;letter-spacing:0.5px!important}
+.preview-desc{font-size:14px!important;max-width:340px!important;margin:8px auto!important;color:rgba(255,255,255,0.65)!important;line-height:1.5!important}
+.preview-container{padding:0 16px 48px!important}
+/* ===== 设置页面大气优化 ===== */
+.settings-header{padding:28px 0 18px!important;margin-bottom:14px!important}
+.settings-header-icon{font-size:48px!important;margin-bottom:8px!important}
+.settings-title{font-size:28px!important;margin-bottom:6px!important;font-weight:800!important;letter-spacing:0.5px!important}
+.settings-subtitle{font-size:14px!important;color:rgba(255,255,255,0.65)!important;line-height:1.5!important}
+.settings-container{padding:0 16px 48px!important}
+.settings-section{margin-bottom:32px!important}
+.settings-section-title{font-size:16px!important;padding:12px 0!important;margin-bottom:12px!important;color:rgba(255,255,255,0.75)!important;font-weight:700!important;letter-spacing:0.5px!important}
+.settings-card{padding:16px 20px!important;margin-bottom:14px!important;border-radius:18px!important;background:rgba(255,255,255,0.05)!important;border:1px solid rgba(255,255,255,0.1)!important;transition:all 0.3s ease!important}
+.settings-card:hover{background:rgba(255,255,255,0.07)!important;border-color:rgba(255,255,255,0.14)!important}
+.settings-card-icon{font-size:28px!important;width:48px!important;height:48px!important;border-radius:14px!important}
+.settings-card-name{font-size:16px!important;font-weight:700!important}
+.settings-card-desc{font-size:13px!important;color:rgba(255,255,255,0.6)!important;line-height:1.4!important}
+.settings-card-value{font-size:15px!important;color:rgba(255,255,255,0.75)!important;font-weight:600!important}
+/* ===== 游戏头部大气优化 ===== */
+.game-header{padding:16px 22px!important;margin-bottom:14px!important;border-radius:18px!important}
+.game-header-title{font-size:24px!important;font-weight:800!important;letter-spacing:0.5px!important}
+.game-header-sub{font-size:14px!important;color:rgba(255,255,255,0.65)!important;font-weight:500!important}
 /* ===== 滚动条优化 ===== */
-::-webkit-scrollbar{width:6px!important}
-::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15)!important;border-radius:3px!important}
-::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,0.2)!important}
-/* ===== 答题选项优化 ===== */
-.quiz-option{padding:14px 16px!important;border-radius:14px!important;margin-bottom:10px!important;font-size:14px!important}
-.quiz-option:hover{border-color:rgba(0,212,255,0.4)!important;background:rgba(0,212,255,0.05)!important}
-/* ===== 结果页优化 ===== */
-.result-box{padding:24px 20px!important;border-radius:20px!important;margin-bottom:16px!important}
-.result-title{font-size:24px!important;margin-bottom:8px!important}
-.result-desc{font-size:14px!important;color:rgba(255,255,255,0.6)!important;margin-bottom:16px!important}
-/* ===== 卡片网格优化 ===== */
-.codex-grid{padding:0 12px 40px!important;gap:12px!important}
-.achievement-list{padding:0 12px 40px!important;gap:10px!important}
-.shop-list{padding:0 12px 40px!important;gap:12px!important}
-.leaderboard-content{padding:0 12px 40px!important}
-.character-content{padding:0 12px 40px!important}
-/* ===== 按钮通用优化 ===== */
-.btn-primary{padding:12px 24px!important;border-radius:12px!important;font-size:15px!important;font-weight:600!important}
-.btn-secondary{padding:10px 20px!important;border-radius:12px!important;font-size:14px!important}
+::-webkit-scrollbar{width:8px!important}
+::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)!important;border-radius:4px!important}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.2)!important;border-radius:4px!important}
+::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,0.3)!important}
+/* ===== 答题选项大气优化 ===== */
+.quiz-option{padding:16px 18px!important;border-radius:16px!important;margin-bottom:12px!important;font-size:15px!important;font-weight:500!important;transition:all 0.3s ease!important}
+.quiz-option:hover{border-color:rgba(0,212,255,0.5)!important;background:rgba(0,212,255,0.06)!important;transform:translateX(4px)!important}
+/* ===== 结果页大气优化 ===== */
+.result-box{padding:32px 24px!important;border-radius:24px!important;margin-bottom:20px!important;box-shadow:0 12px 40px rgba(0,0,0,0.3)!important}
+.result-title{font-size:28px!important;margin-bottom:10px!important;font-weight:800!important}
+.result-desc{font-size:15px!important;color:rgba(255,255,255,0.65)!important;margin-bottom:20px!important;line-height:1.5!important}
+/* ===== 卡片网格大气优化 ===== */
+.codex-grid{padding:0 16px 48px!important;gap:16px!important}
+.achievement-list{padding:0 16px 48px!important;gap:12px!important}
+.shop-list{padding:0 16px 48px!important;gap:16px!important}
+.leaderboard-content{padding:0 16px 48px!important}
+.character-content{padding:0 16px 48px!important}
+/* ===== 按钮通用大气优化 ===== */
+.btn-primary{padding:14px 28px!important;border-radius:14px!important;font-size:16px!important;font-weight:700!important;transition:all 0.3s ease!important;box-shadow:0 4px 16px rgba(0,0,0,0.2)!important}
+.btn-primary:hover{transform:translateY(-2px)!important;box-shadow:0 6px 24px rgba(0,0,0,0.3)!important}
+.btn-secondary{padding:12px 24px!important;border-radius:14px!important;font-size:15px!important;font-weight:600!important;transition:all 0.3s ease!important}
+.btn-secondary:hover{transform:translateY(-2px)!important}
 /* ===== 输入框优化 ===== */
-input,select,textarea{padding:10px 14px!important;border-radius:10px!important;font-size:14px!important;border:1px solid rgba(255,255,255,0.1)!important;background:rgba(255,255,255,0.05)!important;color:#fff!important}
-input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!important;outline:none!important;box-shadow:0 0 0 3px rgba(0,212,255,0.1)!important}
+input,select,textarea{padding:12px 16px!important;border-radius:12px!important;font-size:15px!important;font-weight:500!important;border:1px solid rgba(255,255,255,0.12)!important;background:rgba(255,255,255,0.06)!important;color:#fff!important;transition:all 0.3s ease!important}
+input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!important;outline:none!important;box-shadow:0 0 0 3px rgba(0,212,255,0.12)!important}
 </style>
 <style>
 /* ===== 加载界面 v4.0 — 赛博控制台 ===== */
@@ -458,33 +466,33 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
     padding: 0 0 20px;
   }
 </style>
-<link rel="stylesheet" href="all-styles.css?v=31">
-  <link rel="stylesheet" href="v5-glass-3d.css?v=28">
-  <link rel="stylesheet" href="clean-ui.css?v=28">
-  <link rel="stylesheet" href="bg-premium.css?v=9">
-  <link rel="stylesheet" href="bg-themes.css?v=9">
-  <link rel="stylesheet" href="menu-premium.css?v=30">
-  <link rel="stylesheet" href="fx-effects.css?v=9">
-  <link rel="stylesheet" href="ai-tutor.css?v=9">
-  <link rel="stylesheet" href="certification.css?v=9">
-  <link rel="stylesheet" href="disaster-sim.css?v=9">
-  <link rel="stylesheet" href="real-cases.css?v=9">
-  <link rel="stylesheet" href="fix-click.css?v=9">
-  <script src="fix-click.js?v=9" defer></script>
-  <script src="menu-manager.js?v=9" defer></script>
-  <link rel="stylesheet" href="transitions.css?v=30">
-  <link rel="stylesheet" href="accessibility.css?v=9">
-  <link rel="stylesheet" href="wrong-book.css?v=9">
-  <link rel="stylesheet" href="loading.css?v=9">
-  <link rel="stylesheet" href="guide-enhance.css?v=9">
-  <link rel="stylesheet" href="cert-enhance.css?v=9">
-  <link rel="stylesheet" href="menu-enhance.css?v=9">
-  <link rel="stylesheet" href="share.css?v=9">
-  <link rel="stylesheet" href="i18n.css?v=9">
-  <link rel="stylesheet" href="layout-fix.css?v=9">
-  <link rel="stylesheet" href="ai-float.css?v=9">
-  <link rel="stylesheet" href="ui-ultimate.css?v=9">
-  <link rel="stylesheet" href="settings.css?v=9">
+<link rel="stylesheet" href="all-styles.css?v=39">
+  <link rel="stylesheet" href="v5-glass-3d.css?v=39">
+  <link rel="stylesheet" href="clean-ui.css?v=39">
+  <link rel="stylesheet" href="bg-premium.css?v=39">
+  <link rel="stylesheet" href="bg-themes.css?v=39">
+  <link rel="stylesheet" href="menu-premium.css?v=39">
+  <link rel="stylesheet" href="fx-effects.css?v=39">
+  <link rel="stylesheet" href="ai-tutor.css?v=39">
+  <link rel="stylesheet" href="certification.css?v=39">
+  <link rel="stylesheet" href="disaster-sim.css?v=39">
+  <link rel="stylesheet" href="real-cases.css?v=39">
+  <link rel="stylesheet" href="fix-click.css?v=39">
+  <script src="fix-click.js?v=39" defer></script>
+  <script src="menu-manager.js?v=39" defer></script>
+  <link rel="stylesheet" href="transitions.css?v=39">
+  <link rel="stylesheet" href="accessibility.css?v=39">
+  <link rel="stylesheet" href="wrong-book.css?v=39">
+  <link rel="stylesheet" href="loading.css?v=39">
+  <link rel="stylesheet" href="guide-enhance.css?v=39">
+  <link rel="stylesheet" href="cert-enhance.css?v=39">
+  <link rel="stylesheet" href="menu-enhance.css?v=39">
+  <link rel="stylesheet" href="share.css?v=39">
+  <link rel="stylesheet" href="i18n.css?v=39">
+  <link rel="stylesheet" href="layout-fix.css?v=39">
+  <link rel="stylesheet" href="ai-float.css?v=39">
+  <link rel="stylesheet" href="ui-ultimate.css?v=39">
+  <link rel="stylesheet" href="settings.css?v=39">
 <style>
 /* ===== 标题与图标可见性优化 ===== */
 .menu-logo-title { font-weight: 900 !important; text-shadow: 0 0 20px rgba(255,255,255,0.3), 0 2px 4px rgba(0,0,0,0.5) !important; letter-spacing: 2px !important; }
@@ -2451,42 +2459,42 @@ document.addEventListener('DOMContentLoaded', function() {
 })();
 </script>
 
-<script src="juice.js?v=9" defer></script>
-<script src="visual-fx.js?v=9" defer></script>
-<script src="bgm.js?v=9" defer></script>
-<script src="cards.js?v=9" defer></script>
-<script src="scenarios.js?v=9" defer></script>
-<script src="kit_data.js?v=9" defer></script>
-<script src="game.js?v=9" defer></script>
-<script src="v10-interactions.js?v=9" defer></script>
+<script src="juice.js?v=39" defer></script>
+<script src="visual-fx.js?v=39" defer></script>
+<script src="bgm.js?v=39" defer></script>
+<script src="cards.js?v=39" defer></script>
+<script src="scenarios.js?v=39" defer></script>
+<script src="kit_data.js?v=39" defer></script>
+<script src="game.js?v=39" defer></script>
+<script src="v10-interactions.js?v=39" defer></script>
 
-<script src="encyclopedia_extra.js?v=9" defer></script>
-<script src="encyclopedia_final.js?v=9" defer></script>
-<script src="bg-premium.js?v=9" defer></script>
-<script src="ui-polish.js?v=9" defer></script>
-<script src="tilt3d.js?v=9" defer></script>
-<script src="ai-tutor-llm.js?v=9" defer></script>
-<script src="ai-tutor.js?v=9" defer></script>
-<script src="ai-float.js?v=9" defer></script>
-<script src="certification.js?v=9" defer></script>
-<script src="disaster-sim.js?v=9" defer></script>
-<script src="real-cases.js?v=9" defer></script>
-<script src="sfx.js?v=9" defer></script>
-<script src="bgm-enhanced.js?v=9" defer></script>
-<script src="audio-integration.js?v=9" defer></script>
-<script src="accessibility.js?v=9" defer></script>
-<script src="performance.js?v=9" defer></script>
-<script src="wrong-book.js?v=9" defer></script>
-<script src="report.js?v=9" defer></script>
-<script src="voice.js?v=9" defer></script>
-<script src="guide-enhance.js?v=9" defer></script>
-<script src="cert-enhance.js?v=9" defer></script>
-<script src="disaster-particles.js?v=9" defer></script>
-<script src="menu-enhance.js?v=9" defer></script>
-<script src="share.js?v=9" defer></script>
-<script src="i18n.js?v=9" defer></script>
-<script src="bg-themes.js?v=9" defer></script>
-<script src="liquid-glass.js?v=9" defer></script>
+<script src="encyclopedia_extra.js?v=39" defer></script>
+<script src="encyclopedia_final.js?v=39" defer></script>
+<script src="bg-premium.js?v=39" defer></script>
+<script src="ui-polish.js?v=39" defer></script>
+<script src="tilt3d.js?v=39" defer></script>
+<script src="ai-tutor-llm.js?v=39" defer></script>
+<script src="ai-tutor.js?v=39" defer></script>
+<script src="ai-float.js?v=39" defer></script>
+<script src="certification.js?v=39" defer></script>
+<script src="disaster-sim.js?v=39" defer></script>
+<script src="real-cases.js?v=39" defer></script>
+<script src="sfx.js?v=39" defer></script>
+<script src="bgm-enhanced.js?v=39" defer></script>
+<script src="audio-integration.js?v=39" defer></script>
+<script src="accessibility.js?v=39" defer></script>
+<script src="performance.js?v=39" defer></script>
+<script src="wrong-book.js?v=39" defer></script>
+<script src="report.js?v=39" defer></script>
+<script src="voice.js?v=39" defer></script>
+<script src="guide-enhance.js?v=39" defer></script>
+<script src="cert-enhance.js?v=39" defer></script>
+<script src="disaster-particles.js?v=39" defer></script>
+<script src="menu-enhance.js?v=39" defer></script>
+<script src="share.js?v=39" defer></script>
+<script src="i18n.js?v=39" defer></script>
+<script src="bg-themes.js?v=39" defer></script>
+<script src="liquid-glass.js?v=39" defer></script>
 
 <!-- 补丁脚本：修复缺失的方法 -->
 <script>

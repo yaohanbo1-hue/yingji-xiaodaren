@@ -447,11 +447,11 @@ body {
 
 /* ===== 3D 菜单按钮 ===== */
 .mode-btn {
-  padding: 36px 24px !important;
+  padding: 48px 24px !important;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px);
-  min-height: 180px !important;
+  min-height: 220px !important;
   width: 100% !important;
   box-sizing: border-box !important;
 }
