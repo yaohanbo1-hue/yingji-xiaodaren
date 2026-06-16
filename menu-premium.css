@@ -106,13 +106,34 @@
   background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%) !important;
   backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
-  border: 1px solid rgba(255,255,255,0.08) !important;
-  border-radius: 12px !important;
-  padding: 16px 12px !important;
+  border: 2px solid rgba(255,255,255,0.08) !important;
+  border-radius: 28px !important;
+  padding: 36px 24px !important;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
   position: relative;
   overflow: hidden;
+  min-height: 180px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.mode-btn .mode-icon {
+  font-size: 56px !important;
+  margin-bottom: 10px !important;
+}
+
+.mode-btn .mode-name {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  margin-top: 8px !important;
+}
+
+.mode-btn .mode-desc {
+  font-size: 14px !important;
+  margin-top: 5px !important;
+  line-height: 1.4 !important;
+  color: rgba(255,255,255,0.6) !important;
 }
 
 .mode-btn::before {
