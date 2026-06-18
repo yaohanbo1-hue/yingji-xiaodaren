@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>应急小达人 — 清除缓存专用</title>
+<style>
+body{font-family:system-ui,-apple-system,sans-serif;background:#0a0a1e;color:#fff;padding:20px;max-width:600px;margin:0 auto;line-height:1.6}
+h1{color:#00d4ff;text-align:center}
+.code{background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.3);border-radius:8px;padding:15px;margin:15px 0;font-family:monospace;font-size:13px;overflow-x:auto}
+button{display:block;width:100%;padding:15px;margin:10px 0;border:none;border-radius:12px;background:linear-gradient(135deg,#00d4ff,#7c4dff);color:#fff;font-size:16px;font-weight:700;cursor:pointer}
+button:hover{opacity:0.9}
+.success{color:#00e676;font-weight:700}
+.error{color:#ff5252;font-weight:700}
+</style>
+</head>
+<body>
+<h1>🧹 应急小达人 — 缓存清除工具</h1>
+<p>如果你看到的内容还是旧版本，按以下步骤操作：</p>
+
+<h2>方法 1：清除 Service Worker（推荐）</h2>
+<p>按 <kbd>F12</kbd> 打开控制台，粘贴以下代码执行：</p>
+<div class="code">
+// 清除所有缓存和 Service Worker
+navigator.serviceWorker.getRegistrations().then(regs => {
+  regs.forEach(r => r.unregister());
+  console.log('✅ Service Worker 已清除');
+});
+caches.keys().then(names => {
+  names.forEach(name => caches.delete(name));
+  console.log('✅ 缓存已清除');
+});
+localStorage.clear();
+console.log('✅ 本地存储已清除');
+setTimeout(() => location.reload(true), 1000);
+</div>
+
+<h2>方法 2：强制刷新页面</h2>
+<button onclick="forceReload()">🔄 强制刷新页面（清除所有缓存）</button>
+
+<h2>方法 3：无痕模式访问</h2>
+<p>按 <kbd>Ctrl+Shift+N</kbd> 打开无痕窗口，访问：</p>
+<div class="code">https://yaohanbo1-hue.github.io/yingji-xiaodaren/?nocache=1</div>
+
+<h2>方法 4：本地直接打开（最可靠）</h2>
+<p>直接双击本地 index.html 文件，无需网络缓存：</p>
+<div class="code">yingji-xiaodaren/index.html</div>
+
+<p id="result"></p>
+
+<script>
+function forceReload() {
+  // 尝试清除缓存后刷新
+  if ('caches' in window) {
+    caches.keys().then(names => {
+      return Promise.all(names.map(name => caches.delete(name)));
+    }).then(() => {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(regs => {
+          return Promise.all(regs.map(r => r.unregister()));
+        }).then(() => {
+          document.getElementById('result').innerHTML = '<p class="success">✅ 缓存已清除！正在跳转...</p>';
+          setTimeout(() => {
+            window.location.href = 'https://yaohanbo1-hue.github.io/yingji-xiaodaren/?nocache=' + Date.now();
+          }, 1000);
+        });
+      }
+    });
+  } else {
+    window.location.reload(true);
+  }
+}
+</script>
+</body>
+</html>
