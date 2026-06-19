@@ -102,15 +102,15 @@
 <link rel="mask-icon" href="favicon.svg" color="#00d4ff">
 <link rel="manifest" href="manifest.json">
 
-<title>应急小达人 — 防灾教育互动游戏 v50</title>
-<meta name="version" content="v50">
+<title>应急小达人 — 防灾教育互动游戏 v51</title>
+<meta name="version" content="v51">
 
 <!-- ===== 资源预连接：字体 CDN ===== -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <!-- ===== 预加载最关键资源（不超过5个，避免带宽竞争） ===== -->
-<link rel="preload" href="all-styles.css?v=50" as="style">
+<link rel="preload" href="all-styles.css?v=51" as="style">
 <link rel="preload" href="game.js" as="script">
 <link rel="preload" href="cards.js" as="script">
 <link rel="preload" href="scenarios.js" as="script">
@@ -479,33 +479,34 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
     padding: 0 0 20px;
   }
 </style>
-<link rel="stylesheet" href="all-styles.css?v=50">
-  <link rel="stylesheet" href="v5-glass-3d.css?v=50">
-  <link rel="stylesheet" href="clean-ui.css?v=50">
-  <link rel="stylesheet" href="bg-premium.css?v=50">
-  <link rel="stylesheet" href="bg-themes.css?v=50">
-  <link rel="stylesheet" href="menu-premium.css?v=50">
-  <link rel="stylesheet" href="fx-effects.css?v=50">
-  <link rel="stylesheet" href="ai-tutor.css?v=50">
-  <link rel="stylesheet" href="certification.css?v=50">
-  <link rel="stylesheet" href="disaster-sim.css?v=50">
-  <link rel="stylesheet" href="real-cases.css?v=50">
-  <link rel="stylesheet" href="fix-click.css?v=50">
-  <script src="fix-click.js?v=50" defer></script>
-  <script src="menu-manager.js?v=50" defer></script>
-  <link rel="stylesheet" href="transitions.css?v=50">
-  <link rel="stylesheet" href="accessibility.css?v=50">
-  <link rel="stylesheet" href="wrong-book.css?v=50">
-  <link rel="stylesheet" href="loading.css?v=50">
-  <link rel="stylesheet" href="guide-enhance.css?v=50">
-  <link rel="stylesheet" href="cert-enhance.css?v=50">
-  <link rel="stylesheet" href="menu-enhance.css?v=50">
-  <link rel="stylesheet" href="share.css?v=50">
-  <link rel="stylesheet" href="i18n.css?v=50">
-  <link rel="stylesheet" href="layout-fix.css?v=50">
-  <link rel="stylesheet" href="ai-float.css?v=50">
-  <link rel="stylesheet" href="ui-ultimate.css?v=50">
-  <link rel="stylesheet" href="settings.css?v=50">
+<link rel="stylesheet" href="all-styles.css?v=51">
+  <link rel="stylesheet" href="v5-glass-3d.css?v=51">
+  <link rel="stylesheet" href="clean-ui.css?v=51">
+  <link rel="stylesheet" href="bg-premium.css?v=51">
+  <link rel="stylesheet" href="bg-themes.css?v=51">
+  <link rel="stylesheet" href="menu-premium.css?v=51">
+  <link rel="stylesheet" href="fx-effects.css?v=51">
+  <link rel="stylesheet" href="ai-tutor.css?v=51">
+  <link rel="stylesheet" href="certification.css?v=51">
+  <link rel="stylesheet" href="disaster-sim.css?v=51">
+  <link rel="stylesheet" href="real-cases.css?v=51">
+  <link rel="stylesheet" href="fix-click.css?v=51">
+  <script src="fix-click.js?v=51" defer></script>
+  <script src="menu-manager.js?v=51" defer></script>
+  <script src="loading.js?v=51" defer></script>
+  <link rel="stylesheet" href="transitions.css?v=51">
+  <link rel="stylesheet" href="accessibility.css?v=51">
+  <link rel="stylesheet" href="wrong-book.css?v=51">
+  <link rel="stylesheet" href="loading.css?v=51">
+  <link rel="stylesheet" href="guide-enhance.css?v=51">
+  <link rel="stylesheet" href="cert-enhance.css?v=51">
+  <link rel="stylesheet" href="menu-enhance.css?v=51">
+  <link rel="stylesheet" href="share.css?v=51">
+  <link rel="stylesheet" href="i18n.css?v=51">
+  <link rel="stylesheet" href="layout-fix.css?v=51">
+  <link rel="stylesheet" href="ai-float.css?v=51">
+  <link rel="stylesheet" href="ui-ultimate.css?v=51">
+  <link rel="stylesheet" href="settings.css?v=51">
 <style>
 /* ===== 标题与图标可见性优化 ===== */
 .menu-logo-title { font-weight: 900 !important; text-shadow: 0 0 40px rgba(255,100,0,0.6), 0 0 80px rgba(255,0,0,0.3), 0 4px 12px rgba(0,0,0,0.7) !important; letter-spacing: 6px !important; font-size: 48px !important; background: linear-gradient(180deg,#fff 0%,#ffe4a0 25%,#ff9d00 50%,#ff4d00 75%,#ff0000 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; background-clip: text !important; animation: titlePulse 2.5s ease-in-out infinite !important; }
@@ -1603,47 +1604,47 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
   </div>
 
 <!-- ======== 学习页（闪卡模式） ======== -->
-<div id="page-study" class="page page-content">
-  <button class="btn back-float" onclick="PageManager.navigate('free')" data-nav="free">←</button>
-  <div id="studyArea" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:var(--space-md);padding:var(--space-md)">
-    <div class="quiz-header" id="studyHeader">
-      <span class="quiz-progress-text" id="studyProgressTxt">📖 学习中 1/10</span>
-      <span class="quiz-score-text" id="studyScoreTxt">🏆 0 分</span>
-    </div>
-    <div class="quiz-progress-bar">
-      <div class="quiz-progress-fill" id="studyProgressFill" style="width:0%"></div>
-    </div>
-    <!-- 闪卡 -->
-    <div class="study-card" id="studyCard" onclick="StudyEngine.flip()">
-      <div class="study-card-inner" id="studyCardInner">
-        <div class="study-card-front">
-          <div class="study-icon" id="studyIcon">🌍</div>
-          <div class="study-label">❓ 点击翻转看答案</div>
-          <div class="study-question" id="studyQuestion">加载中...</div>
-        </div>
-        <div class="study-card-back">
-          <div class="study-icon" id="studyAnswerIcon">💡</div>
-          <div class="study-label">✅ 正确答案</div>
-          <div class="study-answer" id="studyAnswer">...</div>
-          <div class="study-divider"></div>
-          <div class="study-exp-label">📖 解析</div>
-          <div class="study-exp" id="studyExp">...</div>
-          <div class="study-divider"></div>
-          <div class="study-tips-label">📌 实用贴士</div>
-          <div class="study-tips" id="studyTips">...</div>
-          <div class="study-scenario-label">🎬 场景</div>
-          <div class="study-scenario" id="studyScenario">...</div>
+  <div id="page-study" class="page page-content">
+    <button class="btn back-float" onclick="PageManager.navigate('free')" data-nav="free">←</button>
+    <div id="studyArea" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:var(--space-md);padding:var(--space-md)">
+      <div class="quiz-header" id="studyHeader">
+        <span class="quiz-progress-text" id="studyProgressTxt">📖 学习中 1/10</span>
+        <span class="quiz-score-text" id="studyScoreTxt">🏆 0 分</span>
+      </div>
+      <div class="quiz-progress-bar">
+        <div class="quiz-progress-fill" id="studyProgressFill" style="width:0%"></div>
+      </div>
+      <!-- 闪卡 -->
+      <div class="study-card" id="studyCard" onclick="StudyEngine.flip()">
+        <div class="study-card-inner" id="studyCardInner">
+          <div class="study-card-front">
+            <div class="study-icon" id="studyIcon">🌍</div>
+            <div class="study-label">❓ 点击翻转看答案</div>
+            <div class="study-question" id="studyQuestion">加载中...</div>
+          </div>
+          <div class="study-card-back">
+            <div class="study-icon" id="studyAnswerIcon">💡</div>
+            <div class="study-label">✅ 正确答案</div>
+            <div class="study-answer" id="studyAnswer">...</div>
+            <div class="study-divider"></div>
+            <div class="study-exp-label">📖 解析</div>
+            <div class="study-exp" id="studyExp">...</div>
+            <div class="study-divider"></div>
+            <div class="study-tips-label">📌 实用贴士</div>
+            <div class="study-tips" id="studyTips">...</div>
+            <div class="study-scenario-label">🎬 场景</div>
+            <div class="study-scenario" id="studyScenario">...</div>
+          </div>
         </div>
       </div>
+      <!-- 导航按钮 -->
+      <div class="study-nav">
+        <button class="study-nav-btn" id="studyPrevBtn" onclick="StudyEngine.prev()">◀ 上一张</button>
+        <button class="study-nav-btn study-nav-primary" id="studyNextBtn" onclick="StudyEngine.next()">下一张 ▶</button>
+      </div>
+      <button class="quiz-menu-btn" onclick="StudyEngine.quit()" style="margin-top:var(--space-sm)">🏠 返回自由模式</button>
     </div>
-    <!-- 导航按钮 -->
-    <div class="study-nav">
-      <button class="study-nav-btn" id="studyPrevBtn" onclick="StudyEngine.prev()">◀ 上一张</button>
-      <button class="study-nav-btn study-nav-primary" id="studyNextBtn" onclick="StudyEngine.next()">下一张 ▶</button>
-    </div>
-    <button class="quiz-menu-btn" onclick="StudyEngine.quit()" style="margin-top:var(--space-sm)">🏠 返回自由模式</button>
   </div>
-</div>
 
   <!-- ======== 闯关挑战大厅 ======== -->
   <div id="page-battle-lobby" class="page page-content">
@@ -1771,420 +1772,425 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
   </div>
 
 <!-- ======== 答题页 ======== -->
-<div id="page-quiz" class="page page-content">
-  <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+  <div id="page-quiz" class="page page-content">
+    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
   
-  <!--  生存模式：HP 血条 -->
-  <div class="survival-hud hidden" id="survivalHud" >
-    <div class="hud-row">
-      <span class="hud-label">❤️ 生命值</span>
-      <span class="hud-value" id="hudHpValue">100/100</span>
-    </div>
-    <div class="hp-bar-container">
-      <div class="hp-bar-fill w-full" id="hpBarFill" ></div>
-    </div>
-  </div>
-
-  <div class="quiz-header hidden" id="quizHeader" >
-    <span class="quiz-progress-text" id="quizProgressTxt">第 1/10 题</span>
-    <span class="quiz-streak hidden" id="quizStreak" >🔥 0x 连击</span>
-    <span class="quiz-score-text" id="quizScoreTxt">🏆 0 分</span>
-  </div>
-  <div class="quiz-progress-bar hidden" id="quizProgressBar" >
-    <div class="quiz-progress-fill" id="quizProgressFill" style="width:0%"></div>
-  </div>
-  <div class="quiz-timer hidden" id="quizTimer" >
-    <div class="quiz-timer-fill w-full" id="quizTimerFill" ></div>
-  </div>
-  <!-- 答题区域 -->
-  <div id="quizArea" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:var(--space-md)">
-    <!-- 题目卡片 -->
-    <div class="quiz-card hidden" id="quizCard" >
-      <div class="quiz-disaster-icon" id="quizDisasterIcon">🌍</div>
-      <div class="quiz-question" id="quizQuestion">加载中...</div>
-      <div class="quiz-options" id="quizOptions"></div>
-    </div>
-    <!-- 解析区 -->
-    <div class="quiz-exp-box hidden" id="quizExpBox" >
-      <div id="quizExpText" class="exp-text"></div>
-      <div id="quizTipText" class="tip-text"></div>
-      <div id="quizExpCard" class="exp-card hidden" >
-        <div id="quizExpScenario" class="exp-scenario"></div>
+    <!--  生存模式：HP 血条 -->
+    <div class="survival-hud hidden" id="survivalHud" >
+      <div class="hud-row">
+        <span class="hud-label">❤️ 生命值</span>
+        <span class="hud-value" id="hudHpValue">100/100</span>
+      </div>
+      <div class="hp-bar-container">
+        <div class="hp-bar-fill w-full" id="hpBarFill" ></div>
       </div>
     </div>
-    <button class="quiz-next-btn hidden" id="quizNextBtn" onclick="QuizEngine.next()" >下一题 →</button>
+
+    <div class="quiz-header hidden" id="quizHeader" >
+      <span class="quiz-progress-text" id="quizProgressTxt">第 1/10 题</span>
+      <span class="quiz-streak hidden" id="quizStreak" >🔥 0x 连击</span>
+      <span class="quiz-score-text" id="quizScoreTxt">🏆 0 分</span>
+    </div>
+    <div class="quiz-progress-bar hidden" id="quizProgressBar" >
+      <div class="quiz-progress-fill" id="quizProgressFill" style="width:0%"></div>
+    </div>
+    <div class="quiz-timer hidden" id="quizTimer" >
+      <div class="quiz-timer-fill w-full" id="quizTimerFill" ></div>
+    </div>
+    <!-- 答题区域 -->
+    <div id="quizArea" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:var(--space-md)">
+      <!-- 题目卡片 -->
+      <div class="quiz-card hidden" id="quizCard" >
+        <div class="quiz-disaster-icon" id="quizDisasterIcon">🌍</div>
+        <div class="quiz-question" id="quizQuestion">加载中...</div>
+        <div class="quiz-options" id="quizOptions"></div>
+      </div>
+      <!-- 解析区 -->
+      <div class="quiz-exp-box hidden" id="quizExpBox" >
+        <div id="quizExpText" class="exp-text"></div>
+        <div id="quizTipText" class="tip-text"></div>
+        <div id="quizExpCard" class="exp-card hidden" >
+          <div id="quizExpScenario" class="exp-scenario"></div>
+        </div>
+      </div>
+      <button class="quiz-next-btn hidden" id="quizNextBtn" onclick="QuizEngine.next()" >下一题 →</button>
+    </div>
+    <!-- 结果区 -->
+    <div class="quiz-result hidden" id="quizResult" ></div>
   </div>
-  <!-- 结果区 -->
-  <div class="quiz-result hidden" id="quizResult" ></div>
-</div>
 
 <!-- ======== 情景模拟页 ======== -->
-<div id="page-scenario" class="page page-content">
-  <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
-  <div class="scenario-header">
-    <span class="quiz-progress-text" id="scenarioProgress">情景 1/25</span>
-    <span class="quiz-score-text" id="scenarioScore">🏆 0 分</span>
-  </div>
-  <div class="quiz-progress-bar">
-    <div class="quiz-progress-fill" id="scenarioProgressFill" style="width:0%"></div>
-  </div>
-  <div id="scenarioContent" style="width:100%;max-width:500px;display:flex;flex-direction:column;align-items:center;gap:var(--space-md);padding:var(--space-sm) 0">
-    <!-- 情景卡片 -->
-    <div class="scenario-card">
-      <div class="scenario-icon" id="scenarioIcon">🌍</div>
-      <div class="scenario-meta">
-        <span class="scenario-setting" id="scenarioSetting">🏠 家里</span>
-        <span class="scenario-title" id="scenarioTitle">情景标题</span>
+  <div id="page-scenario" class="page page-content">
+    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <div class="scenario-header">
+      <span class="quiz-progress-text" id="scenarioProgress">情景 1/25</span>
+      <span class="quiz-score-text" id="scenarioScore">🏆 0 分</span>
+    </div>
+    <div class="quiz-progress-bar">
+      <div class="quiz-progress-fill" id="scenarioProgressFill" style="width:0%"></div>
+    </div>
+    <div id="scenarioContent" style="width:100%;max-width:500px;display:flex;flex-direction:column;align-items:center;gap:var(--space-md);padding:var(--space-sm) 0">
+      <!-- 情景卡片 -->
+      <div class="scenario-card">
+        <div class="scenario-icon" id="scenarioIcon">🌍</div>
+        <div class="scenario-meta">
+          <span class="scenario-setting" id="scenarioSetting">🏠 家里</span>
+          <span class="scenario-title" id="scenarioTitle">情景标题</span>
+        </div>
+        <div class="scenario-desc" id="scenarioDesc">情景描述...</div>
+        <div class="scenario-options" id="scenarioOptions"></div>
+        <div class="scenario-feedback hidden" id="scenarioFeedback" ></div>
+        <button class="quiz-next-btn hidden" id="scenarioNextBtn" onclick="ScenarioEngine.next()" >下一幕 →</button>
       </div>
-      <div class="scenario-desc" id="scenarioDesc">情景描述...</div>
-      <div class="scenario-options" id="scenarioOptions"></div>
-      <div class="scenario-feedback hidden" id="scenarioFeedback" ></div>
-      <button class="quiz-next-btn hidden" id="scenarioNextBtn" onclick="ScenarioEngine.next()" >下一幕 →</button>
     </div>
   </div>
-</div>
 
 <!-- ======== 应急包整理页 ======== -->
-<div id="page-kit" class="page page-content">
-  <button class="btn back-float" onclick="if(KitEngine.active){KitEngine.quit()}else{PageManager.navigate('campaign')}">←</button>
-  <div class="kit-header">
-    <span class="kit-title" id="kitTitle">🌍 地震应急包</span>
-    <span class="kit-stats">
-      <span id="kitTimer">⏱️ 30s</span>
-      <span id="kitSlots">📦 已选 0/6</span>
-      <span id="kitScore">🏆 0 分</span>
-    </span>
-  </div>
-  <div class="kit-area">
-    <!-- 物品网格 -->
-    <div class="kit-grid" id="kitGrid"></div>
-    <!-- 背包区域 -->
-    <div class="kit-pack" id="kitPackArea">
-      <div class="kit-pack-hint">⬇️ 点击物品放入应急包</div>
+  <div id="page-kit" class="page page-content">
+    <button class="btn back-float" onclick="if(KitEngine.active){KitEngine.quit()}else{PageManager.navigate('campaign')}">←</button>
+    <div class="kit-header">
+      <span class="kit-title" id="kitTitle">🌍 地震应急包</span>
+      <span class="kit-stats">
+        <span id="kitTimer">⏱️ 30s</span>
+        <span id="kitSlots">📦 已选 0/6</span>
+        <span id="kitScore">🏆 0 分</span>
+      </span>
     </div>
-    <!-- 确认按钮 -->
-    <button class="btn btn-primary btn-lg" id="kitConfirmBtn" style="display:block;margin-top:var(--space-sm)" onclick="KitEngine.confirm()">
-      ✅ 打包完毕！
-    </button>
-    <!-- 结果 -->
-    <div id="kitResult" style="display:none;width:100%"></div>
+    <div class="kit-area">
+      <!-- 物品网格 -->
+      <div class="kit-grid" id="kitGrid"></div>
+      <!-- 背包区域 -->
+      <div class="kit-pack" id="kitPackArea">
+        <div class="kit-pack-hint">⬇️ 点击物品放入应急包</div>
+      </div>
+      <!-- 确认按钮 -->
+      <button class="btn btn-primary btn-lg" id="kitConfirmBtn" style="display:block;margin-top:var(--space-sm)" onclick="KitEngine.confirm()">
+        ✅ 打包完毕！
+      </button>
+      <!-- 结果 -->
+      <div id="kitResult" style="display:none;width:100%"></div>
+    </div>
   </div>
-</div>
 
 <!-- ======== 急救模拟器页 ======== -->
-<div id="page-firstaid" class="page page-content">
-  <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
-  <div id="firstaid-content" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md) 0"></div>
-</div>
+  <div id="page-firstaid" class="page page-content">
+    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <div id="firstaid-content" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md) 0"></div>
+  </div>
 
 <!-- ======== 音乐页 ======== -->
-<div id="page-music" class="page page-content">
-  <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
-  <div id="music-content" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md) 0"></div>
-</div>
+  <div id="page-music" class="page page-content">
+    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <div id="music-content" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md) 0"></div>
+  </div>
 
 <!-- ======== 彩蛋页 ======== -->
-<div id="page-eggs" class="page page-content">
-  <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
-  <div id="eggs-content" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md) 0"></div>
-</div>
+  <div id="page-eggs" class="page page-content">
+    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <div id="eggs-content" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md) 0"></div>
+  </div>
 
 <!-- ======== 基地页 ======== -->
-<div id="page-base" class="page page-content">
-  <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
-  <div id="base-content" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md) 0"></div>
-</div>
+  <div id="page-base" class="page page-content">
+    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <div id="base-content" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md) 0"></div>
+  </div>
 
 <!-- ======== 博物馆页 ======== -->
-<div id="page-museum" class="page page-content">
-  <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
-  <div id="museum-content" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md) 0"></div>
-</div>
+  <div id="page-museum" class="page page-content">
+    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <div id="museum-content" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md) 0"></div>
+  </div>
 
 <!-- ======== 每日挑战页 ======== -->
-<div id="page-daily" class="page page-content">
-  <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
-  <div class="preview-header">
-    <span class="preview-icon">📅</span>
-    <h2 class="preview-title">每日挑战</h2>
-    <p class="preview-desc">每天10题，连续打卡得奖励！</p>
+  <div id="page-daily" class="page page-content">
+    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <div class="preview-header">
+      <span class="preview-icon">📅</span>
+      <h2 class="preview-title">每日挑战</h2>
+      <p class="preview-desc">每天10题，连续打卡得奖励！</p>
+    </div>
+    <div id="dailyContent" class="game-container"></div>
   </div>
-  <div id="dailyContent" class="game-container"></div>
-</div>
 
 <!-- ======== 生存模式页 ======== -->
-<div id="page-survival" class="page page-content">
-  <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
-  <div class="preview-header">
-    <span class="preview-icon">♾️</span>
-    <h2 class="preview-title">生存模式</h2>
-    <p class="preview-desc">无限答题，答错3次结束</p>
+  <div id="page-survival" class="page page-content">
+    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <div class="preview-header">
+      <span class="preview-icon">♾️</span>
+      <h2 class="preview-title">生存模式</h2>
+      <p class="preview-desc">无限答题，答错3次结束</p>
+    </div>
+    <div id="survivalContent" class="game-container"></div>
+    <div id="survivalQuiz" class="game-container"></div>
   </div>
-  <div id="survivalContent" class="game-container"></div>
-</div>
 
 <!-- ======== Boss Rush页 ======== -->
-<div id="page-bossrush" class="page page-content">
-  <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
-  <div class="preview-header">
-    <span class="preview-icon">💀</span>
-    <h2 class="preview-title">Boss Rush</h2>
-    <p class="preview-desc">连续挑战5个Boss！</p>
+  <div id="page-bossrush" class="page page-content">
+    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <div class="preview-header">
+      <span class="preview-icon">💀</span>
+      <h2 class="preview-title">Boss Rush</h2>
+      <p class="preview-desc">连续挑战5个Boss！</p>
+    </div>
+    <div id="bossrushContent" class="game-container"></div>
+    <div id="bossrushQuiz" class="game-container"></div>
   </div>
-  <div id="bossrushContent" class="game-container"></div>
-</div>
 
 <!-- ======== 限时挑战页 ======== -->
-<div id="page-timed" class="page page-content">
-  <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
-  <div class="preview-header">
-    <span class="preview-icon">⏱️</span>
-    <h2 class="preview-title">限时挑战</h2>
-    <p class="preview-desc">30秒内答对尽可能多</p>
+  <div id="page-timed" class="page page-content">
+    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <div class="preview-header">
+      <span class="preview-icon">⏱️</span>
+      <h2 class="preview-title">限时挑战</h2>
+      <p class="preview-desc">30秒内答对尽可能多</p>
+    </div>
+    <div id="timedContent" class="game-container"></div>
+    <div id="timedTimer" class="game-container"></div>
+    <div id="timedQuiz" class="game-container"></div>
   </div>
-  <div id="timedContent" class="game-container"></div>
-</div>
 
 <!-- ======== 故事模式页 ======== -->
-<div id="page-story" class="page page-content">
-  <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
-  <div class="preview-header">
-    <span class="preview-icon">📖</span>
-    <h2 class="preview-title">故事模式</h2>
-    <p class="preview-desc">做出正确选择，守护城市安全</p>
+  <div id="page-story" class="page page-content">
+    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <div class="preview-header">
+      <span class="preview-icon">📖</span>
+      <h2 class="preview-title">故事模式</h2>
+      <p class="preview-desc">做出正确选择，守护城市安全</p>
+    </div>
+    <div id="storyContent" class="game-container"></div>
   </div>
-  <div id="storyContent" class="game-container"></div>
-</div>
 
 <!-- ======== 闪电问答页 ======== -->
-<div id="page-disasterquiz" class="page page-content">
-  <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
-  <div class="preview-header">
-    <span class="preview-icon">⚡</span>
-    <h2 class="preview-title">闪电问答</h2>
-    <p class="preview-desc">5秒内选出正确答案！</p>
+  <div id="page-disasterquiz" class="page page-content">
+    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <div class="preview-header">
+      <span class="preview-icon">⚡</span>
+      <h2 class="preview-title">闪电问答</h2>
+      <p class="preview-desc">5秒内选出正确答案！</p>
+    </div>
+    <div id="disasterquizContent" class="game-container"></div>
   </div>
-  <div id="disasterquizContent" class="game-container"></div>
-</div>
 
 <!-- ======== 精准投放页 ======== -->
-<div id="page-supplydrop" class="page page-content">
-  <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
-  <div class="preview-header">
-    <span class="preview-icon">🎯</span>
-    <h2 class="preview-title">精准投放</h2>
-    <p class="preview-desc">将物资投放到正确区域</p>
+  <div id="page-supplydrop" class="page page-content">
+    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <div class="preview-header">
+      <span class="preview-icon">🎯</span>
+      <h2 class="preview-title">精准投放</h2>
+      <p class="preview-desc">将物资投放到正确区域</p>
+    </div>
+    <div id="supplydropContent" class="game-container"></div>
   </div>
-  <div id="supplydropContent" class="game-container"></div>
-</div>
 
 <!-- ======== 限时逃生页 ======== -->
-<div id="page-time-escape" class="page page-content">
-  <button class="btn back-float" onclick="if(TimeEscapeEngine.active){clearInterval(TimeEscapeEngine.timer);TimeEscapeEngine.active=false;}PageManager.navigate('menu')">←</button>
-  <div class="game-header">
-    <div class="mode-label" style="color:var(--cyber-blue);">⏰ 限时逃生</div>
-    <div style="display:flex;gap:16px;align-items:center;">
-      <div id="escapeTimer" style="font-size:28px;color:#FF006E;font-weight:900;">60</div>
-      <div id="escapeScore" style="font-size:16px;color:rgba(255,255,255,0.6);">0/20</div>
+  <div id="page-time-escape" class="page page-content">
+    <button class="btn back-float" onclick="if(TimeEscapeEngine.active){clearInterval(TimeEscapeEngine.timer);TimeEscapeEngine.active=false;}PageManager.navigate('menu')">←</button>
+    <div class="game-header">
+      <div class="mode-label" style="color:var(--cyber-blue);">⏰ 限时逃生</div>
+      <div style="display:flex;gap:16px;align-items:center;">
+        <div id="escapeTimer" style="font-size:28px;color:#FF006E;font-weight:900;">60</div>
+        <div id="escapeScore" style="font-size:16px;color:rgba(255,255,255,0.6);">0/20</div>
+      </div>
+    </div>
+    <div style="position:relative;z-index:1;">
+      <div id="escapeProgressBar" style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:24px;overflow:hidden;">
+        <div id="escapeProgressFill" style="height:100%;background:linear-gradient(90deg,#FF006E,#FFD700);width:0%;transition:width 0.3s;border-radius:2px;"></div>
+      </div>
+      <div id="escapeQuestion" class="quiz-q">题目加载中...</div>
+      <div id="escapeOptions" class="quiz-options"></div>
+      <div id="escapeExplanation" class="quiz-explanation hidden" ></div>
     </div>
   </div>
-  <div style="position:relative;z-index:1;">
-    <div id="escapeProgressBar" style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:24px;overflow:hidden;">
-      <div id="escapeProgressFill" style="height:100%;background:linear-gradient(90deg,#FF006E,#FFD700);width:0%;transition:width 0.3s;border-radius:2px;"></div>
-    </div>
-    <div id="escapeQuestion" class="quiz-q">题目加载中...</div>
-    <div id="escapeOptions" class="quiz-options"></div>
-    <div id="escapeExplanation" class="quiz-explanation hidden" ></div>
-  </div>
-</div>
 
 <!-- ======== 精准打击页 ======== -->
-<div id="page-precision" class="page page-content">
-  <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
-  <div class="game-header">
-    <div class="mode-label" style="color:var(--neon-green);">🎯 精准打击</div>
-    <div style="display:flex;gap:16px;align-items:center;">
-      <div id="precisionScore" style="font-size:16px;color:rgba(255,255,255,0.6);">0/10</div>
-      <div id="precisionAccuracy" style="font-size:16px;color:var(--neon-gold);">100%</div>
+  <div id="page-precision" class="page page-content">
+    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <div class="game-header">
+      <div class="mode-label" style="color:var(--neon-green);">🎯 精准打击</div>
+      <div style="display:flex;gap:16px;align-items:center;">
+        <div id="precisionScore" style="font-size:16px;color:rgba(255,255,255,0.6);">0/10</div>
+        <div id="precisionAccuracy" style="font-size:16px;color:var(--neon-gold);">100%</div>
+      </div>
+    </div>
+    <div style="position:relative;z-index:1;">
+      <div id="precisionProgressBar" style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:24px;overflow:hidden;">
+        <div id="precisionProgressFill" style="height:100%;background:linear-gradient(90deg,#00E676,#00D4FF);width:0%;transition:width 0.3s;border-radius:2px;"></div>
+      </div>
+      <div id="precisionQuestion" class="quiz-q">题目加载中...</div>
+      <div id="precisionOptions" class="quiz-options"></div>
+      <div id="precisionExplanation" class="quiz-explanation hidden" ></div>
     </div>
   </div>
-  <div style="position:relative;z-index:1;">
-    <div id="precisionProgressBar" style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:24px;overflow:hidden;">
-      <div id="precisionProgressFill" style="height:100%;background:linear-gradient(90deg,#00E676,#00D4FF);width:0%;transition:width 0.3s;border-radius:2px;"></div>
-    </div>
-    <div id="precisionQuestion" class="quiz-q">题目加载中...</div>
-    <div id="precisionOptions" class="quiz-options"></div>
-    <div id="precisionExplanation" class="quiz-explanation hidden" ></div>
-  </div>
-</div>
 
 <!-- ======== 防灾大冒险页 ======== -->
-<div id="page-story-adventure" class="page page-content">
-  <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
-  <div class="game-header">
-    <div class="mode-label" style="color:var(--neon-purple);">📖 防灾大冒险</div>
-    <div id="storyAdvChapter" style="font-size:14px;color:rgba(255,255,255,0.5);">第1章</div>
-  </div>
-  <div style="position:relative;z-index:1;">
-    <div id="storyAdvProgress" style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:24px;overflow:hidden;">
-      <div id="storyAdvProgressFill" style="height:100%;background:linear-gradient(90deg,#AB47BC,#FF006E);width:0%;transition:width 0.3s;border-radius:2px;"></div>
+  <div id="page-story-adventure" class="page page-content">
+    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <div class="game-header">
+      <div class="mode-label" style="color:var(--neon-purple);">📖 防灾大冒险</div>
+      <div id="storyAdvChapter" style="font-size:14px;color:rgba(255,255,255,0.5);">第1章</div>
     </div>
-    <div id="storyAdvNarration" style="background:rgba(255,255,255,0.03);border-radius:12px;padding:20px;margin-bottom:24px;border-left:3px solid var(--neon-purple);font-size:14px;line-height:1.8;color:rgba(255,255,255,0.8);min-height:60px;">故事加载中...</div>
-    <div id="storyAdvQuestion" class="quiz-q">题目加载中...</div>
-    <div id="storyAdvOptions" class="quiz-options"></div>
-    <div id="storyAdvExplanation" class="quiz-explanation hidden" ></div>
+    <div style="position:relative;z-index:1;">
+      <div id="storyAdvProgress" style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:24px;overflow:hidden;">
+        <div id="storyAdvProgressFill" style="height:100%;background:linear-gradient(90deg,#AB47BC,#FF006E);width:0%;transition:width 0.3s;border-radius:2px;"></div>
+      </div>
+      <div id="storyAdvNarration" style="background:rgba(255,255,255,0.03);border-radius:12px;padding:20px;margin-bottom:24px;border-left:3px solid var(--neon-purple);font-size:14px;line-height:1.8;color:rgba(255,255,255,0.8);min-height:60px;">故事加载中...</div>
+      <div id="storyAdvQuestion" class="quiz-q">题目加载中...</div>
+      <div id="storyAdvOptions" class="quiz-options"></div>
+      <div id="storyAdvExplanation" class="quiz-explanation hidden" ></div>
+    </div>
   </div>
-</div>
 
 <!-- ======== 新手引导页 ======== -->
-<div id="page-guide" class="page page-content">
-  <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
-  <div class="game-header">
-    <div class="mode-label" style="color:var(--neon-gold);">🎓 新手引导</div>
-    <div id="guideStep" style="font-size:14px;color:rgba(255,255,255,0.5);">8步引导</div>
+  <div id="page-guide" class="page page-content">
+    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <div class="game-header">
+      <div class="mode-label" style="color:var(--neon-gold);">🎓 新手引导</div>
+      <div id="guideStep" style="font-size:14px;color:rgba(255,255,255,0.5);">8步引导</div>
+    </div>
+    <div style="position:relative;z-index:1;">
+      <div id="guideProgress" style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:24px;overflow:hidden;">
+        <div id="guideProgressFill" style="height:100%;background:linear-gradient(90deg,#FFD700,#FF6B35);width:0%;transition:width 0.3s;border-radius:2px;"></div>
+      </div>
+      <div id="guideContent" style="background:rgba(255,255,255,0.03);border-radius:12px;padding:24px;margin-bottom:24px;border-left:3px solid var(--neon-gold);min-height:120px;">
+        <div id="guideText" style="font-size:16px;line-height:1.8;color:rgba(255,255,255,0.9);">欢迎来到应急小达人！</div>
+        <div id="guideIcon" style="font-size:64px;text-align:center;margin:20px 0;">📦</div>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:center;">
+        <button class="btn btn-secondary" onclick="PageManager.navigate('menu')">返回菜单</button>
+        <button class="btn btn-primary" onclick="GuideEnhancer.forceRestart()">开始引导</button>
+      </div>
+    </div>
   </div>
-  <div style="position:relative;z-index:1;">
-    <div id="guideProgress" style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:24px;overflow:hidden;">
-      <div id="guideProgressFill" style="height:100%;background:linear-gradient(90deg,#FFD700,#FF6B35);width:0%;transition:width 0.3s;border-radius:2px;"></div>
-    </div>
-    <div id="guideContent" style="background:rgba(255,255,255,0.03);border-radius:12px;padding:24px;margin-bottom:24px;border-left:3px solid var(--neon-gold);min-height:120px;">
-      <div id="guideText" style="font-size:16px;line-height:1.8;color:rgba(255,255,255,0.9);">欢迎来到应急小达人！</div>
-      <div id="guideIcon" style="font-size:64px;text-align:center;margin:20px 0;">📦</div>
-    </div>
-    <div style="display:flex;gap:12px;justify-content:center;">
-      <button class="btn btn-secondary" onclick="PageManager.navigate('menu')">返回菜单</button>
-      <button class="btn btn-primary" onclick="GuideEnhancer.forceRestart()">开始引导</button>
-    </div>
-  </div>
-</div>
 
 <!-- ======== 记忆翻牌页 ======== -->
-<div id="page-memory-card" class="page page-content">
-  <button class="btn back-float" onclick="MemoryCardEngine.active=false;PageManager.navigate('menu')">←</button>
-  <div class="game-header">
-    <div class="mode-label" style="color:#00D4FF;">🧠 记忆翻牌</div>
-    <div style="display:flex;gap:16px;align-items:center;">
-      <div id="memoryTimer" style="font-size:28px;color:#FF006E;font-weight:900;">60</div>
+  <div id="page-memory-card" class="page page-content">
+    <button class="btn back-float" onclick="MemoryCardEngine.active=false;PageManager.navigate('menu')">←</button>
+    <div class="game-header">
+      <div class="mode-label" style="color:#00D4FF;">🧠 记忆翻牌</div>
+      <div style="display:flex;gap:16px;align-items:center;">
+        <div id="memoryTimer" style="font-size:28px;color:#FF006E;font-weight:900;">60</div>
+      </div>
+    </div>
+    <div style="position:relative;z-index:1;">
+      <div id="memoryGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:400px;margin:0 auto;"></div>
     </div>
   </div>
-  <div style="position:relative;z-index:1;">
-    <div id="memoryGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:400px;margin:0 auto;"></div>
-  </div>
-</div>
 
 <!-- ======== 反应速度页 ======== -->
-<div id="page-reaction" class="page page-content">
-  <button class="btn back-float" onclick="ReactionEngine.active=false;clearTimeout(ReactionEngine.targetTimeout);PageManager.navigate('menu')">←</button>
-  <div class="game-header">
-    <div class="mode-label" style="color:#FF006E;">⚡ 反应速度</div>
-    <div id="reactionInfo" style="font-size:16px;color:rgba(255,255,255,0.6);">准备...</div>
-  </div>
-  <div style="position:relative;z-index:1;">
-    <div id="reactionArea" style="width:100%;height:300px;background:rgba(255,255,255,0.03);border-radius:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative;border:2px solid rgba(255,255,255,0.1);">
-      <div style="font-size:48px;">🎯</div>
-      <div style="font-size:16px;color:rgba(255,255,255,0.5);margin-top:12px;">等待目标出现...</div>
+  <div id="page-reaction" class="page page-content">
+    <button class="btn back-float" onclick="ReactionEngine.active=false;clearTimeout(ReactionEngine.targetTimeout);PageManager.navigate('menu')">←</button>
+    <div class="game-header">
+      <div class="mode-label" style="color:#FF006E;">⚡ 反应速度</div>
+      <div id="reactionInfo" style="font-size:16px;color:rgba(255,255,255,0.6);">准备...</div>
+    </div>
+    <div style="position:relative;z-index:1;">
+      <div id="reactionArea" style="width:100%;height:300px;background:rgba(255,255,255,0.03);border-radius:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative;border:2px solid rgba(255,255,255,0.1);">
+        <div style="font-size:48px;">🎯</div>
+        <div style="font-size:16px;color:rgba(255,255,255,0.5);margin-top:12px;">等待目标出现...</div>
+      </div>
     </div>
   </div>
-</div>
 
 <!-- ======== 知识竞速页 ======== -->
-<div id="page-knowledge-race" class="page page-content">
-  <button class="btn back-float" onclick="KnowledgeRaceEngine.active=false;clearInterval(KnowledgeRaceEngine.timer);PageManager.navigate('menu')">←</button>
-  <div class="game-header">
-    <div class="mode-label" style="color:#FFD700;">🏁 知识竞速</div>
-    <div style="display:flex;gap:16px;align-items:center;">
-      <div id="raceLives" style="font-size:18px;">❤️❤️❤️</div>
-      <div id="raceTimer" style="font-size:28px;color:#00D4FF;font-weight:900;">120</div>
-      <div id="raceScore" style="font-size:16px;color:var(--neon-gold);">0分</div>
+  <div id="page-knowledge-race" class="page page-content">
+    <button class="btn back-float" onclick="KnowledgeRaceEngine.active=false;clearInterval(KnowledgeRaceEngine.timer);PageManager.navigate('menu')">←</button>
+    <div class="game-header">
+      <div class="mode-label" style="color:#FFD700;">🏁 知识竞速</div>
+      <div style="display:flex;gap:16px;align-items:center;">
+        <div id="raceLives" style="font-size:18px;">❤️❤️❤️</div>
+        <div id="raceTimer" style="font-size:28px;color:#00D4FF;font-weight:900;">120</div>
+        <div id="raceScore" style="font-size:16px;color:var(--neon-gold);">0分</div>
+      </div>
+    </div>
+    <div style="position:relative;z-index:1;">
+      <div id="raceProgressBar" style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:24px;overflow:hidden;">
+        <div id="raceProgressFill" style="height:100%;background:linear-gradient(90deg,#FFD700,#FF006E);width:0%;transition:width 0.3s;border-radius:2px;"></div>
+      </div>
+      <div id="raceQuestion" class="quiz-q">题目加载中...</div>
+      <div id="raceOptions" class="quiz-options"></div>
     </div>
   </div>
-  <div style="position:relative;z-index:1;">
-    <div id="raceProgressBar" style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:24px;overflow:hidden;">
-      <div id="raceProgressFill" style="height:100%;background:linear-gradient(90deg,#FFD700,#FF006E);width:0%;transition:width 0.3s;border-radius:2px;"></div>
-    </div>
-    <div id="raceQuestion" class="quiz-q">题目加载中...</div>
-    <div id="raceOptions" class="quiz-options"></div>
-  </div>
-</div>
 
 <!-- ======== AI 智能防灾导师页 ======== -->
-<div id="page-ai-tutor" class="page page-content">
-  <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
-  <div class="game-header">
-    <div class="mode-label" style="color:#60A5FA;">🤖 AI 防灾导师</div>
-    <div style="font-size:12px;color:rgba(255,255,255,0.4);">智能分析 · 个性推荐</div>
+  <div id="page-ai-tutor" class="page page-content">
+    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <div class="game-header">
+      <div class="mode-label" style="color:#60A5FA;">🤖 AI 防灾导师</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.4);">智能分析 · 个性推荐</div>
+    </div>
+    <div id="aiTutorContent" style="position:relative;z-index:1;"></div>
   </div>
-  <div id="aiTutorContent" style="position:relative;z-index:1;"></div>
-</div>
 
 <!-- ======== 能力认证页 ======== -->
-<div id="page-certification" class="page page-content">
-  <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
-  <div class="game-header">
-    <div class="mode-label" style="color:#F59E0B;">🏅 能力认证</div>
-    <div style="font-size:12px;color:rgba(255,255,255,0.4);">等级 · 证书 · 成就</div>
+  <div id="page-certification" class="page page-content">
+    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <div class="game-header">
+      <div class="mode-label" style="color:#F59E0B;">🏅 能力认证</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.4);">等级 · 证书 · 成就</div>
+    </div>
+    <div id="certContent" style="position:relative;z-index:1;"></div>
   </div>
-  <div id="certContent" style="position:relative;z-index:1;"></div>
-</div>
 
 <!-- ======== 灾害情景沉浸模拟页 ======== -->
-<div id="page-disaster-sim" class="page page-content">
-  <button class="btn back-float" onclick="if(DisasterSimEngine._animFrame)cancelAnimationFrame(DisasterSimEngine._animFrame);PageManager.navigate('menu')">←</button>
-  <div class="game-header">
-    <div class="mode-label" style="color:#EF4444;">🎬 灾害情景模拟</div>
-    <div style="font-size:12px;color:rgba(255,255,255,0.4);">沉浸式体验 · 真实决策</div>
-  </div>
-  <div id="simContent" style="position:relative;z-index:1;">
-    <!-- 灾害选择器 -->
-    <div class="sim-selector" id="simSelector">
-      <div class="sim-selector-btn" onclick="DisasterSimEngine.init('earthquake')">
-        <div class="sim-selector-icon">🌍</div>
-        <div class="sim-selector-name">地震</div>
-        <div class="sim-selector-case">2008 汶川地震</div>
-      </div>
-      <div class="sim-selector-btn" onclick="DisasterSimEngine.init('flood')">
-        <div class="sim-selector-icon">🌊</div>
-        <div class="sim-selector-name">洪水</div>
-        <div class="sim-selector-case">2021 河南暴雨</div>
-      </div>
-      <div class="sim-selector-btn" onclick="DisasterSimEngine.init('wildfire')">
-        <div class="sim-selector-icon">🔥</div>
-        <div class="sim-selector-name">山火</div>
-        <div class="sim-selector-case">2019 澳洲山火</div>
-      </div>
-      <div class="sim-selector-btn" onclick="DisasterSimEngine.init('typhoon')">
-        <div class="sim-selector-icon">🌀</div>
-        <div class="sim-selector-name">台风</div>
-        <div class="sim-selector-case">2023 杜苏芮</div>
-      </div>
-      <div class="sim-selector-btn" onclick="DisasterSimEngine.init('volcano')">
-        <div class="sim-selector-icon">🌋</div>
-        <div class="sim-selector-name">火山爆发</div>
-        <div class="sim-selector-case">2010 冰岛火山</div>
-      </div>
+  <div id="page-disaster-sim" class="page page-content">
+    <button class="btn back-float" onclick="if(DisasterSimEngine._animFrame)cancelAnimationFrame(DisasterSimEngine._animFrame);PageManager.navigate('menu')">←</button>
+    <div class="game-header">
+      <div class="mode-label" style="color:#EF4444;">🎬 灾害情景模拟</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.4);">沉浸式体验 · 真实决策</div>
     </div>
-    <!-- Canvas 动画容器 -->
-    <div class="sim-canvas-wrapper" id="simCanvasWrapper" style="display:none;">
-      <canvas id="simCanvas"></canvas>
+    <div id="simContent" style="position:relative;z-index:1;">
+      <!-- 灾害选择器 -->
+      <div class="sim-selector" id="simSelector">
+        <div class="sim-selector-btn" onclick="DisasterSimEngine.init('earthquake')">
+          <div class="sim-selector-icon">🌍</div>
+          <div class="sim-selector-name">地震</div>
+          <div class="sim-selector-case">2008 汶川地震</div>
+        </div>
+        <div class="sim-selector-btn" onclick="DisasterSimEngine.init('flood')">
+          <div class="sim-selector-icon">🌊</div>
+          <div class="sim-selector-name">洪水</div>
+          <div class="sim-selector-case">2021 河南暴雨</div>
+        </div>
+        <div class="sim-selector-btn" onclick="DisasterSimEngine.init('wildfire')">
+          <div class="sim-selector-icon">🔥</div>
+          <div class="sim-selector-name">山火</div>
+          <div class="sim-selector-case">2019 澳洲山火</div>
+        </div>
+        <div class="sim-selector-btn" onclick="DisasterSimEngine.init('typhoon')">
+          <div class="sim-selector-icon">🌀</div>
+          <div class="sim-selector-name">台风</div>
+          <div class="sim-selector-case">2023 杜苏芮</div>
+        </div>
+        <div class="sim-selector-btn" onclick="DisasterSimEngine.init('volcano')">
+          <div class="sim-selector-icon">🌋</div>
+          <div class="sim-selector-name">火山爆发</div>
+          <div class="sim-selector-case">2010 冰岛火山</div>
+        </div>
+      </div>
+      <!-- Canvas 动画容器 -->
+      <div class="sim-canvas-wrapper" id="simCanvasWrapper" style="display:none;">
+        <canvas id="simCanvas"></canvas>
+      </div>
+      <!-- 信息卡片 -->
+      <div id="simInfo" style="display:none;"></div>
+      <!-- 操作按钮 -->
+      <div id="simActions" style="display:none;"></div>
+      <!-- 结果 -->
+      <div id="simResult"></div>
     </div>
-    <!-- 信息卡片 -->
-    <div id="simInfo" style="display:none;"></div>
-    <!-- 操作按钮 -->
-    <div id="simActions" style="display:none;"></div>
-    <!-- 结果 -->
-    <div id="simResult"></div>
   </div>
-</div>
 
 <!-- ======== 真实案例还原模式页 ======== -->
-<div id="page-real-cases" class="page page-content">
-  <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
-  <div class="game-header">
-    <div class="mode-label" style="color:#F59E0B;">📖 真实案例还原</div>
-    <div style="font-size:12px;color:rgba(255,255,255,0.4);">历史事件 · 情景重现 · 知识总结</div>
+  <div id="page-real-cases" class="page page-content">
+    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <div class="game-header">
+      <div class="mode-label" style="color:#F59E0B;">📖 真实案例还原</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.4);">历史事件 · 情景重现 · 知识总结</div>
+    </div>
+    <div id="realCasesContent" style="position:relative;z-index:1;"></div>
+    <div id="choiceResult" style="display:none;"></div>
   </div>
-  <div id="realCasesContent" style="position:relative;z-index:1;"></div>
-</div>
 
   <!-- ======== 错题本页 ======== -->
   <div id="page-wrong-book" class="page page-content">
@@ -2374,133 +2380,43 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
 <div id="mascotBubble" class="mascot-bubble" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:50;padding:8px 16px;background:rgba(0,212,255,0.15);border:1px solid rgba(0,212,255,0.2);border-radius:20px;color:#fff;font-size:0.85rem;backdrop-filter:blur(8px);pointer-events:none;transition:opacity 0.3s">你好！我是防灾小精灵！</div>
 
 
-<script>
-// ===== 折叠式菜单管理器 =====
-const MenuManager = {
-  _expanded: {},
-  
-  toggleCategory(cat) {
-    const section = document.querySelector('.menu-section');
-    const sections = document.querySelectorAll('.menu-section');
-    const btnLearn = document.getElementById('catBtnLearn');
-    const btnBattle = document.getElementById('catBtnBattle');
-    const backBtn = document.getElementById('backToCategories');
-    
-    if (cat === 'learn') {
-      if (this._expanded.learn) {
-        // Collapse learn
-        sections[0].classList.remove('expanded');
-        btnLearn.classList.remove('active');
-        this._expanded.learn = false;
-        backBtn.classList.remove('show');
-      } else {
-        // Collapse battle, expand learn
-        if (sections.length > 1) sections[1].classList.remove('expanded');
-        btnBattle.classList.remove('active');
-        this._expanded.battle = false;
-        
-        sections[0].classList.add('expanded');
-        btnLearn.classList.add('active');
-        this._expanded.learn = true;
-        backBtn.classList.add('show');
-      }
-    } else if (cat === 'battle') {
-      if (this._expanded.battle) {
-        // Collapse battle
-        if (sections.length > 1) sections[1].classList.remove('expanded');
-        btnBattle.classList.remove('active');
-        this._expanded.battle = false;
-        backBtn.classList.remove('show');
-      } else {
-        // Collapse learn, expand battle
-        sections[0].classList.remove('expanded');
-        btnLearn.classList.remove('active');
-        this._expanded.learn = false;
-        
-        if (sections.length > 1) sections[1].classList.add('expanded');
-        btnBattle.classList.add('active');
-        this._expanded.battle = true;
-        backBtn.classList.add('show');
-      }
-    }
-    
-    if (typeof AudioManager !== 'undefined') AudioManager.play('click');
-  },
-  
-  collapseAll() {
-    const sections = document.querySelectorAll('.menu-section');
-    const btnLearn = document.getElementById('catBtnLearn');
-    const btnBattle = document.getElementById('catBtnBattle');
-    const backBtn = document.getElementById('backToCategories');
-    
-    sections.forEach(s => s.classList.remove('expanded'));
-    btnLearn.classList.remove('active');
-    btnBattle.classList.remove('active');
-    backBtn.classList.remove('show');
-    this._expanded = {};
-    
-    if (typeof AudioManager !== 'undefined') AudioManager.play('click');
-  }
-};
 
-// 初始化：默认展开学习中心
-document.addEventListener('DOMContentLoaded', function() {
-  const sections = document.querySelectorAll('.menu-section');
-  if (sections[0]) sections[0].classList.add('expanded');
-  const btnLearn = document.getElementById('catBtnLearn');
-  if (btnLearn) btnLearn.classList.add('active');
-  const backBtn = document.getElementById('backToCategories');
-  if (backBtn) backBtn.classList.add('show');
-  MenuManager._expanded.learn = true;
-});
-// 立即执行（DOMContentLoaded 可能已触发）
-(function(){
-  var s = document.querySelectorAll('.menu-section');
-  if (s[0]) s[0].classList.add('expanded');
-  var btnLearn = document.getElementById('catBtnLearn');
-  if (btnLearn) btnLearn.classList.add('active');
-  var backBtn = document.getElementById('backToCategories');
-  if (backBtn) backBtn.classList.add('show');
-  MenuManager._expanded.learn = true;
-})();
-</script>
+<script src="juice.js?v=51" defer></script>
+<script src="visual-fx.js?v=51" defer></script>
+<script src="bgm.js?v=51" defer></script>
+<script src="cards.js?v=51" defer></script>
+<script src="scenarios.js?v=51" defer></script>
+<script src="kit_data.js?v=51" defer></script>
+<script src="game.js?v=51" defer></script>
+<script src="v10-interactions.js?v=51" defer></script>
 
-<script src="juice.js?v=50" defer></script>
-<script src="visual-fx.js?v=50" defer></script>
-<script src="bgm.js?v=50" defer></script>
-<script src="cards.js?v=50" defer></script>
-<script src="scenarios.js?v=50" defer></script>
-<script src="kit_data.js?v=50" defer></script>
-<script src="game.js?v=50" defer></script>
-<script src="v10-interactions.js?v=50" defer></script>
-
-<script src="encyclopedia_extra.js?v=50" defer></script>
-<script src="encyclopedia_final.js?v=50" defer></script>
-<script src="bg-premium.js?v=50" defer></script>
-<script src="ui-polish.js?v=50" defer></script>
-<script src="tilt3d.js?v=50" defer></script>
-<script src="ai-tutor-llm.js?v=50" defer></script>
-<script src="ai-tutor.js?v=50" defer></script>
-<script src="ai-float.js?v=50" defer></script>
-<script src="certification.js?v=50" defer></script>
-<script src="disaster-sim.js?v=50" defer></script>
-<script src="real-cases.js?v=50" defer></script>
-<script src="sfx.js?v=50" defer></script>
-<script src="bgm-enhanced.js?v=50" defer></script>
-<script src="audio-integration.js?v=50" defer></script>
-<script src="accessibility.js?v=50" defer></script>
-<script src="performance.js?v=50" defer></script>
-<script src="wrong-book.js?v=50" defer></script>
-<script src="report.js?v=50" defer></script>
-<script src="voice.js?v=50" defer></script>
-<script src="guide-enhance.js?v=50" defer></script>
-<script src="cert-enhance.js?v=50" defer></script>
-<script src="disaster-particles.js?v=50" defer></script>
-<script src="menu-enhance.js?v=50" defer></script>
-<script src="share.js?v=50" defer></script>
-<script src="i18n.js?v=50" defer></script>
-<script src="bg-themes.js?v=50" defer></script>
-<script src="liquid-glass.js?v=50" defer></script>
+<script src="encyclopedia_extra.js?v=51" defer></script>
+<script src="encyclopedia_final.js?v=51" defer></script>
+<script src="bg-premium.js?v=51" defer></script>
+<script src="ui-polish.js?v=51" defer></script>
+<script src="tilt3d.js?v=51" defer></script>
+<script src="ai-tutor-llm.js?v=51" defer></script>
+<script src="ai-tutor.js?v=51" defer></script>
+<script src="ai-float.js?v=51" defer></script>
+<script src="certification.js?v=51" defer></script>
+<script src="disaster-sim.js?v=51" defer></script>
+<script src="real-cases.js?v=51" defer></script>
+<script src="sfx.js?v=51" defer></script>
+<script src="bgm-enhanced.js?v=51" defer></script>
+<script src="audio-integration.js?v=51" defer></script>
+<script src="accessibility.js?v=51" defer></script>
+<script src="performance.js?v=51" defer></script>
+<script src="wrong-book.js?v=51" defer></script>
+<script src="report.js?v=51" defer></script>
+<script src="voice.js?v=51" defer></script>
+<script src="guide-enhance.js?v=51" defer></script>
+<script src="cert-enhance.js?v=51" defer></script>
+<script src="disaster-particles.js?v=51" defer></script>
+<script src="menu-enhance.js?v=51" defer></script>
+<script src="share.js?v=51" defer></script>
+<script src="i18n.js?v=51" defer></script>
+<script src="bg-themes.js?v=51" defer></script>
+<script src="liquid-glass.js?v=51" defer></script>
 
 <!-- 补丁脚本：修复缺失的方法 -->
 <script>
