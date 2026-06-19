@@ -135,10 +135,15 @@ body {
 
 /* ===== 菜单区域 — 简洁统一 ===== */
 .menu-particles { display: none !important; }
-.menu-logo-glow { display: none !important; }
+.menu-logo-glow { display: block !important; }
 
 .menu-logo {
-  padding: 16px 0 8px !important;
+  padding: 48px 0 24px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
 }
 
 .menu-logo-icon {
@@ -147,17 +152,7 @@ body {
   animation: none !important;
 }
 
-.menu-logo-title {
-  font-size: 20px !important;
-  font-weight: 700 !important;
-  letter-spacing: 2px !important;
-  background: linear-gradient(135deg, var(--cyber-blue), var(--gold)) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-  text-shadow: none !important;
-  animation: none !important;
-}
+/* 标题样式由 index.html 统一管理，clean-ui 不覆盖 */
 
 .menu-logo-sub {
   font-size: 12px !important;

@@ -1,0 +1,393 @@
+/* ============================================================================
+   optimizer-mobile.css — 移动端优化样式
+   版本: 1.0.0
+   生成时间: 2026-06-14
+   ============================================================================ */
+
+/* ===== 1. 全局触摸优化 ===== */
+*,
+*::before,
+*::after {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* 恢复可滚动区域的正常触摸行为 */
+.scrollable,
+.page-content,
+.ai-float-body,
+.terminal-body,
+.encyclopedia-content,
+.leaderboard-content,
+.codex-grid,
+.shop-list,
+.achievement-list {
+  touch-action: pan-y pinch-zoom;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ===== 2. 触摸反馈增强 ===== */
+/* 统一所有可点击元素的 :active 状态 */
+button:active,
+.mode-btn:active,
+.menu-cat-btn:active,
+.tool-btn:active,
+.quiz-opt:active,
+.choice-btn:active,
+.btn-primary:active,
+.btn-secondary:active,
+.ai-fab:active,
+.ai-float-tab:active,
+.ai-quick-btn:active,
+.ai-recommend-card:active,
+.settings-card:active,
+.back-float:active,
+.back-to-categories:active,
+.terminal-send-btn:active,
+.legend-item:active,
+.stat-card:active,
+.diagnosis-summary:active,
+.weak-tag:active,
+.action-btn:active,
+.menu-section-title:active {
+  transform: scale(0.96) !important;
+  opacity: 0.85;
+  transition: transform 0.08s ease, opacity 0.08s ease;
+}
+
+/* 触摸设备上禁用 hover 延迟 */
+@media (hover: none) {
+  .mode-btn:hover,
+  .menu-cat-btn:hover,
+  .tool-btn:hover,
+  .quiz-opt:hover,
+  .choice-btn:hover,
+  .btn-primary:hover,
+  .btn-secondary:hover,
+  .ai-fab:hover,
+  .ai-recommend-card:hover,
+  .settings-card:hover,
+  .back-float:hover,
+  .back-to-categories:hover,
+  .terminal-send-btn:hover,
+  .legend-item:hover,
+  .stat-card:hover,
+  .action-btn:hover {
+    transform: none !important;
+    box-shadow: inherit !important;
+  }
+}
+
+/* ===== 3. 触摸目标大小保障（>= 44px，推荐 48px） ===== */
+.tool-btn,
+.menu-toolbar .tool-btn,
+.ai-float-close,
+.ai-float-send,
+.ai-float-tab,
+.ai-quick-btn,
+.back-float,
+.back-to-categories,
+.terminal-send-btn,
+.menu-section-title .collapse-arrow {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* 答题选项必须足够大 */
+.quiz-opt,
+.choice-btn,
+.scenario-opt {
+  min-height: 52px;
+  padding: 14px 18px;
+}
+
+/* 底部工具栏按钮 */
+.menu-toolbar .tool-btn {
+  padding: 8px 4px !important;
+}
+
+/* ===== 4. 安全区域适配（刘海屏/灵动岛） ===== */
+/* 顶部安全区域 */
+.page {
+  padding-top: max(0px, env(safe-area-inset-top, 0px)) !important;
+}
+
+/* 底部安全区域 */
+.page {
+  padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+.menu-toolbar {
+  padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+/* 侧边安全区域（横屏） */
+#app,
+.page {
+  padding-left: max(0px, env(safe-area-inset-left, 0px)) !important;
+  padding-right: max(0px, env(safe-area-inset-right, 0px)) !important;
+}
+
+/* ===== 5. 虚拟键盘适配 ===== */
+/* 键盘弹出时调整布局 */
+body.keyboard-open .page-content {
+  padding-bottom: calc(200px + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+body.keyboard-open .menu-toolbar {
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+body.keyboard-open .ai-fab {
+  transform: translateY(-60px);
+  transition: transform 0.3s ease;
+}
+
+/* 输入区域在键盘上方 */
+.terminal-input-area,
+.ai-float-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 100;
+}
+
+/* ===== 6. 滑动返回手势区域 ===== */
+/* 左侧边缘滑动区域（页面内返回） */
+.swipe-back-zone {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 100vh;
+  z-index: 9998;
+  pointer-events: none;
+}
+
+/* ===== 7. 滚动优化 ===== */
+/* 禁止 body 滚动，只允许页面内滚动 */
+html,
+body {
+  overscroll-behavior-y: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.page-content,
+.ai-float-body,
+.terminal-body {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+
+/* 下拉刷新占位（禁用默认行为） */
+body {
+  overscroll-behavior-y: none;
+}
+
+/* ===== 8. 性能优化：GPU 加速 ===== */
+.page,
+.menu-toolbar,
+.modal-overlay,
+.ai-float-panel,
+.ai-fab {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* 移动端减少重绘区域 */
+.page {
+  contain: layout style paint;
+}
+
+.menu-toolbar {
+  contain: layout style;
+}
+
+/* ===== 9. 低端设备/触摸设备优化 ===== */
+/* 触摸设备简化 3D 效果 */
+.touch-device .mode-btn,
+.touch-device .menu-cat-btn,
+.touch-device .quiz-opt,
+.touch-device .scenario-opt {
+  transform-style: flat !important;
+  perspective: none !important;
+}
+
+/* 触摸设备禁用 backdrop-filter（性能） */
+.touch-device .menu-toolbar,
+.touch-device .ai-float-panel,
+.touch-device .settings-card,
+.touch-device .back-float {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: rgba(12, 12, 35, 0.98) !important;
+}
+
+/* 低性能模式进一步简化 */
+.low-perf-mode .bg-orb,
+.low-perf-mode .bg-gradient,
+.low-perf-mode .bg-noise,
+.low-perf-mode .bg-vignette,
+.low-perf-mode .bg-top-bar,
+.low-perf-mode .fx-layer,
+.low-perf-mode .ls-hexgrid,
+.low-perf-mode .ls-scanline,
+.low-perf-mode .ls-glitch-line,
+.low-perf-mode .ls-ring-outer,
+.low-perf-mode .ls-ring-spin,
+.low-perf-mode .ls-ring-inner,
+.low-perf-mode .dust,
+.low-perf-mode .light-sweep,
+.low-perf-mode .geo-ring,
+.low-perf-mode .pulse-ring,
+.low-perf-mode .meteor,
+.low-perf-mode .gradient-bar,
+.low-perf-mode .data-stream,
+.low-perf-mode .corner-decor {
+  display: none !important;
+}
+
+.low-perf-mode .page,
+.low-perf-mode .menu-toolbar {
+  contain: none !important;
+}
+
+/* ===== 10. 响应式增强 ===== */
+@media (max-width: 768px) {
+  /* 更大的触摸目标 */
+  .quiz-opt,
+  .choice-btn,
+  .scenario-opt {
+    min-height: 56px;
+    padding: 16px 20px;
+    font-size: 16px; /* 防止 iOS 缩放 */
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    min-height: 48px;
+    padding: 14px 28px;
+  }
+
+  /* 输入框防缩放 */
+  input[type="text"],
+  input[type="number"],
+  textarea,
+  select,
+  .terminal-input,
+  .ai-float-input {
+    font-size: 16px !important; /* iOS 防止自动缩放 */
+    touch-action: manipulation;
+  }
+
+  /* 底部栏间距调整 */
+  .menu-toolbar {
+    gap: 2px !important;
+  }
+
+  .menu-toolbar .tool-btn {
+    min-height: 56px !important;
+  }
+
+  /* 页面内容安全区域 */
+  .page-content {
+    padding-top: max(12px, env(safe-area-inset-top, 0px)) !important;
+    padding-bottom: calc(160px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* 浮动按钮避开底部栏 */
+  .ai-fab {
+    bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* 极小屏幕进一步调整 */
+  .menu-logo-title {
+    font-size: 36px !important;
+  }
+
+  .mode-btn .mode-icon {
+    font-size: 48px !important;
+  }
+
+  .mode-btn .mode-name {
+    font-size: 16px !important;
+  }
+
+  .mode-btn .mode-desc {
+    font-size: 13px !important;
+  }
+
+  /* 输入框在极小屏幕的优化 */
+  .terminal-input-area,
+  .ai-float-footer {
+    padding: 8px 12px !important;
+  }
+
+  .ai-float-panel {
+    width: calc(100vw - 24px) !important;
+    right: 12px !important;
+    bottom: calc(140px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
+/* ===== 11. 横屏优化 ===== */
+@media (max-height: 500px) and (orientation: landscape) {
+  .menu-toolbar {
+    padding: 4px 8px calc(4px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .menu-toolbar .tool-btn {
+    min-height: 44px !important;
+    padding: 4px 2px !important;
+  }
+
+  .menu-toolbar .tool-btn .icon {
+    font-size: 20px !important;
+  }
+
+  .menu-toolbar .tool-btn .label {
+    font-size: 10px !important;
+  }
+
+  .page-content {
+    padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .ai-fab {
+    bottom: calc(60px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
+/* ===== 12. 打印时隐藏手势区域 ===== */
+@media print {
+  .swipe-back-zone {
+    display: none !important;
+  }
+}
+
+/* ===== 13.  prefers-reduced-motion 增强 ===== */
+@media (prefers-reduced-motion: reduce) {
+  .page,
+  .menu-toolbar,
+  .ai-float-panel,
+  .ai-fab {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ===== 14. 高对比度模式触摸反馈 ===== */
+.high-contrast .mode-btn:active,
+.high-contrast .menu-cat-btn:active,
+.high-contrast .tool-btn:active,
+.high-contrast .quiz-opt:active,
+.high-contrast .choice-btn:active {
+  outline: 3px solid #ffff00 !important;
+  outline-offset: 2px !important;
+}

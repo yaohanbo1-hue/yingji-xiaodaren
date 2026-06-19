@@ -133,7 +133,11 @@ const GuideEnhancer = {
 
   init() {
     // 首次进入自动触发
-    if (!localStorage.getItem(this._storageKey)) {
+    try {
+      if (!localStorage.getItem(this._storageKey)) {
+        setTimeout(() => this.start(), 1500);
+      }
+    } catch(e) {
       setTimeout(() => this.start(), 1500);
     }
   },
@@ -145,14 +149,14 @@ const GuideEnhancer = {
       this.next();
       return;
     }
-    localStorage.removeItem(this._storageKey);
+    try { localStorage.removeItem(this._storageKey); } catch(e) { console.error(e); }
     this.start();
   },
   
   forceRestart() {
     this._clearUI();
     this._isRunning = false;
-    localStorage.removeItem(this._storageKey);
+    try { localStorage.removeItem(this._storageKey); } catch(e) { console.error(e); }
     this.start();
   },
   
@@ -160,6 +164,7 @@ const GuideEnhancer = {
     if (this._isRunning) return;
     this._isRunning = true;
     this._currentStep = 0;
+    try { localStorage.setItem(this._storageKey, '1'); } catch(e) { console.error(e); }
     
     // 绑定键盘和resize事件
     this._boundKeydown = function(e) {
@@ -445,7 +450,7 @@ const GuideEnhancer = {
   complete() {
     this._clearUI();
     this._isRunning = false;
-    localStorage.setItem(this._storageKey, '1');
+    try { localStorage.setItem(this._storageKey, '1'); } catch(e) { console.error(e); }
     
     // 回到主菜单
     if (typeof PageManager !== 'undefined') {
@@ -455,7 +460,7 @@ const GuideEnhancer = {
   
   // 重置引导
   reset() {
-    localStorage.removeItem(this._storageKey);
+    try { localStorage.removeItem(this._storageKey); } catch(e) { console.error(e); }
   }
 };
 

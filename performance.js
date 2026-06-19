@@ -45,13 +45,33 @@
       var cores = navigator.hardwareConcurrency || 2;
       var memory = navigator.deviceMemory || 4; // GB
       var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      var saveData = connection && connection.saveData;
       
-      if (cores <= 2 || memory <= 2 || isMobile) {
+      // 更严格的移动端检测
+      if (isMobile) {
+        this._lowPerfMode = true;
+        this._fps = 30;
+        this._frameInterval = 1000 / 30;
+        this._particleMultiplier = 0.3; // 移动端粒子更少
+        document.body.classList.add('low-perf-mode');
+        document.body.classList.add('mobile-device');
+      } else if (cores <= 2 || memory <= 2 || saveData) {
         this._lowPerfMode = true;
         this._fps = 30;
         this._frameInterval = 1000 / 30;
         this._particleMultiplier = 0.5;
         document.body.classList.add('low-perf-mode');
+      }
+      
+      // 电池状态检测
+      if (navigator.getBattery) {
+        navigator.getBattery().then(function(battery) {
+          if (battery.level < 0.2 && !battery.charging) {
+            document.body.classList.add('low-perf-mode');
+            console.log('🔋 Low battery mode activated');
+          }
+        });
       }
     },
     

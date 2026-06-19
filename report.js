@@ -13,13 +13,25 @@
  * ===========================================================================
  */
 
+const SafeStorage = {
+  set(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch(e) { console.error('Storage error:', e); }
+  },
+  get(key, defaultVal) {
+    try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : defaultVal; } catch(e) { return defaultVal; }
+  },
+  getString(key, defaultVal) {
+    try { return localStorage.getItem(key) || defaultVal; } catch(e) { return defaultVal; }
+  }
+};
+
 const ReportEngine = {
   
   // 收集学习数据
   _collectData() {
     var data = {
       date: new Date().toLocaleDateString('zh-CN'),
-      studentName: localStorage.getItem('disaster_hq_name') || '防灾小学员',
+      studentName: SafeStorage.getString('disaster_hq_name', '防灾小学员'),
       totalTime: this._getPlayTime(),
       totalQuizzes: this._getQuizCount(),
       correctRate: this._getCorrectRate(),
@@ -34,11 +46,19 @@ const ReportEngine = {
   },
   
   _getPlayTime() {
-    // 尝试从多个可能的存储位置获取
-    var time = localStorage.getItem('disaster_hq_playtime') ||
-               localStorage.getItem('disaster_hq_totalTime') ||
-               localStorage.getItem('play_time') || '0';
-    var minutes = parseInt(time) || 0;
+    var time = SafeStorage.getString('disaster_hq_playtime', null) ||
+               SafeStorage.getString('disaster_hq_totalTime', null) ||
+               SafeStorage.getString('play_time', null);
+    // 尝试从 GameState 获取
+    if (!time && typeof GameState !== 'undefined' && GameState._data) {
+      time = GameState._data.playTime || GameState._data.totalTime || null;
+    }
+    // 尝试从 disasterGachaState 获取
+    if (!time) {
+      var gacha = SafeStorage.get('disasterGachaState', null);
+      if (gacha && gacha.playTime) time = String(gacha.playTime);
+    }
+    var minutes = parseInt(time || '0') || 0;
     if (minutes < 60) return minutes + ' 分钟';
     var hours = Math.floor(minutes / 60);
     var mins = minutes % 60;
@@ -46,17 +66,44 @@ const ReportEngine = {
   },
   
   _getQuizCount() {
-    var count = localStorage.getItem('disaster_hq_quizcount') ||
-                localStorage.getItem('disaster_hq_totalQuizzes') ||
-                localStorage.getItem('quiz_count') || '0';
-    return parseInt(count) || 0;
+    var count = SafeStorage.getString('disaster_hq_quizcount', null) ||
+                SafeStorage.getString('disaster_hq_totalQuizzes', null) ||
+                SafeStorage.getString('quiz_count', null);
+    // 尝试从 AI 导师数据获取
+    if (!count) {
+      var aiData = SafeStorage.get('aiTutorData', null);
+      if (aiData && aiData.quizHistory) count = String(aiData.quizHistory.length);
+    }
+    // 尝试从 GameState 获取
+    if (!count && typeof GameState !== 'undefined' && GameState._data) {
+      count = GameState._data.totalQuizzes || GameState._data.quizCount || null;
+    }
+    // 尝试从 disasterGachaState 获取
+    if (!count) {
+      var gacha = SafeStorage.get('disasterGachaState', null);
+      if (gacha && gacha.totalQuizzes) count = String(gacha.totalQuizzes);
+    }
+    return parseInt(count || '0') || 0;
   },
   
   _getCorrectRate() {
-    var correct = parseInt(localStorage.getItem('disaster_hq_correct') || 
-                  localStorage.getItem('correct_count') || '0');
-    var total = parseInt(localStorage.getItem('disaster_hq_total') || 
-                localStorage.getItem('total_count') || '0');
+    var correct = parseInt(SafeStorage.getString('disaster_hq_correct', '0') || 
+                  SafeStorage.getString('correct_count', '0'));
+    var total = parseInt(SafeStorage.getString('disaster_hq_total', '0') || 
+                SafeStorage.getString('total_count', '0'));
+    // 尝试从 AI 导师数据计算
+    if (total === 0) {
+      var aiData = SafeStorage.get('aiTutorData', null);
+      if (aiData && aiData.quizHistory) {
+        total = aiData.quizHistory.length;
+        correct = aiData.quizHistory.filter(function(h) { return h.correct; }).length;
+      }
+    }
+    // 尝试从 GameState 获取
+    if (total === 0 && typeof GameState !== 'undefined' && GameState._data) {
+      total = GameState._data.totalQuizzes || GameState._data.quizCount || 0;
+      correct = GameState._data.correctCount || 0;
+    }
     if (total === 0) return 0;
     return Math.round(correct / total * 100);
   },
@@ -79,16 +126,28 @@ const ReportEngine = {
     
     // 尝试从已有数据中获取
     try {
-      var stats = localStorage.getItem('disaster_hq_category_stats');
+      var stats = SafeStorage.get('disaster_hq_category_stats', null);
       if (stats) {
-        var parsed = JSON.parse(stats);
-        Object.keys(parsed).forEach(function(key) {
+        Object.keys(stats).forEach(function(key) {
           if (categories[key]) {
-            categories[key] = Object.assign(categories[key], parsed[key]);
+            categories[key] = Object.assign(categories[key], stats[key]);
           }
         });
       }
-    } catch (e) {}
+    } catch (e) { console.error(e); }
+    
+    // 尝试从 AI 导师数据获取
+    try {
+      var aiData = SafeStorage.get('aiTutorData', null);
+      if (aiData && aiData.mastery) {
+        Object.keys(aiData.mastery).forEach(function(key) {
+          if (categories[key]) {
+            categories[key].correct = Math.round(aiData.mastery[key]);
+            categories[key].total = 100;
+          }
+        });
+      }
+    } catch (e) { console.error(e); }
     
     return categories;
   },
@@ -110,12 +169,12 @@ const ReportEngine = {
   _getAchievements() {
     var achievements = [];
     try {
-      var data = localStorage.getItem('disaster_hq_achievements') ||
-                 localStorage.getItem('achievements');
+      var data = SafeStorage.get('disaster_hq_achievements', null) ||
+                 SafeStorage.get('achievements', null);
       if (data) {
-        achievements = JSON.parse(data);
+        achievements = Array.isArray(data) ? data : [];
       }
-    } catch (e) {}
+    } catch (e) { console.error(e); }
     return achievements.slice(0, 5); // 最多显示5个
   },
   
@@ -127,14 +186,23 @@ const ReportEngine = {
   },
   
   _getLevel() {
-    var level = localStorage.getItem('disaster_hq_level') ||
-                localStorage.getItem('player_level') || '1';
+    // 优先从 CertificationEngine 获取
+    if (typeof CertificationEngine !== 'undefined' && CertificationEngine._data) {
+      var level = CertificationEngine._data.currentLevel;
+      if (level !== undefined && level !== -1) return level + 1;
+    }
+    var level = SafeStorage.getString('disaster_hq_level', null) ||
+                SafeStorage.getString('player_level', '1');
     return parseInt(level) || 1;
   },
   
   _getStreak() {
-    var streak = localStorage.getItem('disaster_hq_streak') ||
-                 localStorage.getItem('login_streak') || '0';
+    // 优先从 CalendarEngine 获取
+    if (typeof CalendarEngine !== 'undefined' && CalendarEngine._checkins) {
+      return CalendarEngine._streak || 0;
+    }
+    var streak = SafeStorage.getString('disaster_hq_streak', null) ||
+                 SafeStorage.getString('login_streak', '0');
     return parseInt(streak) || 0;
   },
   

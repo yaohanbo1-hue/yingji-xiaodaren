@@ -64,7 +64,9 @@ const VoiceEngine = {
   // 开关
   toggle() {
     this._enabled = !this._enabled;
-    localStorage.setItem('disaster_hq_voice_enabled', this._enabled);
+    try {
+      localStorage.setItem('disaster_hq_voice_enabled', this._enabled);
+    } catch(e) { console.error('Storage error:', e); }
     if (!this._enabled) {
       this.stop();
     }
@@ -78,13 +80,17 @@ const VoiceEngine = {
   // 设置语速
   setRate(rate) {
     this._rate = Math.max(0.5, Math.min(2.0, rate));
-    localStorage.setItem('disaster_hq_voice_rate', this._rate);
+    try {
+      localStorage.setItem('disaster_hq_voice_rate', this._rate);
+    } catch(e) { console.error('Storage error:', e); }
   },
   
   // 设置音调
   setPitch(pitch) {
     this._pitch = Math.max(0.5, Math.min(2.0, pitch));
-    localStorage.setItem('disaster_hq_voice_pitch', this._pitch);
+    try {
+      localStorage.setItem('disaster_hq_voice_pitch', this._pitch);
+    } catch(e) { console.error('Storage error:', e); }
   },
   
   // 朗读文本

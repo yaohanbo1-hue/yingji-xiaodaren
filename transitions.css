@@ -13,22 +13,107 @@
  * ===========================================================================
  */
 
-/* ===== 页面切换基础动画 ===== */
+/* ===== 页面切换基础动画（增强版） ===== */
 .page {
-  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: opacity, transform;
-}
-
-.page:not(.active) {
+  position: fixed;
+  inset: 0;
   opacity: 0;
-  transform: scale(0.98) translateY(10px);
+  visibility: hidden;
   pointer-events: none;
+  transform: translateY(24px) scale(0.97);
+  transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0.45s ease,
+              filter 0.45s ease;
+  will-change: opacity, transform, filter;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .page.active {
   opacity: 1;
-  transform: scale(1) translateY(0);
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+/* 页面退出效果：向上滑出 + 模糊淡出 */
+.page:not(.active) {
+  filter: blur(2px);
+}
+
+/* 页面进入方向：从下方滑入 */
+.page.enter-from-bottom {
+  transform: translateY(30px) scale(0.96);
+}
+.page.enter-from-bottom.active {
+  transform: translateY(0) scale(1);
+}
+
+/* 页面返回方向：从左侧滑入 */
+.page.enter-from-left {
+  transform: translateX(-30px) scale(0.96);
+}
+.page.enter-from-left.active {
+  transform: translateX(0) scale(1);
+}
+
+/* 骨架屏容器 */
+.skeleton-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: linear-gradient(135deg, #0F172A 0%, #111827 50%, #0F172A 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.skeleton-screen.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 骨架屏内容 */
+.skeleton-header {
+  width: 200px;
+  height: 28px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.06) 25%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.06) 75%);
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.5s ease-in-out infinite;
+  margin-bottom: 40px;
+}
+
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  width: 90%;
+  max-width: 400px;
+}
+
+.skeleton-card {
+  height: 120px;
+  border-radius: 16px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.04) 75%);
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.5s ease-in-out infinite;
+}
+
+.skeleton-card:nth-child(2) { animation-delay: 0.1s; }
+.skeleton-card:nth-child(3) { animation-delay: 0.2s; }
+.skeleton-card:nth-child(4) { animation-delay: 0.3s; }
+.skeleton-card:nth-child(5) { animation-delay: 0.4s; }
+.skeleton-card:nth-child(6) { animation-delay: 0.5s; }
+
+@keyframes skeletonShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 /* ===== 菜单页专属动画 ===== */
@@ -123,15 +208,90 @@
   opacity: 1;
 }
 
-/* ===== 按钮点击反馈 ===== */
+/* ===== 按钮点击反馈（全面增强） ===== */
 .mode-btn:active,
 .tool-btn:active,
-button:active {
-  transform: scale(0.96);
-  transition: transform 0.1s ease;
+button:active,
+.quiz-opt:active,
+.choice-btn:active,
+.menu-cat-btn:active,
+.back-float:active,
+.btn:active,
+.btn-primary:active,
+.btn-secondary:active,
+.settings-card:active,
+.placeholder-btn:active,
+.shop-item:active,
+.character-card:active,
+.achievement-item:active,
+.codex-card:active {
+  transform: scale(0.94) !important;
+  transition: transform 0.08s cubic-bezier(0.4, 0, 0.2, 1), filter 0.08s ease !important;
+  filter: brightness(0.9);
 }
 
-/* ===== 底部导航栏切换高亮 ===== */
+/* 触摸设备专用：更明显的按下反馈 */
+@media (hover: none) and (pointer: coarse) {
+  .mode-btn:active,
+  .tool-btn:active,
+  button:active,
+  .quiz-opt:active,
+  .choice-btn:active,
+  .menu-cat-btn:active,
+  .back-float:active,
+  .btn:active,
+  .btn-primary:active,
+  .btn-secondary:active {
+    transform: scale(0.92) !important;
+    filter: brightness(0.85) !important;
+  }
+  
+  /* 禁用 hover 效果，避免 sticky hover 问题 */
+  .mode-btn:hover,
+  .tool-btn:hover,
+  button:hover,
+  .quiz-opt:hover,
+  .choice-btn:hover,
+  .menu-cat-btn:hover {
+    transform: none !important;
+  }
+  
+  .mode-btn:active {
+    transform: scale(0.92) !important;
+  }
+}
+
+/* 按钮点击时的涟漪效果 */
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+.btn-ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255,255,255,0.25);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+.btn-ripple:active::after {
+  width: 200%;
+  height: 200%;
+  opacity: 1;
+  transition: width 0s, height 0s, opacity 0s;
+}
+.btn-ripple:not(:active)::after {
+  transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
+  opacity: 0;
+}
+
+/* ===== 底部导航栏切换高亮（增强） ===== */
 .menu-toolbar .tool-btn {
   position: relative;
   overflow: hidden;
@@ -156,6 +316,11 @@ button:active {
 
 .menu-toolbar .tool-btn:hover::before {
   width: 40%;
+}
+
+/* 导航栏按钮按压 */
+.menu-toolbar .tool-btn:active {
+  transform: scale(0.9) !important;
 }
 
 /* ===== 标题进入动画 ===== */
@@ -253,14 +418,31 @@ button:active {
   animation: errorShake 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ===== 悬浮卡片效果 ===== */
+/* ===== 悬浮卡片效果（增强版） ===== */
 .mode-btn:hover,
-.case-card:hover {
+.case-card:hover,
+.shop-item:hover,
+.character-card:hover,
+.achievement-item:hover,
+.codex-card:hover,
+.settings-card:hover,
+.quiz-opt:hover,
+.scenario-opt:hover {
   transform: translateY(-4px) scale(1.02);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ===== 滚动条美化 ===== */
+/* 桌面端：更精致的 hover 发光 */
+@media (hover: hover) and (pointer: fine) {
+  .mode-btn:hover,
+  .case-card:hover,
+  .shop-item:hover,
+  .character-card:hover {
+    box-shadow: 0 12px 40px rgba(59, 130, 246, 0.15), 0 4px 12px rgba(0,0,0,0.2) !important;
+  }
+}
+
+/* ===== 滚动条美化（增强） ===== */
 .page::-webkit-scrollbar {
   width: 6px;
 }
@@ -278,4 +460,166 @@ button:active {
 
 .page::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
+}
+
+/* Firefox 滚动条 */
+.page {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+
+/* ===== 响应式适配（375px / 768px / 1200px） ===== */
+
+/* 手机端优化（375px以下） */
+@media (max-width: 375px) {
+  .page {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+  
+  .mode-btn {
+    padding: 36px 16px !important;
+    min-height: 180px !important;
+    border-radius: 24px !important;
+  }
+  .mode-btn .mode-icon { font-size: 52px !important; }
+  .mode-btn .mode-name { font-size: 18px !important; }
+  .mode-btn .mode-desc { font-size: 12px !important; }
+  
+  .menu-cat-btn {
+    padding: 28px 16px !important;
+    min-height: 120px !important;
+    border-radius: 20px !important;
+  }
+  .menu-cat-btn .cat-icon { font-size: 40px !important; }
+  .menu-cat-btn .cat-title { font-size: 16px !important; }
+  
+  .quiz-opt, .scenario-opt {
+    padding: 12px 14px !important;
+    font-size: 14px !important;
+  }
+  
+  .game-header .mode-label {
+    font-size: 20px !important;
+  }
+  
+  .back-float {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 14px !important;
+  }
+  
+  .menu-toolbar .tool-btn .icon { font-size: 22px !important; }
+  .menu-toolbar .tool-btn .label { font-size: 10px !important; }
+  
+  .page-content {
+    padding: 60px 10px 120px !important;
+  }
+  
+  .result-box { padding: 20px 16px !important; }
+  .result-title { font-size: 22px !important; }
+  
+  .loading-icon { font-size: 56px !important; }
+  .loading-title { font-size: 26px !important; letter-spacing: 2px !important; }
+  .loading-subtitle { font-size: 11px !important; }
+  .loading-bar-container { width: 200px !important; }
+  .loading-tip { font-size: 12px !important; }
+  
+  .skeleton-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  .skeleton-card { height: 100px !important; }
+}
+
+/* 手机端到平板端（376px - 768px） */
+@media (min-width: 376px) and (max-width: 768px) {
+  .mode-btn {
+    padding: 40px 20px !important;
+    min-height: 200px !important;
+  }
+  .mode-btn .mode-icon { font-size: 60px !important; }
+  .mode-btn .mode-name { font-size: 20px !important; }
+  .mode-btn .mode-desc { font-size: 13px !important; }
+  
+  .quiz-opt, .scenario-opt {
+    padding: 14px 16px !important;
+    font-size: 15px !important;
+  }
+  
+  .page-content {
+    padding: 65px 14px 130px !important;
+  }
+}
+
+/* 平板端（769px - 1199px） */
+@media (min-width: 769px) and (max-width: 1199px) {
+  .menu-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 14px !important;
+  }
+  .mode-btn {
+    min-height: 200px !important;
+  }
+  .page-content {
+    max-width: 700px !important;
+    margin: 0 auto !important;
+  }
+}
+
+/* 电脑端（1200px+） */
+@media (min-width: 1200px) {
+  .menu-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 16px !important;
+    max-width: 1100px !important;
+    margin: 0 auto !important;
+  }
+  .mode-btn {
+    min-height: 240px !important;
+    padding: 52px 28px !important;
+  }
+  .mode-btn .mode-icon { font-size: 80px !important; }
+  .mode-btn .mode-name { font-size: 26px !important; }
+  .mode-btn .mode-desc { font-size: 16px !important; }
+  
+  .page-content {
+    max-width: 900px !important;
+    margin: 0 auto !important;
+  }
+  
+  .quiz-opt, .scenario-opt {
+    padding: 18px 24px !important;
+    font-size: 16px !important;
+  }
+  
+  .game-header .mode-label {
+    font-size: 32px !important;
+  }
+  
+  .back-float {
+    width: 48px !important;
+    height: 48px !important;
+    font-size: 20px !important;
+  }
+}
+
+/* 横屏手机优化 */
+@media (max-height: 450px) and (orientation: landscape) {
+  .mode-btn {
+    min-height: 140px !important;
+    padding: 20px 16px !important;
+  }
+  .mode-btn .mode-icon { font-size: 40px !important; margin-bottom: 6px !important; }
+  .mode-btn .mode-name { font-size: 16px !important; }
+  .mode-btn .mode-desc { font-size: 11px !important; }
+  
+  .menu-logo { padding: 8px 0 4px !important; }
+  .menu-logo-title { font-size: 28px !important; }
+  .menu-logo-sub { font-size: 12px !important; }
+  
+  .menu-cat-btn { min-height: 100px !important; padding: 20px 16px !important; }
+  .menu-cat-btn .cat-icon { font-size: 32px !important; }
+  
+  .page-content { padding: 50px 12px 100px !important; }
 }

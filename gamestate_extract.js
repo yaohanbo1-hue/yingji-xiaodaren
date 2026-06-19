@@ -1,0 +1,1 @@
+Extracting GameState init method to find where _data is initialized without checking for null. Need to see the full init() code. Let me use a more targeted extraction.

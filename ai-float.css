@@ -6,9 +6,9 @@
 /* ===== 浮动按钮 ===== */
 .ai-fab {
   position: fixed !important;
-  bottom: 80px !important;
+  bottom: calc(100px + env(safe-area-inset-bottom, 0px)) !important;
   right: 20px !important;
-  z-index: 9998 !important;
+  z-index: 10001 !important;
   width: 56px !important;
   height: 56px !important;
   border-radius: 50% !important;

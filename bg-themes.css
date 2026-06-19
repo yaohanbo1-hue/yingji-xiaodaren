@@ -423,3 +423,224 @@ body.theme-warm-light .ai-float-input::placeholder {
     font-size: 10px;
   }
 }
+
+/* ===== 浅色主题对比度与可读性优化（v1.3.0） ===== */
+
+/* 自然晨曦 — 增强文字对比度 */
+body.theme-dawn-light .game-header,
+body.theme-dawn-light .preview-header,
+body.theme-dawn-light .settings-header {
+  color: #1E293B !important;
+}
+body.theme-dawn-light .preview-title,
+body.theme-dawn-light .settings-title,
+body.theme-dawn-light .game-header-title {
+  color: #0F172A !important;
+  text-shadow: none !important;
+}
+body.theme-dawn-light .preview-desc,
+body.theme-dawn-light .settings-subtitle,
+body.theme-dawn-light .game-header-sub {
+  color: rgba(30, 41, 59, 0.75) !important;
+}
+body.theme-dawn-light .quiz-opt,
+body.theme-dawn-light .scenario-opt,
+body.theme-dawn-light .choice-btn {
+  background: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.5) 100%) !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+  color: #1E293B !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+}
+body.theme-dawn-light .quiz-opt:hover,
+body.theme-dawn-light .scenario-opt:hover,
+body.theme-dawn-light .choice-btn:hover {
+  background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%) !important;
+  border-color: rgba(59,130,246,0.3) !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1) !important;
+}
+body.theme-dawn-light .quiz-opt.correct,
+body.theme-dawn-light .choice-btn.correct {
+  background: linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.08)) !important;
+  border-color: rgba(34,197,94,0.4) !important;
+}
+body.theme-dawn-light .quiz-opt.wrong,
+body.theme-dawn-light .choice-btn.wrong {
+  background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.08)) !important;
+  border-color: rgba(239,68,68,0.4) !important;
+}
+body.theme-dawn-light .result-box {
+  background: rgba(255,255,255,0.8) !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+  color: #1E293B !important;
+}
+body.theme-dawn-light .result-title { color: #0F172A !important; }
+body.theme-dawn-light .result-desc { color: rgba(30,41,59,0.7) !important; }
+body.theme-dawn-light .btn-primary {
+  background: linear-gradient(135deg, #3B82F6, #60A5FA) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 16px rgba(59,130,246,0.3) !important;
+}
+body.theme-dawn-light .btn-primary:hover {
+  background: linear-gradient(135deg, #2563EB, #3B82F6) !important;
+  box-shadow: 0 6px 24px rgba(59,130,246,0.4) !important;
+}
+body.theme-dawn-light .btn-secondary {
+  background: rgba(0,0,0,0.04) !important;
+  border: 1px solid rgba(0,0,0,0.1) !important;
+  color: #1E293B !important;
+}
+body.theme-dawn-light .tool-btn {
+  color: rgba(30,41,59,0.6) !important;
+}
+body.theme-dawn-light .tool-btn.active {
+  color: #3B82F6 !important;
+  background: rgba(59,130,246,0.1) !important;
+}
+body.theme-dawn-light .menu-toolbar .tool-btn::after {
+  background: linear-gradient(90deg, #3B82F6, #60A5FA) !important;
+}
+body.theme-dawn-light input,
+body.theme-dawn-light select,
+body.theme-dawn-light textarea {
+  background: rgba(255,255,255,0.7) !important;
+  border: 1px solid rgba(0,0,0,0.1) !important;
+  color: #1E293B !important;
+}
+body.theme-dawn-light input:focus,
+body.theme-dawn-light select:focus,
+body.theme-dawn-light textarea:focus {
+  border-color: rgba(59,130,246,0.5) !important;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.15) !important;
+}
+body.theme-dawn-light ::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.15) !important;
+}
+body.theme-dawn-light ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0,0,0,0.25) !important;
+}
+body.theme-dawn-light .page::after {
+  background: linear-gradient(to top, rgba(255,255,255,0.5), transparent) !important;
+}
+
+/* 温馨暖光 — 增强文字对比度 */
+body.theme-warm-light .game-header,
+body.theme-warm-light .preview-header,
+body.theme-warm-light .settings-header {
+  color: #3E2723 !important;
+}
+body.theme-warm-light .preview-title,
+body.theme-warm-light .settings-title,
+body.theme-warm-light .game-header-title {
+  color: #2D1B15 !important;
+  text-shadow: none !important;
+}
+body.theme-warm-light .preview-desc,
+body.theme-warm-light .settings-subtitle,
+body.theme-warm-light .game-header-sub {
+  color: rgba(62, 39, 35, 0.75) !important;
+}
+body.theme-warm-light .quiz-opt,
+body.theme-warm-light .scenario-opt,
+body.theme-warm-light .choice-btn {
+  background: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.55) 100%) !important;
+  border: 1px solid rgba(62,39,35,0.08) !important;
+  color: #3E2723 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+}
+body.theme-warm-light .quiz-opt:hover,
+body.theme-warm-light .scenario-opt:hover,
+body.theme-warm-light .choice-btn:hover {
+  background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.75) 100%) !important;
+  border-color: rgba(251,146,60,0.3) !important;
+}
+body.theme-warm-light .quiz-opt.correct,
+body.theme-warm-light .choice-btn.correct {
+  background: linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.08)) !important;
+  border-color: rgba(34,197,94,0.4) !important;
+}
+body.theme-warm-light .quiz-opt.wrong,
+body.theme-warm-light .choice-btn.wrong {
+  background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.08)) !important;
+  border-color: rgba(239,68,68,0.4) !important;
+}
+body.theme-warm-light .result-box {
+  background: rgba(255,255,255,0.85) !important;
+  border: 1px solid rgba(62,39,35,0.08) !important;
+  color: #3E2723 !important;
+}
+body.theme-warm-light .result-title { color: #2D1B15 !important; }
+body.theme-warm-light .result-desc { color: rgba(62,39,35,0.7) !important; }
+body.theme-warm-light .btn-primary {
+  background: linear-gradient(135deg, #F97316, #FB923C) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 16px rgba(249,115,22,0.3) !important;
+}
+body.theme-warm-light .btn-primary:hover {
+  background: linear-gradient(135deg, #EA580C, #F97316) !important;
+  box-shadow: 0 6px 24px rgba(249,115,22,0.4) !important;
+}
+body.theme-warm-light .btn-secondary {
+  background: rgba(62,39,35,0.04) !important;
+  border: 1px solid rgba(62,39,35,0.1) !important;
+  color: #3E2723 !important;
+}
+body.theme-warm-light .tool-btn {
+  color: rgba(62,39,35,0.6) !important;
+}
+body.theme-warm-light .tool-btn.active {
+  color: #F97316 !important;
+  background: rgba(249,115,22,0.1) !important;
+}
+body.theme-warm-light .menu-toolbar .tool-btn::after {
+  background: linear-gradient(90deg, #F97316, #FB923C) !important;
+}
+body.theme-warm-light input,
+body.theme-warm-light select,
+body.theme-warm-light textarea {
+  background: rgba(255,255,255,0.75) !important;
+  border: 1px solid rgba(62,39,35,0.1) !important;
+  color: #3E2723 !important;
+}
+body.theme-warm-light input:focus,
+body.theme-warm-light select:focus,
+body.theme-warm-light textarea:focus {
+  border-color: rgba(249,115,22,0.5) !important;
+  box-shadow: 0 0 0 3px rgba(249,115,22,0.15) !important;
+}
+body.theme-warm-light ::-webkit-scrollbar-thumb {
+  background: rgba(62,39,35,0.15) !important;
+}
+body.theme-warm-light ::-webkit-scrollbar-thumb:hover {
+  background: rgba(62,39,35,0.25) !important;
+}
+body.theme-warm-light .page::after {
+  background: linear-gradient(to top, rgba(255,255,255,0.5), transparent) !important;
+}
+
+/* 浅色主题通用：底部工具栏 */
+body.theme-dawn-light .menu-toolbar,
+body.theme-warm-light .menu-toolbar {
+  background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.98) 100%) !important;
+  border-top: 1px solid rgba(0,0,0,0.06) !important;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.08) !important;
+}
+
+/* ===== 系统主题检测（prefers-color-scheme） ===== */
+@media (prefers-color-scheme: light) {
+  body:not([data-theme-override]) .bg-theme-layer {
+    opacity: 0.8;
+  }
+}
+
+/* ===== 减少动画偏好适配 ===== */
+@media (prefers-reduced-motion: reduce) {
+  .bg-theme-layer,
+  .aurora-band,
+  .matrix-col,
+  .bg-stars {
+    animation: none !important;
+  }
+  body {
+    transition: none !important;
+  }
+}

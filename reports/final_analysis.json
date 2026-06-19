@@ -1,0 +1,38 @@
+{
+  "StoryEngine": {
+    "chapters_count": 10,
+    "has_chapters": true,
+    "has_underscore_chapters": true,
+    "methods": [
+      "_renderChapterSelect",
+      "choose",
+      "_chapters",
+      "_finish",
+      "_renderScene",
+      "startChapter",
+      "push"
+    ]
+  },
+  "BossRushEngine": {
+    "has_end": false,
+    "has_victory": true,
+    "has_startBoss": true,
+    "end_body": "",
+    "victory_body": "this._active=!1;const grade=this._score>=200?\"S\":this._score>=150?\"A\":this._score>=100?\"B\":\"C\";AchievementEngine.unlock(\"boss_rush\"),Modal.show(\"🎉 Boss Rush 通关！\",\"⚡ 评级: \"+grade+\"<br/>🏆 总分: \"+this._sco",
+    "startBoss_body": "if(this._current>=this._bosses.length)return this.victory();const boss=this._bosses[this._current];this._bossHp=boss.hp,this.render(),this.nextQuestion()}"
+  },
+  "RealCasesEngine": {
+    "dom_ids": [
+      "realCasesContent",
+      "realCasesContent",
+      "choiceResult",
+      "realCasesContent",
+      "realCasesContent",
+      "page-real-cases"
+    ],
+    "missing_ids": [
+      "choiceResult"
+    ],
+    "navigate_calls": []
+  }
+}

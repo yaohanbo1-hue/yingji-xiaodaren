@@ -1,0 +1,1674 @@
+{
+  "issues": [
+    {
+      "level": "fatal",
+      "title": ".page display:none 冲突",
+      "detail": "选择器 `.low-perf-mode .page::before,\n.low-perf-mode .page::after` 设置了 display:none，可能导致页面无法显示",
+      "file": "accessibility.css",
+      "line": 163
+    },
+    {
+      "level": "fatal",
+      "title": ".page display:none 冲突",
+      "detail": "选择器 `.low-perf-mode .page::before,\n.low-perf-mode .page::after` 设置了 display:none，可能导致页面无法显示",
+      "file": "all-styles.css",
+      "line": 164
+    },
+    {
+      "level": "fatal",
+      "title": ".page display:none 冲突",
+      "detail": "选择器 `.page:not(.active)` 设置了 display:none，可能导致页面无法显示",
+      "file": "all-styles.css",
+      "line": 6565
+    },
+    {
+      "level": "fatal",
+      "title": ".page display:none 冲突",
+      "detail": "选择器 `body:not(.app-ready) .page` 设置了 display:none，可能导致页面无法显示",
+      "file": "index.html (style tag #1)",
+      "line": 3
+    },
+    {
+      "level": "fatal",
+      "title": ".page display:none 冲突",
+      "detail": "选择器 `.page:not(.active)` 设置了 display:none，可能导致页面无法显示",
+      "file": "index.html (style tag #1)",
+      "line": 4
+    },
+    {
+      "level": "fatal",
+      "title": ".page:not(.active) 多处定义 (3处)",
+      "detail": "多处定义可能导致不可预期的行为",
+      "file": "index.html (style tag #1), all-styles.css, transitions.css",
+      "line": "多行"
+    },
+    {
+      "level": "fatal",
+      "title": "按钮被 pointer-events:none 禁用",
+      "detail": "选择器 `.ai-llm-toggle-btn.llm-loading` 设置了 pointer-events:none，按钮将无法点击",
+      "file": "ai-tutor.css",
+      "line": 855
+    },
+    {
+      "level": "fatal",
+      "title": "按钮被 pointer-events:none 禁用",
+      "detail": "选择器 `.ai-llm-toggle-btn.llm-loading` 设置了 pointer-events:none，按钮将无法点击",
+      "file": "all-styles.css",
+      "line": 1538
+    },
+    {
+      "level": "fatal",
+      "title": "按钮被 pointer-events:none 禁用",
+      "detail": "选择器 `.quiz-opt::before, .scenario-opt::before, .quiz-card::before,\n.quiz-content::before, .scenario-card::before, .mode-btn::before` 设置了 pointer-events:none，按钮将无法点击",
+      "file": "all-styles.css",
+      "line": 7343
+    },
+    {
+      "level": "fatal",
+      "title": "按钮被 pointer-events:none 禁用",
+      "detail": "选择器 `.quiz-opt::before, .scenario-opt::before, .quiz-card::before,\n.quiz-content::before, .scenario-card::before, .mode-btn::before` 设置了 pointer-events:none，按钮将无法点击",
+      "file": "v5-glass-3d.css",
+      "line": 39
+    },
+    {
+      "level": "fatal",
+      "title": "按钮被 pointer-events:none 禁用",
+      "detail": "选择器 `.menu-cat-btn::before` 设置了 pointer-events:none，按钮将无法点击",
+      "file": "index.html (style tag #5)",
+      "line": 26
+    },
+    {
+      "level": "fatal",
+      "title": "z-index 极端值: 999999",
+      "detail": "选择器 `#loadingScreen` 的 z-index=999999 过高，可能导致层叠混乱",
+      "file": "index.html (style tag #2)",
+      "line": 1
+    },
+    {
+      "level": "fatal",
+      "title": "同一选择器 display 矛盾设置",
+      "detail": "`.back-to-categories` 在不同文件中 display 设置为: ['inline-flex', 'inline-flex', 'none']",
+      "file": "index.html (style tag #5), all-styles.css, menu-premium.css",
+      "line": "多行"
+    },
+    {
+      "level": "fatal",
+      "title": "同一选择器 display 矛盾设置",
+      "detail": "`.page:not(.active)` 在不同文件中 display 设置为: ['none !important', 'none!important']",
+      "file": "index.html (style tag #1), all-styles.css",
+      "line": "多行"
+    },
+    {
+      "level": "fatal",
+      "title": "同一选择器 display 矛盾设置",
+      "detail": "`.menu-title-decor` 在不同文件中 display 设置为: ['flex!important', 'flex !important']",
+      "file": "index.html (style tag #1), index.html (style tag #3)",
+      "line": "多行"
+    },
+    {
+      "level": "fatal",
+      "title": "同一选择器 display 矛盾设置",
+      "detail": "`.title-shield` 在不同文件中 display 设置为: ['flex!important', 'flex !important']",
+      "file": "index.html (style tag #1), index.html (style tag #3)",
+      "line": "多行"
+    },
+    {
+      "level": "fatal",
+      "title": ".menu-toolbar 被 pointer-events:none 禁用",
+      "detail": "选择器 `.menu-toolbar::before` 导致整个菜单栏无法点击",
+      "file": "all-styles.css",
+      "line": 7902
+    },
+    {
+      "level": "fatal",
+      "title": "按钮样式设置 pointer-events:none",
+      "detail": "`.quiz-opt::before, .scenario-opt::before, .quiz-card::before,\n.quiz-content::before, .scenario-card::before, .mode-btn::before` 无法点击",
+      "file": "all-styles.css",
+      "line": 7343
+    },
+    {
+      "level": "fatal",
+      "title": "按钮样式设置 pointer-events:none",
+      "detail": "`.quiz-opt::before, .scenario-opt::before, .quiz-card::before,\n.quiz-content::before, .scenario-card::before, .mode-btn::before` 无法点击",
+      "file": "v5-glass-3d.css",
+      "line": 39
+    }
+  ],
+  "warnings": [
+    {
+      "level": "warning",
+      "title": "page::after 有 pointer-events:none",
+      "detail": "选择器 `.page::after` - 确保不会意外阻断点击",
+      "file": "index.html (style tag #1)",
+      "line": 17
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: ai-fab-pulse",
+      "detail": "在 2 个地方定义，文件: ai-float.css, all-styles.css",
+      "file": "ai-float.css",
+      "line": 47
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: ai-fab-badge-pulse",
+      "detail": "在 2 个地方定义，文件: ai-float.css, all-styles.css",
+      "file": "ai-float.css",
+      "line": 52
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: ai-panel-slide-in",
+      "detail": "在 2 个地方定义，文件: ai-float.css, all-styles.css",
+      "file": "ai-float.css",
+      "line": 82
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: ai-msg-fade-in",
+      "detail": "在 2 个地方定义，文件: ai-float.css, all-styles.css",
+      "file": "ai-float.css",
+      "line": 210
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: cardFadeIn",
+      "detail": "在 4 个地方定义，文件: all-styles.css, transitions.css, ai-tutor.css",
+      "file": "ai-tutor.css",
+      "line": 41
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: pulse-ring",
+      "detail": "在 2 个地方定义，文件: all-styles.css, ai-tutor.css",
+      "file": "ai-tutor.css",
+      "line": 85
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: dotPulse",
+      "detail": "在 2 个地方定义，文件: all-styles.css, ai-tutor.css",
+      "file": "ai-tutor.css",
+      "line": 124
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: msgFadeIn",
+      "detail": "在 2 个地方定义，文件: all-styles.css, ai-tutor.css",
+      "file": "ai-tutor.css",
+      "line": 510
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: typingBounce",
+      "detail": "在 2 个地方定义，文件: all-styles.css, ai-tutor.css",
+      "file": "ai-tutor.css",
+      "line": 728
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: bgShift",
+      "detail": "在 2 个地方定义，文件: all-styles.css, bg-premium.css",
+      "file": "all-styles.css",
+      "line": 1673
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: orbFloat1",
+      "detail": "在 2 个地方定义，文件: all-styles.css, bg-premium.css",
+      "file": "all-styles.css",
+      "line": 1728
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: orbFloat2",
+      "detail": "在 2 个地方定义，文件: all-styles.css, bg-premium.css",
+      "file": "all-styles.css",
+      "line": 1734
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: orbFloat3",
+      "detail": "在 2 个地方定义，文件: all-styles.css, bg-premium.css",
+      "file": "all-styles.css",
+      "line": 1740
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: orbFloat4",
+      "detail": "在 2 个地方定义，文件: all-styles.css, bg-premium.css",
+      "file": "all-styles.css",
+      "line": 1745
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: topBarPulse",
+      "detail": "在 2 个地方定义，文件: all-styles.css, bg-premium.css",
+      "file": "all-styles.css",
+      "line": 1802
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: menuSpotlight",
+      "detail": "在 2 个地方定义，文件: all-styles.css, bg-premium.css",
+      "file": "all-styles.css",
+      "line": 1857
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: starTwinkle",
+      "detail": "在 2 个地方定义，文件: bg-themes.css, all-styles.css",
+      "file": "all-styles.css",
+      "line": 1973
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: meteorFall1",
+      "detail": "在 2 个地方定义，文件: bg-themes.css, all-styles.css",
+      "file": "all-styles.css",
+      "line": 2001
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: meteorFall2",
+      "detail": "在 2 个地方定义，文件: bg-themes.css, all-styles.css",
+      "file": "all-styles.css",
+      "line": 2007
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: meteorFall3",
+      "detail": "在 2 个地方定义，文件: bg-themes.css, all-styles.css",
+      "file": "all-styles.css",
+      "line": 2013
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: auroraWave",
+      "detail": "在 2 个地方定义，文件: bg-themes.css, all-styles.css",
+      "file": "all-styles.css",
+      "line": 2072
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: matrixFall",
+      "detail": "在 2 个地方定义，文件: bg-themes.css, all-styles.css",
+      "file": "all-styles.css",
+      "line": 2135
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: certShine",
+      "detail": "在 2 个地方定义，文件: all-styles.css, cert-enhance.css",
+      "file": "all-styles.css",
+      "line": 2383
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: certModalIn",
+      "detail": "在 2 个地方定义，文件: all-styles.css, cert-enhance.css",
+      "file": "all-styles.css",
+      "line": 2396
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: certCardFadeIn",
+      "detail": "在 2 个地方定义，文件: all-styles.css, certification.css",
+      "file": "all-styles.css",
+      "line": 2468
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: badgePulse",
+      "detail": "在 4 个地方定义，文件: all-styles.css, menu-enhance.css, certification.css",
+      "file": "all-styles.css",
+      "line": 2498
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: modalFadeIn",
+      "detail": "在 2 个地方定义，文件: all-styles.css, certification.css",
+      "file": "all-styles.css",
+      "line": 2741
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: pulse-glow",
+      "detail": "在 2 个地方定义，文件: clean-ui.css, all-styles.css",
+      "file": "all-styles.css",
+      "line": 3201
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: neonPulse",
+      "detail": "在 2 个地方定义，文件: clean-ui.css, all-styles.css",
+      "file": "all-styles.css",
+      "line": 3202
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: glassShimmer",
+      "detail": "在 2 个地方定义，文件: clean-ui.css, all-styles.css",
+      "file": "all-styles.css",
+      "line": 3203
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: float3D",
+      "detail": "在 2 个地方定义，文件: clean-ui.css, all-styles.css",
+      "file": "all-styles.css",
+      "line": 3204
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: cardSlideIn",
+      "detail": "在 2 个地方定义，文件: clean-ui.css, all-styles.css",
+      "file": "all-styles.css",
+      "line": 3458
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: simFadeIn",
+      "detail": "在 2 个地方定义，文件: disaster-sim.css, all-styles.css",
+      "file": "all-styles.css",
+      "line": 3567
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: phasePulse",
+      "detail": "在 2 个地方定义，文件: disaster-sim.css, all-styles.css",
+      "file": "all-styles.css",
+      "line": 3628
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: resultSlideIn",
+      "detail": "在 2 个地方定义，文件: disaster-sim.css, all-styles.css",
+      "file": "all-styles.css",
+      "line": 3674
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: dustRise1",
+      "detail": "在 2 个地方定义，文件: all-styles.css, fx-effects.css",
+      "file": "all-styles.css",
+      "line": 3903
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: dustRise2",
+      "detail": "在 2 个地方定义，文件: all-styles.css, fx-effects.css",
+      "file": "all-styles.css",
+      "line": 3910
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: dustRise3",
+      "detail": "在 2 个地方定义，文件: all-styles.css, fx-effects.css",
+      "file": "all-styles.css",
+      "line": 3917
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: dustRise4",
+      "detail": "在 2 个地方定义，文件: all-styles.css, fx-effects.css",
+      "file": "all-styles.css",
+      "line": 3924
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: dustRise5",
+      "detail": "在 2 个地方定义，文件: all-styles.css, fx-effects.css",
+      "file": "all-styles.css",
+      "line": 3931
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: dustRise6",
+      "detail": "在 2 个地方定义，文件: all-styles.css, fx-effects.css",
+      "file": "all-styles.css",
+      "line": 3938
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: dustRise7",
+      "detail": "在 2 个地方定义，文件: all-styles.css, fx-effects.css",
+      "file": "all-styles.css",
+      "line": 3945
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: dustRise8",
+      "detail": "在 2 个地方定义，文件: all-styles.css, fx-effects.css",
+      "file": "all-styles.css",
+      "line": 3952
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: sweep",
+      "detail": "在 2 个地方定义，文件: all-styles.css, fx-effects.css",
+      "file": "all-styles.css",
+      "line": 3978
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: geoSpin",
+      "detail": "在 2 个地方定义，文件: all-styles.css, fx-effects.css",
+      "file": "all-styles.css",
+      "line": 4041
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: pulseExpand",
+      "detail": "在 2 个地方定义，文件: all-styles.css, fx-effects.css",
+      "file": "all-styles.css",
+      "line": 4096
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: meteorFall",
+      "detail": "在 2 个地方定义，文件: all-styles.css, fx-effects.css",
+      "file": "all-styles.css",
+      "line": 4144
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: barFlow1",
+      "detail": "在 2 个地方定义，文件: all-styles.css, fx-effects.css",
+      "file": "all-styles.css",
+      "line": 4185
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: barFlow2",
+      "detail": "在 2 个地方定义，文件: all-styles.css, fx-effects.css",
+      "file": "all-styles.css",
+      "line": 4192
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: barFlow3",
+      "detail": "在 2 个地方定义，文件: all-styles.css, fx-effects.css",
+      "file": "all-styles.css",
+      "line": 4199
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: streamFall",
+      "detail": "在 2 个地方定义，文件: all-styles.css, fx-effects.css",
+      "file": "all-styles.css",
+      "line": 4323
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: guideFadeIn",
+      "detail": "在 2 个地方定义，文件: guide-enhance.css, all-styles.css",
+      "file": "all-styles.css",
+      "line": 4348
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: guidePulse",
+      "detail": "在 2 个地方定义，文件: guide-enhance.css, all-styles.css",
+      "file": "all-styles.css",
+      "line": 4374
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: guideTooltipIn",
+      "detail": "在 2 个地方定义，文件: guide-enhance.css, all-styles.css",
+      "file": "all-styles.css",
+      "line": 4420
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: loadingFadeIn",
+      "detail": "在 2 个地方定义，文件: all-styles.css, loading.css",
+      "file": "all-styles.css",
+      "line": 4859
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: loadingFadeOut",
+      "detail": "在 2 个地方定义，文件: all-styles.css, loading.css",
+      "file": "all-styles.css",
+      "line": 4864
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: loadingLogoEnter",
+      "detail": "在 2 个地方定义，文件: all-styles.css, loading.css",
+      "file": "all-styles.css",
+      "line": 4881
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: loadingIconPulse",
+      "detail": "在 2 个地方定义，文件: all-styles.css, loading.css",
+      "file": "all-styles.css",
+      "line": 4899
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: loadingParticleFloat",
+      "detail": "在 2 个地方定义，文件: all-styles.css, loading.css",
+      "file": "all-styles.css",
+      "line": 4978
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: loadingGlow",
+      "detail": "在 2 个地方定义，文件: all-styles.css, loading.css",
+      "file": "all-styles.css",
+      "line": 5003
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: rcFadeIn",
+      "detail": "在 2 个地方定义，文件: real-cases.css, all-styles.css",
+      "file": "all-styles.css",
+      "line": 5997
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: rcSlideIn",
+      "detail": "在 2 个地方定义，文件: real-cases.css, all-styles.css",
+      "file": "all-styles.css",
+      "line": 6002
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: settingsIconFloat",
+      "detail": "在 2 个地方定义，文件: settings.css, all-styles.css",
+      "file": "all-styles.css",
+      "line": 6045
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: settingsFadeIn",
+      "detail": "在 2 个地方定义，文件: settings.css, all-styles.css",
+      "file": "all-styles.css",
+      "line": 6079
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: shareOverlayIn",
+      "detail": "在 2 个地方定义，文件: all-styles.css, share.css",
+      "file": "all-styles.css",
+      "line": 6394
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: shareModalIn",
+      "detail": "在 2 个地方定义，文件: all-styles.css, share.css",
+      "file": "all-styles.css",
+      "line": 6414
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: menuItemSlideIn",
+      "detail": "在 2 个地方定义，文件: all-styles.css, transitions.css",
+      "file": "all-styles.css",
+      "line": 6597
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: headerSlideDown",
+      "detail": "在 2 个地方定义，文件: all-styles.css, transitions.css",
+      "file": "all-styles.css",
+      "line": 6712
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: optionFadeIn",
+      "detail": "在 2 个地方定义，文件: all-styles.css, transitions.css",
+      "file": "all-styles.css",
+      "line": 6739
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: loadingPulse",
+      "detail": "在 2 个地方定义，文件: all-styles.css, transitions.css",
+      "file": "all-styles.css",
+      "line": 6769
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: successBounce",
+      "detail": "在 2 个地方定义，文件: all-styles.css, transitions.css",
+      "file": "all-styles.css",
+      "line": 6779
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: errorShake",
+      "detail": "在 2 个地方定义，文件: all-styles.css, transitions.css",
+      "file": "all-styles.css",
+      "line": 6787
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: fadeInUp",
+      "detail": "在 2 个地方定义，文件: all-styles.css, ui-ultimate.css",
+      "file": "all-styles.css",
+      "line": 7252
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: wrongShake3D",
+      "detail": "在 2 个地方定义，文件: all-styles.css, v5-glass-3d.css",
+      "file": "all-styles.css",
+      "line": 7479
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: card3DGlassIn",
+      "detail": "在 2 个地方定义，文件: all-styles.css, v5-glass-3d.css",
+      "file": "all-styles.css",
+      "line": 7509
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: icon3DGlassFloat",
+      "detail": "在 2 个地方定义，文件: all-styles.css, v5-glass-3d.css",
+      "file": "all-styles.css",
+      "line": 7534
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: exp3DGlassIn",
+      "detail": "在 2 个地方定义，文件: all-styles.css, v5-glass-3d.css",
+      "file": "all-styles.css",
+      "line": 7562
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: streakPulse",
+      "detail": "在 2 个地方定义，文件: all-styles.css, v5-glass-3d.css",
+      "file": "all-styles.css",
+      "line": 7652
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: combo3DGlassExplode",
+      "detail": "在 2 个地方定义，文件: all-styles.css, v5-glass-3d.css",
+      "file": "all-styles.css",
+      "line": 7761
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: feedback3DGlassIn",
+      "detail": "在 2 个地方定义，文件: all-styles.css, v5-glass-3d.css",
+      "file": "all-styles.css",
+      "line": 7790
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: result3DGlassIn",
+      "detail": "在 2 个地方定义，文件: all-styles.css, v5-glass-3d.css",
+      "file": "all-styles.css",
+      "line": 7802
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: logo3DGlassGlow",
+      "detail": "在 2 个地方定义，文件: all-styles.css, v5-glass-3d.css",
+      "file": "all-styles.css",
+      "line": 7814
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: menuLogoFloat",
+      "detail": "在 2 个地方定义，文件: all-styles.css, v5-glass-3d.css",
+      "file": "all-styles.css",
+      "line": 7855
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: gradientShift",
+      "detail": "在 2 个地方定义，文件: all-styles.css, v5-glass-3d.css",
+      "file": "all-styles.css",
+      "line": 7872
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: resultPop3D",
+      "detail": "在 2 个地方定义，文件: all-styles.css, v5-glass-3d.css",
+      "file": "all-styles.css",
+      "line": 7997
+    },
+    {
+      "level": "warning",
+      "title": "重复的 @keyframes: versionPulse",
+      "detail": "在 2 个地方定义，文件: all-styles.css, v5-glass-3d.css",
+      "file": "all-styles.css",
+      "line": 8025
+    },
+    {
+      "level": "warning",
+      "title": "按钮 opacity:0 但可能仍可点击",
+      "detail": "`.touch-device .mode-btn:active,\n.touch-device .menu-cat-btn:active,\n.touch-device .tool-btn:active,\n.touch-device .quiz-opt:active,\n.touch-device .choice-btn:active` 透明但可能未禁用 pointer-events",
+      "file": "accessibility.css",
+      "line": 136
+    },
+    {
+      "level": "warning",
+      "title": "按钮 opacity:0 但可能仍可点击",
+      "detail": "`.touch-device .mode-btn:active,\n.touch-device .menu-cat-btn:active,\n.touch-device .tool-btn:active,\n.touch-device .quiz-opt:active,\n.touch-device .choice-btn:active` 透明但可能未禁用 pointer-events",
+      "file": "all-styles.css",
+      "line": 137
+    },
+    {
+      "level": "warning",
+      "title": "按钮 opacity:0 但可能仍可点击",
+      "detail": "`.mode-btn::before` 透明但可能未禁用 pointer-events",
+      "file": "all-styles.css",
+      "line": 5352
+    },
+    {
+      "level": "warning",
+      "title": "按钮 opacity:0 但可能仍可点击",
+      "detail": "`.mode-btn::before` 透明但可能未禁用 pointer-events",
+      "file": "menu-premium.css",
+      "line": 132
+    }
+  ],
+  "suggestions": [
+    {
+      "level": "suggest",
+      "title": "大量无限循环动画 (137处)",
+      "detail": "可能导致CPU/GPU高占用，建议在移动设备上减少动画数量",
+      "file": "multiple",
+      "line": "-"
+    }
+  ],
+  "duplicates": {
+    "ai-fab-pulse": [
+      {
+        "file": "ai-float.css",
+        "line": 47
+      },
+      {
+        "file": "all-styles.css",
+        "line": 310
+      }
+    ],
+    "ai-fab-badge-pulse": [
+      {
+        "file": "ai-float.css",
+        "line": 52
+      },
+      {
+        "file": "all-styles.css",
+        "line": 315
+      }
+    ],
+    "ai-panel-slide-in": [
+      {
+        "file": "ai-float.css",
+        "line": 82
+      },
+      {
+        "file": "all-styles.css",
+        "line": 345
+      }
+    ],
+    "ai-msg-fade-in": [
+      {
+        "file": "ai-float.css",
+        "line": 210
+      },
+      {
+        "file": "all-styles.css",
+        "line": 473
+      }
+    ],
+    "cardFadeIn": [
+      {
+        "file": "ai-tutor.css",
+        "line": 41
+      },
+      {
+        "file": "all-styles.css",
+        "line": 724
+      },
+      {
+        "file": "all-styles.css",
+        "line": 6631
+      },
+      {
+        "file": "transitions.css",
+        "line": 73
+      }
+    ],
+    "pulse-ring": [
+      {
+        "file": "ai-tutor.css",
+        "line": 85
+      },
+      {
+        "file": "all-styles.css",
+        "line": 768
+      }
+    ],
+    "dotPulse": [
+      {
+        "file": "ai-tutor.css",
+        "line": 124
+      },
+      {
+        "file": "all-styles.css",
+        "line": 807
+      }
+    ],
+    "msgFadeIn": [
+      {
+        "file": "ai-tutor.css",
+        "line": 510
+      },
+      {
+        "file": "all-styles.css",
+        "line": 1193
+      }
+    ],
+    "typingBounce": [
+      {
+        "file": "ai-tutor.css",
+        "line": 728
+      },
+      {
+        "file": "all-styles.css",
+        "line": 1411
+      }
+    ],
+    "bgShift": [
+      {
+        "file": "all-styles.css",
+        "line": 1673
+      },
+      {
+        "file": "bg-premium.css",
+        "line": 44
+      }
+    ],
+    "orbFloat1": [
+      {
+        "file": "all-styles.css",
+        "line": 1728
+      },
+      {
+        "file": "bg-premium.css",
+        "line": 99
+      }
+    ],
+    "orbFloat2": [
+      {
+        "file": "all-styles.css",
+        "line": 1734
+      },
+      {
+        "file": "bg-premium.css",
+        "line": 105
+      }
+    ],
+    "orbFloat3": [
+      {
+        "file": "all-styles.css",
+        "line": 1740
+      },
+      {
+        "file": "bg-premium.css",
+        "line": 111
+      }
+    ],
+    "orbFloat4": [
+      {
+        "file": "all-styles.css",
+        "line": 1745
+      },
+      {
+        "file": "bg-premium.css",
+        "line": 116
+      }
+    ],
+    "topBarPulse": [
+      {
+        "file": "all-styles.css",
+        "line": 1802
+      },
+      {
+        "file": "bg-premium.css",
+        "line": 173
+      }
+    ],
+    "menuSpotlight": [
+      {
+        "file": "all-styles.css",
+        "line": 1857
+      },
+      {
+        "file": "bg-premium.css",
+        "line": 228
+      }
+    ],
+    "starTwinkle": [
+      {
+        "file": "all-styles.css",
+        "line": 1973
+      },
+      {
+        "file": "bg-themes.css",
+        "line": 97
+      }
+    ],
+    "meteorFall1": [
+      {
+        "file": "all-styles.css",
+        "line": 2001
+      },
+      {
+        "file": "bg-themes.css",
+        "line": 125
+      }
+    ],
+    "meteorFall2": [
+      {
+        "file": "all-styles.css",
+        "line": 2007
+      },
+      {
+        "file": "bg-themes.css",
+        "line": 131
+      }
+    ],
+    "meteorFall3": [
+      {
+        "file": "all-styles.css",
+        "line": 2013
+      },
+      {
+        "file": "bg-themes.css",
+        "line": 137
+      }
+    ],
+    "auroraWave": [
+      {
+        "file": "all-styles.css",
+        "line": 2072
+      },
+      {
+        "file": "bg-themes.css",
+        "line": 196
+      }
+    ],
+    "matrixFall": [
+      {
+        "file": "all-styles.css",
+        "line": 2135
+      },
+      {
+        "file": "bg-themes.css",
+        "line": 259
+      }
+    ],
+    "certShine": [
+      {
+        "file": "all-styles.css",
+        "line": 2383
+      },
+      {
+        "file": "cert-enhance.css",
+        "line": 96
+      }
+    ],
+    "certModalIn": [
+      {
+        "file": "all-styles.css",
+        "line": 2396
+      },
+      {
+        "file": "cert-enhance.css",
+        "line": 109
+      }
+    ],
+    "certCardFadeIn": [
+      {
+        "file": "all-styles.css",
+        "line": 2468
+      },
+      {
+        "file": "certification.css",
+        "line": 41
+      }
+    ],
+    "badgePulse": [
+      {
+        "file": "all-styles.css",
+        "line": 2498
+      },
+      {
+        "file": "all-styles.css",
+        "line": 5184
+      },
+      {
+        "file": "certification.css",
+        "line": 71
+      },
+      {
+        "file": "menu-enhance.css",
+        "line": 168
+      }
+    ],
+    "modalFadeIn": [
+      {
+        "file": "all-styles.css",
+        "line": 2741
+      },
+      {
+        "file": "certification.css",
+        "line": 314
+      }
+    ],
+    "pulse-glow": [
+      {
+        "file": "all-styles.css",
+        "line": 3201
+      },
+      {
+        "file": "clean-ui.css",
+        "line": 341
+      }
+    ],
+    "neonPulse": [
+      {
+        "file": "all-styles.css",
+        "line": 3202
+      },
+      {
+        "file": "clean-ui.css",
+        "line": 342
+      }
+    ],
+    "glassShimmer": [
+      {
+        "file": "all-styles.css",
+        "line": 3203
+      },
+      {
+        "file": "clean-ui.css",
+        "line": 343
+      }
+    ],
+    "float3D": [
+      {
+        "file": "all-styles.css",
+        "line": 3204
+      },
+      {
+        "file": "clean-ui.css",
+        "line": 344
+      }
+    ],
+    "cardSlideIn": [
+      {
+        "file": "all-styles.css",
+        "line": 3458
+      },
+      {
+        "file": "clean-ui.css",
+        "line": 598
+      }
+    ],
+    "simFadeIn": [
+      {
+        "file": "all-styles.css",
+        "line": 3567
+      },
+      {
+        "file": "disaster-sim.css",
+        "line": 35
+      }
+    ],
+    "phasePulse": [
+      {
+        "file": "all-styles.css",
+        "line": 3628
+      },
+      {
+        "file": "disaster-sim.css",
+        "line": 96
+      }
+    ],
+    "resultSlideIn": [
+      {
+        "file": "all-styles.css",
+        "line": 3674
+      },
+      {
+        "file": "disaster-sim.css",
+        "line": 142
+      }
+    ],
+    "dustRise1": [
+      {
+        "file": "all-styles.css",
+        "line": 3903
+      },
+      {
+        "file": "fx-effects.css",
+        "line": 88
+      }
+    ],
+    "dustRise2": [
+      {
+        "file": "all-styles.css",
+        "line": 3910
+      },
+      {
+        "file": "fx-effects.css",
+        "line": 95
+      }
+    ],
+    "dustRise3": [
+      {
+        "file": "all-styles.css",
+        "line": 3917
+      },
+      {
+        "file": "fx-effects.css",
+        "line": 102
+      }
+    ],
+    "dustRise4": [
+      {
+        "file": "all-styles.css",
+        "line": 3924
+      },
+      {
+        "file": "fx-effects.css",
+        "line": 109
+      }
+    ],
+    "dustRise5": [
+      {
+        "file": "all-styles.css",
+        "line": 3931
+      },
+      {
+        "file": "fx-effects.css",
+        "line": 116
+      }
+    ],
+    "dustRise6": [
+      {
+        "file": "all-styles.css",
+        "line": 3938
+      },
+      {
+        "file": "fx-effects.css",
+        "line": 123
+      }
+    ],
+    "dustRise7": [
+      {
+        "file": "all-styles.css",
+        "line": 3945
+      },
+      {
+        "file": "fx-effects.css",
+        "line": 130
+      }
+    ],
+    "dustRise8": [
+      {
+        "file": "all-styles.css",
+        "line": 3952
+      },
+      {
+        "file": "fx-effects.css",
+        "line": 137
+      }
+    ],
+    "sweep": [
+      {
+        "file": "all-styles.css",
+        "line": 3978
+      },
+      {
+        "file": "fx-effects.css",
+        "line": 163
+      }
+    ],
+    "geoSpin": [
+      {
+        "file": "all-styles.css",
+        "line": 4041
+      },
+      {
+        "file": "fx-effects.css",
+        "line": 226
+      }
+    ],
+    "pulseExpand": [
+      {
+        "file": "all-styles.css",
+        "line": 4096
+      },
+      {
+        "file": "fx-effects.css",
+        "line": 281
+      }
+    ],
+    "meteorFall": [
+      {
+        "file": "all-styles.css",
+        "line": 4144
+      },
+      {
+        "file": "fx-effects.css",
+        "line": 329
+      }
+    ],
+    "barFlow1": [
+      {
+        "file": "all-styles.css",
+        "line": 4185
+      },
+      {
+        "file": "fx-effects.css",
+        "line": 370
+      }
+    ],
+    "barFlow2": [
+      {
+        "file": "all-styles.css",
+        "line": 4192
+      },
+      {
+        "file": "fx-effects.css",
+        "line": 377
+      }
+    ],
+    "barFlow3": [
+      {
+        "file": "all-styles.css",
+        "line": 4199
+      },
+      {
+        "file": "fx-effects.css",
+        "line": 384
+      }
+    ],
+    "streamFall": [
+      {
+        "file": "all-styles.css",
+        "line": 4323
+      },
+      {
+        "file": "fx-effects.css",
+        "line": 508
+      }
+    ],
+    "guideFadeIn": [
+      {
+        "file": "all-styles.css",
+        "line": 4348
+      },
+      {
+        "file": "guide-enhance.css",
+        "line": 13
+      }
+    ],
+    "guidePulse": [
+      {
+        "file": "all-styles.css",
+        "line": 4374
+      },
+      {
+        "file": "guide-enhance.css",
+        "line": 39
+      }
+    ],
+    "guideTooltipIn": [
+      {
+        "file": "all-styles.css",
+        "line": 4420
+      },
+      {
+        "file": "guide-enhance.css",
+        "line": 85
+      }
+    ],
+    "loadingFadeIn": [
+      {
+        "file": "all-styles.css",
+        "line": 4859
+      },
+      {
+        "file": "loading.css",
+        "line": 18
+      }
+    ],
+    "loadingFadeOut": [
+      {
+        "file": "all-styles.css",
+        "line": 4864
+      },
+      {
+        "file": "loading.css",
+        "line": 23
+      }
+    ],
+    "loadingLogoEnter": [
+      {
+        "file": "all-styles.css",
+        "line": 4881
+      },
+      {
+        "file": "loading.css",
+        "line": 40
+      }
+    ],
+    "loadingIconPulse": [
+      {
+        "file": "all-styles.css",
+        "line": 4899
+      },
+      {
+        "file": "loading.css",
+        "line": 58
+      }
+    ],
+    "loadingParticleFloat": [
+      {
+        "file": "all-styles.css",
+        "line": 4978
+      },
+      {
+        "file": "loading.css",
+        "line": 137
+      }
+    ],
+    "loadingGlow": [
+      {
+        "file": "all-styles.css",
+        "line": 5003
+      },
+      {
+        "file": "loading.css",
+        "line": 162
+      }
+    ],
+    "rcFadeIn": [
+      {
+        "file": "all-styles.css",
+        "line": 5997
+      },
+      {
+        "file": "real-cases.css",
+        "line": 507
+      }
+    ],
+    "rcSlideIn": [
+      {
+        "file": "all-styles.css",
+        "line": 6002
+      },
+      {
+        "file": "real-cases.css",
+        "line": 512
+      }
+    ],
+    "settingsIconFloat": [
+      {
+        "file": "all-styles.css",
+        "line": 6045
+      },
+      {
+        "file": "settings.css",
+        "line": 22
+      }
+    ],
+    "settingsFadeIn": [
+      {
+        "file": "all-styles.css",
+        "line": 6079
+      },
+      {
+        "file": "settings.css",
+        "line": 56
+      }
+    ],
+    "shareOverlayIn": [
+      {
+        "file": "all-styles.css",
+        "line": 6394
+      },
+      {
+        "file": "share.css",
+        "line": 16
+      }
+    ],
+    "shareModalIn": [
+      {
+        "file": "all-styles.css",
+        "line": 6414
+      },
+      {
+        "file": "share.css",
+        "line": 36
+      }
+    ],
+    "menuItemSlideIn": [
+      {
+        "file": "all-styles.css",
+        "line": 6597
+      },
+      {
+        "file": "transitions.css",
+        "line": 39
+      }
+    ],
+    "headerSlideDown": [
+      {
+        "file": "all-styles.css",
+        "line": 6712
+      },
+      {
+        "file": "transitions.css",
+        "line": 154
+      }
+    ],
+    "optionFadeIn": [
+      {
+        "file": "all-styles.css",
+        "line": 6739
+      },
+      {
+        "file": "transitions.css",
+        "line": 181
+      }
+    ],
+    "loadingPulse": [
+      {
+        "file": "all-styles.css",
+        "line": 6769
+      },
+      {
+        "file": "transitions.css",
+        "line": 211
+      }
+    ],
+    "successBounce": [
+      {
+        "file": "all-styles.css",
+        "line": 6779
+      },
+      {
+        "file": "transitions.css",
+        "line": 221
+      }
+    ],
+    "errorShake": [
+      {
+        "file": "all-styles.css",
+        "line": 6787
+      },
+      {
+        "file": "transitions.css",
+        "line": 229
+      }
+    ],
+    "fadeInUp": [
+      {
+        "file": "all-styles.css",
+        "line": 7252
+      },
+      {
+        "file": "ui-ultimate.css",
+        "line": 424
+      }
+    ],
+    "wrongShake3D": [
+      {
+        "file": "all-styles.css",
+        "line": 7479
+      },
+      {
+        "file": "v5-glass-3d.css",
+        "line": 175
+      }
+    ],
+    "card3DGlassIn": [
+      {
+        "file": "all-styles.css",
+        "line": 7509
+      },
+      {
+        "file": "v5-glass-3d.css",
+        "line": 205
+      }
+    ],
+    "icon3DGlassFloat": [
+      {
+        "file": "all-styles.css",
+        "line": 7534
+      },
+      {
+        "file": "v5-glass-3d.css",
+        "line": 230
+      }
+    ],
+    "exp3DGlassIn": [
+      {
+        "file": "all-styles.css",
+        "line": 7562
+      },
+      {
+        "file": "v5-glass-3d.css",
+        "line": 258
+      }
+    ],
+    "streakPulse": [
+      {
+        "file": "all-styles.css",
+        "line": 7652
+      },
+      {
+        "file": "v5-glass-3d.css",
+        "line": 348
+      }
+    ],
+    "combo3DGlassExplode": [
+      {
+        "file": "all-styles.css",
+        "line": 7761
+      },
+      {
+        "file": "v5-glass-3d.css",
+        "line": 457
+      }
+    ],
+    "feedback3DGlassIn": [
+      {
+        "file": "all-styles.css",
+        "line": 7790
+      },
+      {
+        "file": "v5-glass-3d.css",
+        "line": 486
+      }
+    ],
+    "result3DGlassIn": [
+      {
+        "file": "all-styles.css",
+        "line": 7802
+      },
+      {
+        "file": "v5-glass-3d.css",
+        "line": 498
+      }
+    ],
+    "logo3DGlassGlow": [
+      {
+        "file": "all-styles.css",
+        "line": 7814
+      },
+      {
+        "file": "v5-glass-3d.css",
+        "line": 510
+      }
+    ],
+    "menuLogoFloat": [
+      {
+        "file": "all-styles.css",
+        "line": 7855
+      },
+      {
+        "file": "v5-glass-3d.css",
+        "line": 551
+      }
+    ],
+    "gradientShift": [
+      {
+        "file": "all-styles.css",
+        "line": 7872
+      },
+      {
+        "file": "v5-glass-3d.css",
+        "line": 568
+      }
+    ],
+    "resultPop3D": [
+      {
+        "file": "all-styles.css",
+        "line": 7997
+      },
+      {
+        "file": "v5-glass-3d.css",
+        "line": 693
+      }
+    ],
+    "versionPulse": [
+      {
+        "file": "all-styles.css",
+        "line": 8025
+      },
+      {
+        "file": "v5-glass-3d.css",
+        "line": 721
+      }
+    ]
+  },
+  "z_max": {
+    "selector": "#loadingScreen",
+    "value": "999999",
+    "num_value": 999999,
+    "file": "index.html (style tag #2)",
+    "line": 1
+  },
+  "pe_count": 81,
+  "pe_none_count": 73,
+  "keyframe_count": 191,
+  "css_count": 25
+}

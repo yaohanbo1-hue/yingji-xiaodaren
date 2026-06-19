@@ -170,10 +170,23 @@
   
   // ===== 3. 触摸优化 =====
   function optimizeTouch() {
-    // 消除 300ms 点击延迟
-    document.addEventListener('touchstart', function() {}, { passive: true });
-    
-    // 防止双击缩放
+    // 消除 300ms 点击延迟：passive touchstart  + CSS touch-action: manipulation
+    document.addEventListener('touchstart', function(e) {
+      // 快速添加触摸反馈 class
+      var btn = e.target.closest('.mode-btn, .menu-cat-btn, .tool-btn, .quiz-opt, .choice-btn, .btn-primary, .btn-secondary, .ai-fab');
+      if (btn) {
+        btn.classList.add('touch-active');
+      }
+    }, { passive: true });
+
+    // 触摸结束时移除反馈
+    document.addEventListener('touchend', function(e) {
+      document.querySelectorAll('.touch-active').forEach(function(el) {
+        el.classList.remove('touch-active');
+      });
+    }, { passive: true });
+
+    // 防止双击缩放（保留 accessibility 的原有逻辑）
     var lastTouchEnd = 0;
     document.addEventListener('touchend', function(e) {
       var now = Date.now();
@@ -182,9 +195,9 @@
       }
       lastTouchEnd = now;
     }, false);
-    
+
     // 移动端视口优化
-    if ('ontouchstart' in window) {
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
       document.body.classList.add('touch-device');
       
       // 禁用 iOS 橡皮筋效果（在页面容器上）

@@ -8,13 +8,18 @@ const BGTheme = {
   _themes: ['deep-space', 'starry-night', 'aurora-flow', 'dawn-light', 'digital-matrix', 'warm-light'],
   _current: 'deep-space',
   _matrixInterval: null,
+  _systemThemeListener: null,
 
   init() {
     const saved = localStorage.getItem('bg_theme');
     if (saved && this._themes.includes(saved)) {
       this._current = saved;
+    } else {
+      // 首次访问：检测系统主题偏好
+      this._detectSystemTheme();
     }
     this.apply(this._current);
+    this._setupSystemThemeListener();
     // 更新设置页显示
     const names = {
       'deep-space': '深空指挥官',
@@ -39,10 +44,46 @@ const BGTheme = {
     console.log('🎨 背景主题系统已启动：' + this._current);
   },
 
+  // 检测系统主题偏好
+  _detectSystemTheme() {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+      this._current = 'dawn-light';
+      console.log('🌅 检测到系统浅色主题，自动切换为自然晨曦');
+    } else {
+      this._current = 'deep-space';
+      console.log('🌌 检测到系统深色主题，使用默认深空指挥官');
+    }
+  },
+
+  // 监听系统主题变化
+  _setupSystemThemeListener() {
+    if (!window.matchMedia) return;
+    const mq = window.matchMedia('(prefers-color-scheme: light)');
+    this._systemThemeListener = function(e) {
+      // 只在用户未手动设置主题时响应系统变化
+      if (!localStorage.getItem('bg_theme')) {
+        if (e.matches) {
+          BGTheme.switch('dawn-light');
+        } else {
+          BGTheme.switch('deep-space');
+        }
+      }
+    };
+    if (mq.addEventListener) {
+      mq.addEventListener('change', this._systemThemeListener);
+    } else if (mq.addListener) {
+      mq.addListener(this._systemThemeListener);
+    }
+  },
+
   switch(theme) {
     if (!this._themes.includes(theme)) return;
     this._current = theme;
-    localStorage.setItem('bg_theme', theme);
+    try {
+      localStorage.setItem('bg_theme', theme);
+    } catch(e) {
+      console.error('Storage error:', e);
+    }
     this.apply(theme);
 
     // 显示提示

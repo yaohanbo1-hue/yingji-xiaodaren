@@ -82,6 +82,23 @@
     });
   }
   
+  // ===== 2.5 按钮点击音效增强（全面覆盖） =====
+  function hookButtonClicks() {
+    document.addEventListener('click', function(e) {
+      var btn = e.target.closest('.mode-btn, .tool-btn, .menu-cat-btn, .btn, .btn-primary, .btn-secondary, .back-float, .settings-card, .placeholder-btn, .shop-item, .character-card, .achievement-item, .codex-card');
+      if (!btn) return;
+      
+      if (typeof SFXEngine === 'undefined') return;
+      SFXEngine.init();
+      SFXEngine.click();
+      
+      // 添加涟漪效果
+      if (!btn.classList.contains('btn-ripple')) {
+        btn.classList.add('btn-ripple');
+      }
+    });
+  }
+  
   // ===== 3. UI 交互音效 =====
   function hookUIInteractions() {
     if (typeof SFXEngine === 'undefined') return;
@@ -198,6 +215,7 @@
     
     hookPageManager();
     hookQuizEngine();
+    hookButtonClicks();
     hookUIInteractions();
     hookComboSystem();
     hookGameEnd();

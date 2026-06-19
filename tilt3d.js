@@ -55,6 +55,11 @@
 
   // 延迟初始化（等 DOM 渲染完）
   function init(){
+    // 移动端/触摸设备禁用 3D 倾斜（性能 + 电池优化）
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+      console.log('📱 3D Tilt disabled on touch devices for performance');
+      return;
+    }
     addTilt3D('.quiz-opt');
     addTilt3D('.scenario-opt');
     addTilt3D('.mode-btn');

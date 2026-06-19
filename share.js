@@ -13,6 +13,18 @@
  * ===========================================================================
  */
 
+const SafeStorage = {
+  set(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch(e) { console.error('Storage error:', e); }
+  },
+  get(key, defaultVal) {
+    try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : defaultVal; } catch(e) { return defaultVal; }
+  },
+  getString(key, defaultVal) {
+    try { return localStorage.getItem(key) || defaultVal; } catch(e) { return defaultVal; }
+  }
+};
+
 const ShareEngine = {
   
   // 生成成绩海报
@@ -137,32 +149,43 @@ const ShareEngine = {
       streakDays: 0
     };
     
-    // 从 localStorage 读取数据
+    // 尝试从实际存在的 key 读取数据
     try {
-      const saved = localStorage.getItem('disasterHQ_stats');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        stats.totalAnswered = parsed.totalAnswered || 0;
-        stats.correctCount = parsed.correctCount || 0;
-        stats.accuracy = stats.totalAnswered > 0 ? Math.round(stats.correctCount / stats.totalAnswered * 100) : 0;
+      // 1. 优先从 disasterGachaState 读取综合数据
+      const gacha = SafeStorage.get('disasterGachaState', null);
+      if (gacha) {
+        stats.totalAnswered = gacha.totalQuizzes || gacha.totalAnswered || 0;
+        stats.correctCount = gacha.correctCount || 0;
+        stats.blindboxOpened = gacha.blindboxOpened || gacha.boxOpened || 0;
+        stats.streakDays = gacha.streakDays || gacha.checkinStreak || 0;
       }
       
-      const blindbox = localStorage.getItem('disasterHQ_blindbox');
-      if (blindbox) {
-        const parsed = JSON.parse(blindbox);
-        stats.blindboxOpened = parsed.opened || 0;
+      // 2. 从 aiTutorData 补充答题数据
+      const aiData = SafeStorage.get('aiTutorData', null);
+      if (aiData && aiData.quizHistory) {
+        stats.totalAnswered = stats.totalAnswered || aiData.quizHistory.length;
+        stats.correctCount = stats.correctCount || aiData.quizHistory.filter(h => h.correct).length;
       }
       
-      const checkin = localStorage.getItem('disasterHQ_checkin');
-      if (checkin) {
-        const parsed = JSON.parse(checkin);
-        stats.streakDays = parsed.streak || 0;
-      }
-      
+      // 3. 从 CertificationEngine 获取等级数据
       if (typeof CertificationEngine !== 'undefined' && CertificationEngine._data) {
         stats.currentLevel = CertificationEngine._data.currentLevel || 0;
-        stats.levelName = CertificationEngine._levels[stats.currentLevel]?.name || '防灾新手';
+        if (CertificationEngine._levels && stats.currentLevel >= 0) {
+          stats.levelName = CertificationEngine._levels[stats.currentLevel]?.name || '防灾新手';
+        }
         stats.masteredDisasters = CertificationEngine._data.masteredModules || 0;
+      }
+      
+      // 4. 从 GameState 补充数据
+      if (typeof GameState !== 'undefined' && GameState._data) {
+        stats.totalAnswered = stats.totalAnswered || GameState._data.totalQuizzes || 0;
+        stats.correctCount = stats.correctCount || GameState._data.correctCount || 0;
+        stats.blindboxOpened = stats.blindboxOpened || GameState._data.blindboxOpened || 0;
+      }
+      
+      // 5. 计算正确率
+      if (stats.totalAnswered > 0) {
+        stats.accuracy = Math.round(stats.correctCount / stats.totalAnswered * 100);
       }
     } catch(e) {
       // 使用默认值

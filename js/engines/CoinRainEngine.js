@@ -1,0 +1,11 @@
+/**
+ * ============================================================================
+ * CoinRainEngine
+ * ============================================================================
+ * 
+ *
+ * Auto-generated from game.js refactoring.
+ * ============================================================================
+ */
+
+const CoinRainEngine = {rain:function(count,bonusText){count=count||5;for(var i=0;i<count;i++)setTimeout(function(idx){return function(){CoinRainEngine._spawnCoin(idx)}}(i),120*i);bonusText&&setTimeout(function(){showFloatingText(window.innerWidth/2,.25*window.innerHeight,bonusText,"#ffd700","24px")},120*count)},_spawnCoin:function(index){var coin=document.createElement("div");coin.className="coin-rain";var c,x=Math.random()*window.innerWidth,size=24+16*Math.random(),rotateSpeed=.5+Math.random(),fallDuration=1.5+Math.random(),swayAmount=100*(Math.random()-.5);coin.style.cssText="position:fixed;left:"+x+"px;top:-40px;width:"+size+"px;height:"+size+"px;z-index:10001;pointer-events:none;animation:coinFall "+fallDuration+"s cubic-bezier(0.25,0.46,0.45,0.94) forwards;--sway:"+swayAmount+"px;",coin.innerHTML='<div style="width:100%;height:100%;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff7a8,#ffd700 40%,#b8860b 100%);border:2px solid #daa520;box-shadow:0 0 10px rgba(255,215,0,0.6),inset 0 -3px 6px rgba(0,0,0,0.2);display:flex;align-items:center;justify-content:center;font-size:'+.5*size+"px;animation:coinSpin "+rotateSpeed+'s linear infinite;">🪙</div>',coin.style.pointerEvents="auto",coin.style.cursor="pointer",coin.addEventListener("click",function(){CoinRainEngine._collectCoin(coin)}),document.body.appendChild(coin),setTimeout((c=coin,function(){c.parentNode&&(c.style.opacity="0",c.style.transition="opacity 0.3s",setTimeout(function(){c.remove()},300))}),1e3*fallDuration+500)},_collectCoin:function(coin){AudioManager.play("coin"),coin.style.animation="coinCollect 0.4s ease-in forwards",coin.style.pointerEvents="none";var rect=coin.getBoundingClientRect();showFloatingText(rect.left+20,rect.top,"+1 🪙","#ffd700","20px");var data=GameState._data;data&&(data.coins=(data.coins||0)+1,GameState.save()),setTimeout(function(){coin.remove()},400)},clear:function(){document.querySelectorAll(".coin-rain").forEach(function(c){c.remove()})}};
