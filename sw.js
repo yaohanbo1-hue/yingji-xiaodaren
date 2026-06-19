@@ -1,7 +1,7 @@
 // ===== 应急小达人 Service Worker =====
 // 离线缓存策略：Cache First, Network Fallback
 
-const CACHE_NAME = 'yingji-xiaodaren-v50';
+const CACHE_NAME = 'yingji-xiaodaren-v51';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -22,6 +22,7 @@ const STATIC_ASSETS = [
   './accessibility.css',
   './wrong-book.css',
   './loading.css',
+  './loading.js',
   './guide-enhance.css',
   './cert-enhance.css',
   './menu-enhance.css',
@@ -101,7 +102,7 @@ self.addEventListener('activate', function(event) {
   );
 });
 
-// 拦截请求：Network First 策略（优先获取最新资源）
+// 拦截请求：Cache First (Stale-While-Revalidate) 策略
 self.addEventListener('fetch', function(event) {
   const request = event.request;
   
@@ -112,19 +113,31 @@ self.addEventListener('fetch', function(event) {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
+  // 去除查询参数用于缓存匹配（index.html 中资源带 ?v=50）
+  const cacheRequest = url.search ? new Request(url.pathname) : request;
+
   event.respondWith(
-    fetch(request).then(function(networkResponse) {
-      if (networkResponse && networkResponse.status === 200) {
-        var responseClone = networkResponse.clone();
-        caches.open(CACHE_NAME).then(function(cache) {
-          cache.put(request, responseClone);
-        });
+    caches.match(cacheRequest).then(function(cachedResponse) {
+      var networkFetch = fetch(request).then(function(networkResponse) {
+        if (networkResponse && networkResponse.ok) {
+          var responseClone = networkResponse.clone();
+          event.waitUntil(
+            caches.open(CACHE_NAME).then(function(cache) {
+              return cache.put(cacheRequest, responseClone);
+            })
+          );
+        }
+        return networkResponse;
+      });
+
+      // 缓存优先：有缓存先返回缓存，后台静默更新
+      if (cachedResponse) {
+        event.waitUntil(networkFetch.catch(function() {}));
+        return cachedResponse;
       }
-      return networkResponse;
-    }).catch(function() {
-      return caches.match(request).then(function(response) {
-        if (response) return response;
-        // 离线且无缓存时返回离线页面
+
+      // 无缓存时等待网络
+      return networkFetch.catch(function() {
         if (request.mode === 'navigate') {
           return caches.match('./index.html');
         }
