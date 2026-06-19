@@ -232,6 +232,7 @@ const AITutorEngine = {
           </div>
           <div class="terminal-actions">
             <div class="terminal-action-btn" onclick="AITutorEngine.loadLLM()" title="启用AI模型" id="llmToggleBtn">🧠</div>
+            <div class="terminal-action-btn" onclick="AITutorEngine.showApiKeyDialog()" title="设置DeepSeek API Key" id="apiKeyBtn">🔑</div>
             <div class="terminal-action-btn" onclick="AITutorEngine.clearChat()" title="清空对话">🗑</div>
           </div>
         </div>
@@ -701,15 +702,77 @@ const AITutorEngine = {
     if (!btn) return;
     const isActive = btn.classList.contains('llm-active');
     if (!isActive) {
+      // 检查 DeepSeek 是否可用
+      if (!window.DeepSeekAPI || !window.DeepSeekAPI.isReady()) {
+        this._typeMessage('ai', '⚠️ **DeepSeek AI 引擎未配置**\n\n点击右上角的 🔑 按钮设置 API Key，即可启用智能问答！\n\n如果没有 Key，可以前往 [DeepSeek 官网](https://platform.deepseek.com) 免费获取。');
+        return;
+      }
       btn.classList.add('llm-active');
       btn.innerHTML = '✨';
-      btn.title = 'AI 智能引擎已激活';
-      this._typeMessage('ai', '✨ **AI 智能引擎已激活！**\n\n我现在可以更精准地理解你的问题，并从知识库中搜索最合适的答案。\n\n有什么想聊的？');
+      btn.title = 'DeepSeek AI 已激活';
+      this._typeMessage('ai', '✨ **DeepSeek AI 智能引擎已激活！**\n\n我现在可以调用云端大模型，为你提供更精准、更深入的防灾知识解答。\n\n有什么想问的？');
     } else {
       btn.classList.remove('llm-active');
       btn.innerHTML = '🧠';
-      btn.title = '激活AI引擎';
+      btn.title = '启用 DeepSeek AI';
+      this._typeMessage('ai', '🧠 已切换回本地规则引擎。');
     }
+  },
+  
+  // 显示 API Key 设置对话框
+  showApiKeyDialog() {
+    const existing = document.getElementById('apiKeyDialog');
+    if (existing) existing.remove();
+    
+    const dialog = document.createElement('div');
+    dialog.id = 'apiKeyDialog';
+    dialog.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a2e;border:1px solid rgba(0,212,255,0.3);border-radius:16px;padding:24px;z-index:9999;width:90%;max-width:400px;box-shadow:0 0 40px rgba(0,212,255,0.2);';
+    
+    const currentKey = window.DeepSeekAPI ? window.DeepSeekAPI.getApiKey() : '';
+    const maskedKey = currentKey ? currentKey.slice(0, 8) + '****' + currentKey.slice(-4) : '未设置';
+    const isDefault = currentKey === 'sk-4cdcfcde0e1343789c07266c23efd371';
+    
+    dialog.innerHTML = `
+      <h3 style="margin:0 0 16px;color:#00d4ff;font-size:18px;">🔑 DeepSeek API 设置</h3>
+      <p style="color:#8899aa;font-size:14px;margin:0 0 12px;line-height:1.5;">
+        当前状态：${isDefault ? '<span style="color:#00e676;">✅ 内置 Key 可用</span>' : (currentKey ? '<span style="color:#00e676;">✅ 已设置</span>' : '<span style="color:#FF4D00;">⚠️ 未设置</span>')}
+      </p>
+      <p style="color:#8899aa;font-size:12px;margin:0 0 12px;">
+        当前 Key：${maskedKey}
+      </p>
+      <input type="text" id="newApiKeyInput" placeholder="输入新的 API Key（可选）" 
+        style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,212,255,0.2);border-radius:8px;color:#fff;font-size:14px;margin-bottom:12px;box-sizing:border-box;"
+        value="${isDefault ? '' : currentKey}">
+      <div style="display:flex;gap:8px;justify-content:flex-end;">
+        <button onclick="document.getElementById('apiKeyDialog').remove()" 
+          style="padding:8px 16px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:8px;color:#fff;cursor:pointer;font-size:14px;">取消</button>
+        <button onclick="AITutorEngine.saveApiKey()" 
+          style="padding:8px 16px;background:linear-gradient(135deg,#00d4ff,#7c4dff);border:none;border-radius:8px;color:#fff;cursor:pointer;font-size:14px;font-weight:600;">保存</button>
+      </div>
+      <p style="color:#8899aa;font-size:11px;margin:12px 0 0;line-height:1.5;">
+        💡 提示：内置 Key 为共享额度，用完可前往 <a href="https://platform.deepseek.com" target="_blank" style="color:#00d4ff;">DeepSeek 官网</a> 免费获取个人 Key。
+      </p>
+    `;
+    
+    document.body.appendChild(dialog);
+  },
+  
+  saveApiKey() {
+    const input = document.getElementById('newApiKeyInput');
+    if (!input) return;
+    
+    const key = input.value.trim();
+    if (!key) {
+      document.getElementById('apiKeyDialog').remove();
+      return;
+    }
+    
+    if (window.DeepSeekAPI) {
+      window.DeepSeekAPI.setApiKey(key);
+      this._typeMessage('ai', '✅ API Key 已更新！DeepSeek AI 引擎已准备就绪。');
+    }
+    
+    document.getElementById('apiKeyDialog').remove();
   },
   
   // ===== 练习功能 =====
