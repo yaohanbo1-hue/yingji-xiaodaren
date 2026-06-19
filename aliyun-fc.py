@@ -1,6 +1,6 @@
 # coding: utf-8
 """
-阿里云函数计算 FC 3.0 - DeepSeek API 代理
+阿里云函数计算 FC 3.0 - 硅基流动 API 代理
 国内直接访问，无需翻墙，每月有免费额度
 """
 import json
@@ -59,10 +59,10 @@ def handler(environ, start_response):
         start_response('500 Internal Server Error', [('Content-Type', 'application/json')])
         return [json.dumps({'error': '服务器未配置 DEEPSEEK_API_KEY'}, ensure_ascii=False).encode('utf-8')]
     
-    # 构建 DeepSeek 请求
+    # 调用硅基流动 API
     try:
         payload = {
-            'model': 'deepseek-v4-flash',
+            'model': 'nex-agi/Nex-N2-Pro',
             'messages': [
                 {
                     'role': 'system',
@@ -77,7 +77,7 @@ def handler(environ, start_response):
         }
         
         req = urllib.request.Request(
-            'https://api.deepseek.com/v1/chat/completions',
+            'https://api.siliconflow.cn/v1/chat/completions',
             data=json.dumps(payload).encode('utf-8'),
             headers={
                 'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ def handler(environ, start_response):
             
             if not answer:
                 start_response('500 Internal Server Error', [('Content-Type', 'application/json')])
-                return [json.dumps({'error': 'DeepSeek API 返回为空'}, ensure_ascii=False).encode('utf-8')]
+                return [json.dumps({'error': 'API 返回为空'}, ensure_ascii=False).encode('utf-8')]
             
             start_response('200 OK', cors_headers)
             return [json.dumps({'answer': answer}, ensure_ascii=False).encode('utf-8')]
@@ -115,7 +115,7 @@ def handler(environ, start_response):
     
     except urllib.error.URLError as e:
         start_response('502 Bad Gateway', [('Content-Type', 'application/json')])
-        return [json.dumps({'error': f'连接 DeepSeek API 失败: {str(e.reason)}'}, ensure_ascii=False).encode('utf-8')]
+        return [json.dumps({'error': f'连接 API 失败: {str(e.reason)}'}, ensure_ascii=False).encode('utf-8')]
     
     except Exception as e:
         start_response('500 Internal Server Error', [('Content-Type', 'application/json')])

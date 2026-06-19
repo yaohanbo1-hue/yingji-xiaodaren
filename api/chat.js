@@ -1,5 +1,5 @@
 /**
- * DeepSeek API 代理 - Vercel Serverless Function
+ * 硅基流动 API 代理 - Vercel Serverless Function
  * 解决浏览器 CORS 跨域限制问题
  */
 
@@ -34,14 +34,14 @@ export default async function handler(req, res) {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 20000);
 
-    const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+    const response = await fetch('https://api.siliconflow.cn/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: 'deepseek-v4-flash',
+        model: 'nex-agi/Nex-N2-Pro',
         messages: [
           {
             role: 'system',
@@ -62,13 +62,13 @@ export default async function handler(req, res) {
     if (!response.ok) {
       const error = await response.json().catch(() => ({}));
       if (response.status === 401) {
-        return res.status(401).json({ error: 'API Key 无效，请检查 DEEPSEEK_API_KEY 是否正确' });
+        return res.status(401).json({ error: 'API Key 无效，请检查是否正确' });
       }
       if (response.status === 429) {
         return res.status(429).json({ error: '请求太频繁，请稍后再试' });
       }
       return res.status(response.status).json({
-        error: error.error?.message || `DeepSeek API 错误 (${response.status})`
+        error: error.error?.message || `API 错误 (${response.status})`
       });
     }
 
@@ -76,7 +76,7 @@ export default async function handler(req, res) {
     const answer = data.choices?.[0]?.message?.content;
 
     if (!answer) {
-      return res.status(500).json({ error: 'DeepSeek API 返回为空' });
+      return res.status(500).json({ error: 'API 返回为空' });
     }
 
     return res.status(200).json({ answer });

@@ -1,5 +1,5 @@
 /**
- * Cloudflare Worker - DeepSeek API 代理
+ * Cloudflare Worker - 硅基流动 API 代理
  * 免费、全球边缘节点、无需 GitHub 登录
  */
 
@@ -55,15 +55,15 @@ export default {
     }
 
     try {
-      // 调用 DeepSeek API
-      const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+      // 调用硅基流动 API
+      const response = await fetch('https://api.siliconflow.cn/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          model: 'deepseek-v4-flash',
+          model: 'nex-agi/Nex-N2-Pro',
           messages: [
             {
               role: 'system',
@@ -81,7 +81,7 @@ export default {
       if (!response.ok) {
         const error = await response.json().catch(() => ({}));
         const status = response.status;
-        let errorMsg = error.error?.message || `DeepSeek API 错误 (${status})`;
+        let errorMsg = error.error?.message || `API 错误 (${status})`;
         if (status === 401) errorMsg = 'API Key 无效';
         if (status === 429) errorMsg = '请求太频繁，请稍后再试';
 
@@ -95,7 +95,7 @@ export default {
       const answer = data.choices?.[0]?.message?.content;
 
       if (!answer) {
-        return new Response(JSON.stringify({ error: 'DeepSeek API 返回为空' }), {
+        return new Response(JSON.stringify({ error: 'API 返回为空' }), {
           status: 500,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
