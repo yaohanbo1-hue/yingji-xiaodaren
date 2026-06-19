@@ -763,7 +763,7 @@ const AITutorEngine = {
     
     const currentKey = window.DeepSeekAPI ? window.DeepSeekAPI.getApiKey() : '';
     const maskedKey = currentKey ? currentKey.slice(0, 8) + '****' + currentKey.slice(-4) : '未设置';
-    const isDefault = currentKey === 'sk-4cdcfcde0e1343789c07266c23efd371';
+    const isDefault = currentKey === 'sk-114a10f0a35a475e854780bccac8652d';
     
     dialog.innerHTML = `
       <h3 style="margin:0 0 16px;color:#00d4ff;font-size:18px;">🔑 DeepSeek API 设置</h3>
