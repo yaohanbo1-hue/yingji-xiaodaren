@@ -341,7 +341,9 @@ const I18nEngine = {
   setLanguage(lang) {
     if (lang !== 'zh' && lang !== 'en') return;
     this._currentLang = lang;
-    localStorage.setItem('disasterHQ_language', lang);
+    try {
+      localStorage.setItem('disasterHQ_language', lang);
+    } catch(e) { console.error('Storage error:', e); }
     this.apply();
   },
   
