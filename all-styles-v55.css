@@ -7491,12 +7491,6 @@ body {
   animation: result3DGlassIn 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* ===== Logo 3D 浮动 ===== */
-.menu-logo-title {
-  transform-style: preserve-3d;
-  animation: logo3DGlassGlow 5s ease-in-out infinite;
-}
-
 /* ===== 背景视差 ===== */
 #bgCanvas {
   transform: translateZ(-200px) scale(1.2);
@@ -7532,17 +7526,6 @@ body {
 .menu-logo {
   transform-style: preserve-3d;
   animation: menuLogoFloat 8s ease-in-out infinite;
-}
-
-/* 菜单标题霓虹发光 */
-.menu-logo-title {
-  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple), var(--accent-cyan));
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientShift 4s linear infinite;
-  filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.3));
 }
 
 /* 分区标题液态玻璃条 */
