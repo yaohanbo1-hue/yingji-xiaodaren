@@ -6,7 +6,7 @@
  * ============================================================================
  */
 
-const PageManager = {
+var PageManager = {
   _currentPage: "menu",
   
   navigate(pageId) {
