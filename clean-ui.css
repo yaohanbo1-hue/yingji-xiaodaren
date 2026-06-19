@@ -135,10 +135,15 @@ body {
 
 /* ===== 菜单区域 — 简洁统一 ===== */
 .menu-particles { display: none !important; }
-.menu-logo-glow { display: none !important; }
+.menu-logo-glow { display: block !important; }
 
 .menu-logo {
-  padding: 16px 0 8px !important;
+  padding: 48px 0 24px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
 }
 
 .menu-logo-icon {
@@ -147,17 +152,7 @@ body {
   animation: none !important;
 }
 
-.menu-logo-title {
-  font-size: 20px !important;
-  font-weight: 700 !important;
-  letter-spacing: 2px !important;
-  background: linear-gradient(135deg, var(--cyber-blue), var(--gold)) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-  text-shadow: none !important;
-  animation: none !important;
-}
+/* 标题样式由 index.html 统一管理，clean-ui 不覆盖 */
 
 .menu-logo-sub {
   font-size: 12px !important;
@@ -242,13 +237,35 @@ body {
   background: var(--glass-bg) !important;
   backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
-  border: 1px solid var(--glass-border) !important;
-  border-radius: 10px !important;
-  padding: 14px 12px !important;
+  border: 2px solid var(--glass-border) !important;
+  border-radius: 36px !important;
+  padding: 48px 24px !important;
   box-shadow: none !important;
   transition: all 0.2s ease !important;
   position: relative;
   overflow: hidden;
+  min-height: 220px !important;
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+}
+
+.mode-btn .mode-icon {
+  font-size: 72px !important;
+  margin-bottom: 14px !important;
+}
+
+.mode-btn .mode-name {
+  font-size: 24px !important;
+  font-weight: 800 !important;
+  margin-top: 12px !important;
+}
+
+.mode-btn .mode-desc {
+  font-size: 15px !important;
+  margin-top: 8px !important;
+  line-height: 1.5 !important;
+  color: rgba(255,255,255,0.65) !important;
 }
 
 .mode-btn::before {
