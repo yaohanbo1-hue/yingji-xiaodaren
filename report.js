@@ -134,7 +134,7 @@ const ReportEngine = {
           }
         });
       }
-    } catch (e) {}
+    } catch (e) { console.error(e); }
     
     // 尝试从 AI 导师数据获取
     try {
@@ -147,7 +147,7 @@ const ReportEngine = {
           }
         });
       }
-    } catch (e) {}
+    } catch (e) { console.error(e); }
     
     return categories;
   },
@@ -174,7 +174,7 @@ const ReportEngine = {
       if (data) {
         achievements = Array.isArray(data) ? data : [];
       }
-    } catch (e) {}
+    } catch (e) { console.error(e); }
     return achievements.slice(0, 5); // 最多显示5个
   },
   
