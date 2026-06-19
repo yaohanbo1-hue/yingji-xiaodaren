@@ -14,9 +14,11 @@ const LoadingScreen = {
   
   init() {
     // 检查是否已显示过
-    if (localStorage.getItem('disaster_hq_loading_shown')) {
-      return;
-    }
+    try {
+      if (localStorage.getItem('disaster_hq_loading_shown')) {
+        return;
+      }
+    } catch(e) { return; }
     
     this._shown = true;
     this._show();
@@ -81,7 +83,9 @@ const LoadingScreen = {
           overlay.classList.add('loading-fade-out');
           setTimeout(function() {
             overlay.remove();
-            localStorage.setItem('disaster_hq_loading_shown', '1');
+            try {
+              localStorage.setItem('disaster_hq_loading_shown', '1');
+            } catch(e) { console.error('Storage error:', e); }
           }, 500);
         }, 300);
       }
