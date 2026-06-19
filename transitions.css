@@ -20,11 +20,7 @@
   will-change: opacity, transform;
 }
 
-.page:not(.active) {
-  opacity: 0;
-  transform: scale(0.98) translateY(10px);
-  pointer-events: none;
-}
+/* 已移除重复的 .page:not(.active) 定义，该规则已在 index.html 中以 !important 形式定义 */
 
 .page.active {
   opacity: 1;
