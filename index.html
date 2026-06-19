@@ -1,6 +1,6 @@
 <!--
 ================================================================================
-  应急小达人 v1.2.0 — Disaster Blind Box Command HQ
+  应急小达人 v1.3.0 — Disaster Blind Box Command HQ
   Copyright (c) 2026 应急小达人开发团队
   
   📖 项目简介
@@ -50,7 +50,7 @@
   kit_data.js           - 应急包数据
   
   🔧 开发信息
-  版本: v1.2.0
+  版本: v1.3.0
   日期: 2026-06-05
   作者: 应急小达人开发团队
   
@@ -75,7 +75,7 @@
 <meta name="description" content="面向中小学生的防灾教育互动游戏，通过盲盒开箱、答题闯关、情景模拟等趣味方式学习防灾知识。覆盖12种自然灾害，369张知识卡牌，32种游戏模式。">
 <meta name="keywords" content="防灾教育,应急科普,灾害模拟,互动游戏,中小学生,安全教育">
 <meta name="author" content="应急小达人开发团队">
-<meta name="generator" content="应急小达人 v1.2.0">
+<meta name="generator" content="应急小达人 v1.3.0">
 <meta name="robots" content="index, follow">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -102,19 +102,19 @@
 <link rel="mask-icon" href="favicon.svg" color="#00d4ff">
 <link rel="manifest" href="manifest.json">
 
-<title>应急小达人 — 防灾教育互动游戏 v55</title>
-<meta name="version" content="v55">
+<title>应急小达人 — 防灾教育互动游戏 v1.3.0</title>
+<meta name="version" content="v1.3.0">
 
 <!-- ===== 资源预连接：字体 CDN ===== -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <!-- ===== 预加载最关键资源（不超过5个，避免带宽竞争） ===== -->
-<link rel="preload" href="all-styles-v55.css" as="style">
-<link rel="preload" href="game-engines.js" as="script">
-<link rel="preload" href="cards.js" as="script">
-<link rel="preload" href="scenarios.js" as="script">
-<link rel="preload" href="liquid-glass.js" as="script">
+<link rel="preload" href="all-styles-v55.css?v=56" as="style">
+<link rel="preload" href="game-engines.js?v=56" as="script">
+<link rel="preload" href="cards.js?v=56" as="script">
+<link rel="preload" href="scenarios.js?v=56" as="script">
+<link rel="preload" href="liquid-glass.js?v=56" as="script">
 
 <!-- 加载画面最简样式：确保第一帧就覆盖全屏 -->
 <style>
@@ -138,7 +138,7 @@ body:not(.app-ready) #menuToolbar,body:not(.app-ready) .menu-toolbar{display:non
 .menu-toolbar .tool-btn.active .label{color:#00D4FF!important;font-weight:700!important;letter-spacing:0.6px!important}
 .menu-toolbar .tool-btn.active::after{width:28px!important}
 /* ===== 页面内容底部渐变过渡 ===== */
-.page::after{content:'';position:fixed;bottom:75px;left:0;right:0;height:50px;background:linear-gradient(to top,rgba(10,10,30,0.7),transparent);pointer-events:none;z-index:9999}
+.page::after{content:'';position:fixed;bottom:75px;left:0;right:0;height:50px;background:linear-gradient(to top,rgba(10,10,30,0.7),transparent);pointer-events:none;z-index:1}
 /* ===== 全局页面优化 ===== */
 .page{padding-bottom:140px!important}
 /* ===== Logo区域大气优化 ===== */
@@ -483,35 +483,35 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
     padding: 0 0 20px;
   }
 </style>
-<link rel="stylesheet" href="all-styles-v55.css">
-  <link rel="stylesheet" href="v5-glass-3d.css?v=55">
-  <link rel="stylesheet" href="clean-ui.css?v=55">
-  <link rel="stylesheet" href="bg-premium.css?v=55">
-  <link rel="stylesheet" href="bg-themes.css?v=55">
-  <link rel="stylesheet" href="menu-premium.css?v=55">
-  <link rel="stylesheet" href="fx-effects.css?v=55">
-  <link rel="stylesheet" href="ai-tutor.css?v=55">
-  <link rel="stylesheet" href="certification.css?v=55">
-  <link rel="stylesheet" href="disaster-sim.css?v=55">
-  <link rel="stylesheet" href="real-cases.css?v=55">
-  <link rel="stylesheet" href="fix-click.css?v=55">
-  <script src="fix-click.js?v=55" defer></script>
-  <script src="menu-manager.js?v=55" defer></script>
-  <script src="loading.js?v=55" defer></script>
-  <link rel="stylesheet" href="transitions.css?v=55">
-  <link rel="stylesheet" href="accessibility.css?v=55">
-  <link rel="stylesheet" href="wrong-book.css?v=55">
-  <link rel="stylesheet" href="loading.css?v=55">
-  <link rel="stylesheet" href="guide-enhance.css?v=55">
-  <link rel="stylesheet" href="cert-enhance.css?v=55">
-  <link rel="stylesheet" href="menu-enhance.css?v=55">
-  <link rel="stylesheet" href="share.css?v=55">
-  <link rel="stylesheet" href="i18n.css?v=55">
-  <link rel="stylesheet" href="layout-fix.css?v=55">
-  <link rel="stylesheet" href="ai-float.css?v=55">
-  <link rel="stylesheet" href="ui-ultimate.css?v=55">
-  <link rel="stylesheet" href="settings.css?v=55">
-  <link rel="stylesheet" href="optimizer-mobile.css?v=1">
+<link rel="stylesheet" href="all-styles-v55.css?v=56">
+  <link rel="stylesheet" href="v5-glass-3d.css?v=56">
+  <link rel="stylesheet" href="clean-ui.css?v=56">
+  <link rel="stylesheet" href="bg-premium.css?v=56">
+  <link rel="stylesheet" href="bg-themes.css?v=56">
+  <link rel="stylesheet" href="menu-premium.css?v=56">
+  <link rel="stylesheet" href="fx-effects.css?v=56">
+  <link rel="stylesheet" href="ai-tutor.css?v=56">
+  <link rel="stylesheet" href="certification.css?v=56">
+  <link rel="stylesheet" href="disaster-sim.css?v=56">
+  <link rel="stylesheet" href="real-cases.css?v=56">
+  <link rel="stylesheet" href="fix-click.css?v=56">
+  <script src="fix-click.js?v=56" defer></script>
+  <script src="menu-manager.js?v=56" defer></script>
+  <script src="loading.js?v=56" defer></script>
+  <link rel="stylesheet" href="transitions.css?v=56">
+  <link rel="stylesheet" href="accessibility.css?v=56">
+  <link rel="stylesheet" href="wrong-book.css?v=56">
+  <link rel="stylesheet" href="loading.css?v=56">
+  <link rel="stylesheet" href="guide-enhance.css?v=56">
+  <link rel="stylesheet" href="cert-enhance.css?v=56">
+  <link rel="stylesheet" href="menu-enhance.css?v=56">
+  <link rel="stylesheet" href="share.css?v=56">
+  <link rel="stylesheet" href="i18n.css?v=56">
+  <link rel="stylesheet" href="layout-fix.css?v=56">
+  <link rel="stylesheet" href="ai-float.css?v=56">
+  <link rel="stylesheet" href="ui-ultimate.css?v=56">
+  <link rel="stylesheet" href="settings.css?v=56">
+  <link rel="stylesheet" href="optimizer-mobile.css?v=56">
 <style>
 /* ===== 标题与图标可见性优化 ===== */
 .menu-logo-title { font-weight: 900 !important; text-shadow: 0 0 50px rgba(255,100,0,0.7), 0 0 100px rgba(255,0,0,0.4), 0 6px 16px rgba(0,0,0,0.7) !important; letter-spacing: 8px !important; font-size: 64px !important; background: linear-gradient(180deg,#fff 0%,#ffe4a0 25%,#ff9d00 50%,#ff4d00 75%,#ff0000 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; background-clip: text !important; animation: titlePulse 2.5s ease-in-out infinite !important; }
@@ -692,6 +692,41 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
   }
 }
 </style>
+<style>
+/* ===== 标题最终兜底覆盖 ===== */
+body .menu-logo-title {
+  font-size: 64px !important;
+  font-weight: 900 !important;
+  letter-spacing: 8px !important;
+  text-align: center !important;
+  display: block !important;
+  text-shadow: 0 0 50px rgba(255,100,0,0.7), 0 0 100px rgba(255,0,0,0.4), 0 6px 16px rgba(0,0,0,0.7) !important;
+  background: linear-gradient(180deg,#fff 0%,#ffe4a0 25%,#ff9d00 50%,#ff4d00 75%,#ff0000 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  animation: titlePulse 2.5s ease-in-out infinite !important;
+}
+body .menu-logo {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  padding: 48px 0 24px !important;
+}
+body #page-menu {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  min-height: 100vh !important;
+}
+/* ===== 按钮点击兜底 ===== */
+body:not(.app-ready) .page {
+  pointer-events: auto !important;
+}
+</style>
 </head>
 <body>
 <div class="cyber-grid"></div>
@@ -717,7 +752,7 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
   <div class="ls-corner tr"></div>
   <div class="ls-corner bl"></div>
   <div class="ls-corner br"></div>
-  <div class="ls-coord top">SYS://DISASTER_HQ_v1.2.0</div>
+  <div class="ls-coord top">SYS://DISASTER_HQ_v1.3.0</div>
   <div class="ls-coord bottom">NODE://LOCAL_STORAGE</div>
 </div>
 
@@ -811,7 +846,7 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
         <span class="title-deco-icon">⚠️</span>
       </div>
       <p class="menu-logo-sub">🎁 开盲盒 · 学防灾 · 救世界</p>
-      <span class="version-tag">✨ v1.2.0 Premium</span>
+      <span class="version-tag">✨ v1.3.0 Premium</span>
     </div>
 
     <!-- 主分类按钮 -->
@@ -2386,45 +2421,45 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
 
 
 
-<script src="juice.js?v=55" defer></script>
-<script src="visual-fx.js?v=55" defer></script>
-<script src="bgm.js?v=55" defer></script>
-<script src="cards.js?v=55" defer></script>
-<script src="scenarios.js?v=55" defer></script>
-<script src="kit_data.js?v=55" defer></script>
-<script src="js/core/utils.js?v=55" defer></script>
-<script src="js/core/game-core.js?v=55" defer></script>
-<script src="game-engines.js?v=55" defer></script>
-<script src="game.js?v=55" defer></script>
-<script src="v10-interactions.js?v=55" defer></script>
+<script src="juice.js?v=56" defer></script>
+<script src="visual-fx.js?v=56" defer></script>
+<script src="bgm.js?v=56" defer></script>
+<script src="cards.js?v=56" defer></script>
+<script src="scenarios.js?v=56" defer></script>
+<script src="kit_data.js?v=56" defer></script>
+<script src="js/core/utils.js?v=56" defer></script>
+<script src="js/core/game-core.js?v=56" defer></script>
+<script src="game-engines.js?v=56" defer></script>
+<script src="game.js?v=56" defer></script>
+<script src="v10-interactions.js?v=56" defer></script>
 
-<script src="encyclopedia_extra.js?v=55" defer></script>
-<script src="encyclopedia_final.js?v=55" defer></script>
-<script src="bg-premium.js?v=55" defer></script>
-<script src="ui-polish.js?v=55" defer></script>
-<script src="tilt3d.js?v=55" defer></script>
-<script src="ai-tutor-llm-v55.js" defer></script>
-<script src="ai-tutor-v55.js" defer></script>
-<script src="ai-float-v55.js" defer></script>
-<script src="certification.js?v=55" defer></script>
-<script src="disaster-sim.js?v=55" defer></script>
-<script src="real-cases.js?v=55" defer></script>
-<script src="sfx.js?v=55" defer></script>
-<script src="bgm-enhanced.js?v=55" defer></script>
-<script src="audio-integration.js?v=55" defer></script>
-<script src="accessibility.js?v=55" defer></script>
-<script src="performance.js?v=55" defer></script>
-<script src="wrong-book.js?v=55" defer></script>
-<script src="report.js?v=55" defer></script>
-<script src="voice.js?v=55" defer></script>
-<script src="guide-enhance.js?v=55" defer></script>
-<script src="cert-enhance.js?v=55" defer></script>
-<script src="disaster-particles.js?v=55" defer></script>
-<script src="menu-enhance.js?v=55" defer></script>
-<script src="share.js?v=55" defer></script>
-<script src="i18n.js?v=55" defer></script>
-<script src="bg-themes.js?v=55" defer></script>
-<script src="liquid-glass.js?v=55" defer></script>
+<script src="encyclopedia_extra.js?v=56" defer></script>
+<script src="encyclopedia_final.js?v=56" defer></script>
+<script src="bg-premium.js?v=56" defer></script>
+<script src="ui-polish.js?v=56" defer></script>
+<script src="tilt3d.js?v=56" defer></script>
+<script src="ai-tutor-llm-v55.js?v=56" defer></script>
+<script src="ai-tutor-v55.js?v=56" defer></script>
+<script src="ai-float-v55.js?v=56" defer></script>
+<script src="certification.js?v=56" defer></script>
+<script src="disaster-sim.js?v=56" defer></script>
+<script src="real-cases.js?v=56" defer></script>
+<script src="sfx.js?v=56" defer></script>
+<script src="bgm-enhanced.js?v=56" defer></script>
+<script src="audio-integration.js?v=56" defer></script>
+<script src="accessibility.js?v=56" defer></script>
+<script src="performance.js?v=56" defer></script>
+<script src="wrong-book.js?v=56" defer></script>
+<script src="report.js?v=56" defer></script>
+<script src="voice.js?v=56" defer></script>
+<script src="guide-enhance.js?v=56" defer></script>
+<script src="cert-enhance.js?v=56" defer></script>
+<script src="disaster-particles.js?v=56" defer></script>
+<script src="menu-enhance.js?v=56" defer></script>
+<script src="share.js?v=56" defer></script>
+<script src="i18n.js?v=56" defer></script>
+<script src="bg-themes.js?v=56" defer></script>
+<script src="liquid-glass.js?v=56" defer></script>
 
 <!-- 补丁脚本：修复缺失的方法 -->
 <script>
@@ -2616,11 +2651,12 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
         setTimeout(function(){
           screen.classList.add('hidden');
           document.body.classList.add('app-ready');
+          screen.style.pointerEvents = 'none';
           if (typeof LiquidGlass !== 'undefined') {
             LiquidGlass.createParticles(20);
           }
         }, 400);
-        setTimeout(function(){ screen.remove(); }, 1200);
+        setTimeout(function(){ screen.style.display = 'none'; screen.remove(); }, 1200);
       }
     };
     requestAnimationFrame(animate);
@@ -2676,6 +2712,6 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
   document.addEventListener('keydown', unlockAudio);
 })();
 </script>
-<script src="optimizer-mobile.js?v=1" defer></script>
+<script src="optimizer-mobile.js?v=56" defer></script>
 </body>
 </html>
