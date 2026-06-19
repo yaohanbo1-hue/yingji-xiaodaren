@@ -2895,7 +2895,15 @@ body {
 .menu-logo-glow { display: none !important; }
 
 .menu-logo {
-  padding: 16px 0 8px !important;
+  padding: 48px 0 24px !important;
+  margin-bottom: 20px !important;
+  margin-top: auto !important;
+  text-align: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
 }
 
 .menu-logo-icon {
@@ -2905,31 +2913,40 @@ body {
 }
 
 .menu-logo-title {
-  font-size: 20px !important;
-  font-weight: 700 !important;
-  letter-spacing: 2px !important;
-  background: linear-gradient(135deg, var(--cyber-blue), var(--gold)) !important;
+  font-size: 64px !important;
+  font-weight: 900 !important;
+  letter-spacing: 8px !important;
+  background: linear-gradient(180deg,#fff 0%,#ffe4a0 25%,#ff9d00 50%,#ff4d00 75%,#ff0000 100%) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
-  text-shadow: none !important;
-  animation: none !important;
+  text-shadow: 0 0 50px rgba(255,100,0,0.7), 0 0 100px rgba(255,0,0,0.4), 0 6px 16px rgba(0,0,0,0.7) !important;
+  animation: titlePulse 2.5s ease-in-out infinite !important;
+}
 }
 
 .menu-logo-sub {
-  font-size: 12px !important;
-  color: var(--text-secondary) !important;
-  letter-spacing: 1px !important;
+  font-size: 16px !important;
+  margin: 6px 0 8px !important;
+  opacity: 0.9 !important;
+  letter-spacing: 2px !important;
+  font-weight: 600 !important;
+  color: rgba(255,255,255,0.85) !important;
+  text-shadow: 0 0 15px rgba(255,255,255,0.15) !important;
 }
 
 .version-tag {
-  background: rgba(255,255,255,0.06) !important;
-  border: 1px solid rgba(255,255,255,0.1) !important;
-  color: var(--text-secondary) !important;
-  font-size: 10px !important;
-  padding: 2px 8px !important;
-  border-radius: 4px !important;
-  box-shadow: none !important;
+  font-size: 14px !important;
+  padding: 6px 18px !important;
+  margin-top: 8px !important;
+  border-radius: 24px !important;
+  font-weight: 700 !important;
+  letter-spacing: 1px !important;
+  background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(0,212,255,0.15)) !important;
+  border: 1px solid rgba(255,215,0,0.3) !important;
+  color: #FFD700 !important;
+  box-shadow: 0 0 20px rgba(255,215,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1) !important;
+  animation: tagPulse 2s ease-in-out infinite !important;
 }
 
 /* ===== 分类按钮 — 简洁统一 ===== */
