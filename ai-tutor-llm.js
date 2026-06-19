@@ -93,7 +93,7 @@ const AITutorBrain = {
     try {
       const saved = localStorage.getItem('aitutor_profile');
       if (saved) this._userProfile = JSON.parse(saved);
-    } catch (e) {}
+    } catch (e) { console.error(e); }
   },
 
   _saveUserProfile() {
