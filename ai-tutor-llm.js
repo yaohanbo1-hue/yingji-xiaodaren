@@ -487,13 +487,131 @@ const AITutorBrain = {
   getStatus() { return { ready: this.isReady(), knowledgeCount: this._knowledgeBase.length, chats: this._userProfile.totalChats }; }
 };
 
-// 自动初始化
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => AITutorBrain.init());
-} else {
-  AITutorBrain.init();
-}
+// ===== DeepSeek API 集成 =====
+const DeepSeekAPI = {
+  _apiKey: localStorage.getItem('deepseek_api_key') || 'sk-4cdcfcde0e1343789c07266c23efd371',
+  _baseUrl: 'https://api.deepseek.com/v1',
+  _model: 'deepseek-chat',
+  _systemPrompt: `你是"应急小达人"游戏的AI防灾导师，一位专业的防灾教育专家。
 
-window.AITutorBrain = AITutorBrain;
+你的职责：
+1. 用通俗易懂的语言回答防灾减灾问题
+2. 结合真实案例解释防灾原理
+3. 给出可操作的应急建议（步骤清晰）
+4. 针对中小学生用户，语气亲切、鼓励为主
+5. 回答控制在200字以内，重点突出
+
+知识范围：地震、洪水、台风、火灾、雷电、暴雪、泥石流、干旱、山火、火山、海啸、沙尘暴等12种自然灾害的预防、应对、逃生、急救知识。
+
+禁止：
+- 不要回答与防灾无关的问题
+- 不要使用过于专业的术语（除非附带解释）
+- 不要给出不确定的建议
+
+每次回答最后，可以引导用户继续提问或去游戏中练习。`,
+
+  isReady() {
+    return this._apiKey.length > 10;
+  },
+
+  setApiKey(key) {
+    this._apiKey = key.trim();
+    localStorage.setItem('deepseek_api_key', this._apiKey);
+  },
+
+  getApiKey() {
+    return this._apiKey;
+  },
+
+  async chat(userMessage, history = []) {
+    if (!this.isReady()) {
+      return { error: '请先设置 DeepSeek API Key' };
+    }
+
+    const messages = [
+      { role: 'system', content: this._systemPrompt },
+      ...history.slice(-6), // 保留最近6轮对话
+      { role: 'user', content: userMessage }
+    ];
+
+    try {
+      const response = await fetch(`${this._baseUrl}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this._apiKey}`
+        },
+        body: JSON.stringify({
+          model: this._model,
+          messages: messages,
+          temperature: 0.7,
+          max_tokens: 500,
+          stream: false
+        })
+      });
+
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({}));
+        if (response.status === 401) {
+          return { error: 'API Key 无效，请检查是否正确' };
+        }
+        if (response.status === 429) {
+          return { error: '请求太频繁，请稍后再试' };
+        }
+        return { error: error.error?.message || `API 错误 (${response.status})` };
+      }
+
+      const data = await response.json();
+      const reply = data.choices?.[0]?.message?.content;
+      
+      if (!reply) {
+        return { error: 'API 返回为空' };
+      }
+
+      return { answer: reply };
+    } catch (e) {
+      console.error('DeepSeek API error:', e);
+      return { error: '网络错误，请检查网络连接' };
+    }
+  }
+};
+
 // 保持兼容
-window.AITutorLLM = AITutorBrain;
+window.DeepSeekAPI = DeepSeekAPI;
+
+// 重写 AITutorBrain 的 generateReply，增加 DeepSeek 调用
+const _originalGenerateReply = AITutorBrain.generateReply.bind(AITutorBrain);
+AITutorBrain.generateReply = async function(userMessage, history = []) {
+  // 如果 DeepSeek API 可用，优先使用
+  if (DeepSeekAPI.isReady()) {
+    try {
+      // 显示 "AI 思考中..."
+      const result = await DeepSeekAPI.chat(userMessage, history);
+      if (result.answer) {
+        // 缓存到本地知识库
+        this._cacheToKnowledge(userMessage, result.answer);
+        return result.answer;
+      }
+      // API 失败，回退到本地引擎
+      console.log('DeepSeek fallback:', result.error);
+    } catch (e) {
+      console.error('DeepSeek error:', e);
+    }
+  }
+  
+  // 回退到本地规则引擎
+  return _originalGenerateReply(userMessage, history);
+};
+
+// 缓存问答到本地知识库
+AITutorBrain._cacheToKnowledge = function(question, answer) {
+  try {
+    const cache = JSON.parse(localStorage.getItem('aitutor_cache') || '[]');
+    cache.push({ question, answer, time: Date.now() });
+    // 只保留最近100条
+    if (cache.length > 100) cache.shift();
+    localStorage.setItem('aitutor_cache', JSON.stringify(cache));
+  } catch (e) {}
+};
+
+console.log('🧠 DeepSeek API 集成已加载');
