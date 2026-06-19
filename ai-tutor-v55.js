@@ -22,6 +22,8 @@ const AITutorEngine = {
   
   // ===== 初始化 =====
   init() {
+    if (this._initialized) return;
+    this._initialized = true;
     this.loadData();
     this.analyzeMastery();
     this.generateRecommendations();
@@ -468,6 +470,8 @@ const AITutorEngine = {
     if (engine && engine.generateReply) {
       engine.generateReply('你好').then(greeting => {
         this._typeMessage('ai', greeting);
+      }).catch(() => {
+        this._typeMessage('ai', '👋 你好！我是你的 AI 防灾导师！\n\n我已经学习了 369 道防灾题目和 34 个真实灾害场景，随时为你解答。');
       });
     } else {
       this._typeMessage('ai', '👋 你好！我是你的 AI 防灾导师！\n\n我已经学习了 369 道防灾题目和 34 个真实灾害场景，随时为你解答。\n\n你可以直接问我：\n• "地震来了怎么办？"\n• "推荐我练习什么？"\n• "讲个防灾故事"\n• 或者点击下方的快捷按钮');
@@ -541,6 +545,7 @@ const AITutorEngine = {
   showTyping() {
     const body = document.getElementById('terminalBody');
     if (!body) return;
+    this.hideTyping(); // 先清理旧指示器
     
     const typing = document.createElement('div');
     typing.className = 'terminal-msg ai-msg';
@@ -584,6 +589,10 @@ const AITutorEngine = {
         this._chatHistory.push({ role: 'user', content: text });
         this._chatHistory.push({ role: 'assistant', content: response });
         if (this._chatHistory.length > 20) this._chatHistory = this._chatHistory.slice(-20);
+      }).catch(err => {
+        this.hideTyping();
+        console.error('AI回复错误:', err);
+        this._typeMessage('ai', '抱歉，AI引擎暂时出错了，请稍后再试。');
       });
     } else {
       this.hideTyping();
@@ -615,6 +624,10 @@ const AITutorEngine = {
         this._chatHistory.push({ role: 'user', content: text });
         this._chatHistory.push({ role: 'assistant', content: response });
         if (this._chatHistory.length > 20) this._chatHistory = this._chatHistory.slice(-20);
+      }).catch(err => {
+        this.hideTyping();
+        console.error('AI回复错误:', err);
+        this._typeMessage('ai', '抱歉，AI引擎暂时出错了，请稍后再试。');
       });
     }
   },
