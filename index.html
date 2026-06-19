@@ -34,7 +34,7 @@
   
   📂 文件结构
   index.html            - 主页面 (23 个子页面模块)
-  all-styles.css        - 核心样式表 (合并版)
+  all-styles-v55.css     - 核心样式表 (合并版)
   game.js               - 游戏引擎 (50+ 模块)
   cards.js              - 卡牌数据 (369 张)
   scenarios.js          - 情景数据 (12 类灾害，34 个场景)
@@ -110,7 +110,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <!-- ===== 预加载最关键资源（不超过5个，避免带宽竞争） ===== -->
-<link rel="preload" href="all-styles.css?v=55" as="style">
+<link rel="preload" href="all-styles-v55.css" as="style">
 <link rel="preload" href="game-engines.js" as="script">
 <link rel="preload" href="cards.js" as="script">
 <link rel="preload" href="scenarios.js" as="script">
@@ -483,7 +483,7 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
     padding: 0 0 20px;
   }
 </style>
-<link rel="stylesheet" href="all-styles.css?v=55">
+<link rel="stylesheet" href="all-styles-v55.css">
   <link rel="stylesheet" href="v5-glass-3d.css?v=55">
   <link rel="stylesheet" href="clean-ui.css?v=55">
   <link rel="stylesheet" href="bg-premium.css?v=55">
@@ -2403,9 +2403,9 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
 <script src="bg-premium.js?v=55" defer></script>
 <script src="ui-polish.js?v=55" defer></script>
 <script src="tilt3d.js?v=55" defer></script>
-<script src="ai-tutor-llm.js?v=55" defer></script>
-<script src="ai-tutor.js?v=55" defer></script>
-<script src="ai-float.js?v=55" defer></script>
+<script src="ai-tutor-llm-v55.js" defer></script>
+<script src="ai-tutor-v55.js" defer></script>
+<script src="ai-float-v55.js" defer></script>
 <script src="certification.js?v=55" defer></script>
 <script src="disaster-sim.js?v=55" defer></script>
 <script src="real-cases.js?v=55" defer></script>
@@ -2459,7 +2459,7 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
 (function() {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-      navigator.serviceWorker.register('sw.js')
+      navigator.serviceWorker.register('sw-v55.js')
         .then(function(registration) {
           console.log('[SW] 注册成功:', registration.scope);
           // 监听更新
