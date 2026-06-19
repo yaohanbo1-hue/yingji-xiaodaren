@@ -102,15 +102,15 @@
 <link rel="mask-icon" href="favicon.svg" color="#00d4ff">
 <link rel="manifest" href="manifest.json">
 
-<title>应急小达人 — 防灾教育互动游戏 v52</title>
-<meta name="version" content="v52">
+<title>应急小达人 — 防灾教育互动游戏 v53</title>
+<meta name="version" content="v53">
 
 <!-- ===== 资源预连接：字体 CDN ===== -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <!-- ===== 预加载最关键资源（不超过5个，避免带宽竞争） ===== -->
-<link rel="preload" href="all-styles.css?v=52" as="style">
+<link rel="preload" href="all-styles.css?v=53" as="style">
 <link rel="preload" href="game-engines.js" as="script">
 <link rel="preload" href="cards.js" as="script">
 <link rel="preload" href="scenarios.js" as="script">
@@ -142,18 +142,19 @@ body:not(.app-ready) #menuToolbar,body:not(.app-ready) .menu-toolbar{display:non
 /* ===== 全局页面优化 ===== */
 .page{padding-bottom:140px!important}
 /* ===== Logo区域大气优化 ===== */
-.menu-logo{padding:24px 0 16px!important;margin-bottom:12px!important;text-align:center!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;position:relative!important}
+.menu-logo{padding:48px 0 24px!important;margin-bottom:20px!important;margin-top:auto!important;text-align:center!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;position:relative!important}
 .menu-title-decor{display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;margin:8px 0!important}
 .title-deco-icon{font-size:28px!important;animation:decoPulse 2s ease-in-out infinite!important;filter:drop-shadow(0 0 12px rgba(255,215,0,0.5))!important}
 .title-shield{display:flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;position:relative!important}
 .shield-left,.shield-right{font-size:24px!important;animation:shieldRotate 3s ease-in-out infinite!important;filter:drop-shadow(0 0 8px rgba(255,0,0,0.4))!important}
 .shield-left{animation-delay:0.5s!important}
 .shield-right{animation-delay:1s!important}
-.menu-logo-title{font-size:48px!important;margin:0!important;letter-spacing:6px!important;font-weight:900!important;font-family:'Microsoft YaHei','PingFang SC',sans-serif!important;text-shadow:0 0 40px rgba(255,100,0,0.6),0 0 80px rgba(255,0,0,0.3),0 4px 12px rgba(0,0,0,0.7)!important;background:linear-gradient(180deg,#fff 0%,#ffe4a0 25%,#ff9d00 50%,#ff4d00 75%,#ff0000 100%)!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important;position:relative!important;animation:titlePulse 2.5s ease-in-out infinite!important}
+.menu-logo-title{font-size:64px!important;margin:0!important;letter-spacing:8px!important;font-weight:900!important;font-family:'Microsoft YaHei','PingFang SC',sans-serif!important;text-shadow:0 0 50px rgba(255,100,0,0.7),0 0 100px rgba(255,0,0,0.4),0 6px 16px rgba(0,0,0,0.7)!important;background:linear-gradient(180deg,#fff 0%,#ffe4a0 25%,#ff9d00 50%,#ff4d00 75%,#ff0000 100%)!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important;position:relative!important;animation:titlePulse 2.5s ease-in-out infinite!important}
 .menu-logo-title::before{content:'';position:absolute;inset:-8px -20px;background:radial-gradient(ellipse,rgba(255,100,0,0.15) 0%,transparent 70%)!important;z-index:-1;pointer-events:none;animation:flareRotate 4s linear infinite!important}
 .menu-logo-sub{font-size:16px!important;margin:6px 0 8px!important;opacity:0.9!important;letter-spacing:2px!important;font-weight:600!important;color:rgba(255,255,255,0.85)!important;text-shadow:0 0 15px rgba(255,255,255,0.15)!important}
 .version-tag{font-size:14px!important;padding:6px 18px!important;margin-top:8px!important;border-radius:24px!important;font-weight:700!important;letter-spacing:1px!important;background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(0,212,255,0.15))!important;border:1px solid rgba(255,215,0,0.3)!important;color:#FFD700!important;box-shadow:0 0 20px rgba(255,215,0,0.2),inset 0 1px 0 rgba(255,255,255,0.1)!important;animation:tagPulse 2s ease-in-out infinite!important}
 /* ===== 主分类按钮大气优化 ===== */
+#page-menu{display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;min-height:100vh!important;padding-top:0!important;padding-bottom:160px!important}
 body #page-menu .menu-category-btns{gap:16px!important;padding:14px 16px!important;margin-bottom:10px!important}
 body #page-menu .menu-cat-btn{padding:42px 28px!important;border-radius:36px!important;min-height:160px!important;box-shadow:0 12px 48px rgba(0,0,0,0.35),0 4px 12px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.1)!important;border:2px solid rgba(255,255,255,0.14)!important;transition:all 0.35s cubic-bezier(0.23,1,0.32,1)!important}
 body #page-menu .menu-cat-btn:hover{transform:translateY(-4px)!important;box-shadow:0 16px 56px rgba(0,0,0,0.4),0 6px 16px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.12)!important}
@@ -482,38 +483,38 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
     padding: 0 0 20px;
   }
 </style>
-<link rel="stylesheet" href="all-styles.css?v=52">
-  <link rel="stylesheet" href="v5-glass-3d.css?v=52">
-  <link rel="stylesheet" href="clean-ui.css?v=52">
-  <link rel="stylesheet" href="bg-premium.css?v=52">
-  <link rel="stylesheet" href="bg-themes.css?v=52">
-  <link rel="stylesheet" href="menu-premium.css?v=52">
-  <link rel="stylesheet" href="fx-effects.css?v=52">
-  <link rel="stylesheet" href="ai-tutor.css?v=52">
-  <link rel="stylesheet" href="certification.css?v=52">
-  <link rel="stylesheet" href="disaster-sim.css?v=52">
-  <link rel="stylesheet" href="real-cases.css?v=52">
-  <link rel="stylesheet" href="fix-click.css?v=52">
-  <script src="fix-click.js?v=52" defer></script>
-  <script src="menu-manager.js?v=52" defer></script>
-  <script src="loading.js?v=52" defer></script>
-  <link rel="stylesheet" href="transitions.css?v=52">
-  <link rel="stylesheet" href="accessibility.css?v=52">
-  <link rel="stylesheet" href="wrong-book.css?v=52">
-  <link rel="stylesheet" href="loading.css?v=52">
-  <link rel="stylesheet" href="guide-enhance.css?v=52">
-  <link rel="stylesheet" href="cert-enhance.css?v=52">
-  <link rel="stylesheet" href="menu-enhance.css?v=52">
-  <link rel="stylesheet" href="share.css?v=52">
-  <link rel="stylesheet" href="i18n.css?v=52">
-  <link rel="stylesheet" href="layout-fix.css?v=52">
-  <link rel="stylesheet" href="ai-float.css?v=52">
-  <link rel="stylesheet" href="ui-ultimate.css?v=52">
-  <link rel="stylesheet" href="settings.css?v=52">
+<link rel="stylesheet" href="all-styles.css?v=53">
+  <link rel="stylesheet" href="v5-glass-3d.css?v=53">
+  <link rel="stylesheet" href="clean-ui.css?v=53">
+  <link rel="stylesheet" href="bg-premium.css?v=53">
+  <link rel="stylesheet" href="bg-themes.css?v=53">
+  <link rel="stylesheet" href="menu-premium.css?v=53">
+  <link rel="stylesheet" href="fx-effects.css?v=53">
+  <link rel="stylesheet" href="ai-tutor.css?v=53">
+  <link rel="stylesheet" href="certification.css?v=53">
+  <link rel="stylesheet" href="disaster-sim.css?v=53">
+  <link rel="stylesheet" href="real-cases.css?v=53">
+  <link rel="stylesheet" href="fix-click.css?v=53">
+  <script src="fix-click.js?v=53" defer></script>
+  <script src="menu-manager.js?v=53" defer></script>
+  <script src="loading.js?v=53" defer></script>
+  <link rel="stylesheet" href="transitions.css?v=53">
+  <link rel="stylesheet" href="accessibility.css?v=53">
+  <link rel="stylesheet" href="wrong-book.css?v=53">
+  <link rel="stylesheet" href="loading.css?v=53">
+  <link rel="stylesheet" href="guide-enhance.css?v=53">
+  <link rel="stylesheet" href="cert-enhance.css?v=53">
+  <link rel="stylesheet" href="menu-enhance.css?v=53">
+  <link rel="stylesheet" href="share.css?v=53">
+  <link rel="stylesheet" href="i18n.css?v=53">
+  <link rel="stylesheet" href="layout-fix.css?v=53">
+  <link rel="stylesheet" href="ai-float.css?v=53">
+  <link rel="stylesheet" href="ui-ultimate.css?v=53">
+  <link rel="stylesheet" href="settings.css?v=53">
   <link rel="stylesheet" href="optimizer-mobile.css?v=1">
 <style>
 /* ===== 标题与图标可见性优化 ===== */
-.menu-logo-title { font-weight: 900 !important; text-shadow: 0 0 40px rgba(255,100,0,0.6), 0 0 80px rgba(255,0,0,0.3), 0 4px 12px rgba(0,0,0,0.7) !important; letter-spacing: 6px !important; font-size: 48px !important; background: linear-gradient(180deg,#fff 0%,#ffe4a0 25%,#ff9d00 50%,#ff4d00 75%,#ff0000 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; background-clip: text !important; animation: titlePulse 2.5s ease-in-out infinite !important; }
+.menu-logo-title { font-weight: 900 !important; text-shadow: 0 0 50px rgba(255,100,0,0.7), 0 0 100px rgba(255,0,0,0.4), 0 6px 16px rgba(0,0,0,0.7) !important; letter-spacing: 8px !important; font-size: 64px !important; background: linear-gradient(180deg,#fff 0%,#ffe4a0 25%,#ff9d00 50%,#ff4d00 75%,#ff0000 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; background-clip: text !important; animation: titlePulse 2.5s ease-in-out infinite !important; }
 .menu-title-decor { display: flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; margin: 8px 0 !important; }
 .title-deco-icon { font-size: 28px !important; animation: decoPulse 2s ease-in-out infinite !important; filter: drop-shadow(0 0 12px rgba(255,215,0,0.5)) !important; }
 .title-shield { display: flex !important; align-items: center !important; justify-content: center !important; gap: 6px !important; position: relative !important; }
@@ -2385,45 +2386,45 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
 
 
 
-<script src="juice.js?v=52" defer></script>
-<script src="visual-fx.js?v=52" defer></script>
-<script src="bgm.js?v=52" defer></script>
-<script src="cards.js?v=52" defer></script>
-<script src="scenarios.js?v=52" defer></script>
-<script src="kit_data.js?v=52" defer></script>
-<script src="js/core/utils.js?v=52" defer></script>
-<script src="js/core/game-core.js?v=52" defer></script>
-<script src="game-engines.js?v=52" defer></script>
-<script src="game.js?v=52" defer></script>
-<script src="v10-interactions.js?v=52" defer></script>
+<script src="juice.js?v=53" defer></script>
+<script src="visual-fx.js?v=53" defer></script>
+<script src="bgm.js?v=53" defer></script>
+<script src="cards.js?v=53" defer></script>
+<script src="scenarios.js?v=53" defer></script>
+<script src="kit_data.js?v=53" defer></script>
+<script src="js/core/utils.js?v=53" defer></script>
+<script src="js/core/game-core.js?v=53" defer></script>
+<script src="game-engines.js?v=53" defer></script>
+<script src="game.js?v=53" defer></script>
+<script src="v10-interactions.js?v=53" defer></script>
 
-<script src="encyclopedia_extra.js?v=52" defer></script>
-<script src="encyclopedia_final.js?v=52" defer></script>
-<script src="bg-premium.js?v=52" defer></script>
-<script src="ui-polish.js?v=52" defer></script>
-<script src="tilt3d.js?v=52" defer></script>
-<script src="ai-tutor-llm.js?v=52" defer></script>
-<script src="ai-tutor.js?v=52" defer></script>
-<script src="ai-float.js?v=52" defer></script>
-<script src="certification.js?v=52" defer></script>
-<script src="disaster-sim.js?v=52" defer></script>
-<script src="real-cases.js?v=52" defer></script>
-<script src="sfx.js?v=52" defer></script>
-<script src="bgm-enhanced.js?v=52" defer></script>
-<script src="audio-integration.js?v=52" defer></script>
-<script src="accessibility.js?v=52" defer></script>
-<script src="performance.js?v=52" defer></script>
-<script src="wrong-book.js?v=52" defer></script>
-<script src="report.js?v=52" defer></script>
-<script src="voice.js?v=52" defer></script>
-<script src="guide-enhance.js?v=52" defer></script>
-<script src="cert-enhance.js?v=52" defer></script>
-<script src="disaster-particles.js?v=52" defer></script>
-<script src="menu-enhance.js?v=52" defer></script>
-<script src="share.js?v=52" defer></script>
-<script src="i18n.js?v=52" defer></script>
-<script src="bg-themes.js?v=52" defer></script>
-<script src="liquid-glass.js?v=52" defer></script>
+<script src="encyclopedia_extra.js?v=53" defer></script>
+<script src="encyclopedia_final.js?v=53" defer></script>
+<script src="bg-premium.js?v=53" defer></script>
+<script src="ui-polish.js?v=53" defer></script>
+<script src="tilt3d.js?v=53" defer></script>
+<script src="ai-tutor-llm.js?v=53" defer></script>
+<script src="ai-tutor.js?v=53" defer></script>
+<script src="ai-float.js?v=53" defer></script>
+<script src="certification.js?v=53" defer></script>
+<script src="disaster-sim.js?v=53" defer></script>
+<script src="real-cases.js?v=53" defer></script>
+<script src="sfx.js?v=53" defer></script>
+<script src="bgm-enhanced.js?v=53" defer></script>
+<script src="audio-integration.js?v=53" defer></script>
+<script src="accessibility.js?v=53" defer></script>
+<script src="performance.js?v=53" defer></script>
+<script src="wrong-book.js?v=53" defer></script>
+<script src="report.js?v=53" defer></script>
+<script src="voice.js?v=53" defer></script>
+<script src="guide-enhance.js?v=53" defer></script>
+<script src="cert-enhance.js?v=53" defer></script>
+<script src="disaster-particles.js?v=53" defer></script>
+<script src="menu-enhance.js?v=53" defer></script>
+<script src="share.js?v=53" defer></script>
+<script src="i18n.js?v=53" defer></script>
+<script src="bg-themes.js?v=53" defer></script>
+<script src="liquid-glass.js?v=53" defer></script>
 
 <!-- 补丁脚本：修复缺失的方法 -->
 <script>
