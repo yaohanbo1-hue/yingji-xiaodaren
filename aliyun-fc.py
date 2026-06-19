@@ -62,7 +62,7 @@ def handler(environ, start_response):
     # 构建 DeepSeek 请求
     try:
         payload = {
-            'model': 'deepseek-chat',
+            'model': 'deepseek-v4-flash',
             'messages': [
                 {
                     'role': 'system',
