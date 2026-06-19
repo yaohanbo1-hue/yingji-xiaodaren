@@ -89,12 +89,19 @@ const CertificationEngine = {
   },
   
   saveData() {
-    localStorage.setItem('certificationData', JSON.stringify(this._data));
+    try {
+      localStorage.setItem('certificationData', JSON.stringify(this._data));
+    } catch(e) {
+      console.error('Storage error:', e);
+    }
   },
   
   // ===== 检查进度 =====
   checkProgress() {
-    const aiData = JSON.parse(localStorage.getItem('aiTutorData') || '{}');
+    var aiData = {};
+    try {
+      aiData = JSON.parse(localStorage.getItem('aiTutorData') || '{}');
+    } catch(e) { aiData = {}; }
     const mastery = aiData.mastery || {};
     const history = aiData.quizHistory || [];
     
@@ -159,7 +166,10 @@ const CertificationEngine = {
     const container = document.getElementById('certContent');
     if (!container) return;
     
-    const aiData = JSON.parse(localStorage.getItem('aiTutorData') || '{}');
+    var aiData = {};
+    try {
+      aiData = JSON.parse(localStorage.getItem('aiTutorData') || '{}');
+    } catch(e) { aiData = {}; }
     const history = aiData.quizHistory || [];
     const mastery = aiData.mastery || {};
     const totalAnswered = history.length;
