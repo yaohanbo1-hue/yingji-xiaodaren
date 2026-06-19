@@ -57,15 +57,16 @@ const AITutorEngine = {
   },
   
   saveData() {
-    localStorage.setItem('aiTutorData', JSON.stringify(this._data));
+    try {
+      localStorage.setItem('aiTutorData', JSON.stringify(this._data));
+    } catch(e) {
+      console.error('Storage error:', e);
+    }
   },
   
   // ===== 记录答题 =====
   recordAnswer(cardId, correct, disaster) {
     if (!cardId || !disaster) return;
-    
-    // 确保数据已初始化
-    if (!this._data) this.loadData();
     
     this._data.quizHistory.push({
       cardId, correct,
@@ -230,6 +231,7 @@ const AITutorEngine = {
             AI 导师对话
           </div>
           <div class="terminal-actions">
+            <div class="terminal-action-btn" onclick="AITutorEngine.loadLLM()" title="启用AI模型" id="llmToggleBtn">🧠</div>
             <div class="terminal-action-btn" onclick="AITutorEngine.clearChat()" title="清空对话">🗑</div>
           </div>
         </div>
@@ -237,8 +239,10 @@ const AITutorEngine = {
         <div class="terminal-suggestions">
           <button class="suggestion-btn" onclick="AITutorEngine.quickAsk('weakness')">⚠️ 薄弱项</button>
           <button class="suggestion-btn" onclick="AITutorEngine.quickAsk('recommend')">🎯 推荐练习</button>
-          <button class="suggestion-btn" onclick="AITutorEngine.quickAsk('progress')">📈 学习进度</button>
-          <button class="suggestion-btn" onclick="AITutorEngine.quickAsk('tips')">💡 防灾贴士</button>
+          <button class="suggestion-btn" onclick="AITutorEngine.quickAsk('progress')">📊 学习进度</button>
+          <button class="suggestion-btn" onclick="AITutorEngine.quickAsk('trivia')">🧠 冷知识</button>
+          <button class="suggestion-btn" onclick="AITutorEngine.quickAsk('story')">📖 真实故事</button>
+          <button class="suggestion-btn" onclick="AITutorEngine.quickAsk('practice')">❓ 给我出题</button>
         </div>
         <div class="terminal-input-area">
           <div class="terminal-input-wrapper">
@@ -459,29 +463,14 @@ const AITutorEngine = {
   
   // ===== 对话系统 =====
   startConversation() {
-    const totalAnswered = this._data.quizHistory.length;
-    const correctCount = this._data.quizHistory.filter(h => h.correct).length;
-    const accuracy = totalAnswered > 0 ? Math.round((correctCount / totalAnswered) * 100) : 0;
-    
-    const weakPoints = Object.entries(this._data.mastery)
-      .filter(([d, s]) => s < 50 && s > 0)
-      .sort((a, b) => a[1] - b[1]);
-    
-    const meta = this._getDisasterMeta();
-    
-    let greeting;
-    if (totalAnswered === 0) {
-      greeting = '你好！我是你的 AI 防灾导师 🎯\n\n我还没有看到你的答题记录。去开盲盒或挑战答题吧，我会帮你分析薄弱项，推荐最适合的练习！';
+    const engine = window.AITutorBrain || window.AITutorLLM;
+    if (engine && engine.generateReply) {
+      engine.generateReply('你好').then(greeting => {
+        this._typeMessage('ai', greeting);
+      });
     } else {
-      greeting = `你好！我是你的 AI 防灾导师 🎯\n\n你已经答了 ${totalAnswered} 道题，正确率 ${accuracy}%。`;
-      if (weakPoints.length > 0) {
-        greeting += `\n\n我发现以下知识模块还需要加强：${weakPoints.map(([d]) => meta.names[d]).join('、')}。\n\n我可以帮你针对性练习，要不要试试？`;
-      } else {
-        greeting += '\n\n所有已学模块表现都不错！继续保持 💪';
-      }
+      this._typeMessage('ai', '👋 你好！我是你的 AI 防灾导师！\n\n我已经学习了 369 道防灾题目和 34 个真实灾害场景，随时为你解答。\n\n你可以直接问我：\n• "地震来了怎么办？"\n• "推荐我练习什么？"\n• "讲个防灾故事"\n• 或者点击下方的快捷按钮');
     }
-    
-    this._typeMessage('ai', greeting);
   },
   
   _typeMessage(type, text, callback) {
@@ -503,15 +492,39 @@ const AITutorEngine = {
     body.appendChild(msg);
     
     if (type === 'ai' && text.length > 30) {
-      // 打字动画
+      // 智能打字动画：按词打字，自动解析 HTML 标签
+      let plainText = text.replace(/<[^>]+>/g, ''); // 临时计算长度
+      const speed = 18;
       let i = 0;
-      const speed = 15;
+      let inTag = false;
+      let displayText = '';
+      
       const typeChar = () => {
         if (i < text.length) {
-          bubble.innerHTML = text.slice(0, i + 1).replace(/\n/g, '<br>');
-          body.scrollTop = body.scrollHeight;
+          const char = text[i];
+          if (char === '<') inTag = true;
+          if (inTag) {
+            displayText += char;
+            if (char === '>') inTag = false;
+          } else {
+            displayText += char;
+          }
           i++;
-          setTimeout(typeChar, speed);
+          
+          // 遇到标点或空格时暂停稍长，模拟自然阅读节奏
+          let delay = speed;
+          if (!inTag && /[。！？\n]/.test(char)) delay = speed * 6;
+          else if (!inTag && /[，；：]/.test(char)) delay = speed * 3;
+          else if (!inTag && char === ' ') delay = speed * 1.5;
+          
+          bubble.innerHTML = displayText.replace(/\n/g, '<br>');
+          body.scrollTop = body.scrollHeight;
+          
+          if (i < text.length) {
+            setTimeout(typeChar, delay);
+          } else {
+            if (callback) callback();
+          }
         } else {
           if (callback) callback();
         }
@@ -559,11 +572,22 @@ const AITutorEngine = {
     input.value = '';
     
     this.showTyping();
-    setTimeout(() => {
+    
+    // 使用新引擎生成回复
+    const engine = window.AITutorBrain || window.AITutorLLM;
+    if (engine && engine.generateReply) {
+      engine.generateReply(text, this._chatHistory || []).then(response => {
+        this.hideTyping();
+        this._typeMessage('ai', response);
+        if (!this._chatHistory) this._chatHistory = [];
+        this._chatHistory.push({ role: 'user', content: text });
+        this._chatHistory.push({ role: 'assistant', content: response });
+        if (this._chatHistory.length > 20) this._chatHistory = this._chatHistory.slice(-20);
+      });
+    } else {
       this.hideTyping();
-      const response = this.analyzeIntent(text);
-      this._typeMessage('ai', response);
-    }, 800 + Math.random() * 400);
+      this._typeMessage('ai', 'AI 引擎正在初始化，请稍后再试...');
+    }
   },
   
   quickAsk(type) {
@@ -571,17 +595,27 @@ const AITutorEngine = {
       weakness: '我的薄弱项是什么？',
       recommend: '推荐一些练习题',
       progress: '我的学习进度如何？',
-      tips: '有什么防灾小贴士？'
+      tips: '有什么防灾小贴士？',
+      trivia: '讲个防灾冷知识',
+      story: '讲个真实防灾故事',
+      practice: '给我出道题'
     };
     
-    this._typeMessage('user', questions[type]);
-    
+    const text = questions[type] || type;
+    this._typeMessage('user', text);
     this.showTyping();
-    setTimeout(() => {
-      this.hideTyping();
-      const response = this.getResponse(type);
-      this._typeMessage('ai', response);
-    }, 600 + Math.random() * 400);
+    
+    const engine = window.AITutorBrain || window.AITutorLLM;
+    if (engine && engine.generateReply) {
+      engine.generateReply(text, this._chatHistory || []).then(response => {
+        this.hideTyping();
+        this._typeMessage('ai', response);
+        if (!this._chatHistory) this._chatHistory = [];
+        this._chatHistory.push({ role: 'user', content: text });
+        this._chatHistory.push({ role: 'assistant', content: response });
+        if (this._chatHistory.length > 20) this._chatHistory = this._chatHistory.slice(-20);
+      });
+    }
   },
   
   analyzeIntent(text) {
@@ -658,7 +692,24 @@ const AITutorEngine = {
   clearChat() {
     const body = document.getElementById('terminalBody');
     if (body) body.innerHTML = '';
+    this._chatHistory = [];
     setTimeout(() => this.startConversation(), 200);
+  },
+  
+  loadLLM() {
+    const btn = document.getElementById('llmToggleBtn');
+    if (!btn) return;
+    const isActive = btn.classList.contains('llm-active');
+    if (!isActive) {
+      btn.classList.add('llm-active');
+      btn.innerHTML = '✨';
+      btn.title = 'AI 智能引擎已激活';
+      this._typeMessage('ai', '✨ **AI 智能引擎已激活！**\n\n我现在可以更精准地理解你的问题，并从知识库中搜索最合适的答案。\n\n有什么想聊的？');
+    } else {
+      btn.classList.remove('llm-active');
+      btn.innerHTML = '🧠';
+      btn.title = '激活AI引擎';
+    }
   },
   
   // ===== 练习功能 =====
