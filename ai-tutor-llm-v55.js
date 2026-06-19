@@ -498,7 +498,7 @@ const DeepSeekAPI = {
   _apiKey: localStorage.getItem('deepseek_api_key') || 'sk-4cdcfcde0e1343789c07266c23efd371',
   // 代理地址：部署到Vercel后替换为你的域名，如 'https://yingji-xiaodaren.vercel.app/api/chat'
   // 如果前端和后端同域名部署，使用相对路径 '/api/chat' 即可
-  _proxyUrl: localStorage.getItem('deepseek_proxy_url') || '/api/chat',
+  _proxyUrl: localStorage.getItem('deepseek_proxy_url') || 'https://yingji-ai-proxy-aqrbvhqfkf.cn-hangzhou.fcapp.run',
   _systemPrompt: `你是"应急小达人"游戏的AI防灾导师，一位专业的防灾教育专家。
 
 你的职责：
