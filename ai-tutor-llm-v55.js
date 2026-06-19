@@ -495,7 +495,7 @@ const AITutorBrain = {
 
 // ===== DeepSeek API 集成（代理模式）=====
 const DeepSeekAPI = {
-  _apiKey: localStorage.getItem('deepseek_api_key') || 'sk-114a10f0a35a475e854780bccac8652d',
+  _apiKey: localStorage.getItem('deepseek_api_key') || 'sk-2dfeeb9acf2d428ba8501d45ac2edd95',
   _proxyUrl: localStorage.getItem('deepseek_proxy_url') || 'https://yingji-ai-proxy-aqrbvhqfkf.cn-hangzhou.fcapp.run',
   _systemPrompt: `...`,
   
