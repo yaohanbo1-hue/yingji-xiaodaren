@@ -89,6 +89,21 @@
   window.AITutorFloat = {
     currentTab: 'chat',
     messages: [],
+    
+    close: function() {
+      var panel = document.getElementById('aiFloatPanel');
+      if (panel) panel.classList.remove('active');
+    },
+    open: function() {
+      var panel = document.getElementById('aiFloatPanel');
+      if (panel) panel.classList.add('active');
+      var badge = document.querySelector('.ai-fab-badge');
+      if (badge) badge.style.display = 'none';
+      if (!window._aiFloatLoaded) {
+        window._aiFloatLoaded = true;
+        this.switchTab('chat');
+      }
+    },
 
     switchTab: function(tab) {
       this.currentTab = tab;
@@ -109,13 +124,15 @@
 
     renderChat: function(body) {
       if (this.messages.length === 0) {
-        this.addBotMessage('你好！我是你的 AI 防灾导师 🤖\n\n我可以帮你：\n• 分析防灾知识掌握情况\n• 推荐薄弱项练习\n• 回答防灾问题\n\n试试下面的按钮吧！');
+        this.addBotMessage('你好！我是你的 AI 防灾导师 🤖\n\n我已经学习了 369 道防灾题目和 34 个真实灾害场景，可以帮你解答任何防灾问题！\n\n试试下面的按钮，或直接输入你的问题！');
       }
 
       var html = '';
-      this.messages.forEach(function(msg) {
+      var lastBotIdx = -1;
+      this.messages.forEach(function(msg, idx) {
         if (msg.type === 'bot') {
-          html += '<div class="ai-msg ai-msg-bot"><div class="ai-msg-avatar">🤖</div><div class="ai-msg-bubble">' + msg.text.replace(/\n/g, '<br>') + '</div></div>';
+          lastBotIdx = idx;
+          html += '<div class="ai-msg ai-msg-bot" data-idx="' + idx + '"><div class="ai-msg-avatar">🤖</div><div class="ai-msg-bubble">' + msg.text.replace(/\n/g, '<br>') + '</div></div>';
         } else {
           html += '<div class="ai-msg ai-msg-user"><div class="ai-msg-bubble">' + msg.text + '</div></div>';
         }
@@ -174,12 +191,41 @@
       
       // 通用按钮
       html += '<button class="ai-quick-btn" onclick="AITutorFloat.quickAsk(\'推荐我练习什么\')">💡 推荐练习</button>';
-      html += '<button class="ai-quick-btn" onclick="AITutorFloat.quickAsk(\'有什么学习技巧\')">📚 学习技巧</button>';
+      html += '<button class="ai-quick-btn" onclick="AITutorFloat.quickAsk(\'我的学习进度\')">📊 学习进度</button>';
+      html += '<button class="ai-quick-btn" onclick="AITutorFloat.quickAsk(\'讲个防灾冷知识\')">🧠 冷知识</button>';
+      html += '<button class="ai-quick-btn" onclick="AITutorFloat.quickAsk(\'讲个真实故事\')">📖 真实故事</button>';
+      html += '<button class="ai-quick-btn" onclick="AITutorFloat.quickAsk(\'防灾基础知识\')">🛡️ 基础知识</button>';
       
       html += '</div>';
 
       body.innerHTML = html;
       body.scrollTop = body.scrollHeight;
+      
+      // 打字机效果：最后一条 bot 消息如果标记为 typing，逐字显示
+      var lastBotMsg = this.messages[lastBotIdx];
+      if (lastBotMsg && lastBotMsg.typing && lastBotMsg.text.length > 30) {
+        var bubbleEl = body.querySelector('.ai-msg[data-idx="' + lastBotIdx + '"]').querySelector('.ai-msg-bubble');
+        var fullText = lastBotMsg.text;
+        bubbleEl.innerHTML = '';
+        var i = 0, inTag = false, displayText = '';
+        var typeChar = function() {
+          if (i < fullText.length) {
+            var c = fullText[i];
+            if (c === '<') inTag = true;
+            if (inTag) { displayText += c; if (c === '>') inTag = false; }
+            else { displayText += c; }
+            i++;
+            var delay = 18;
+            if (!inTag && /[。！？\n]/.test(c)) delay = 90;
+            else if (!inTag && /[，；：]/.test(c)) delay = 45;
+            bubbleEl.innerHTML = displayText.replace(/\n/g, '<br>');
+            body.scrollTop = body.scrollHeight;
+            if (i < fullText.length) setTimeout(typeChar, delay);
+            else { lastBotMsg.typing = false; }
+          }
+        };
+        typeChar();
+      }
     },
 
     renderRadar: function(body) {
@@ -351,8 +397,8 @@
       }
     },
 
-    addBotMessage: function(text) {
-      this.messages.push({ type: 'bot', text: text });
+    addBotMessage: function(text, typing) {
+      this.messages.push({ type: 'bot', text: text, typing: typing });
     },
 
     addUserMessage: function(text) {
@@ -371,18 +417,24 @@
 
     quickAsk: function(question) {
       this.addUserMessage(question);
-      
-      // 智能回复
-      var reply = this.generateReply(question);
-      
-      // 模拟打字延迟
       var body = document.getElementById('aiFloatBody');
-      if (body) {
-        this.renderChat(body);
-        setTimeout(function() {
-          AITutorFloat.addBotMessage(reply);
-          AITutorFloat.renderChat(body);
-        }, 500);
+      if (body) this.renderChat(body);
+      
+      var engine = window.AITutorBrain || window.AITutorLLM;
+      if (engine && engine.generateReply) {
+        engine.generateReply(question).then(function(reply) {
+          AITutorFloat.addBotMessage(reply, true);
+          var body = document.getElementById('aiFloatBody');
+          if (body) AITutorFloat.renderChat(body);
+        });
+      } else {
+        var reply = this.generateReply(question);
+        if (body) {
+          setTimeout(function() {
+            AITutorFloat.addBotMessage(reply, true);
+            AITutorFloat.renderChat(body);
+          }, 500);
+        }
       }
     },
 
