@@ -1,0 +1,188 @@
+{
+  "files": [
+    {
+      "file": "sw.js",
+      "status": 200,
+      "sha": "f761ceabb602586add4cc5276b52533cdc634278",
+      "data": {
+        "content": {
+          "name": "sw.js",
+          "path": "sw.js",
+          "sha": "1a2e658c50af5b8f5cbdba0fb26cf9673353eed8",
+          "size": 3917,
+          "url": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/contents/sw.js?ref=main",
+          "html_url": "https://github.com/yaohanbo1-hue/yingji-xiaodaren/blob/main/sw.js",
+          "git_url": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/git/blobs/1a2e658c50af5b8f5cbdba0fb26cf9673353eed8",
+          "download_url": "https://raw.githubusercontent.com/yaohanbo1-hue/yingji-xiaodaren/main/sw.js",
+          "type": "file",
+          "_links": {
+            "self": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/contents/sw.js?ref=main",
+            "git": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/git/blobs/1a2e658c50af5b8f5cbdba0fb26cf9673353eed8",
+            "html": "https://github.com/yaohanbo1-hue/yingji-xiaodaren/blob/main/sw.js"
+          }
+        },
+        "commit": {
+          "sha": "f761ceabb602586add4cc5276b52533cdc634278",
+          "node_id": "C_kwDOS3YtaNoAKGY3NjFjZWFiYjYwMjU4NmFkZDRjYzUyNzZiNTI1MzNjZGM2MzQyNzg",
+          "url": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/git/commits/f761ceabb602586add4cc5276b52533cdc634278",
+          "html_url": "https://github.com/yaohanbo1-hue/yingji-xiaodaren/commit/f761ceabb602586add4cc5276b52533cdc634278",
+          "author": {
+            "name": "yaohanbo1-hue",
+            "email": "yaohanbo1@gmail.com",
+            "date": "2026-06-19T11:14:09Z"
+          },
+          "committer": {
+            "name": "yaohanbo1-hue",
+            "email": "yaohanbo1@gmail.com",
+            "date": "2026-06-19T11:14:09Z"
+          },
+          "tree": {
+            "sha": "ddb7720044608ecdf3d345e4036c5b9347ad05a1",
+            "url": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/git/trees/ddb7720044608ecdf3d345e4036c5b9347ad05a1"
+          },
+          "message": "Update sw.js to v54",
+          "parents": [
+            {
+              "sha": "e711b17d284820f4b886afc78a0f89056dd4537c",
+              "url": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/git/commits/e711b17d284820f4b886afc78a0f89056dd4537c",
+              "html_url": "https://github.com/yaohanbo1-hue/yingji-xiaodaren/commit/e711b17d284820f4b886afc78a0f89056dd4537c"
+            }
+          ],
+          "verification": {
+            "verified": false,
+            "reason": "unsigned",
+            "signature": null,
+            "payload": null,
+            "verified_at": null
+          }
+        }
+      }
+    },
+    {
+      "file": "ai-tutor-llm.js",
+      "status": 409,
+      "sha": "N/A",
+      "data": {
+        "message": "is at f761ceabb602586add4cc5276b52533cdc634278 but expected e711b17d284820f4b886afc78a0f89056dd4537c",
+        "documentation_url": "https://docs.github.com/rest/repos/contents#create-or-update-file-contents",
+        "status": "409"
+      }
+    },
+    {
+      "file": "ai-tutor.js",
+      "status": 200,
+      "sha": "db2cba44bd8c3a87890b4407cbb719f320f0ca98",
+      "data": {
+        "content": {
+          "name": "ai-tutor.js",
+          "path": "ai-tutor.js",
+          "sha": "71631c0eca8447be431b62b199975c07c2c67d56",
+          "size": 34734,
+          "url": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/contents/ai-tutor.js?ref=main",
+          "html_url": "https://github.com/yaohanbo1-hue/yingji-xiaodaren/blob/main/ai-tutor.js",
+          "git_url": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/git/blobs/71631c0eca8447be431b62b199975c07c2c67d56",
+          "download_url": "https://raw.githubusercontent.com/yaohanbo1-hue/yingji-xiaodaren/main/ai-tutor.js",
+          "type": "file",
+          "_links": {
+            "self": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/contents/ai-tutor.js?ref=main",
+            "git": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/git/blobs/71631c0eca8447be431b62b199975c07c2c67d56",
+            "html": "https://github.com/yaohanbo1-hue/yingji-xiaodaren/blob/main/ai-tutor.js"
+          }
+        },
+        "commit": {
+          "sha": "db2cba44bd8c3a87890b4407cbb719f320f0ca98",
+          "node_id": "C_kwDOS3YtaNoAKGRiMmNiYTQ0YmQ4YzNhODc4OTBiNDQwN2NiYjcxOWYzMjBmMGNhOTg",
+          "url": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/git/commits/db2cba44bd8c3a87890b4407cbb719f320f0ca98",
+          "html_url": "https://github.com/yaohanbo1-hue/yingji-xiaodaren/commit/db2cba44bd8c3a87890b4407cbb719f320f0ca98",
+          "author": {
+            "name": "yaohanbo1-hue",
+            "email": "yaohanbo1@gmail.com",
+            "date": "2026-06-19T11:14:09Z"
+          },
+          "committer": {
+            "name": "yaohanbo1-hue",
+            "email": "yaohanbo1@gmail.com",
+            "date": "2026-06-19T11:14:09Z"
+          },
+          "tree": {
+            "sha": "63ab28ec685d908a417377326763e2a62520cb18",
+            "url": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/git/trees/63ab28ec685d908a417377326763e2a62520cb18"
+          },
+          "message": "Update ai-tutor.js - DeepSeek API Key settings UI",
+          "parents": [
+            {
+              "sha": "f761ceabb602586add4cc5276b52533cdc634278",
+              "url": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/git/commits/f761ceabb602586add4cc5276b52533cdc634278",
+              "html_url": "https://github.com/yaohanbo1-hue/yingji-xiaodaren/commit/f761ceabb602586add4cc5276b52533cdc634278"
+            }
+          ],
+          "verification": {
+            "verified": false,
+            "reason": "unsigned",
+            "signature": null,
+            "payload": null,
+            "verified_at": null
+          }
+        }
+      }
+    },
+    {
+      "file": "all-styles.css",
+      "status": 200,
+      "sha": "63c55caa5d7870c7d9d6353aba20cb8f9cbdf050",
+      "data": {
+        "content": {
+          "name": "all-styles.css",
+          "path": "all-styles.css",
+          "sha": "048bd26dba5f35b46444c3ebae17be57a81d30a2",
+          "size": 203750,
+          "url": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/contents/all-styles.css?ref=main",
+          "html_url": "https://github.com/yaohanbo1-hue/yingji-xiaodaren/blob/main/all-styles.css",
+          "git_url": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/git/blobs/048bd26dba5f35b46444c3ebae17be57a81d30a2",
+          "download_url": "https://raw.githubusercontent.com/yaohanbo1-hue/yingji-xiaodaren/main/all-styles.css",
+          "type": "file",
+          "_links": {
+            "self": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/contents/all-styles.css?ref=main",
+            "git": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/git/blobs/048bd26dba5f35b46444c3ebae17be57a81d30a2",
+            "html": "https://github.com/yaohanbo1-hue/yingji-xiaodaren/blob/main/all-styles.css"
+          }
+        },
+        "commit": {
+          "sha": "63c55caa5d7870c7d9d6353aba20cb8f9cbdf050",
+          "node_id": "C_kwDOS3YtaNoAKDYzYzU1Y2FhNWQ3ODcwYzdkOWQ2MzUzYWJhMjBjYjhmOWNiZGYwNTA",
+          "url": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/git/commits/63c55caa5d7870c7d9d6353aba20cb8f9cbdf050",
+          "html_url": "https://github.com/yaohanbo1-hue/yingji-xiaodaren/commit/63c55caa5d7870c7d9d6353aba20cb8f9cbdf050",
+          "author": {
+            "name": "yaohanbo1-hue",
+            "email": "yaohanbo1@gmail.com",
+            "date": "2026-06-19T11:14:10Z"
+          },
+          "committer": {
+            "name": "yaohanbo1-hue",
+            "email": "yaohanbo1@gmail.com",
+            "date": "2026-06-19T11:14:10Z"
+          },
+          "tree": {
+            "sha": "63ab28ec685d908a417377326763e2a62520cb18",
+            "url": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/git/trees/63ab28ec685d908a417377326763e2a62520cb18"
+          },
+          "message": "Update all-styles.css - title style fix",
+          "parents": [
+            {
+              "sha": "db2cba44bd8c3a87890b4407cbb719f320f0ca98",
+              "url": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/git/commits/db2cba44bd8c3a87890b4407cbb719f320f0ca98",
+              "html_url": "https://github.com/yaohanbo1-hue/yingji-xiaodaren/commit/db2cba44bd8c3a87890b4407cbb719f320f0ca98"
+            }
+          ],
+          "verification": {
+            "verified": false,
+            "reason": "unsigned",
+            "signature": null,
+            "payload": null,
+            "verified_at": null
+          }
+        }
+      }
+    }
+  ]
+}

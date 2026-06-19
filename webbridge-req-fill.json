@@ -1,0 +1,1 @@
+{"action":"evaluate","args":{"code":"const input = document.getElementById('aiFloatInput'); input.value = '地震来了怎么办'; input.dispatchEvent(new Event('input', {bubbles:true})); 'filled'"},"session":"yingji-v53-test"}

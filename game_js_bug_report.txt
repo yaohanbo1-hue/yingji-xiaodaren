@@ -1,0 +1,155 @@
+================================================================================
+JavaScript 游戏引擎 Bug 检查报告
+文件: game.js (行 27, 压缩单行, ~350KB)
+================================================================================
+
+🔴 致命问题 (可能导致页面空白或功能失效)
+--------------------------------------------------------------------------------
+
+1. [precision] 页面引擎未初始化
+   位置: _refreshPage 函数中缺少 'precision' 条件分支
+   代码: showToolbarPages 包含 'precision'，但引擎调用链中无对应处理
+   影响: page-precision 页面显示 '题目加载中...' 但 PrecisionEngine.init() 永远不会被调用
+   修复: 在 _refreshPage 中添加:
+        "precision"===pageId&&void 0!==PrecisionEngine&&(PrecisionEngine.init(),PrecisionEngine._showQuestion())
+
+2. [time-escape] 页面引擎未初始化
+   位置: _refreshPage 函数中缺少 'time-escape' 条件分支
+   代码: showToolbarPages 包含 'time-escape'，但引擎调用链中无对应处理
+   影响: page-time-escape 页面显示 '题目加载中...' 但 TimeEscapeEngine.init() 永远不会被调用
+   修复: 在 _refreshPage 中添加:
+        "time-escape"===pageId&&void 0!==TimeEscapeEngine&&(TimeEscapeEngine.init(),TimeEscapeEngine._showQuestion())
+
+3. [supplydrop] 等页面可能缺少引擎初始化
+   位置: _refreshPage 函数
+   代码: showToolbarPages 包含 'supplydrop', 'reaction', 'memory-card', 'campaign', 'story-adventure', 'study', 'story' 等
+   影响: 这些页面在 _refreshPage 中无专用引擎调用，可能依赖静态内容或内联脚本
+   修复: 确认这些页面是否需要引擎初始化，并补充相应调用
+
+🟡 警告问题 (不会导致崩溃但功能缺失或混乱)
+--------------------------------------------------------------------------------
+
+4. 页面ID拼写不一致: time-escape vs timed-escape
+   位置: showToolbarPages / noPointerPages / HTML / _refreshPage
+   代码:
+     - showToolbarPages 包含: "time-escape"
+     - noPointerPages 包含: "time-escape" 和 "timed-escape"
+     - HTML 中同时存在: id="page-time-escape" 和 id="page-timed-escape"
+     - _refreshPage 只初始化: "timed-escape" (TimedEscapeEngine)
+   影响: 用户可能困惑两个同名页面，且 time-escape 页面无法加载题目
+   修复: 统一页面ID，删除旧版或重命名新版
+
+5. 页面ID拼写不一致: precision vs precision-strike
+   位置: showToolbarPages / HTML / _refreshPage
+   代码:
+     - showToolbarPages 包含: "precision" 和 "precision-strike"
+     - HTML 中同时存在: id="page-precision" 和 id="page-precision-strike"
+     - _refreshPage 只初始化: "precision-strike" (PrecisionStrikeEngine)
+   影响: precision 页面无法加载题目
+   修复: 统一页面ID，或补充 precision 的引擎调用
+
+6. 未定义的全局变量 (有保护不会报错)
+   位置: 全局作用域
+   代码:
+     - BGMEngine: 被引用 13 次，但文件内未定义 (typeof 保护)
+     - VisualFX: 被引用 40 次，但文件内未定义 (typeof 保护)
+     - EggEngine: 被引用 2 次，但文件内未定义 (void 0 !== 保护)
+   影响: 功能缺失：无背景音乐、无过渡动画、彩蛋页面空白
+   修复: 在 game.js 中定义这些引擎，或从外部文件加载
+
+7. _refreshPage 中重复页面条件
+   位置: _refreshPage 引擎调用链
+   代码:
+     - "timed-escape"===pageId... 出现 2 次
+     - "precision-strike"===pageId... 出现 2 次
+   影响: 代码冗余，不会导致错误但增加维护成本
+   修复: 删除重复的条件分支
+
+8. HTML 页面未在 _refreshPage 中处理
+   位置: _refreshPage 函数
+   代码: 以下 12 个页面未在 showToolbarPages 或 noPointerPages 中:
+     - ai-tutor
+     - battle-lobby
+     - calendar
+     - certification
+     - disaster-sim
+     - encyclopedia
+     - minigame
+     - real-cases
+     - report
+     - report-detail
+     - scenario
+     - wrong-book
+   影响: 这些页面没有工具栏显示/隐藏和 pointer-events 控制
+   修复: 将页面添加到 showToolbarPages 或 noPointerPages 中
+
+🟢 建议
+--------------------------------------------------------------------------------
+
+9. showToolbarPages 页面数量
+   当前: 30 个页面
+   用户期望: 37 个页面
+   HTML 实际定义: 54 个页面
+   建议: 确认是否所有页面都应显示工具栏，或部分应加入 noPointerPages
+
+【全局变量检查】
+--------------------------------------------------------------------------------
+   PageManager: ✅ 已定义 (game.js 第 27 行)
+   MenuManager: ❌ 未定义 (代码中未引用)
+   AudioManager: ✅ 已定义 (被引用 112 次)
+   GameState: ✅ 已定义 (被引用 528 次)
+   Modal: ✅ 已定义 (被引用 90 次)
+
+【导航逻辑检查】
+--------------------------------------------------------------------------------
+   navigate 函数: ✅ 已定义
+   递归调用: ✅ 无
+   _refreshPage 调用: ✅ 有
+   try-catch: ✅ 有
+   死循环风险: ✅ 无
+
+【页面ID检查】
+--------------------------------------------------------------------------------
+   showToolbarPages 页面: 30
+   noPointerPages 页面: 13
+   HTML 中定义页面: 54
+   _refreshPage 条件分支: 20 个唯一页面
+   拼写问题: time-escape/timed-escape, precision/precision-strike
+
+【引擎引用统计】
+--------------------------------------------------------------------------------
+   StoryEngine: 8 次
+   TimedEscapeEngine: 9 次
+   PrecisionStrikeEngine: 11 次
+   TimeEscapeEngine: 2 次 (已定义但 _refreshPage 未调用)
+   PrecisionEngine: 2 次 (已定义但 _refreshPage 未调用)
+   BattleEngine: 11 次
+   QuizEngine: 30 次
+
+【语法检查】
+--------------------------------------------------------------------------------
+   方括号 [ ]: 758/758 ✅
+   花括号 { }: 2069/2069 ✅
+   圆括号 ( ): 5162/5162 ✅
+   双逗号 ,,: 0 ✅
+
+================================================================================
+🎯 最终总结
+================================================================================
+
+🔴 存在严重 Bug，会导致页面空白或功能失效!
+
+核心问题:
+  1. 'precision' 和 'time-escape' 页面在 _refreshPage 中没有对应的引擎初始化调用
+     导致这两个页面永远显示 '题目加载中...'，无法交互。
+  2. 'timed-escape' 和 'precision-strike' 条件分支在 _refreshPage 中重复，
+     说明代码在合并新旧版本时出现了混乱。
+  3. BGMEngine / VisualFX / EggEngine 未定义，功能缺失但不会崩溃。
+
+建议修复优先级:
+  P0 (立即): 补充 'precision' 和 'time-escape' 的引擎初始化调用
+  P1 (高): 统一 time-escape/timed-escape 和 precision/precision-strike 的页面ID
+  P2 (中): 定义 BGMEngine, VisualFX, EggEngine 或移除相关调用
+  P3 (低): 清理重复条件分支，补充 12 个未覆盖页面的处理
+
+文件保存路径: C:\Users\hambu\AppData\Roaming\kimi-desktop\daimon-share\daimon\agents\main\code\python-run\fba62959-f6be-42b1-9e25-a46151d50f30

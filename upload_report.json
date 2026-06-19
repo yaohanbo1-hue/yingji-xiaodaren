@@ -1,0 +1,104 @@
+{
+  "batch1": [
+    {
+      "file": "sw.js",
+      "status": 409,
+      "sha": "N/A",
+      "data": {
+        "message": "sw.js does not match e7870d2df6796ecfc460ce51928e2854df749002",
+        "documentation_url": "https://docs.github.com/rest/repos/contents#create-or-update-file-contents",
+        "status": "409"
+      }
+    },
+    {
+      "file": "index.html",
+      "status": 200,
+      "sha": "e711b17d284820f4b886afc78a0f89056dd4537c",
+      "data": {
+        "content": {
+          "name": "index.html",
+          "path": "index.html",
+          "sha": "3284f4e19de7512c3dd767d405bdd4906d6d7b42",
+          "size": 140283,
+          "url": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/contents/index.html?ref=main",
+          "html_url": "https://github.com/yaohanbo1-hue/yingji-xiaodaren/blob/main/index.html",
+          "git_url": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/git/blobs/3284f4e19de7512c3dd767d405bdd4906d6d7b42",
+          "download_url": "https://raw.githubusercontent.com/yaohanbo1-hue/yingji-xiaodaren/main/index.html",
+          "type": "file",
+          "_links": {
+            "self": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/contents/index.html?ref=main",
+            "git": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/git/blobs/3284f4e19de7512c3dd767d405bdd4906d6d7b42",
+            "html": "https://github.com/yaohanbo1-hue/yingji-xiaodaren/blob/main/index.html"
+          }
+        },
+        "commit": {
+          "sha": "e711b17d284820f4b886afc78a0f89056dd4537c",
+          "node_id": "C_kwDOS3YtaNoAKGU3MTFiMTdkMjg0ODIwZjRiODg2YWZjNzhhMGY4OTA1NmRkNDUzN2M",
+          "url": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/git/commits/e711b17d284820f4b886afc78a0f89056dd4537c",
+          "html_url": "https://github.com/yaohanbo1-hue/yingji-xiaodaren/commit/e711b17d284820f4b886afc78a0f89056dd4537c",
+          "author": {
+            "name": "yaohanbo1-hue",
+            "email": "yaohanbo1@gmail.com",
+            "date": "2026-06-19T11:13:12Z"
+          },
+          "committer": {
+            "name": "yaohanbo1-hue",
+            "email": "yaohanbo1@gmail.com",
+            "date": "2026-06-19T11:13:12Z"
+          },
+          "tree": {
+            "sha": "13184766cca702b8e28735ed7e91ff126f61759e",
+            "url": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/git/trees/13184766cca702b8e28735ed7e91ff126f61759e"
+          },
+          "message": "Update index.html to v54 - DeepSeek AI integration, title center fix",
+          "parents": [
+            {
+              "sha": "2da6e6a17c7d2a962b5af3ce05d3f26c95d71629",
+              "url": "https://api.github.com/repos/yaohanbo1-hue/yingji-xiaodaren/git/commits/2da6e6a17c7d2a962b5af3ce05d3f26c95d71629",
+              "html_url": "https://github.com/yaohanbo1-hue/yingji-xiaodaren/commit/2da6e6a17c7d2a962b5af3ce05d3f26c95d71629"
+            }
+          ],
+          "verification": {
+            "verified": false,
+            "reason": "unsigned",
+            "signature": null,
+            "payload": null,
+            "verified_at": null
+          }
+        }
+      }
+    }
+  ],
+  "batch2": [
+    {
+      "file": "ai-tutor.js",
+      "status": 409,
+      "sha": "N/A",
+      "data": {
+        "message": "ai-tutor.js does not match a5b42e2ab20b9da3ffba91c3b51f3ac61c11e9a0",
+        "documentation_url": "https://docs.github.com/rest/repos/contents#create-or-update-file-contents",
+        "status": "409"
+      }
+    },
+    {
+      "file": "ai-tutor-llm.js",
+      "status": 409,
+      "sha": "N/A",
+      "data": {
+        "message": "ai-tutor-llm.js does not match 7b15d61a7bd21f0a2e6f63d12d9ca1b4e2f6c2b0",
+        "documentation_url": "https://docs.github.com/rest/repos/contents#create-or-update-file-contents",
+        "status": "409"
+      }
+    },
+    {
+      "file": "all-styles.css",
+      "status": 409,
+      "sha": "N/A",
+      "data": {
+        "message": "all-styles.css does not match 41b03b300e54a61f6b80d2a29d7f7a3e11cd2003",
+        "documentation_url": "https://docs.github.com/rest/repos/contents#create-or-update-file-contents",
+        "status": "409"
+      }
+    }
+  ]
+}
