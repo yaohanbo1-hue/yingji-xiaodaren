@@ -69,7 +69,12 @@ const STATIC_ASSETS = [
   './liquid-glass.js',
   './bg-themes.js',
   './fix-click.js',
-  './menu-manager.js'
+  './menu-manager.js',
+  './game-engines.js',
+  './optimizer-mobile.css',
+  './optimizer-mobile.js',
+  './js/core/utils.js',
+  './js/core/game-core.js'
 ];
 
 // 安装：缓存核心资源
