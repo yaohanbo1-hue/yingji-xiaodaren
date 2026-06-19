@@ -4,14 +4,18 @@
  * ===========================================================================
  */
 
-/* 遮罩层 */
+/* 遮罩层 — z-index 低于底部栏(100)但高于页面内容(1-2)，确保不遮挡底部栏 */
 .guide-overlay {
   position: fixed;
   inset: 0;
-  z-index: 99998;
+  z-index: 50;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
   animation: guideFadeIn 0.3s ease;
+  pointer-events: none;
+}
+.guide-tooltip {
+  pointer-events: auto;
 }
 
 @keyframes guideFadeIn {
@@ -19,9 +23,21 @@
   to { opacity: 1; }
 }
 
-/* 高亮元素 */
+/* 高亮元素 — 不改变已有定位方式（fixed/absolute/sticky 保持原样） */
 .guide-highlight {
+  z-index: 99999 !important;
+  animation: guidePulse 1.5s ease-in-out infinite;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.5), 
+              0 0 20px rgba(59, 130, 246, 0.3) !important;
+}
+
+/* 非定位元素需要 position: relative 才能生效 z-index */
+.guide-highlight:not([style*="position: fixed"]):not([style*="position: absolute"]):not([style*="position: sticky"]) {
   position: relative;
+}
+
+/* 已定位元素的高亮（JS 动态添加） */
+.guide-highlight-positioned {
   z-index: 99999 !important;
   animation: guidePulse 1.5s ease-in-out infinite;
   box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.5), 
@@ -39,12 +55,31 @@
   }
 }
 
+/* 提示气泡滚动条美化 */
+.guide-tooltip::-webkit-scrollbar {
+  width: 4px;
+}
+.guide-tooltip::-webkit-scrollbar-track {
+  background: transparent;
+}
+.guide-tooltip::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+.guide-tooltip::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
 /* 提示气泡 */
 .guide-tooltip {
   position: fixed;
   z-index: 100000;
   max-width: 320px;
   min-width: 260px;
+  max-height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
   background: rgba(15, 23, 42, 0.95);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(59, 130, 246, 0.3);
