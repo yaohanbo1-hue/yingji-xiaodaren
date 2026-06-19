@@ -13,25 +13,17 @@
  * ===========================================================================
  */
 
-// roundRect 兼容补丁
-if (!CanvasRenderingContext2D.prototype.roundRect) {
-  CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
-    if (typeof r === 'number') r = [r, r, r, r];
-    if (!Array.isArray(r)) r = [0, 0, 0, 0];
-    var tl = r[0] || 0, tr = r[1] || r[0] || 0, br = r[2] || r[0] || 0, bl = r[3] || r[1] || r[0] || 0;
-    this.moveTo(x + tl, y);
-    this.lineTo(x + w - tr, y);
-    this.quadraticCurveTo(x + w, y, x + w, y + tr);
-    this.lineTo(x + w, y + h - br);
-    this.quadraticCurveTo(x + w, y + h, x + w - br, y + h);
-    this.lineTo(x + bl, y + h);
-    this.quadraticCurveTo(x, y + h, x, y + h - bl);
-    this.lineTo(x, y + tl);
-    this.quadraticCurveTo(x, y, x + tl, y);
-    this.closePath();
-    return this;
-  };
-}
+const SafeStorage = {
+  set(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch(e) { console.error('Storage error:', e); }
+  },
+  get(key, defaultVal) {
+    try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : defaultVal; } catch(e) { return defaultVal; }
+  },
+  getString(key, defaultVal) {
+    try { return localStorage.getItem(key) || defaultVal; } catch(e) { return defaultVal; }
+  }
+};
 
 const ReportEngine = {
   
@@ -39,7 +31,7 @@ const ReportEngine = {
   _collectData() {
     var data = {
       date: new Date().toLocaleDateString('zh-CN'),
-      studentName: localStorage.getItem('disaster_hq_name') || '防灾小学员',
+      studentName: SafeStorage.getString('disaster_hq_name', '防灾小学员'),
       totalTime: this._getPlayTime(),
       totalQuizzes: this._getQuizCount(),
       correctRate: this._getCorrectRate(),
@@ -54,11 +46,19 @@ const ReportEngine = {
   },
   
   _getPlayTime() {
-    // 尝试从多个可能的存储位置获取
-    var time = localStorage.getItem('disaster_hq_playtime') ||
-               localStorage.getItem('disaster_hq_totalTime') ||
-               localStorage.getItem('play_time') || '0';
-    var minutes = parseInt(time) || 0;
+    var time = SafeStorage.getString('disaster_hq_playtime', null) ||
+               SafeStorage.getString('disaster_hq_totalTime', null) ||
+               SafeStorage.getString('play_time', null);
+    // 尝试从 GameState 获取
+    if (!time && typeof GameState !== 'undefined' && GameState._data) {
+      time = GameState._data.playTime || GameState._data.totalTime || null;
+    }
+    // 尝试从 disasterGachaState 获取
+    if (!time) {
+      var gacha = SafeStorage.get('disasterGachaState', null);
+      if (gacha && gacha.playTime) time = String(gacha.playTime);
+    }
+    var minutes = parseInt(time || '0') || 0;
     if (minutes < 60) return minutes + ' 分钟';
     var hours = Math.floor(minutes / 60);
     var mins = minutes % 60;
@@ -66,17 +66,44 @@ const ReportEngine = {
   },
   
   _getQuizCount() {
-    var count = localStorage.getItem('disaster_hq_quizcount') ||
-                localStorage.getItem('disaster_hq_totalQuizzes') ||
-                localStorage.getItem('quiz_count') || '0';
-    return parseInt(count) || 0;
+    var count = SafeStorage.getString('disaster_hq_quizcount', null) ||
+                SafeStorage.getString('disaster_hq_totalQuizzes', null) ||
+                SafeStorage.getString('quiz_count', null);
+    // 尝试从 AI 导师数据获取
+    if (!count) {
+      var aiData = SafeStorage.get('aiTutorData', null);
+      if (aiData && aiData.quizHistory) count = String(aiData.quizHistory.length);
+    }
+    // 尝试从 GameState 获取
+    if (!count && typeof GameState !== 'undefined' && GameState._data) {
+      count = GameState._data.totalQuizzes || GameState._data.quizCount || null;
+    }
+    // 尝试从 disasterGachaState 获取
+    if (!count) {
+      var gacha = SafeStorage.get('disasterGachaState', null);
+      if (gacha && gacha.totalQuizzes) count = String(gacha.totalQuizzes);
+    }
+    return parseInt(count || '0') || 0;
   },
   
   _getCorrectRate() {
-    var correct = parseInt(localStorage.getItem('disaster_hq_correct') || 
-                  localStorage.getItem('correct_count') || '0');
-    var total = parseInt(localStorage.getItem('disaster_hq_total') || 
-                localStorage.getItem('total_count') || '0');
+    var correct = parseInt(SafeStorage.getString('disaster_hq_correct', '0') || 
+                  SafeStorage.getString('correct_count', '0'));
+    var total = parseInt(SafeStorage.getString('disaster_hq_total', '0') || 
+                SafeStorage.getString('total_count', '0'));
+    // 尝试从 AI 导师数据计算
+    if (total === 0) {
+      var aiData = SafeStorage.get('aiTutorData', null);
+      if (aiData && aiData.quizHistory) {
+        total = aiData.quizHistory.length;
+        correct = aiData.quizHistory.filter(function(h) { return h.correct; }).length;
+      }
+    }
+    // 尝试从 GameState 获取
+    if (total === 0 && typeof GameState !== 'undefined' && GameState._data) {
+      total = GameState._data.totalQuizzes || GameState._data.quizCount || 0;
+      correct = GameState._data.correctCount || 0;
+    }
     if (total === 0) return 0;
     return Math.round(correct / total * 100);
   },
@@ -99,12 +126,24 @@ const ReportEngine = {
     
     // 尝试从已有数据中获取
     try {
-      var stats = localStorage.getItem('disaster_hq_category_stats');
+      var stats = SafeStorage.get('disaster_hq_category_stats', null);
       if (stats) {
-        var parsed = JSON.parse(stats);
-        Object.keys(parsed).forEach(function(key) {
+        Object.keys(stats).forEach(function(key) {
           if (categories[key]) {
-            categories[key] = Object.assign(categories[key], parsed[key]);
+            categories[key] = Object.assign(categories[key], stats[key]);
+          }
+        });
+      }
+    } catch (e) {}
+    
+    // 尝试从 AI 导师数据获取
+    try {
+      var aiData = SafeStorage.get('aiTutorData', null);
+      if (aiData && aiData.mastery) {
+        Object.keys(aiData.mastery).forEach(function(key) {
+          if (categories[key]) {
+            categories[key].correct = Math.round(aiData.mastery[key]);
+            categories[key].total = 100;
           }
         });
       }
@@ -114,7 +153,7 @@ const ReportEngine = {
   },
   
   _getWeakAreas() {
-    if (typeof WrongBookEngine !== 'undefined' && typeof WrongBookEngine.getWeakestTopics === 'function') {
+    if (typeof WrongBookEngine !== 'undefined') {
       var weakest = WrongBookEngine.getWeakestTopics(3);
       return weakest.map(function(item) {
         return {
@@ -130,31 +169,40 @@ const ReportEngine = {
   _getAchievements() {
     var achievements = [];
     try {
-      var data = localStorage.getItem('disaster_hq_achievements') ||
-                 localStorage.getItem('achievements');
+      var data = SafeStorage.get('disaster_hq_achievements', null) ||
+                 SafeStorage.get('achievements', null);
       if (data) {
-        achievements = JSON.parse(data);
+        achievements = Array.isArray(data) ? data : [];
       }
     } catch (e) {}
     return achievements.slice(0, 5); // 最多显示5个
   },
   
   _getWrongBookStats() {
-    if (typeof WrongBookEngine !== 'undefined' && typeof WrongBookEngine.getStats === 'function') {
+    if (typeof WrongBookEngine !== 'undefined') {
       return WrongBookEngine.getStats();
     }
     return { total: 0, mastered: 0, unmastered: 0, masteryRate: 0 };
   },
   
   _getLevel() {
-    var level = localStorage.getItem('disaster_hq_level') ||
-                localStorage.getItem('player_level') || '1';
+    // 优先从 CertificationEngine 获取
+    if (typeof CertificationEngine !== 'undefined' && CertificationEngine._data) {
+      var level = CertificationEngine._data.currentLevel;
+      if (level !== undefined && level !== -1) return level + 1;
+    }
+    var level = SafeStorage.getString('disaster_hq_level', null) ||
+                SafeStorage.getString('player_level', '1');
     return parseInt(level) || 1;
   },
   
   _getStreak() {
-    var streak = localStorage.getItem('disaster_hq_streak') ||
-                 localStorage.getItem('login_streak') || '0';
+    // 优先从 CalendarEngine 获取
+    if (typeof CalendarEngine !== 'undefined' && CalendarEngine._checkins) {
+      return CalendarEngine._streak || 0;
+    }
+    var streak = SafeStorage.getString('disaster_hq_streak', null) ||
+                 SafeStorage.getString('login_streak', '0');
     return parseInt(streak) || 0;
   },
   
@@ -391,9 +439,15 @@ const ReportEngine = {
     var printBtn = document.createElement('button');
     printBtn.style.cssText = 'padding:12px 24px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.9);font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;';
     printBtn.textContent = '🖨️ 打印报告';
-    printBtn.onclick = function() {
+printBtn.onclick = function() {
       var win = window.open('', '_blank');
+      if (!win) {
+        Modal.show('⚠️ 打印失败', '浏览器拦截了弹窗，请允许弹窗后重试。', '❌');
+        return;
+      }
       win.document.write('<html><head><title>学习报告</title><style>body{margin:0;background:#0F172A;display:flex;justify-content:center;}img{max-width:100%;}</style></head><body><img src="' + canvas.toDataURL() + '" onload="window.print()"></body></html>');
+      win.document.close();
+      overlay.remove();
     };
     
     var closeBtn = document.createElement('button');
@@ -412,6 +466,53 @@ const ReportEngine = {
     });
     
     document.body.appendChild(overlay);
+  },
+
+  // 在报告详情页显示报告
+  showDetailReport() {
+    var canvas = this.generateReport();
+    var container = document.getElementById('reportDetailContent');
+    if (!container) return;
+    
+    canvas.style.cssText = 'max-width:100%;height:auto;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.3);margin-bottom:20px;';
+    container.innerHTML = '';
+    container.appendChild(canvas);
+    
+    var btnRow = document.createElement('div');
+    btnRow.style.cssText = 'display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap;';
+    
+    var downloadBtn = document.createElement('button');
+    downloadBtn.style.cssText = 'padding:12px 24px;border-radius:10px;border:none;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:white;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;';
+    downloadBtn.textContent = '💾 保存图片';
+    downloadBtn.onclick = function() {
+      var link = document.createElement('a');
+      link.download = '防灾学习报告_' + new Date().toISOString().slice(0,10) + '.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    };
+    
+    var printBtn = document.createElement('button');
+    printBtn.style.cssText = 'padding:12px 24px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.9);font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;';
+    printBtn.textContent = '🖨️ 打印报告';
+    printBtn.onclick = function() {
+      var win = window.open('', '_blank');
+      if (!win) {
+        Modal.show('⚠️ 打印失败', '浏览器拦截了弹窗，请允许弹窗后重试。', '❌');
+        return;
+      }
+      win.document.write('<html><head><title>学习报告</title><style>body{margin:0;background:#0F172A;display:flex;justify-content:center;}img{max-width:100%;}</style></head><body><img src="' + canvas.toDataURL() + '" onload="window.print()"></body></html>');
+      win.document.close();
+    };
+    
+    var backBtn = document.createElement('button');
+    backBtn.style.cssText = 'padding:12px 24px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.9);font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;';
+    backBtn.textContent = '← 返回';
+    backBtn.onclick = function() { if(typeof PageManager!=='undefined') PageManager.navigate('report'); };
+    
+    btnRow.appendChild(downloadBtn);
+    btnRow.appendChild(printBtn);
+    btnRow.appendChild(backBtn);
+    container.appendChild(btnRow);
   }
 };
 
