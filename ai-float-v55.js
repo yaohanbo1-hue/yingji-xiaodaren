@@ -416,6 +416,14 @@
     },
 
     quickAsk: function(question) {
+      // 安全锁：防止重复点击导致多次 API 调用
+      if (this._askingLock) {
+        console.warn('AI 请求锁已激活，跳过重复调用');
+        return;
+      }
+      this._askingLock = true;
+      setTimeout(function() { AITutorFloat._askingLock = false; }, 3000); // 3秒后解锁
+      
       this.addUserMessage(question);
       var body = document.getElementById('aiFloatBody');
       if (body) this.renderChat(body);
@@ -426,6 +434,11 @@
           AITutorFloat.addBotMessage(reply, true);
           var body = document.getElementById('aiFloatBody');
           if (body) AITutorFloat.renderChat(body);
+          AITutorFloat._askingLock = false;
+        }).catch(function(err) {
+          console.error('AI 回复错误:', err);
+          AITutorFloat.addBotMessage('抱歉，AI 暂时出错了，请稍后再试。', true);
+          AITutorFloat._askingLock = false;
         });
       } else {
         var reply = this.generateReply(question);
@@ -433,7 +446,10 @@
           setTimeout(function() {
             AITutorFloat.addBotMessage(reply, true);
             AITutorFloat.renderChat(body);
+            AITutorFloat._askingLock = false;
           }, 500);
+        } else {
+          this._askingLock = false;
         }
       }
     },

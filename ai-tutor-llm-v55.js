@@ -496,29 +496,18 @@ const AITutorBrain = {
 // ===== DeepSeek API 集成（代理模式）=====
 const DeepSeekAPI = {
   _apiKey: localStorage.getItem('deepseek_api_key') || 'sk-4cdcfcde0e1343789c07266c23efd371',
-  // 代理地址：部署到Vercel后替换为你的域名，如 'https://yingji-xiaodaren.vercel.app/api/chat'
-  // 如果前端和后端同域名部署，使用相对路径 '/api/chat' 即可
   _proxyUrl: localStorage.getItem('deepseek_proxy_url') || 'https://yingji-ai-proxy-aqrbvhqfkf.cn-hangzhou.fcapp.run',
-  _systemPrompt: `你是"应急小达人"游戏的AI防灾导师，一位专业的防灾教育专家。
-
-你的职责：
-1. 用通俗易懂的语言回答防灾减灾问题
-2. 结合真实案例解释防灾原理
-3. 给出可操作的应急建议（步骤清晰）
-4. 针对中小学生用户，语气亲切、鼓励为主
-5. 回答控制在200字以内，重点突出
-
-知识范围：地震、洪水、台风、火灾、雷电、暴雪、泥石流、干旱、山火、火山、海啸、沙尘暴等12种自然灾害的预防、应对、逃生、急救知识。
-
-禁止：
-- 不要回答与防灾无关的问题
-- 不要使用过于专业的术语（除非附带解释）
-- 不要给出不确定的建议
-
-每次回答最后，可以引导用户继续提问或去游戏中练习。`,
+  _systemPrompt: `...`,
+  
+  // ===== 安全控制：防止重复调用导致高额费用 =====
+  _requestLock: false,
+  _callCount: 0,
+  _maxCallsPerSession: 5,
+  _lastCallTime: 0,
+  _minInterval: 2000,
+  _callLog: [],
 
   isReady() {
-    // 只要有代理地址就可用，API Key 在服务端配置
     return this._proxyUrl && this._proxyUrl.length > 3;
   },
 
@@ -532,45 +521,57 @@ const DeepSeekAPI = {
   },
 
   async chat(userMessage, history = []) {
-    if (!this.isReady()) {
-      return { error: '代理地址未配置，请设置 DeepSeek 代理 URL' };
+    if (this._requestLock) {
+      console.warn('DeepSeek: 请求锁已激活，跳过重复调用');
+      return { error: '正在处理中，请稍候...' };
     }
+    if (this._callCount >= this._maxCallsPerSession) {
+      console.warn('DeepSeek: 单会话调用次数已达上限 ' + this._maxCallsPerSession);
+      return { error: '本会话 AI 调用次数已达上限，请刷新页面后再试。' };
+    }
+    const now = Date.now();
+    if (now - this._lastCallTime < this._minInterval) {
+      console.warn('DeepSeek: 调用太频繁');
+      return { error: '请求太频繁，请稍后再试。' };
+    }
+    const lastQuestion = this._callLog.length > 0 ? this._callLog[this._callLog.length - 1].question : null;
+    if (lastQuestion === userMessage && now - this._lastCallTime < 10000) {
+      console.warn('DeepSeek: 重复问题，跳过');
+      return { error: '正在处理相同的问题，请稍候...' };
+    }
+    this._requestLock = true;
+    this._callCount++;
+    this._lastCallTime = now;
+    this._callLog.push({ question: userMessage, time: now, count: this._callCount });
+    console.log('DeepSeek API 调用 #' + this._callCount + ':', userMessage.substring(0, 30));
 
+    if (!this.isReady()) {
+      this._requestLock = false;
+      return { error: '代理地址未配置' };
+    }
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 20000);
-
       const response = await fetch(this._proxyUrl, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          message: userMessage,
-          history: history.slice(-6)
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userMessage, history: history.slice(-6) }),
         signal: controller.signal
       });
-
       clearTimeout(timeoutId);
-
+      this._requestLock = false;
       if (!response.ok) {
         const error = await response.json().catch(() => ({}));
-        return { error: error.error || `代理服务器错误 (${response.status})` };
+        return { error: error.error || '代理错误 (' + response.status + ')' };
       }
-
       const data = await response.json();
-      if (data.answer) {
-        return { answer: data.answer };
-      }
-      return { error: data.error || '代理返回异常' };
-
+      if (data.answer) return { answer: data.answer };
+      return { error: data.error || '返回异常' };
     } catch (e) {
-      if (e.name === 'AbortError') {
-        return { error: '请求超时，请检查代理服务器是否可用' };
-      }
+      this._requestLock = false;
+      if (e.name === 'AbortError') return { error: '请求超时' };
       console.error('DeepSeek proxy error:', e);
-      return { error: '网络错误，请检查代理服务器配置' };
+      return { error: '网络错误' };
     }
   }
 };

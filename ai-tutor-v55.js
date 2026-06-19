@@ -570,16 +570,21 @@ const AITutorEngine = {
   },
   
   handleInput() {
+    if (this._askingLock) {
+      console.warn('AI 请求锁已激活，跳过重复调用');
+      return;
+    }
+    this._askingLock = true;
+    
     const input = document.getElementById('terminalInput');
     const text = input?.value.trim();
-    if (!text) return;
+    if (!text) { this._askingLock = false; return; }
     
     this._typeMessage('user', text);
     input.value = '';
     
     this.showTyping();
     
-    // 使用新引擎生成回复
     const engine = window.AITutorBrain || window.AITutorLLM;
     if (engine && engine.generateReply) {
       engine.generateReply(text, this._chatHistory || []).then(response => {
@@ -589,18 +594,27 @@ const AITutorEngine = {
         this._chatHistory.push({ role: 'user', content: text });
         this._chatHistory.push({ role: 'assistant', content: response });
         if (this._chatHistory.length > 20) this._chatHistory = this._chatHistory.slice(-20);
+        this._askingLock = false;
       }).catch(err => {
         this.hideTyping();
         console.error('AI回复错误:', err);
         this._typeMessage('ai', '抱歉，AI引擎暂时出错了，请稍后再试。');
+        this._askingLock = false;
       });
     } else {
       this.hideTyping();
       this._typeMessage('ai', 'AI 引擎正在初始化，请稍后再试...');
+      this._askingLock = false;
     }
   },
   
   quickAsk(type) {
+    if (this._askingLock) {
+      console.warn('AI 请求锁已激活，跳过重复调用');
+      return;
+    }
+    this._askingLock = true;
+    
     const questions = {
       weakness: '我的薄弱项是什么？',
       recommend: '推荐一些练习题',
@@ -624,11 +638,17 @@ const AITutorEngine = {
         this._chatHistory.push({ role: 'user', content: text });
         this._chatHistory.push({ role: 'assistant', content: response });
         if (this._chatHistory.length > 20) this._chatHistory = this._chatHistory.slice(-20);
+        this._askingLock = false;
       }).catch(err => {
         this.hideTyping();
         console.error('AI回复错误:', err);
         this._typeMessage('ai', '抱歉，AI引擎暂时出错了，请稍后再试。');
+        this._askingLock = false;
       });
+    } else {
+      this.hideTyping();
+      this._typeMessage('ai', 'AI 引擎正在初始化，请稍后再试...');
+      this._askingLock = false;
     }
   },
   
