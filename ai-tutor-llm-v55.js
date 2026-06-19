@@ -36,8 +36,14 @@ const AITutorBrain = {
 
   // ===== 初始化知识库 =====
   init() {
+    let retryCount = 0;
     const tryBuild = () => {
       if (typeof ALL_CARDS === 'undefined' || typeof SCENARIOS === 'undefined') {
+        retryCount++;
+        if (retryCount > 50) {
+          console.warn('🧠 AI 导师初始化失败：ALL_CARDS 或 SCENARIOS 未加载');
+          return;
+        }
         setTimeout(tryBuild, 300);
         return;
       }
@@ -107,25 +113,25 @@ const AITutorBrain = {
   // ===== 核心：理解用户输入 =====
   understand(text) {
     const lower = text.toLowerCase();
-    const words = text.split(/[\s,.!?，。！？]+/).filter(w => w.length >= 1);
+    const words = lower.split(/[\s,.!?，。！？]+/).filter(w => w.length >= 1);
     
     // 意图识别
     let intent = 'chat';
-    if (/你好|嗨|hello|hi|在吗|你好啊|早上好|下午好|晚上好/.test(text)) intent = 'greeting';
-    else if (/谢谢|感谢|谢了|多谢|谢|辛苦/.test(text)) intent = 'thanks';
-    else if (/怎么|如何|怎样|步骤|方法|怎么办|该.*做|怎么.*办/.test(text)) intent = 'howto';
-    else if (/为什么|怎么回事|什么.*原因|为什么.*会|为什么.*要/.test(text)) intent = 'why';
-    else if (/是什么|什么.*是|定义|概念|介绍/.test(text)) intent = 'whatis';
-    else if (/推荐|推荐.*练习|推荐.*题目|练.*什么|学.*什么|该.*学/.test(text)) intent = 'recommend';
-    else if (/薄弱|弱点|哪里.*不好|错.*多|不会|不.*好/.test(text)) intent = 'weakness';
-    else if (/进度|数据|统计|多少.*题|正确率|答.*几题/.test(text)) intent = 'progress';
-    else if (/场景|模拟|如果|假如|遇到|发生.*时|遇到.*怎么办/.test(text)) intent = 'scenario';
-    else if (/对比|区别|不同|差异|比较|vs|和.*比/.test(text)) intent = 'compare';
-    else if (/挑战|闯关|练习|做题|测试|考试| quiz/.test(text)) intent = 'practice';
-    else if (/故事|真实案例|案例|新闻|发生过|历史/.test(text)) intent = 'story';
-    else if (/冷知识|趣闻|小知识|百科|你知道吗/.test(text)) intent = 'trivia';
-    else if (/拜|再见|bye|下次见|下次再聊|走了/.test(text)) intent = 'goodbye';
-    else if (text.length < 3 && /嗯|哦|好|行|OK|ok|可以/.test(text)) intent = 'ack';
+    if (/你好|嗨|hello|hi|在吗|你好啊|早上好|下午好|晚上好/.test(lower)) intent = 'greeting';
+    else if (/谢谢|感谢|谢了|多谢|谢|辛苦/.test(lower)) intent = 'thanks';
+    else if (/怎么|如何|怎样|步骤|方法|怎么办|该.*做|怎么.*办/.test(lower)) intent = 'howto';
+    else if (/为什么|怎么回事|什么.*原因|为什么.*会|为什么.*要/.test(lower)) intent = 'why';
+    else if (/是什么|什么.*是|定义|概念|介绍/.test(lower)) intent = 'whatis';
+    else if (/推荐|推荐.*练习|推荐.*题目|练.*什么|学.*什么|该.*学/.test(lower)) intent = 'recommend';
+    else if (/薄弱|弱点|哪里.*不好|错.*多|不会|不.*好/.test(lower)) intent = 'weakness';
+    else if (/进度|数据|统计|多少.*题|正确率|答.*几题/.test(lower)) intent = 'progress';
+    else if (/场景|模拟|如果|假如|遇到|发生.*时|遇到.*怎么办/.test(lower)) intent = 'scenario';
+    else if (/对比|区别|不同|差异|比较|vs|和.*比/.test(lower)) intent = 'compare';
+    else if (/挑战|闯关|练习|做题|测试|考试|quiz/.test(lower)) intent = 'practice';
+    else if (/故事|真实案例|案例|新闻|发生过|历史/.test(lower)) intent = 'story';
+    else if (/冷知识|趣闻|小知识|百科|你知道吗/.test(lower)) intent = 'trivia';
+    else if (/拜|再见|bye|下次见|下次再聊|走了/.test(lower)) intent = 'goodbye';
+    else if (lower.length < 3 && /嗯|哦|好|行|ok|可以/.test(lower)) intent = 'ack';
 
     // 灾害识别
     let disaster = null;
@@ -535,6 +541,8 @@ const DeepSeekAPI = {
     ];
 
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
       const response = await fetch(`${this._baseUrl}/chat/completions`, {
         method: 'POST',
         headers: {
@@ -547,8 +555,10 @@ const DeepSeekAPI = {
           temperature: 0.7,
           max_tokens: 500,
           stream: false
-        })
+        }),
+        signal: controller.signal
       });
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         const error = await response.json().catch(() => ({}));
@@ -570,6 +580,10 @@ const DeepSeekAPI = {
 
       return { answer: reply };
     } catch (e) {
+      clearTimeout(timeoutId);
+      if (e.name === 'AbortError') {
+        return { error: '请求超时，请检查网络连接' };
+      }
       console.error('DeepSeek API error:', e);
       return { error: '网络错误，请检查网络连接' };
     }
@@ -615,3 +629,8 @@ AITutorBrain._cacheToKnowledge = function(question, answer) {
 };
 
 console.log('🧠 DeepSeek API 集成已加载');
+
+// 初始化AI导师大脑
+if (typeof AITutorBrain !== 'undefined') {
+  AITutorBrain.init();
+}
