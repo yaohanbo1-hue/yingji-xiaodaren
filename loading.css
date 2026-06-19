@@ -7,7 +7,7 @@
 #loadingScreen {
   position: fixed;
   inset: 0;
-  z-index: 999999;
+  z-index: 9999;
   background: linear-gradient(135deg, #0F172A 0%, #111827 50%, #0F172A 100%);
   display: flex;
   align-items: center;
@@ -16,7 +16,7 @@
 }
 
 #loadingScreen.loading-fade-out {
-  animation: loadingFadeOut 0.5s ease forwards;
+  animation: loadingFadeOut 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 @keyframes loadingFadeIn {
@@ -25,8 +25,8 @@
 }
 
 @keyframes loadingFadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; pointer-events: none; }
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.98); pointer-events: none; }
 }
 
 .loading-container {
@@ -174,4 +174,81 @@
   .loading-title { font-size: 28px; letter-spacing: 2px; }
   .loading-subtitle { font-size: 12px; }
   .loading-bar-container { width: 220px; }
+}
+
+/* ===========================================================================
+ * 骨架屏样式 — 内容加载期间显示
+ * =========================================================================== */
+
+.skeleton-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: linear-gradient(135deg, #0F172A 0%, #111827 50%, #0F172A 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.4s ease;
+}
+
+.skeleton-screen.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.skeleton-header {
+  width: 200px;
+  height: 28px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.06) 25%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.06) 75%);
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.5s ease-in-out infinite;
+  margin-bottom: 40px;
+}
+
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  width: 90%;
+  max-width: 400px;
+}
+
+.skeleton-card {
+  height: 120px;
+  border-radius: 16px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.04) 75%);
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.5s ease-in-out infinite;
+}
+
+.skeleton-card:nth-child(2) { animation-delay: 0.1s; }
+.skeleton-card:nth-child(3) { animation-delay: 0.2s; }
+.skeleton-card:nth-child(4) { animation-delay: 0.3s; }
+.skeleton-card:nth-child(5) { animation-delay: 0.4s; }
+.skeleton-card:nth-child(6) { animation-delay: 0.5s; }
+
+@keyframes skeletonShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* 骨架屏移动端适配 */
+@media (max-width: 375px) {
+  .skeleton-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .skeleton-card { height: 100px; }
+  .skeleton-header { width: 160px; height: 24px; }
+}
+
+@media (min-width: 1200px) {
+  .skeleton-grid {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 600px;
+  }
 }
