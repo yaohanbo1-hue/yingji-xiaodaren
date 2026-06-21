@@ -15,3 +15,13 @@ Thumbs.db
 
 # Old backup
 yingji-xiaodaren/
+# Agent temp files
+check-*.js
+debug-*.js
+error*.txt
+error*.js
+find-*.js
+temp-*.js
+temp-*.json
+trace-*.js
+code_review_report*
