@@ -290,6 +290,8 @@ const WrongBookEngine = {
       return;
     }
     var win = window.open('', '_blank');
+    // XSS 防护：转义用户输入
+    function _e(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;'); }
     var html = '<html><head><title>错题本打印</title><style>';
     html += 'body{font-family:"Microsoft YaHei",sans-serif;max-width:800px;margin:0 auto;padding:40px 20px;background:#fff;color:#333;}';
     html += 'h1{text-align:center;color:#ef4444;border-bottom:3px solid #ef4444;padding-bottom:15px;margin-bottom:30px;}';
@@ -314,9 +316,9 @@ const WrongBookEngine = {
       var status = item.mastered ? '✅ 已掌握' : '❌ 待复习';
       html += '<div class="item ' + cls + '">';
       html += '<div class="status ' + cls + '">' + status + '<span class="count">错 ' + item.wrongCount + ' 次</span></div>';
-      html += '<div class="question">' + item.question + '</div>';
-      if (item.correctAnswer) html += '<div class="answer">正确答案：' + item.correctAnswer + '</div>';
-      if (item.explanation) html += '<div class="exp">💡 ' + item.explanation + '</div>';
+      html += '<div class="question">' + _e(item.question) + '</div>';
+      if (item.correctAnswer) html += '<div class="answer">正确答案：' + _e(item.correctAnswer) + '</div>';
+      if (item.explanation) html += '<div class="exp">💡 ' + _e(item.explanation) + '</div>';
       html += '</div>';
     });
     html += '<div class="footer">应急小达人 v1.2.0 · 全国青少年安全与应急科普创新大赛</div>';
