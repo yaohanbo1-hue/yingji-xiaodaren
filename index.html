@@ -444,7 +444,7 @@
           <span class="mode-name">基地</span>
           <span class="mode-desc">布置基地+换装</span>
         </div>
-        <div class="mode-btn" onclick="TimeEscapeEngine.init()" style="border-color:rgba(255,0,110,0.4);">
+        <div class="mode-btn" onclick="typeof TimeEscapeEngine!=='undefined'&&TimeEscapeEngine.init()" style="border-color:rgba(255,0,110,0.4);">
           <span class="mode-badge" style="background:linear-gradient(135deg,#FF006E,#FF6B35);color:#fff;">🔥 新</span>
           <span class="mode-icon">⏰</span>
           <span class="mode-name">限时逃生</span>
@@ -468,7 +468,7 @@
           <span class="mode-name">记忆翻牌</span>
           <span class="mode-desc">翻牌配对，考验记忆力</span>
         </div>
-        <div class="mode-btn" onclick="ReactionEngine.init()" style="border-color:rgba(255,0,110,0.4);">
+        <div class="mode-btn" onclick="typeof ReactionEngine!=='undefined'&&ReactionEngine.init()" style="border-color:rgba(255,0,110,0.4);">
           <span class="mode-badge" style="background:linear-gradient(135deg,#FF006E,#FFD700);color:#fff;">⚡ 新</span>
           <span class="mode-icon">⚡</span>
           <span class="mode-name">反应速度</span>
@@ -1411,7 +1411,7 @@
 
 <!-- ======== 限时逃生页 ======== -->
   <div id="page-time-escape" class="page page-content">
-    <button class="btn back-float" onclick="if(TimeEscapeEngine.active){clearInterval(TimeEscapeEngine.timer);TimeEscapeEngine.active=false;}PageManager.navigate('menu')">←</button>
+    <button class="btn back-float" onclick="typeof TimeEscapeEngine!=='undefined'&&TimeEscapeEngine.active&&(clearInterval(TimeEscapeEngine.timer),TimeEscapeEngine.active=!1);PageManager.navigate('menu')">←</button>
     <div class="game-header">
       <div class="mode-label" style="color:var(--cyber-blue);">⏰ 限时逃生</div>
       <div style="display:flex;gap:16px;align-items:center;">
@@ -1505,7 +1505,7 @@
 
 <!-- ======== 反应速度页 ======== -->
   <div id="page-reaction" class="page page-content">
-    <button class="btn back-float" onclick="ReactionEngine.active=false;clearTimeout(ReactionEngine.targetTimeout);PageManager.navigate('menu')">←</button>
+    <button class="btn back-float" onclick="typeof ReactionEngine!=='undefined'&&(ReactionEngine.active=!1,clearTimeout(ReactionEngine.targetTimeout));PageManager.navigate('menu')">←</button>
     <div class="game-header">
       <div class="mode-label" style="color:#FF006E;">⚡ 反应速度</div>
       <div id="reactionInfo" style="font-size:16px;color:rgba(255,255,255,0.6);">准备...</div>
@@ -1841,7 +1841,6 @@
 <script src="i18n.js?v=62" defer></script>
 <script src="bg-themes.js?v=62" defer></script>
 <script src="liquid-glass.js?v=62" defer></script>
-<script src="shuffle-fix.js?v=62" defer></script>
 <script src="html-escape.js?v=62" defer></script>
 <script src="engine-cleanup.js?v=62" defer></script>
 <script src="optimizer-mobile.js?v=62" defer></script>
