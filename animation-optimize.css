@@ -1,0 +1,313 @@
+/**
+ * ===========================================================================
+ * 应急小达人 — 动画性能优化补丁
+ * will-change + transform + content-visibility 优化
+ * ===========================================================================
+ *
+ * 使用方式：
+ * 1. 将本文件内容追加到 all-styles-v55.css 末尾，或作为独立文件加载
+ * 2. 与 critical.css 一起加载（非阻塞渲染优化）
+ * 3. 确保在浏览器支持 will-change 的环境中运行（IE 除外，已支持）
+ *
+ * 注意：
+ * - will-change 会创建新的合成层，增加内存使用
+ * - 仅在动画元素上使用，不要滥用
+ * - 动画结束后可通过 JS 移除 will-change 以释放资源
+ * ===========================================================================
+ */
+
+/* ===== 1. 页面切换动画优化 ===== */
+.page {
+  will-change: opacity, transform;
+  contain: layout style paint;
+}
+
+.page.active {
+  will-change: auto;
+}
+
+/* ===== 2. 按钮悬停动画优化 ===== */
+.mode-btn,
+.menu-cat-btn,
+.tool-btn,
+.quiz-opt,
+.choice-btn,
+.scenario-opt {
+  will-change: transform, box-shadow;
+  transform: translateZ(0); /* 强制创建复合层 */
+  backface-visibility: hidden; /* 防止 3D 变换时的锯齿 */
+}
+
+/* 悬停时保持优化，不悬停时释放（通过 JS 或 :hover 伪类） */
+.mode-btn:hover,
+.menu-cat-btn:hover,
+.tool-btn:hover,
+.quiz-opt:hover,
+.choice-btn:hover,
+.scenario-opt:hover {
+  will-change: transform, box-shadow;
+}
+
+/* ===== 3. 玻璃卡片动画优化 ===== */
+.quiz-card,
+.scenario-card,
+.quiz-content,
+.quiz-exp-box,
+.explanation-box,
+.result-box,
+.survival-hud,
+.settings-card {
+  will-change: transform, backdrop-filter;
+  transform: translateZ(0);
+}
+
+/* 减少动画模式下移除 will-change */
+@media (prefers-reduced-motion: reduce) {
+  .page,
+  .mode-btn,
+  .menu-cat-btn,
+  .tool-btn,
+  .quiz-opt,
+  .choice-btn,
+  .scenario-opt,
+  .quiz-card,
+  .scenario-card {
+    will-change: auto !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ===== 4. AI 浮动面板优化 ===== */
+.ai-fab {
+  will-change: transform, box-shadow;
+  transform: translateZ(0);
+}
+
+.ai-float-panel {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* ===== 5. 加载动画优化 ===== */
+.loading-logo {
+  will-change: opacity, transform;
+}
+
+.loading-bar {
+  will-change: width;
+}
+
+.loading-icon {
+  will-change: transform, filter;
+}
+
+/* 加载完成后释放资源 */
+#loadingScreen.hidden .loading-logo,
+#loadingScreen.hidden .loading-bar,
+#loadingScreen.hidden .loading-icon {
+  will-change: auto;
+}
+
+/* ===== 6. 滚动容器优化 ===== */
+.page,
+.ai-float-body,
+.settings-container,
+.codex-grid,
+.shop-list,
+.achievement-list,
+.leaderboard-content,
+.character-content {
+  will-change: scroll-position;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ===== 7. 转场动画优化 ===== */
+.skeleton-screen {
+  will-change: opacity, visibility;
+}
+
+.page.enter-from-bottom,
+.page.enter-from-left {
+  will-change: transform, opacity;
+}
+
+/* ===== 8. 特效元素优化 ===== */
+.bg-orb,
+.bg-gradient,
+.bg-grid {
+  will-change: transform, opacity;
+}
+
+/* 低性能模式下禁用昂贵效果 */
+.low-perf-mode .bg-orb,
+.low-perf-mode .bg-gradient,
+.low-perf-mode .bg-grid {
+  will-change: auto;
+  display: none;
+}
+
+/* ===== 9. 弹窗/模态框优化 ===== */
+.modal-overlay,
+.popup-overlay,
+.dialog-backdrop {
+  will-change: opacity;
+}
+
+.modal-content,
+.popup-content,
+.dialog-content {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* ===== 10. 数字/计数器动画优化 ===== */
+.counter-value,
+.score-value,
+.stat-number,
+.loading-percent {
+  will-change: transform, opacity;
+  font-variant-numeric: tabular-nums; /* 防止数字宽度变化导致抖动 */
+}
+
+/* ===== 11. 长列表 content-visibility 优化 ===== */
+/* 对不可见的长列表项进行渲染隔离 */
+.codex-grid > .card:nth-child(n+13),
+.shop-list > .item:nth-child(n+13),
+.achievement-list > .item:nth-child(n+13),
+.leaderboard-content > .row:nth-child(n+13),
+.scenario-list > .scenario-item:nth-child(n+13) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 120px; /* 预估高度，防止滚动条跳动 */
+  contain: layout style paint;
+}
+
+/* 移动端减少 content-visibility 阈值（屏幕更小） */
+@media (max-width: 768px) {
+  .codex-grid > .card:nth-child(n+9),
+  .shop-list > .item:nth-child(n+9),
+  .achievement-list > .item:nth-child(n+9) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 100px;
+  }
+}
+
+/* ===== 12. 图片懒加载占位优化 ===== */
+img[loading="lazy"] {
+  background: linear-gradient(90deg, var(--bg-surface) 0%, var(--bg-surface-hover) 50%, var(--bg-surface) 100%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+img[loading="lazy"].loaded,
+img[loading="lazy"]:not([src]) {
+  animation: none;
+  background: none;
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ===== 13. 菜单 Logo 动画优化 ===== */
+.menu-logo-title {
+  will-change: transform, opacity;
+}
+
+.title-deco-icon,
+.shield-left,
+.shield-right {
+  will-change: transform, opacity;
+}
+
+/* ===== 14. 进度条/条带动画优化 ===== */
+.progress-bar,
+.health-bar,
+.energy-bar,
+.xp-bar {
+  will-change: width;
+  transform: translateZ(0);
+}
+
+/* ===== 15. 粒子/Canvas 容器优化 ===== */
+#bgCanvas,
+#particleCanvas,
+.ls-particles,
+.disaster-particles {
+  will-change: transform;
+  contain: layout style paint;
+}
+
+/* 低性能模式下隐藏 Canvas 粒子 */
+.low-perf-mode #bgCanvas,
+.low-perf-mode #particleCanvas,
+.low-perf-mode .ls-particles,
+.low-perf-mode .disaster-particles {
+  display: none;
+}
+
+/* ===== 16. 3D Tilt 效果优化 ===== */
+.tilt-3d,
+.tilt-card,
+[class*="tilt"] {
+  will-change: transform;
+  transform-style: preserve-3d;
+  transform: translateZ(0);
+}
+
+/* ===== 17. 打字机/文本动画优化 ===== */
+.typewriter-text,
+.typing-effect,
+.text-reveal {
+  will-change: width, opacity;
+}
+
+/* ===== 18. 通用工具类 ===== */
+.will-change-transform {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+.will-change-scroll {
+  will-change: scroll-position;
+}
+
+/* 释放 will-change（动画结束后 JS 添加此类） */
+.will-change-none {
+  will-change: auto !important;
+}
+
+/* ===== 19. GPU 加速通用规则 ===== */
+.gpu-layer {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* ===== 20. contain 属性优化（谨慎使用） ===== */
+.contain-layout {
+  contain: layout;
+}
+
+.contain-paint {
+  contain: paint;
+}
+
+.contain-strict {
+  contain: strict;
+}
+
+/* 对独立模块使用严格 contain */
+.menu-toolbar,
+#loadingScreen,
+.ai-float-panel,
+.modal-overlay {
+  contain: layout style paint;
+}

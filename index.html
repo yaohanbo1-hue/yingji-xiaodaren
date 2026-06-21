@@ -1,82 +1,19 @@
-<!--
-================================================================================
-  应急小达人 v1.3.0 — Disaster Blind Box Command HQ
-  Copyright (c) 2026 应急小达人开发团队
-  
-  📖 项目简介
-  一款面向中小学生的防灾教育互动游戏，通过盲盒开箱、答题闯关、情景模拟
-  等趣味方式学习防灾知识。游戏涵盖 12 种自然灾害，34 个情景场景，369 张
-  知识卡牌。
-  
-  🎮 游戏模式 (32 种)
-  学习中心: 开盲盒、每日签到、学习模式、急救模拟、防灾馆、宠物、
-           防灾日记、卡牌工坊、百科、新手引导
-  闯关挑战: 防灾大擂台、自由模式、速答挑战、双人PK、每日挑战、
-           生存挑战、Boss Rush、限时挑战、故事模式、闪电问答、
-           精准投放、扭蛋机、音乐、彩蛋、基地、限时逃生、精准打击、
-           大冒险、记忆翻牌、反应速度、知识竞速
-  
-  🏗️ 技术架构
-  - 纯前端: HTML5 + CSS3 + JavaScript (ES6)
-  - 零依赖: 无需 npm、无需构建工具、无需后端服务器
-  - 单文件交付: ZIP 压缩包，解压后双击 index.html 即可运行
-  - 数据存储: localStorage 本地持久化
-  
-  🎨 视觉设计
-  - 赛博朋克风格: 深空背景 + 霓虹发光 + 液态玻璃
-  - 3D 交互: 鼠标跟随倾斜、透视变换、深度阴影
-  - 动画系统: 页面转场、粒子效果、数字滚动、水波纹
-  
-  📱 兼容性
-  - Chrome 80+ / Edge 80+ / Firefox 75+ / Safari 13+
-  - 移动端自适应 (iOS 13+ / Android 10+)
-  - 支持横屏/竖屏切换
-  
-  📂 文件结构
-  index.html            - 主页面 (23 个子页面模块)
-  all-styles-v55.css     - 核心样式表 (合并版)
-  game.js               - 游戏引擎 (50+ 模块)
-  cards.js              - 卡牌数据 (369 张)
-  scenarios.js          - 情景数据 (12 类灾害，34 个场景)
-  bgm.js                - BGM 步进音序器
-  visual-fx.js          - 视觉特效引擎
-  juice.js              - 屏幕震动/浮字/纸屑
-  tilt3d.js             - 鼠标跟随 3D 倾斜
-  ui-polish.js          - UI 润色
-  v10-interactions.js   - 交互动画
-  encyclopedia_extra.js - 百科核心引擎
-  encyclopedia_final.js - 百科扩展
-  bg.js                 - Canvas 极光粒子背景
-  kit_data.js           - 应急包数据
-  
-  🔧 开发信息
-  版本: v1.3.0
-  日期: 2026-06-05
-  作者: 应急小达人开发团队
-  
-  📜 版权声明
-  本项目仅供教育用途，未经授权不得用于商业目的。
-  灾害知识内容参考自中国应急管理部公开资料。
-================================================================================
--->
+<!-- 应急小达人 v1.3.0 — 优化版 (Performance Optimized) -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover,interactive-widget=resizes-content">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#00d4ff">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
 <meta name="apple-mobile-web-app-title" content="应急小达人">
 <meta name="description" content="面向中小学生的防灾教育互动游戏，通过盲盒开箱、答题闯关、情景模拟等趣味方式学习防灾知识。覆盖12种自然灾害，369张知识卡牌，32种游戏模式。">
 <meta name="keywords" content="防灾教育,应急科普,灾害模拟,互动游戏,中小学生,安全教育">
 <meta name="author" content="应急小达人开发团队">
-<meta name="generator" content="应急小达人 v1.3.0">
 <meta name="robots" content="index, follow">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<!-- ===== Open Graph / 社交媒体分享标签 ===== -->
+<!-- Open Graph -->
 <meta property="og:title" content="应急小达人 — 防灾教育互动游戏">
 <meta property="og:description" content="面向中小学生的防灾教育互动游戏，盲盒开箱、答题闯关、情景模拟，32种游戏模式，12类自然灾害，369张知识卡牌。">
 <meta property="og:type" content="website">
@@ -92,9 +29,8 @@
 <meta name="twitter:description" content="面向中小学生的防灾教育互动游戏，32种游戏模式，12类自然灾害，369张知识卡牌。">
 <meta name="twitter:image" content="https://github.com/yaohanbo1-hue/yingji-xiaodaren/raw/main/favicon.svg">
 
-<!-- ===== Favicon + PWA 图标 ===== -->
+<!-- Favicon + PWA -->
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="shortcut icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="favicon.svg">
 <link rel="mask-icon" href="favicon.svg" color="#00d4ff">
 <link rel="manifest" href="manifest.json">
@@ -102,512 +38,85 @@
 <title>应急小达人 — 防灾教育互动游戏 v1.3.0</title>
 <meta name="version" content="v1.3.0">
 
-<!-- ===== 资源预连接：字体 CDN ===== -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<!-- 预连接第三方域名 -->
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://github.com">
 
-<!-- ===== 预加载最关键资源（不超过5个，避免带宽竞争） ===== -->
+<!-- 关键 CSS — 阻塞渲染但体积小，确保首屏正确 -->
+<link rel="stylesheet" href="critical.css?v=58">
+
+<!-- 预加载最关键资源（限制在6个以内，避免带宽竞争） -->
 <link rel="preload" href="all-styles-v55.css?v=58" as="style">
-<link rel="preload" href="game-engines.js?v=58" as="script">
-<link rel="preload" href="cards.js?v=58" as="script">
-<link rel="preload" href="scenarios.js?v=58" as="script">
-<link rel="preload" href="liquid-glass.js?v=58" as="script">
+<link rel="preload" href="js/core/utils.js?v=58" as="script" fetchpriority="high">
+<link rel="preload" href="js/core/game-core.js?v=58" as="script" fetchpriority="high">
+<link rel="preload" href="cards.js?v=58" as="script" fetchpriority="high">
+<link rel="preload" href="scenarios.js?v=58" as="script" fetchpriority="high">
+<link rel="preload" href="game-engines.js?v=58" as="script" fetchpriority="high">
 
-<!-- 加载画面最简样式：确保第一帧就覆盖全屏 -->
-<style>
-#loadingScreen{position:fixed;inset:0;z-index:9999;background:#0F1117;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Microsoft YaHei','PingFang SC','Hiragino Sans GB','Noto Sans SC',sans-serif}
-#loadingScreen.hidden{opacity:0;visibility:hidden;pointer-events:none}
-body:not(.app-ready) .page{display:none!important}
-body:not(.app-ready) .page.active{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0) scale(1)}
-.page:not(.active){opacity:0;visibility:hidden;position:fixed;inset:0;pointer-events:none;transform:translateY(20px) scale(0.98);transition:opacity .35s cubic-bezier(.4,0,.2,1),transform .35s cubic-bezier(.4,0,.2,1),visibility .35s ease}
-.page.active{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0) scale(1);transition:opacity .4s cubic-bezier(.4,0,.2,1),transform .4s cubic-bezier(.4,0,.2,1),visibility .4s ease}
-body:not(.app-ready) #menuToolbar,body:not(.app-ready) .menu-toolbar{display:none!important}
-/* ===== 底部栏精致设计 v7（内联保底） ===== */
-.menu-toolbar{display:flex!important;justify-content:space-around!important;align-items:center!important;gap:4px!important;padding:10px 8px calc(10px + env(safe-area-inset-bottom,0px))!important;position:fixed!important;bottom:0!important;left:0!important;right:0!important;z-index:10000!important;max-width:900px!important;margin:0 auto!important;background:rgba(12,12,35,0.94)!important;backdrop-filter:blur(32px) saturate(240%)!important;-webkit-backdrop-filter:blur(32px) saturate(240%)!important;border-top:1px solid rgba(0,212,255,0.15)!important;border-top-left-radius:28px!important;border-top-right-radius:28px!important;overflow:visible!important;box-shadow:0 -6px 30px rgba(0,0,0,0.5),0 -2px 0 rgba(0,212,255,0.1)!important;transform:translateZ(0)!important;-webkit-transform:translateZ(0)!important}
-.menu-toolbar .tool-btn{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;padding:8px 3px!important;flex:1!important;max-width:100px!important;min-height:60px!important;border:none!important;border-radius:16px!important;background:transparent!important;color:rgba(255,255,255,0.55)!important;cursor:pointer;position:relative!important;transition:transform 0.3s cubic-bezier(0.23,1,0.32,1),background-color 0.3s cubic-bezier(0.23,1,0.32,1),color 0.3s cubic-bezier(0.23,1,0.32,1),box-shadow 0.3s cubic-bezier(0.23,1,0.32,1)!important}
-.menu-toolbar .tool-btn .icon{font-size:28px!important;line-height:1!important;transition:transform 0.3s ease,filter 0.3s ease!important;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.4))!important}
-.menu-toolbar .tool-btn .label{font-size:12px!important;font-weight:600!important;letter-spacing:0.5px!important;color:inherit!important;line-height:1!important}
-.menu-toolbar .tool-btn::after{content:''!important;position:absolute!important;bottom:4px!important;left:50%!important;transform:translateX(-50%)!important;width:0!important;height:4px!important;border-radius:3px!important;background:#00D4FF!important;transition:width 0.35s ease,box-shadow 0.35s ease!important;box-shadow:0 0 12px rgba(0,212,255,0.8)!important}
-.menu-toolbar .tool-btn:hover{background:rgba(255,255,255,0.06)!important;color:rgba(255,255,255,0.8)!important;transform:translateY(-2px)!important}
-.menu-toolbar .tool-btn.active{color:#00D4FF!important;background:rgba(0,212,255,0.12)!important;box-shadow:0 0 20px rgba(0,212,255,0.15)!important}
-.menu-toolbar .tool-btn.active .icon{filter:drop-shadow(0 0 16px rgba(0,212,255,0.8))!important;transform:translateY(-3px) scale(1.2)!important}
-.menu-toolbar .tool-btn.active .label{color:#00D4FF!important;font-weight:700!important;letter-spacing:0.6px!important}
-.menu-toolbar .tool-btn.active::after{width:28px!important}
-/* ===== 页面内容底部渐变过渡 ===== */
-.page::after{content:'';position:fixed;bottom:75px;left:0;right:0;height:50px;background:linear-gradient(to top,rgba(10,10,30,0.7),transparent);pointer-events:none;z-index:1}
-/* ===== 全局页面优化 ===== */
-.page{padding-bottom:calc(88px + env(safe-area-inset-bottom, 0px))!important}
-/* ===== Logo区域大气优化 ===== */
-.menu-logo{padding:48px 0 24px!important;margin-bottom:20px!important;margin-top:auto!important;text-align:center!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;position:relative!important}
-.menu-title-decor{display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;margin:8px 0!important}
-.title-deco-icon{font-size:28px!important;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3))!important}
-.title-shield{display:flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;position:relative!important}
-.shield-left,.shield-right{font-size:24px!important;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3))!important}
-.shield-left{animation-delay:0.5s!important}
-.shield-right{animation-delay:1s!important}
-.menu-logo-title{font-size:64px!important;margin:0!important;letter-spacing:4px!important;font-weight:900!important;font-family:'Microsoft YaHei','PingFang SC',sans-serif!important;text-shadow:0 2px 8px rgba(0,0,0,0.4)!important;background:linear-gradient(180deg,#fff 0%,#e8eaed 50%,#5BA4CF 100%)!important;color:#5BA4CF!important;
-  -webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important;position:relative!important}
-.menu-logo-title::before{content:'';position:absolute;inset:-8px -20px;background:radial-gradient(ellipse,rgba(91,164,207,0.08) 0%,transparent 70%)!important;z-index:-1;pointer-events:none}
-.menu-logo-sub{font-size:16px!important;margin:6px 0 8px!important;opacity:0.9!important;letter-spacing:2px!important;font-weight:600!important;color:#9AA0AB!important;text-shadow:none!important}
-.version-tag{font-size:14px!important;padding:6px 18px!important;margin-top:8px!important;border-radius:24px!important;font-weight:700!important;letter-spacing:1px!important;background:rgba(255,255,255,0.06)!important;border:1px solid rgba(255,255,255,0.1)!important;color:#C9A84C!important;box-shadow:none!important}
-/* ===== 主分类按钮大气优化 ===== */
-#page-menu{display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;min-height:100vh!important;padding-top:0!important;padding-bottom:calc(96px + env(safe-area-inset-bottom, 0px))!important}
-body #page-menu .menu-category-btns{gap:16px!important;padding:14px 16px!important;margin-bottom:10px!important}
-body #page-menu .menu-cat-btn{padding:42px 28px!important;border-radius:36px!important;min-height:160px!important;box-shadow:0 12px 48px rgba(0,0,0,0.35),0 4px 12px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.1)!important;border:2px solid rgba(255,255,255,0.14)!important;transition:transform 0.35s cubic-bezier(0.23,1,0.32,1),box-shadow 0.35s cubic-bezier(0.23,1,0.32,1),border-color 0.35s cubic-bezier(0.23,1,0.32,1)!important}
-body #page-menu .menu-cat-btn:hover{transform:translateY(-4px)!important;box-shadow:0 16px 56px rgba(0,0,0,0.4),0 6px 16px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.12)!important}
-body #page-menu .menu-cat-btn .cat-icon{font-size:58px!important;margin-bottom:12px!important}
-body #page-menu .menu-cat-btn .cat-title{font-size:24px!important;font-weight:800!important;margin-top:8px!important;letter-spacing:0.5px!important}
-body #page-menu .menu-cat-btn .cat-count{font-size:15px!important;margin-top:6px!important;color:rgba(255,255,255,0.65)!important;font-weight:500!important}
-/* ===== 返回分类按钮优化 ===== */
-body #page-menu .back-to-categories{padding:14px 24px!important;margin:10px 16px 14px!important;border-radius:16px!important;font-size:16px!important;font-weight:600!important;background:rgba(255,255,255,0.07)!important;border:1px solid rgba(255,255,255,0.12)!important;transition:transform 0.3s ease,background-color 0.3s ease!important}
-body #page-menu .back-to-categories:hover{background:rgba(255,255,255,0.1)!important;transform:translateY(-2px)!important}
-/* ===== 模块区域大气优化（高特异性覆盖） ===== */
-body #page-menu .menu-section.expanded{padding-bottom:calc(80px + env(safe-area-inset-bottom, 0px))!important;margin-bottom:24px!important}
-body #page-menu .menu-section-title{font-size:18px!important;padding:14px 18px!important;margin:10px 16px 12px!important;border-radius:16px!important;background:rgba(255,255,255,0.05)!important;border:1px solid rgba(255,255,255,0.08)!important;font-weight:700!important;letter-spacing:0.5px!important}
-body #page-menu .menu-grid{gap:10px!important;padding:0 0 24px!important;display:grid!important;grid-template-columns:repeat(2,1fr)!important;justify-items:stretch!important;align-items:stretch!important}
-body #page-menu .mode-btn{padding:48px 24px!important;border-radius:36px!important;min-height:220px!important;width:100%!important;max-width:none!important;box-sizing:border-box!important;box-shadow:0 16px 56px rgba(0,0,0,0.35),0 6px 20px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.1)!important;border:2px solid rgba(255,255,255,0.14)!important;transition:transform 0.35s cubic-bezier(0.23,1,0.32,1),box-shadow 0.35s cubic-bezier(0.23,1,0.32,1),border-color 0.35s cubic-bezier(0.23,1,0.32,1)!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important}
-body #page-menu .mode-btn:hover{transform:translateY(-4px)!important;box-shadow:0 20px 64px rgba(0,0,0,0.4),0 8px 24px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.12)!important;border-color:rgba(0,212,255,0.2)!important}
-body #page-menu .mode-btn:active{transform:translateY(-2px) scale(0.98)!important}
-body #page-menu .mode-btn .mode-icon{font-size:72px!important;margin-bottom:14px!important}
-body #page-menu .mode-btn .mode-name{font-size:24px!important;font-weight:800!important;margin-top:12px!important;letter-spacing:0.5px!important}
-body #page-menu .mode-desc{font-size:15px!important;margin-top:8px!important;line-height:1.5!important;color:rgba(255,255,255,0.65)!important;font-weight:500!important}
-body #page-menu .mode-btn .mode-badge{font-size:14px!important;padding:7px 16px!important;border-radius:14px!important;top:16px!important;right:16px!important;font-weight:700!important;box-shadow:0 2px 10px rgba(0,0,0,0.3)!important}
-/* ===== 底部统计栏优化 ===== */
-body #page-menu .menu-stats{padding:14px 20px!important;margin:10px 16px 24px!important;border-radius:18px!important;font-size:14px!important;gap:24px!important;background:rgba(255,255,255,0.06)!important;border:1px solid rgba(255,255,255,0.1)!important;font-weight:500!important}
-/* ===== 子页面通用大气优化 ===== */
-.page-content{padding:70px 12px calc(88px + env(safe-area-inset-bottom, 0px))!important;overflow-y:auto!important;height:100vh!important}
-.back-float{top:14px!important;left:14px!important;padding:12px 18px!important;font-size:16px!important;border-radius:14px!important;font-weight:600!important;background:rgba(255,255,255,0.1)!important;border:1px solid rgba(255,255,255,0.12)!important;backdrop-filter:blur(12px)!important}
-.preview-header{padding:28px 0 18px!important;margin-bottom:14px!important}
-.preview-icon{font-size:48px!important;margin-bottom:8px!important}
-.preview-title{font-size:28px!important;margin-bottom:8px!important;font-weight:800!important;letter-spacing:0.5px!important}
-.preview-desc{font-size:14px!important;max-width:340px!important;margin:8px auto!important;color:rgba(255,255,255,0.65)!important;line-height:1.5!important}
-.preview-container{padding:0 16px 48px!important}
-/* ===== 设置页面大气优化 ===== */
-.settings-header{padding:28px 0 18px!important;margin-bottom:14px!important}
-.settings-header-icon{font-size:48px!important;margin-bottom:8px!important}
-.settings-title{font-size:28px!important;margin-bottom:6px!important;font-weight:800!important;letter-spacing:0.5px!important}
-.settings-subtitle{font-size:14px!important;color:rgba(255,255,255,0.65)!important;line-height:1.5!important}
-.settings-container{padding:0 16px 48px!important}
-.settings-section{margin-bottom:32px!important}
-.settings-section-title{font-size:16px!important;padding:12px 0!important;margin-bottom:12px!important;color:rgba(255,255,255,0.75)!important;font-weight:700!important;letter-spacing:0.5px!important}
-.settings-card{padding:16px 20px!important;margin-bottom:14px!important;border-radius:18px!important;background:rgba(255,255,255,0.05)!important;border:1px solid rgba(255,255,255,0.1)!important;transition:background-color 0.3s ease,border-color 0.3s ease!important}
-.settings-card:hover{background:rgba(255,255,255,0.07)!important;border-color:rgba(255,255,255,0.14)!important}
-.settings-card-icon{font-size:28px!important;width:48px!important;height:48px!important;border-radius:14px!important}
-.settings-card-name{font-size:16px!important;font-weight:700!important}
-.settings-card-desc{font-size:13px!important;color:rgba(255,255,255,0.6)!important;line-height:1.4!important}
-.settings-card-value{font-size:15px!important;color:rgba(255,255,255,0.75)!important;font-weight:600!important}
-/* ===== 游戏头部大气优化 ===== */
-.game-header{padding:16px 22px!important;margin-bottom:14px!important;border-radius:18px!important}
-.game-header-title{font-size:24px!important;font-weight:800!important;letter-spacing:0.5px!important}
-.game-header-sub{font-size:14px!important;color:rgba(255,255,255,0.65)!important;font-weight:500!important}
-/* ===== 滚动条优化 ===== */
-::-webkit-scrollbar{width:8px!important}
-::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)!important;border-radius:4px!important}
-::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.2)!important;border-radius:4px!important}
-::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,0.3)!important}
-/* ===== 答题选项大气优化 ===== */
-.quiz-option{padding:16px 18px!important;border-radius:16px!important;margin-bottom:12px!important;font-size:15px!important;font-weight:500!important;transition:transform 0.3s ease,background-color 0.3s ease,border-color 0.3s ease!important}
-.quiz-option:hover{border-color:rgba(0,212,255,0.5)!important;background:rgba(0,212,255,0.06)!important;transform:translateX(4px)!important}
-/* ===== 结果页大气优化 ===== */
-.result-box{padding:32px 24px!important;border-radius:24px!important;margin-bottom:20px!important;box-shadow:0 12px 40px rgba(0,0,0,0.3)!important}
-.result-title{font-size:28px!important;margin-bottom:10px!important;font-weight:800!important}
-.result-desc{font-size:15px!important;color:rgba(255,255,255,0.65)!important;margin-bottom:20px!important;line-height:1.5!important}
-/* ===== 卡片网格大气优化 ===== */
-.codex-grid{padding:0 16px 48px!important;gap:16px!important}
-.achievement-list{padding:0 16px 48px!important;gap:12px!important}
-.shop-list{padding:0 16px 48px!important;gap:16px!important}
-.leaderboard-content{padding:0 16px 48px!important}
-.character-content{padding:0 16px 48px!important}
-/* ===== 按钮通用大气优化 ===== */
-.btn-primary{padding:14px 28px!important;border-radius:14px!important;font-size:16px!important;font-weight:700!important;transition:transform 0.3s ease,box-shadow 0.3s ease!important;box-shadow:0 4px 16px rgba(0,0,0,0.2)!important}
-.btn-primary:hover{transform:translateY(-2px)!important;box-shadow:0 6px 24px rgba(0,0,0,0.3)!important}
-.btn-secondary{padding:12px 24px!important;border-radius:14px!important;font-size:15px!important;font-weight:600!important;transition:transform 0.3s ease!important}
-.btn-secondary:hover{transform:translateY(-2px)!important}
-/* ===== 输入框优化 ===== */
-input,select,textarea{padding:12px 16px!important;border-radius:12px!important;font-size:15px!important;font-weight:500!important;border:1px solid rgba(255,255,255,0.12)!important;background:rgba(255,255,255,0.06)!important;color:#fff!important;transition:border-color 0.3s ease,box-shadow 0.3s ease!important}
-input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!important;outline:none!important;box-shadow:0 0 0 3px rgba(0,212,255,0.12)!important}
-</style>
-<style>
-/* ===== 加载界面 v4.0 — 简洁版 ===== */
-#loadingScreen {
-  position: fixed; inset: 0; z-index: 9999;
-  background: linear-gradient(180deg, #0F1117, #141620, #0F1117);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.8s ease;
-  overflow: hidden;
-  font-family: 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', sans-serif;
-}
-#loadingScreen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-
-.loading-container {
-  text-align: center;
-  position: relative;
-  z-index: 1;
-}
-
-.loading-logo {
-  margin-bottom: 40px;
-  animation: loadingLogoEnter 0.8s ease-out;
-}
-
-@keyframes loadingLogoEnter {
-  from { opacity: 0; transform: translateY(-20px) scale(0.9); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-.loading-icon {
-  font-size: 72px;
-  margin-bottom: 16px;
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
-}
-
-.loading-title {
-  font-size: 32px;
-  font-weight: 700;
-  color: #5BA4CF;
-  margin: 0 0 8px 0;
-  letter-spacing: 2px;
-}
-
-.loading-subtitle {
-  font-size: 14px;
-  color: #9AA0AB;
-  letter-spacing: 2px;
-  margin: 0;
-}
-
-.loading-bar-container {
-  width: 240px;
-  height: 4px;
-  background: rgba(255,255,255,0.08);
-  border-radius: 2px;
-  margin: 0 auto 16px;
-  overflow: hidden;
-}
-
-.loading-bar {
-  height: 100%;
-  width: 0%;
-  background: #5BA4CF;
-  border-radius: 2px;
-  transition: width 0.1s ease;
-}
-
-.loading-percent {
-  font-size: 36px;
-  font-weight: 700;
-  color: #5BA4CF;
-  margin: 0 0 8px 0;
-  letter-spacing: 2px;
-  font-variant-numeric: tabular-nums;
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.loading-complete-flash {
-  animation: loadingFlashComplete 0.6s ease-out forwards;
-}
-
-@keyframes loadingFlashComplete {
-  0% { filter: brightness(1); }
-  50% { filter: brightness(1.2); }
-  100% { filter: brightness(1); }
-}
-
-.loading-container.loading-complete .loading-icon {
-  animation: loadingIconCelebrate 0.5s ease-out forwards;
-}
-
-@keyframes loadingIconCelebrate {
-  0% { transform: scale(1) rotate(0deg); }
-  50% { transform: scale(1.15) rotate(-5deg); }
-  100% { transform: scale(1) rotate(0deg); }
-}
-
-.loading-tip {
-  font-size: 13px;
-  color: #5F6570;
-  margin: 0;
-  transition: opacity 0.15s ease;
-  min-height: 20px;
-}
-
-/* 移动端适配 */
-@media (max-width: 480px) {
-  .loading-icon { font-size: 56px; }
-  .loading-title { font-size: 26px; letter-spacing: 1px; }
-  .loading-subtitle { font-size: 12px; }
-  .loading-bar-container { width: 200px; }
-  .loading-percent { font-size: 28px; }
-}
-
-@media (max-width: 768px) {
-  .loading-icon { font-size: 64px; }
-  .loading-title { font-size: 28px; }
-  .loading-bar-container { width: 220px; }
-}
-
-/* 减少动画偏好 */
-@media (prefers-reduced-motion: reduce) {
-  .loading-logo { animation: none; }
-  .loading-container.loading-complete .loading-icon { animation: none; }
-  .loading-complete-flash { animation: none; }
-}
-</style>
+<!-- 非关键 CSS — 异步加载，不阻塞渲染 -->
 <link rel="stylesheet" href="all-styles-v55.css?v=58">
-  <link rel="stylesheet" href="v5-glass-3d.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="v5-glass-3d.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="v5-glass-3d.css?v=58"></noscript>
-  <link rel="stylesheet" href="clean-ui.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="clean-ui.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="clean-ui.css?v=58"></noscript>
-  <link rel="stylesheet" href="bg-premium.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="bg-premium.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="bg-premium.css?v=58"></noscript>
-  <link rel="stylesheet" href="bg-themes.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="bg-themes.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="bg-themes.css?v=58"></noscript>
-  <link rel="stylesheet" href="menu-premium.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="menu-premium.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="menu-premium.css?v=58"></noscript>
-  <link rel="stylesheet" href="fx-effects.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="fx-effects.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="fx-effects.css?v=58"></noscript>
-  <link rel="stylesheet" href="ai-tutor.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="ai-tutor.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="ai-tutor.css?v=58"></noscript>
-  <link rel="stylesheet" href="certification.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="certification.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="certification.css?v=58"></noscript>
-  <link rel="stylesheet" href="disaster-sim.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="disaster-sim.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="disaster-sim.css?v=58"></noscript>
-  <link rel="stylesheet" href="real-cases.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="real-cases.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="real-cases.css?v=58"></noscript>
-  <link rel="stylesheet" href="fix-click.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="fix-click.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="fix-click.css?v=58"></noscript>
-  <script src="fix-click.js?v=58" defer></script>
-  <script src="menu-manager.js?v=58" defer></script>
-  <script src="loading.js?v=58" defer></script>
-  <link rel="stylesheet" href="transitions.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="transitions.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="transitions.css?v=58"></noscript>
-  <link rel="stylesheet" href="accessibility.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="accessibility.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="accessibility.css?v=58"></noscript>
-  <link rel="stylesheet" href="wrong-book.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="wrong-book.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="wrong-book.css?v=58"></noscript>
-  <link rel="stylesheet" href="loading.css?v=58">
-  <link rel="stylesheet" href="guide-enhance.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="loading.css?v=58" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="loading.css?v=58"></noscript>
+<link rel="stylesheet" href="guide-enhance.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="guide-enhance.css?v=58"></noscript>
-  <link rel="stylesheet" href="cert-enhance.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="cert-enhance.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="cert-enhance.css?v=58"></noscript>
-  <link rel="stylesheet" href="menu-enhance.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="menu-enhance.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="menu-enhance.css?v=58"></noscript>
-  <link rel="stylesheet" href="share.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="share.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="share.css?v=58"></noscript>
-  <link rel="stylesheet" href="i18n.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="i18n.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="i18n.css?v=58"></noscript>
-  <link rel="stylesheet" href="layout-fix.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="layout-fix.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="layout-fix.css?v=58"></noscript>
-  <link rel="stylesheet" href="ai-float.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="ai-float.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="ai-float.css?v=58"></noscript>
-  <link rel="stylesheet" href="ui-ultimate.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="ui-ultimate.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="ui-ultimate.css?v=58"></noscript>
-  <link rel="stylesheet" href="settings.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="settings.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="settings.css?v=58"></noscript>
-  <link rel="stylesheet" href="optimizer-mobile.css?v=58" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="optimizer-mobile.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="optimizer-mobile.css?v=58"></noscript>
-<style>
-/* ===== 标题与图标可见性优化 ===== */
-.menu-logo-title { font-weight: 900 !important; letter-spacing: 4px !important; font-size: 64px !important; background: linear-gradient(180deg,#fff 0%,#e8eaed 50%,#5BA4CF 100%) !important; color: #5BA4CF !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; background-clip: text !important; }
-.menu-title-decor { display: flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; margin: 8px 0 !important; }
-.title-deco-icon { font-size: 28px !important; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)) !important; }
-.title-shield { display: flex !important; align-items: center !important; justify-content: center !important; gap: 6px !important; position: relative !important; }
-.shield-left, .shield-right { font-size: 24px !important; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)) !important; }
-.menu-logo-sub { font-weight: 600 !important; font-size: 16px !important; letter-spacing: 2px !important; color: #9AA0AB !important; }
-.preview-title { font-weight: 800 !important; font-size: 1.6rem !important; }
-.preview-icon { font-size: 3.2rem !important; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
-.game-header .mode-label { font-size: 18px !important; font-weight: 800 !important; }
-.cat-icon { font-size: 28px !important; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
-.cat-title { font-weight: 700 !important; font-size: 15px !important; }
-.menu-section-title { font-weight: 800 !important; font-size: 1.2rem !important; }
-.mode-icon { font-size: 32px !important; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
-.mode-name { font-weight: 700 !important; font-size: 15px !important; }
-</style>
-<!-- Google Fonts removed: using system Chinese fonts for better education-game UX -->
-<!-- 性能优化：预加载关键资源（避免重复） -->
 
-<style>
-/* ===== 折叠式主菜单 ===== */
-.menu-category-btns {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  padding: 20px 16px;
-  margin-bottom: 8px;
-}
-.menu-cat-btn {
-  flex: 1;
-  max-width: 220px;
-  padding: 20px 16px;
-  border-radius: 20px;
-  border: 2px solid rgba(255,255,255,0.1);
-  background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-  backdrop-filter: blur(20px) saturate(1.6);
-  -webkit-backdrop-filter: blur(20px) saturate(1.6);
-  color: var(--text-primary);
-  cursor: pointer;
-  text-align: center;
-  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  transform-style: preserve-3d;
-  position: relative;
-  overflow: hidden;
-}
-.menu-cat-btn::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 50%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
-  pointer-events: none;
-  border-radius: 20px 20px 0 0;
-}
-.menu-cat-btn:hover {
-  transform: translateY(-4px) scale(1.02);
-  border-color: var(--cyber-blue);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 30px rgba(0,212,255,0.15);
-}
-.menu-cat-btn:active {
-  transform: translateY(0) scale(0.98);
-}
-.menu-cat-btn.active {
-  border-color: var(--cyber-blue);
-  background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(124,77,255,0.1));
-  box-shadow: 0 0 30px rgba(0,212,255,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
-}
-.menu-cat-btn .cat-icon {
-  font-size: 36px;
-  display: block;
-  margin-bottom: 8px;
-}
-.menu-cat-btn .cat-title {
-  font-size: 18px;
-  font-weight: 700;
-  display: block;
-}
-.menu-cat-btn .cat-count {
-  font-size: 12px;
-  color: rgba(255,255,255,0.4);
-  margin-top: 4px;
-  display: block;
-}
-.menu-cat-btn.battle-btn .cat-icon { animation-delay: 0.5s; }
+<!-- 预获取非关键资源（空闲时加载） -->
+<link rel="prefetch" href="juice.js?v=58" as="script">
+<link rel="prefetch" href="visual-fx.js?v=58" as="script">
+<link rel="prefetch" href="v10-interactions.js?v=58" as="script">
+<link rel="prefetch" href="menu-enhance.js?v=58" as="script">
+<link rel="prefetch" href="share.js?v=58" as="script">
+<link rel="prefetch" href="i18n.js?v=58" as="script">
+<link rel="prefetch" href="bg-themes.js?v=58" as="script">
+<link rel="prefetch" href="liquid-glass.js?v=58" as="script">
 
-/* 可折叠的菜单网格 */
-.menu-section {
-  max-height: 0 !important;
-  overflow: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-  transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease, margin 0.3s ease, padding 0.3s ease !important;
-  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-.menu-section.expanded {
-  max-height: 2000px !important;
-  overflow: visible !important;
-  opacity: 1 !important;
-  pointer-events: auto !important;
-  margin-bottom: 20px !important;
-  padding-bottom: 80px !important;
-}
-
-/* 收起箭头 */
-.menu-section-title {
-  cursor: pointer;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-right: 40px;
-}
-.menu-section-title .collapse-arrow {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%) rotate(0deg);
-  transition: transform 0.3s ease;
-  font-size: 14px;
-}
-.menu-section.expanded .collapse-arrow {
-  transform: translateY(-50%) rotate(180deg);
-}
-
-/* 返回按钮 */
-.back-to-categories {
-  display: none;
-  padding: 8px 16px;
-  margin-bottom: 12px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 12px;
-  color: rgba(255,255,255,0.6);
-  cursor: pointer;
-  font-size: 13px;
-  transition: background-color 0.2s ease, color 0.2s ease;
-  align-items: center;
-  gap: 6px;
-  width: fit-content;
-}
-.back-to-categories:hover {
-  background: rgba(255,255,255,0.1);
-  color: var(--text-primary);
-}
-.back-to-categories.show {
-  display: flex;
-}
-</style>
-<style>
-/* ===== 减少动画偏好：对眩晕/敏感用户友好 ===== */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-  .ls-hexgrid, .ls-particles, .ls-scanline, .ls-glitch-line,
-  .ls-ring-outer, .ls-ring-spin, .ls-ring-inner,
-  .dust, .light-sweep, .geo-ring, .pulse-ring, .meteor,
-  .gradient-bar, .data-stream, .bg-orb, .bg-grid {
-    display: none !important;
-  }
-}
-</style>
-<style>
-/* ===== 标题最终兜底覆盖 ===== */
-body .menu-logo-title {
-  font-size: 64px !important;
-  font-weight: 900 !important;
-  letter-spacing: 4px !important;
-  text-align: center !important;
-  display: block !important;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.4) !important;
-  background: linear-gradient(180deg,#fff 0%,#e8eaed 50%,#5BA4CF 100%) !important;
-  color: #5BA4CF !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-}
-body .menu-logo {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-align: center !important;
-  padding: 48px 0 24px !important;
-}
-body #page-menu {
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  align-items: center !important;
-  min-height: 100vh !important;
-}
-</style>
-    <!-- ===== 加载界面 v3.0 — 简洁版 ===== -->
 </head>
 <body style="background-color: #0F1117 !important; min-height: 100vh;">
 <div class="cyber-grid"></div>
@@ -738,8 +247,6 @@ body #page-menu {
     <div id="backToCategories" class="back-to-categories" onclick="MenuManager.collapseAll()" role="button" aria-label="返回分类">
       <span>←</span> 返回分类
     </div>
-
-
 
     <!-- 📚 学习区 -->
     <div class="menu-section">
@@ -2204,7 +1711,6 @@ body #page-menu {
     </div>
   </div>
 
-
 </div><!-- /#app -->
 
 <!-- ======== 底部导航栏（独立于页面容器） ======== -->
@@ -2291,22 +1797,30 @@ body #page-menu {
 <!-- 防灾小精灵 -->
 <div id="mascotBubble" class="mascot-bubble" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:50;padding:8px 16px;background:rgba(0,212,255,0.15);border:1px solid rgba(0,212,255,0.2);border-radius:20px;color:#fff;font-size:0.85rem;backdrop-filter:blur(8px);pointer-events:none;transition:opacity 0.3s">你好！我是防灾小精灵！</div>
 
-
-
-<script src="juice.js?v=58" defer></script>
-<script src="visual-fx.js?v=58" defer></script>
 <!-- bgm.js removed: bgm-enhanced.js provides compatibility layer -->
+
+
+<!-- ===== 核心脚本：按依赖顺序加载 ===== -->
+<script src="js/core/utils.js?v=58" defer></script>
+<script src="js/core/game-core.js?v=58" defer></script>
 <script src="cards.js?v=58" defer></script>
 <script src="scenarios.js?v=58" defer></script>
 <script src="kit_data.js?v=58" defer></script>
-<script src="js/core/utils.js?v=58" defer></script>
-<script src="js/core/game-core.js?v=58" defer></script>
 <script src="game-engines.js?v=58" defer></script>
-
 <script src="game.js?v=58" defer></script>
-<script src="v10-interactions.js?v=58" defer></script>
 
+<!-- ===== 加载与交互脚本 ===== -->
+<script src="loading.js?v=58" defer></script>
+<script src="fix-click.js?v=58" defer></script>
+<script src="menu-manager.js?v=58" defer></script>
+
+<!-- ===== 视觉特效脚本 ===== -->
+<script src="juice.js?v=58" defer></script>
+<script src="visual-fx.js?v=58" defer></script>
+<script src="v10-interactions.js?v=58" defer></script>
 <script src="menu-enhance.js?v=58" defer></script>
+
+<!-- ===== 功能模块脚本 ===== -->
 <script src="share.js?v=58" defer></script>
 <script src="i18n.js?v=58" defer></script>
 <script src="bg-themes.js?v=58" defer></script>
@@ -2314,12 +1828,12 @@ body #page-menu {
 <script src="shuffle-fix.js?v=58" defer></script>
 <script src="html-escape.js?v=58" defer></script>
 <script src="engine-cleanup.js?v=58" defer></script>
+<script src="optimizer-mobile.js?v=58" defer></script>
 
-  <!-- 补丁脚本：修复已知问题 -->
+<!-- ===== 补丁脚本：修复已知问题 ===== -->
 <script>
 (function() {
   function patch() {
-    // 修复 KitEngine 缺失方法
     if (typeof KitEngine !== 'undefined') {
       if (!KitEngine.quit) {
         KitEngine.quit = function() {
@@ -2334,7 +1848,6 @@ body #page-menu {
         };
       }
     }
-    // 修复 GameState.save() 无防抖：每次调用直接写 localStorage
     if (typeof GameState !== 'undefined' && GameState.save) {
       var _origSave = GameState.save.bind(GameState);
       var _saveTimer = null;
@@ -2343,7 +1856,6 @@ body #page-menu {
         _saveTimer = setTimeout(_origSave, 300);
       };
     }
-    // 修复 VisualFX resize 监听器不可移除
     if (typeof VisualFX !== 'undefined' && VisualFX.startBattleParticles) {
       var _origStart = VisualFX.startBattleParticles.bind(VisualFX);
       VisualFX.startBattleParticles = function() {
@@ -2351,7 +1863,6 @@ body #page-menu {
         return _origStart.apply(this, arguments);
       };
     }
-    // 修复 AudioContext 浏览器自动暂停
     if (typeof AudioManager !== 'undefined' && AudioManager._getCtx) {
       var _origGetCtx = AudioManager._getCtx.bind(AudioManager);
       AudioManager._getCtx = function() {
@@ -2362,12 +1873,10 @@ body #page-menu {
         return ctx;
       };
     }
-    // XSS 防护：定义全局转义函数
     window._escapeHtml = function(s) {
       if (!s || typeof s !== 'string') return '';
       return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;');
     };
-    // 修复 PKEngine endGame 的 XSS
     if (typeof PKEngine !== 'undefined' && PKEngine.endGame) {
       var _origEndGame = PKEngine.endGame.bind(PKEngine);
       PKEngine.endGame = function() {
@@ -2375,13 +1884,11 @@ body #page-menu {
         var p2 = _escapeHtml(this.p2Name || '玩家2');
         var resultEl = document.getElementById('pkResultPlayers');
         if (resultEl) {
-          var html = '<div class="stat-label">' + p1 + '</div><div class="stat-label">' + p2 + '</div>';
-          resultEl.innerHTML = html;
+          resultEl.innerHTML = '<div class="stat-label">' + p1 + '</div><div class="stat-label">' + p2 + '</div>';
         }
         return _origEndGame.apply(this, arguments);
       };
     }
-    // 修复 AI 导师气泡 XSS
     if (typeof AITutor !== 'undefined' && AITutor._showBubble) {
       var _origShowBubble = AITutor._showBubble.bind(AITutor);
       AITutor._showBubble = function(text) {
@@ -2389,9 +1896,7 @@ body #page-menu {
         return _origShowBubble.call(this, safeText);
       };
     }
-    // 界面优化：平滑滚动
     document.documentElement.style.scrollBehavior = 'smooth';
-    // 界面优化：按钮反馈增强
     var style = document.createElement('style');
     style.textContent = '.btn, .mode-btn, .tool-btn, .quiz-opt { transition: transform 0.15s ease, box-shadow 0.15s ease; } .btn:active, .mode-btn:active, .tool-btn:active, .quiz-opt:active { transform: scale(0.96); }';
     document.head.appendChild(style);
@@ -2404,17 +1909,16 @@ body #page-menu {
 })();
 </script>
 
-<!-- ===== Service Worker 注册（离线可用） ===== -->
+<!-- ===== Service Worker 注册 ===== -->
 <script>
 (function() {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
       navigator.serviceWorker.register('sw-v55.js')
-        .then(function(registration) {
-          console.log('[SW] 注册成功:', registration.scope);
-          // 监听更新
-          registration.addEventListener('updatefound', function() {
-            var newWorker = registration.installing;
+        .then(function(reg) {
+          console.log('[SW] 注册成功:', reg.scope);
+          reg.addEventListener('updatefound', function() {
+            var newWorker = reg.installing;
             newWorker.addEventListener('statechange', function() {
               if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
                 console.log('[SW] 新版本可用，刷新页面后生效');
@@ -2430,7 +1934,7 @@ body #page-menu {
 })();
 </script>
 
-<!-- ===== 加载动画 + AudioContext 解锁 ===== -->
+<!-- ===== 加载进度 + AudioContext 解锁 ===== -->
 <script>
 (function() {
   var tips = [
@@ -2446,91 +1950,12 @@ body #page-menu {
     '// 燃气泄漏禁止开灯和打电话'
   ];
 
-  var bar = document.getElementById('loadBar');
-  var pct = document.getElementById('loadPct');
-  var tip = document.getElementById('loadTip');
+  var bar = document.getElementById('loadingBar');
+  var pct = document.getElementById('loadingPercent');
+  var tip = document.getElementById('loadingTip');
   var screen = document.getElementById('loadingScreen');
-  var canvas = document.getElementById('lsCanvas');
-  var ctx = canvas.getContext('2d');
 
-  // Canvas 粒子系统
-  var W, H, particles = [], lines = [];
-  function resize() {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  // 创建粒子
-  for (var i = 0; i < 60; i++) {
-    particles.push({
-      x: Math.random() * (W||400), y: Math.random() * (H||700),
-      vx: (Math.random()-0.5)*0.4, vy: (Math.random()-0.5)*0.4,
-      r: Math.random()*1.5+0.5,
-      a: Math.random()*0.3+0.1,
-      color: ['#00d4ff','#9b59b6','#ff6b35','#00d4ff'][Math.floor(Math.random()*4)]
-    });
-  }
-  // 随机连线
-  for (var j = 0; j < 15; j++) {
-    lines.push({
-      x1: Math.random()*(W||400), y1: Math.random()*(H||700),
-      x2: Math.random()*(W||400), y2: Math.random()*(H||700),
-      a: Math.random()*0.08+0.02,
-      life: Math.random()*200+100
-    });
-  }
-
-  var frame = 0;
-  function drawParticles() {
-    ctx.clearRect(0, 0, W, H);
-    // 粒子
-    particles.forEach(function(p) {
-      p.x += p.vx; p.y += p.vy;
-      if(p.x<0) p.x=W; if(p.x>W) p.x=0;
-      if(p.y<0) p.y=H; if(p.y>H) p.y=0;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-      ctx.fillStyle = p.color.replace(')', ','+p.a+')').replace('rgb','rgba');
-      ctx.globalAlpha = p.a;
-      ctx.fill();
-    });
-    // 连线
-    lines.forEach(function(l) {
-      l.life--;
-      if(l.life<=0){
-        l.x1=Math.random()*W; l.y1=Math.random()*H;
-        l.x2=Math.random()*W; l.y2=Math.random()*H;
-        l.life=Math.random()*200+100;
-      }
-      ctx.beginPath();
-      ctx.moveTo(l.x1, l.y1); ctx.lineTo(l.x2, l.y2);
-      ctx.strokeStyle = 'rgba(0,212,255,'+l.a+')';
-      ctx.globalAlpha = 1;
-      ctx.lineWidth = 0.5;
-      ctx.stroke();
-    });
-    // 中央六边形脉冲
-    var pulse = Math.sin(frame*0.03)*0.3+0.7;
-    ctx.beginPath();
-    var cx = W/2, cy = H/2, hr = 60*pulse;
-    for(var k=0; k<6; k++){
-      var angle = Math.PI/3*k - Math.PI/6;
-      var px = cx + hr*Math.cos(angle);
-      var py = cy + hr*Math.sin(angle);
-      k===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
-    }
-    ctx.closePath();
-    ctx.strokeStyle = 'rgba(0,212,255,0.08)';
-    ctx.globalAlpha = 1;
-    ctx.lineWidth = 1;
-    ctx.stroke();
-
-    frame++;
-    particleFrame = requestAnimationFrame(drawParticles);
-  }
-  var particleFrame = requestAnimationFrame(drawParticles);
+  if (!bar || !pct || !tip || !screen) return;
 
   // 安全提示轮播
   var tipIdx = 0;
@@ -2550,17 +1975,14 @@ body #page-menu {
   var total = resources.length || 1;
   var loaded = 0;
   var progress = 0;
-  var bar = document.getElementById('loadBar');
-  var pct = document.getElementById('loadPct');
-  var screen = document.getElementById('loadingScreen');
 
   function updateProgress() {
     var target = Math.min(100, Math.round((loaded / total) * 100));
     var animate = function() {
       if (progress < target) {
         progress += Math.max(1, Math.ceil((target - progress) / 3));
-        bar.style.width = progress + '%';
-        pct.textContent = progress + '%';
+        if (bar) bar.style.width = progress + '%';
+        if (pct) pct.textContent = progress + '%';
         requestAnimationFrame(animate);
       } else if (target === 100 && !screen.classList.contains('hidden')) {
         setTimeout(function(){
@@ -2570,7 +1992,6 @@ body #page-menu {
           if (typeof LiquidGlass !== 'undefined') {
             LiquidGlass.createParticles(20);
           }
-          if (particleFrame) cancelAnimationFrame(particleFrame);
           if (tipInterval) clearInterval(tipInterval);
         }, 400);
         setTimeout(function(){ screen.style.display = 'none'; screen.remove(); }, 1200);
@@ -2604,7 +2025,7 @@ body #page-menu {
     }
   }, 4000);
 
-  // 页面可见性优化：隐藏时暂停音频和 Canvas 动画
+  // 页面可见性优化
   document.addEventListener('visibilitychange', function() {
     if (document.hidden) {
       if (typeof BGMEngineV2 !== 'undefined') BGMEngineV2.pause();
@@ -2612,6 +2033,8 @@ body #page-menu {
       if (typeof BGMEngineV2 !== 'undefined') BGMEngineV2.resume();
     }
   });
+
+  // AudioContext 解锁
   function unlockAudio() {
     if (unlockAudio._done) return;
     unlockAudio._done = true;
@@ -2628,6 +2051,6 @@ body #page-menu {
   document.addEventListener('keydown', unlockAudio, { once: true });
 })();
 </script>
-<script src="optimizer-mobile.js?v=58" defer></script>
+
 </body>
 </html>

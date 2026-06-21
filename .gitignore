@@ -1,0 +1,17 @@
+# Screenshots
+screenshots/
+
+# Temp files
+*.tmp
+*.bak
+*.log
+*.cache
+temp_*.json
+*.zip
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Old backup
+yingji-xiaodaren/
