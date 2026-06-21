@@ -872,6 +872,8 @@
 
     // 水波纹点击
     addRipple(element) {
+      if (element.dataset.rippleBound) return;
+      element.dataset.rippleBound = 'true';
       element.classList.add('liquid-ripple');
       element.addEventListener('click', (e) => {
         const ripple = document.createElement('span');

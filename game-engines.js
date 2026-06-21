@@ -552,6 +552,8 @@ const Modal = {
   },
 
   _bindEvents() {
+    if (this._eventsBound) return;
+    this._eventsBound = true;
     this._onClickOutside = (e) => { if (Modal._locked) return; if (e.target === this._overlay) { this.hide(); } };
     this._onKeyDown = (e) => { if (e.key === 'Escape' && this._isOpen) { this.hide(); } };
     this._overlay.addEventListener('click', this._onClickOutside);

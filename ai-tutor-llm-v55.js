@@ -5,8 +5,7 @@
  */
 
 const BailianAPI = {
-  // 注意：API Key 已隐藏，实际使用时需通过后端代理
-  _apiKey: '',
+  _apiKey: null, // ⚠️ 安全: API Key 已移至后端代理，前端不再直接存储。调用前先通过 setApiKey() 设置。
   _baseUrl: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
   _model: 'qwen3.7plus',
   
