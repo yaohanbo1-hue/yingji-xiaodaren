@@ -34,3 +34,6 @@ show-strings.js
 simple-test.js
 test-strings.js
 verify-string-state.js
+final-trace.js
+show-all-braces.js
+show-raw-bytes-*.js
