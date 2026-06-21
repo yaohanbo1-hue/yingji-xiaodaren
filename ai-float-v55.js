@@ -94,6 +94,21 @@
       var panel = document.getElementById('aiFloatPanel');
       if (panel) panel.classList.remove('active');
     },
+
+    // 统一解析 mastery 数据格式（兼容 ai-tutor-v55.js 的百分比整数和对象格式）
+    _getMasteryEntry: function(mastery, key) {
+      var entry = mastery ? mastery[key] : null;
+      if (typeof entry === 'number') {
+        return { total: entry > 0 ? 100 : 0, correct: entry, pct: entry };
+      }
+      if (entry && typeof entry === 'object') {
+        var total = entry.total || 0;
+        var correct = entry.correct || 0;
+        return { total: total, correct: correct, pct: total > 0 ? Math.round(correct / total * 100) : 0 };
+      }
+      return { total: 0, correct: 0, pct: 0 };
+    },
+
     open: function() {
       var panel = document.getElementById('aiFloatPanel');
       if (panel) panel.classList.add('active');
@@ -155,9 +170,9 @@
         var weakest = null, weakestPct = 100;
         var names = { earthquake:'地震', flood:'洪涝', typhoon:'台风', fire:'火灾', lightning:'雷电', blizzard:'暴雪', landslide:'泥石流', drought:'干旱', wildfire:'山火', volcano:'火山', tsunami:'海啸', sandstorm:'沙尘暴' };
         for (var k in mastery) {
-          var d = mastery[k];
+          var d = this._getMasteryEntry(mastery, k);
           if (d.total >= 2) {
-            var pct = Math.round(d.correct / d.total * 100);
+            var pct = d.pct;
             if (pct < weakestPct) { weakestPct = pct; weakest = k; }
           }
         }
@@ -168,8 +183,9 @@
         // 显示用户答过的灾害类型
         var answered = [];
         for (var k in mastery) {
-          if (mastery[k].total > 0 && names[k]) {
-            answered.push({ key: k, name: names[k], count: mastery[k].total });
+          var d = this._getMasteryEntry(mastery, k);
+          if (d.total > 0 && names[k]) {
+            answered.push({ key: k, name: names[k], count: d.total });
           }
         }
         answered.sort(function(a, b) { return b.count - a.count; });
@@ -246,8 +262,8 @@
         html += '<div class="ai-mastery-list">';
         var i = 0;
         for (var key in disasters) {
-          var data = mastery[key] || { total: 0, correct: 0 };
-          var pct = data.total > 0 ? Math.round(data.correct / data.total * 100) : 0;
+          var d = this._getMasteryEntry(mastery, key);
+          var pct = d.pct;
           html += '<div class="ai-mastery-item">';
           html += '<span style="width:70px;flex-shrink:0">' + disasters[key] + '</span>';
           html += '<div class="ai-mastery-bar"><div class="ai-mastery-bar-fill" style="width:' + pct + '%;background:' + colors[i % colors.length] + '"></div></div>';
@@ -310,7 +326,7 @@
 
       // 画数据
       var values = keys.map(function(k) {
-        var d = mastery[k] || { total: 0, correct: 0 };
+        var d = AITutorFloat._getMasteryEntry(mastery, k);
         return d.total > 0 ? d.correct / d.total : 0;
       });
 
@@ -476,9 +492,9 @@
         var best = null, bestPct = 0;
         var worst = null, worstPct = 100;
         for (var k in mastery) {
-          var d = mastery[k];
+          var d = AITutorFloat._getMasteryEntry(mastery, k);
           if (d.total >= 2 && names[k]) {
-            var pct = Math.round(d.correct / d.total * 100);
+            var pct = d.pct;
             if (pct > bestPct) { bestPct = pct; best = k; }
             if (pct < worstPct) { worstPct = pct; worst = k; }
           }
@@ -511,11 +527,12 @@
       // 查询具体灾害类型的答题情况
       for (var k in names) {
         if (q.indexOf(names[k]) !== -1 && (q.indexOf('答对') !== -1 || q.indexOf('答错') !== -1 || q.indexOf('几题') !== -1 || q.indexOf('多少') !== -1)) {
-          if (!data || !data.mastery || !data.mastery[k]) {
+          var entry = data && data.mastery ? AITutorFloat._getMasteryEntry(data.mastery, k) : { total: 0, correct: 0, pct: 0 };
+          if (!entry.total) {
             return '你还没有做过' + names[k] + '相关的题目哦！\n\n点击下面的按钮开始学习：';
           }
-          var d = data.mastery[k];
-          var pct = d.total > 0 ? Math.round(d.correct / d.total * 100) : 0;
+          var d = entry;
+          var pct = d.pct;
           var reply = icons[k] + ' ' + names[k] + '答题情况：\n\n';
           reply += '• 总题数：' + d.total + ' 题\n';
           reply += '• 答对：' + d.correct + ' 题\n';
@@ -536,8 +553,8 @@
       // 帮我提高XX
       for (var k in names) {
         if (q.indexOf('提高') !== -1 && q.indexOf(names[k]) !== -1) {
-          var d = data && data.mastery && data.mastery[k] ? data.mastery[k] : { total: 0, correct: 0 };
-          var pct = d.total > 0 ? Math.round(d.correct / d.total * 100) : 0;
+          var d = data && data.mastery ? AITutorFloat._getMasteryEntry(data.mastery, k) : { total: 0, correct: 0, pct: 0 };
+          var pct = d.pct;
           
           var reply = '💪 提高' + names[k] + '掌握度的计划：\n\n';
           reply += '📍 当前水平：' + (d.total > 0 ? pct + '% (' + d.correct + '/' + d.total + ')' : '还未开始') + '\n\n';
@@ -567,9 +584,9 @@
         var mastery = data.mastery || {};
         var worst = null, worstPct = 100;
         for (var k in mastery) {
-          var d = mastery[k];
+          var d = AITutorFloat._getMasteryEntry(mastery, k);
           if (d.total >= 2 && names[k]) {
-            var pct = Math.round(d.correct / d.total * 100);
+            var pct = d.pct;
             if (pct < worstPct) { worstPct = pct; worst = k; }
           }
         }
@@ -589,9 +606,9 @@
         var mastery = data.mastery || {};
         var worst = null, worstPct = 100;
         for (var k in mastery) {
-          var d = mastery[k];
+          var d = AITutorFloat._getMasteryEntry(mastery, k);
           if (d.total >= 2 && names[k]) {
-            var pct = Math.round(d.correct / d.total * 100);
+            var pct = d.pct;
             if (pct < worstPct) { worstPct = pct; worst = k; }
           }
         }
@@ -612,7 +629,6 @@
 
       // 学习技巧
       if (q.indexOf('技巧') !== -1 || q.indexOf('方法') !== -1 || q.indexOf('怎么学') !== -1) {
-        return '📚 高效学习技巧：\n\n';
         return '📚 高效学习技巧：\n\n1. **系统学习**：先进入"学习模式"打好基础\n2. **盲盒巩固**：开盲盒随机抽取知识卡\n3. **错题复习**：定期查看"错题本"复习\n4. **实战测试**：用"大擂台"检验学习成果\n5. **每日打卡**：坚持"每日签到"保持节奏\n\n💡 关键：理解 > 死记硬背，多思考"为什么"！';
       }
 

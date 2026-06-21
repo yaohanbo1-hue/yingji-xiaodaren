@@ -22,6 +22,14 @@ const BailianAPI = {
     return this._apiKey && this._apiKey.length > 10;
   },
   
+  getApiKey() {
+    return this._apiKey;
+  },
+  
+  setApiKey(key) {
+    this._apiKey = key;
+  },
+  
   async chat(userMessage, history = []) {
     // 1. 检查请求锁
     if (this._requestLock) {
@@ -90,26 +98,30 @@ const BailianAPI = {
       });
 
       clearTimeout(timeoutId);
-      this._requestLock = false;
 
       if (!response.ok) {
         const error = await response.json().catch(() => ({}));
         if (response.status === 401) {
+          this._requestLock = false;
           return { error: 'API Key 无效或已过期' };
         }
         if (response.status === 429) {
+          this._requestLock = false;
           return { error: '请求太频繁，请稍后再试' };
         }
-        return { error: error.error?.message || `API 错误 (${response.status})` };
+        this._requestLock = false;
+        return { error: (error.error && error.error.message) || `API 错误 (${response.status})` };
       }
 
       const data = await response.json();
-      const answer = data.choices?.[0]?.message?.content;
+      const answer = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
       
       if (!answer) {
+        this._requestLock = false;
         return { error: 'API 返回为空' };
       }
 
+      this._requestLock = false;
       return { answer: answer };
     } catch (e) {
       this._requestLock = false;
