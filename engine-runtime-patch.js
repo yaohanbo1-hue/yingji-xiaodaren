@@ -58,7 +58,7 @@
   };
 
   // 每30秒清理一次失效缓存
-  setInterval(function() {
+  var _cacheInterval = setInterval(function() {
     if (!document.body) return;
     _domCache.forEach(function(el, key) {
       if (!el || !document.body.contains(el)) {
@@ -66,6 +66,11 @@
       }
     });
   }, 30000);
+  
+  // 页面卸载时清理定时器
+  window.addEventListener('beforeunload', function() {
+    clearInterval(_cacheInterval);
+  });
 
   // ===== 3. 批量 DOM 渲染 =====
   window._batchRender = function(container, elements) {

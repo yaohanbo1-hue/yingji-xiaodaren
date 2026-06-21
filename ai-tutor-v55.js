@@ -784,7 +784,7 @@ const AITutorEngine = {
         style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,212,255,0.2);border-radius:8px;color:#fff;font-size:14px;margin-bottom:12px;box-sizing:border-box;"
         value="${isDefault ? '' : currentKey}">
       <div style="display:flex;gap:8px;justify-content:flex-end;">
-        <button onclick="document.getElementById('apiKeyDialog').remove()" 
+        <button onclick="var d=document.getElementById('apiKeyDialog');d&&d.remove()" 
           style="padding:8px 16px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:8px;color:#fff;cursor:pointer;font-size:14px;">取消</button>
         <button onclick="AITutorEngine.saveApiKey()" 
           style="padding:8px 16px;background:linear-gradient(135deg,#00d4ff,#7c4dff);border:none;border-radius:8px;color:#fff;cursor:pointer;font-size:14px;font-weight:600;">保存</button>

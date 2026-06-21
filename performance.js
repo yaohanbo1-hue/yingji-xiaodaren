@@ -108,6 +108,8 @@
     
     _setupMemoryMonitor() {
       var self = this;
+      // 避免重复创建定时器
+      if (this._memoryInterval) clearInterval(this._memoryInterval);
       // 定期检查内存使用，保存引用以便清理
       this._memoryInterval = setInterval(function() {
         if (performance.memory) {
