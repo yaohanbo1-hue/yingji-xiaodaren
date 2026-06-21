@@ -5,7 +5,7 @@
  */
 
 /* 打印按钮 */
-.cert-print-btn {
+.cert-print-btn{
   padding: 12px 24px;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -14,7 +14,7 @@
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
   margin-left: 10px;
 }
 
@@ -30,10 +30,8 @@
   gap: 10px;
   justify-content: center;
   flex-wrap: wrap;
-}
-
-/* 批量导出按钮 */
-.cert-export-all-btn {
+}/* 批量导出按钮 */
+.cert-export-all-btn{
   padding: 10px 20px;
   border-radius: 10px;
   border: 1px solid rgba(59, 130, 246, 0.3);
@@ -42,7 +40,7 @@
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
   margin-top: 15px;
 }
 

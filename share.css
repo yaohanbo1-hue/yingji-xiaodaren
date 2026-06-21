@@ -53,9 +53,7 @@
   margin: 0;
   font-size: 18px;
   color: #f8fafc;
-}
-
-.share-modal-close {
+}.share-modal-close{
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -64,7 +62,7 @@
   color: rgba(255, 255, 255, 0.6);
   font-size: 16px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s, border-color 0.2s;
 }
 
 .share-modal-close:hover {
@@ -82,9 +80,7 @@
   gap: 8px;
   margin-top: 16px;
   flex-wrap: wrap;
-}
-
-.share-template-btn {
+}.share-template-btn{
   flex: 1;
   min-width: 100px;
   padding: 10px 12px;
@@ -94,7 +90,7 @@
   color: rgba(255, 255, 255, 0.7);
   font-size: 12px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s, border-color 0.2s;
 }
 
 .share-template-btn:hover {
@@ -112,9 +108,7 @@
 .share-modal-actions {
   display: flex;
   gap: 10px;
-}
-
-.share-download-btn {
+}.share-download-btn{
   flex: 1;
   padding: 14px 20px;
   border-radius: 12px;
@@ -124,16 +118,14 @@
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s, border-color 0.2s;
 }
 
 .share-download-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
-}
-
-/* 浮动分享按钮 */
-.share-btn-float {
+}/* 浮动分享按钮 */
+.share-btn-float{
   position: fixed;
   bottom: 100px;
   right: 20px;
@@ -147,7 +139,7 @@
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s, border-color 0.3s;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 

@@ -173,9 +173,7 @@ body {
 /* ===== 分类按钮 — 简洁统一 ===== */
 .menu-category-btns {
   gap: 8px !important;
-}
-
-.menu-cat-btn {
+}.menu-cat-btn{
   background: var(--glass-bg) !important;
   border: 1px solid var(--glass-border) !important;
   backdrop-filter: blur(8px) !important;
@@ -183,7 +181,7 @@ body {
   border-radius: 12px !important;
   padding: 12px 16px !important;
   box-shadow: none !important;
-  transition: all 0.2s ease !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease!important;
 }
 
 .menu-cat-btn:hover {
@@ -230,10 +228,8 @@ body {
 .collapse-arrow {
   font-size: 10px !important;
   color: var(--text-dim) !important;
-}
-
-/* ===== 模式按钮 — 统一简洁 ===== */
-.mode-btn {
+}/* ===== 模式按钮 — 统一简洁 ===== */
+.mode-btn{
   background: var(--glass-bg) !important;
   backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
@@ -241,7 +237,7 @@ body {
   border-radius: 36px !important;
   padding: 48px 24px !important;
   box-shadow: none !important;
-  transition: all 0.2s ease !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease!important;
   position: relative;
   overflow: hidden;
   min-height: 220px !important;

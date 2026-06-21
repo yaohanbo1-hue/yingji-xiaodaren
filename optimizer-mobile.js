@@ -406,9 +406,9 @@
         const btn = e.target.closest('.mode-btn, .menu-cat-btn, .tool-btn, .quiz-opt, .choice-btn, .btn-primary, .btn-secondary, .ai-fab, .back-float');
         if (btn) {
           btn.classList.add('touch-active');
-          // 添加轻微触觉反馈
+          // 添加触觉反馈
           if (navigator.vibrate && self._isMobile) {
-            navigator.vibrate(5);
+            navigator.vibrate(12);
           }
         }
       }, { passive: true });

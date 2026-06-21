@@ -138,15 +138,13 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
-}
-
-.stat-card {
+}.stat-card{
   padding: 14px 12px;
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.06);
   text-align: center;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .stat-card:hover {
@@ -222,9 +220,7 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 6px;
   margin-top: 16px;
-}
-
-.legend-item {
+}.legend-item{
   display: flex;
   align-items: center;
   gap: 6px;
@@ -232,7 +228,7 @@
   border-radius: 8px;
   font-size: 11px;
   color: rgba(148, 163, 184, 0.8);
-  transition: all 0.2s;
+  transition: transform 0.2s, opacity 0.2s, box-shadow 0.2s, background-color 0.2s, border-color 0.2s;
 }
 
 .legend-item:hover {
@@ -328,9 +324,7 @@
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 10px;
-}
-
-.weak-tag {
+}.weak-tag{
   display: inline-flex;
   align-items: center;
   gap: 5px;
@@ -342,7 +336,7 @@
   border: 1px solid rgba(239, 68, 68, 0.2);
   color: #FCA5A5;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: transform 0.2s, opacity 0.2s, box-shadow 0.2s, background-color 0.2s, border-color 0.2s;
 }
 
 .weak-tag:hover {
@@ -462,9 +456,7 @@
 .terminal-actions {
   display: flex;
   gap: 6px;
-}
-
-.terminal-action-btn {
+}.terminal-action-btn{
   width: 28px;
   height: 28px;
   border-radius: 8px;
@@ -476,7 +468,7 @@
   justify-content: center;
   cursor: pointer;
   font-size: 12px;
-  transition: all 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s, border-color 0.2s;
 }
 
 .terminal-action-btn:hover {
@@ -575,9 +567,7 @@
   display: flex;
   gap: 8px;
   align-items: center;
-}
-
-.terminal-input {
+}.terminal-input{
   flex: 1;
   padding: 10px 14px;
   background: rgba(255, 255, 255, 0.04);
@@ -586,7 +576,7 @@
   color: #F8FAFC;
   font-size: 13px;
   outline: none;
-  transition: all 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .terminal-input:focus {
@@ -597,9 +587,7 @@
 
 .terminal-input::placeholder {
   color: rgba(148, 163, 184, 0.4);
-}
-
-.terminal-send-btn {
+}.terminal-send-btn{
   width: 38px;
   height: 38px;
   border-radius: 12px;
@@ -611,7 +599,7 @@
   justify-content: center;
   cursor: pointer;
   font-size: 16px;
-  transition: all 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s, border-color 0.2s;
   box-shadow: 0 2px 8px rgba(96, 165, 250, 0.3);
 }
 
@@ -630,9 +618,7 @@
   gap: 6px;
   padding: 10px 14px 12px;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.suggestion-btn {
+}.suggestion-btn{
   padding: 6px 12px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.03);
@@ -640,7 +626,7 @@
   color: rgba(148, 163, 184, 0.7);
   font-size: 12px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s, border-color 0.2s;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -659,15 +645,13 @@
   grid-template-columns: 1fr 1fr;
   gap: 10px;
   animation: cardFadeIn 0.6s ease-out 0.4s both;
-}
-
-.action-btn {
+}.action-btn{
   padding: 14px 16px;
   border-radius: 16px;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s, border-color 0.2s;
   border: none;
   display: flex;
   flex-direction: column;
@@ -829,10 +813,8 @@
 .ai-msg.ai-kb .msg-avatar {
   background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(52, 211, 153, 0.15));
   border: 1px solid rgba(16, 185, 129, 0.3);
-}
-
-/* LLM 启用按钮 */
-.ai-llm-toggle-btn {
+}/* LLM 启用按钮 */
+.ai-llm-toggle-btn{
   width: 32px;
   height: 32px;
   border-radius: 10px;
@@ -844,7 +826,7 @@
   justify-content: center;
   cursor: pointer;
   font-size: 14px;
-  transition: all 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s, border-color 0.2s;
   margin-right: 4px;
 }
 

@@ -53,10 +53,8 @@
   display: flex !important;
   flex-direction: column !important;
   gap: 12px !important;
-}
-
-/* 每个设置项 */
-#page-settings h4 {
+}/* 每个设置项 */
+#page-settings h4{
   display: flex !important;
   align-items: center !important;
   gap: 10px !important;
@@ -69,7 +67,7 @@
   font-size: 15px !important;
   font-weight: 600 !important;
   cursor: pointer !important;
-  transition: all 0.2s ease !important;
+  transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease!important;
 }
 
 #page-settings h4:hover {
@@ -82,12 +80,10 @@
 #page-settings h4 + p,
 #page-settings p {
   display: none !important;
-}
-
-/* 设置项右侧按钮/状态 */
+}/* 设置项右侧按钮/状态 */
 #page-settings .btn,
 #page-settings button,
-#page-settings [onclick] {
+#page-settings [onclick]{
   margin-left: auto !important;
   padding: 6px 16px !important;
   background: rgba(59,130,246,0.15) !important;
@@ -97,7 +93,7 @@
   font-size: 12px !important;
   font-weight: 500 !important;
   cursor: pointer !important;
-  transition: all 0.2s ease !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease!important;
 }
 
 #page-settings .btn:hover,
@@ -141,11 +137,9 @@
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important;
   gap: 12px !important;
   padding: 0 !important;
-}
-
-/* 每个成就卡片 */
+}/* 每个成就卡片 */
 #page-achievements .achievement-item,
-#page-achievements [class*="achievement"] {
+#page-achievements [class*="achievement"]{
   background: rgba(255,255,255,0.03) !important;
   border: 1px solid rgba(255,255,255,0.08) !important;
   border-radius: 14px !important;
@@ -153,7 +147,7 @@
   display: flex !important;
   align-items: center !important;
   gap: 12px !important;
-  transition: all 0.2s ease !important;
+  transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease!important;
 }
 
 #page-achievements .achievement-item:hover,
@@ -219,18 +213,16 @@
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
   gap: 16px !important;
   padding: 0 !important;
-}
-
-/* 每个角色卡片 */
+}/* 每个角色卡片 */
 #page-character .character-card,
-#page-character [class*="character"] {
+#page-character [class*="character"]{
   background: rgba(255,255,255,0.03) !important;
   border: 1px solid rgba(255,255,255,0.08) !important;
   border-radius: 16px !important;
   padding: 20px !important;
   text-align: center !important;
   cursor: pointer !important;
-  transition: all 0.3s ease !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease!important;
 }
 
 #page-character .character-card:hover,
@@ -299,17 +291,15 @@
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
   gap: 12px !important;
   padding: 0 !important;
-}
-
-/* 每个统计卡片 */
+}/* 每个统计卡片 */
 #page-stats .stat-card,
-#page-stats [class*="stat"] {
+#page-stats [class*="stat"]{
   background: rgba(255,255,255,0.03) !important;
   border: 1px solid rgba(255,255,255,0.08) !important;
   border-radius: 14px !important;
   padding: 16px !important;
   text-align: center !important;
-  transition: all 0.2s ease !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease!important;
 }
 
 #page-stats .stat-card:hover,
@@ -350,17 +340,15 @@
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
   gap: 12px !important;
   padding: 0 !important;
-}
-
-/* 商品卡片 */
+}/* 商品卡片 */
 #page-shop .shop-item,
-#page-shop [class*="shop-item"] {
+#page-shop [class*="shop-item"]{
   background: rgba(255,255,255,0.03) !important;
   border: 1px solid rgba(255,255,255,0.08) !important;
   border-radius: 14px !important;
   padding: 16px !important;
   text-align: center !important;
-  transition: all 0.2s ease !important;
+  transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease!important;
 }
 
 #page-shop .shop-item:hover,
@@ -446,10 +434,8 @@
 .page-content > div:not(.game-header):not(.back-float):not(.menu-toolbar) > *:nth-child(7) { animation-delay: 0.14s; }
 .page-content > div:not(.game-header):not(.back-float):not(.menu-toolbar) > *:nth-child(8) { animation-delay: 0.16s; }
 .page-content > div:not(.game-header):not(.back-float):not(.menu-toolbar) > *:nth-child(9) { animation-delay: 0.18s; }
-.page-content > div:not(.game-header):not(.back-float):not(.menu-toolbar) > *:nth-child(10) { animation-delay: 0.20s; }
-
-/* ===== 返回按钮美化 ===== */
-.back-float {
+.page-content > div:not(.game-header):not(.back-float):not(.menu-toolbar) > *:nth-child(10) { animation-delay: 0.20s; }/* ===== 返回按钮美化 ===== */
+.back-float{
   position: fixed !important;
   top: 16px !important;
   left: 16px !important;
@@ -466,7 +452,7 @@
   align-items: center !important;
   justify-content: center !important;
   cursor: pointer !important;
-  transition: all 0.2s ease !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease!important;
   padding: 0 !important;
   min-width: auto !important;
 }

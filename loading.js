@@ -32,12 +32,14 @@ const LoadingScreen = {
     var overlay = document.createElement('div');
     overlay.id = 'loadingScreen';
     overlay.innerHTML = `
-      <div class="loading-container">
+      <div class="loading-container" id="loadingContainer">
         <div class="loading-logo">
           <div class="loading-icon">🌪️</div>
           <h1 class="loading-title">应急小达人</h1>
           <p class="loading-subtitle">Disaster Blind Box Command HQ</p>
         </div>
+        
+        <div class="loading-percent" id="loadingPercent">0%</div>
         
         <div class="loading-bar-container">
           <div class="loading-bar"></div>
@@ -57,20 +59,17 @@ const LoadingScreen = {
     // 动画进度条
     var bar = overlay.querySelector('.loading-bar');
     var tip = overlay.querySelector('#loadingTip');
-    var tips = [
-      '正在加载防灾知识库...',
-      '准备 369 张知识卡牌...',
-      '初始化灾害模拟引擎...',
-      '加载 AI 导师系统...',
-      '准备就绪！'
-    ];
-    
+    var percentEl = overlay.querySelector('#loadingPercent');
+    var container = overlay.querySelector('#loadingContainer');
     var progress = 0;
     var tipIndex = 0;
     
     var interval = setInterval(function() {
       progress += 2;
       bar.style.width = progress + '%';
+      if (percentEl) {
+        percentEl.textContent = progress + '%';
+      }
       
       if (progress >= 20 * (tipIndex + 1) && tipIndex < tips.length - 1) {
         tipIndex++;
@@ -83,6 +82,13 @@ const LoadingScreen = {
       
       if (progress >= 100) {
         clearInterval(interval);
+        if (percentEl) {
+          percentEl.textContent = '100% 🎉';
+        }
+        if (container) {
+          container.classList.add('loading-complete');
+        }
+        overlay.classList.add('loading-complete-flash');
         setTimeout(function() {
           overlay.classList.add('loading-fade-out');
           setTimeout(function() {
@@ -93,7 +99,7 @@ const LoadingScreen = {
             // 品牌动画结束后显示骨架屏
             LoadingScreen._showSkeleton();
           }, 500);
-        }, 300);
+        }, 600);
       }
     }, 50); // 总共约 2.5 秒
   },

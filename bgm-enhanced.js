@@ -424,3 +424,26 @@ document.addEventListener('touchstart', initAudio, { once: true });
 
 // 导出到全局
 window.BGMEngineV2 = BGMEngineV2;
+
+// ===== BGMEngine 兼容层 =====
+// 将旧版 BGMEngine API 代理到 BGMEngineV2
+const BGMEngine = {
+  init() { BGMEngineV2.init(); },
+  playMenuBgm() { BGMEngineV2.playMenu(); },
+  playBattleBgm() { BGMEngineV2.playBattle(); },
+  playScenarioBgm() { BGMEngineV2.playScenario(); },
+  playVictoryBgm() { BGMEngineV2.playVictory(); },
+  stop() { BGMEngineV2.stop(); },
+  pause() { BGMEngineV2.pause(); },
+  resume() { BGMEngineV2.resume(); },
+  setVolume(v) {
+    BGMEngineV2.setVolume(v);
+    // 同步到 GameState 持久化
+    if (typeof GameState !== 'undefined' && GameState._data && GameState._data.settings) {
+      GameState._data.settings.bgmVolume = Math.round(v * 100);
+      if (typeof GameState.save === 'function') GameState.save();
+    }
+  },
+  setBPM(bpm) { /* BGMEngineV2 内部管理 BPM，无需外部设置 */ }
+};
+window.BGMEngine = BGMEngine;

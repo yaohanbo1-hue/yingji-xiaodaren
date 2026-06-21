@@ -127,9 +127,7 @@ body {
   gap: 12px;
   width: 100%;
   padding: 8px 0;
-}
-
-.quiz-opt, .scenario-opt {
+}.quiz-opt, .scenario-opt{
   display: flex;
   align-items: center;
   gap: 14px;
@@ -140,7 +138,7 @@ body {
   font-size: 0.95em;
   line-height: 1.5;
   text-align: left;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   transform: perspective(var(--perspective)) rotateX(0deg) rotateY(0deg) translateZ(0px);
   will-change: transform, box-shadow;
 }
@@ -402,10 +400,8 @@ body {
 @keyframes streakPulse {
   0%,100% { opacity: 1; transform: translateZ(6px) scale(1); }
   50% { opacity: 0.8; transform: translateZ(10px) scale(1.05); }
-}
-
-/* ===== 3D 按钮 ===== */
-.btn-primary, .quiz-next-btn {
+}/* ===== 3D 按钮 ===== */
+.btn-primary, .quiz-next-btn{
   position: relative;
   padding: 14px 36px;
   border: none;
@@ -421,7 +417,7 @@ body {
   text-shadow: 0 1px 3px rgba(0,0,0,0.3);
   transform-style: preserve-3d;
   transform: perspective(800px) rotateX(0deg);
-  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   box-shadow: 0 6px 20px rgba(0,212,255,0.3), 0 0 40px rgba(0,212,255,0.1), inset 0 1px 0 rgba(255,255,255,0.25);
 }
 
@@ -443,13 +439,11 @@ body {
   transition: left 0.6s;
 }
 
-.btn-primary:hover::before, .quiz-next-btn:hover::before { left: 100%; }
-
-/* ===== 3D 菜单按钮 ===== */
-.mode-btn {
+.btn-primary:hover::before, .quiz-next-btn:hover::before { left: 100%; }/* ===== 3D 菜单按钮 ===== */
+.mode-btn{
   padding: 48px 24px !important;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px);
   min-height: 220px !important;
   width: 100% !important;
@@ -660,12 +654,10 @@ body {
   background: linear-gradient(90deg, transparent 0%, rgba(0, 212, 255, 0.2) 50%, transparent 100%);
   pointer-events: auto;
   z-index: 1;
-}
-
-/* 工具按钮 3D 增强 */
-.tool-btn {
+}/* 工具按钮 3D 增强 */
+.tool-btn{
   position: relative;
-  transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   border-radius: 12px !important;
 }
 .tool-btn:hover {
@@ -749,12 +741,10 @@ body {
 @keyframes resultPop3D {
   0% { transform: perspective(800px) scale(0.3) rotateX(20deg); opacity: 0; }
   100% { transform: perspective(800px) scale(1) rotateX(0deg); opacity: 1; }
-}
-
-/* 成就/统计卡片 3D */
-.stat-card {
+}/* 成就/统计卡片 3D */
+.stat-card{
   transform-style: preserve-3d;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 .stat-card:hover {
   transform: perspective(800px) rotateY(-5deg) translateZ(15px) translateY(-4px);
@@ -777,16 +767,14 @@ body {
 @keyframes versionPulse {
   0%, 100% { box-shadow: 0 0 8px rgba(0, 212, 255, 0.2); }
   50% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.4), 0 0 40px rgba(0, 212, 255, 0.1); }
-}
-
-/* 返回按钮液态玻璃 */
-.back-float {
+}/* 返回按钮液态玻璃 */
+.back-float{
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
   backdrop-filter: blur(12px) saturate(1.4);
   -webkit-backdrop-filter: blur(12px) saturate(1.4);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 14px;
-  transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 .back-float:hover {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));

@@ -129,6 +129,94 @@ const SFXEngine = {
     this._tone(baseFreq * 1.5, 0.08, 'triangle', 0.15, 0.03);
   },
   
+  // 游戏开始号角
+  start() {
+    // 上行号角 — 像出发信号
+    this._tone(523, 0.2, 'sine', 0.25);
+    this._tone(659, 0.2, 'sine', 0.25, 0.1);
+    this._tone(784, 0.3, 'sine', 0.3, 0.2);
+    this._tone(1047, 0.4, 'sine', 0.25, 0.3);
+  },
+  
+  // 倒计时警告 — 急促提示音
+  timerWarn() {
+    this._tone(880, 0.08, 'square', 0.12);
+    this._tone(880, 0.08, 'square', 0.12, 0.1);
+  },
+  
+  // 页面切换 — 轻快的 whoosh
+  whoosh() {
+    const noise = this._ctx.createOscillator();
+    const gain = this._ctx.createGain();
+    const filter = this._ctx.createBiquadFilter();
+    
+    noise.type = 'sine';
+    noise.frequency.setValueAtTime(800, this._ctx.currentTime);
+    noise.frequency.exponentialRampToValueAtTime(200, this._ctx.currentTime + 0.2);
+    
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(2000, this._ctx.currentTime);
+    filter.frequency.exponentialRampToValueAtTime(400, this._ctx.currentTime + 0.2);
+    
+    gain.gain.setValueAtTime(0, this._ctx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.1, this._ctx.currentTime + 0.03);
+    gain.gain.exponentialRampToValueAtTime(0.001, this._ctx.currentTime + 0.2);
+    
+    noise.connect(filter);
+    filter.connect(gain);
+    gain.connect(this._masterGain);
+    
+    noise.start(this._ctx.currentTime);
+    noise.stop(this._ctx.currentTime + 0.22);
+  },
+  
+  // 翻牌 — 清脆的纸片翻转
+  flip() {
+    this._tone(600, 0.05, 'sine', 0.12);
+    this._tone(900, 0.06, 'sine', 0.08, 0.04);
+  },
+  
+  // 开宝箱/盲盒 — 华丽解锁音
+  chestOpen() {
+    this._tone(523, 0.08, 'sine', 0.2);
+    this._tone(659, 0.08, 'sine', 0.2, 0.06);
+    this._tone(784, 0.08, 'sine', 0.2, 0.12);
+    this._tone(1047, 0.15, 'sine', 0.25, 0.18);
+    this._tone(1319, 0.2, 'sine', 0.2, 0.24);
+  },
+  
+  // 抽卡/扭蛋 — 机械滚动感
+  gacha() {
+    this._tone(400, 0.05, 'triangle', 0.15);
+    this._tone(500, 0.05, 'triangle', 0.15, 0.05);
+    this._tone(600, 0.05, 'triangle', 0.15, 0.1);
+    this._tone(700, 0.05, 'triangle', 0.15, 0.15);
+    this._tone(800, 0.08, 'sine', 0.2, 0.2);
+  },
+  
+  // 击中 — 清脆打击
+  hit() {
+    this._tone(200, 0.1, 'square', 0.2);
+    this._tone(150, 0.15, 'sawtooth', 0.15, 0.02);
+  },
+  
+  // 受击 — 低沉受伤
+  hurt() {
+    this._tone(150, 0.2, 'sawtooth', 0.2);
+    this._tone(100, 0.25, 'triangle', 0.15, 0.05);
+  },
+  
+  // 卡牌掉落 — 轻盈掉落
+  drop() {
+    this._tone(800, 0.08, 'sine', 0.15);
+    this._tone(600, 0.1, 'sine', 0.1, 0.05);
+  },
+  
+  // Boss登场别名
+  boss_appear() {
+    this.bossEntrance();
+  },
+  
   // Boss 登场
   bossEntrance() {
     // 低沉鼓声

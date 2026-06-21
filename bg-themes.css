@@ -19,15 +19,13 @@
 /* ===== 基础层（所有主题共用） ===== */
 body, html {
   transition: background 1.2s ease, color 0.8s ease;
-}
-
-/* 背景过渡层 */
-.bg-theme-layer {
+}/* 背景过渡层 */
+.bg-theme-layer{
   position: fixed;
   inset: 0;
   z-index: -10;
   pointer-events: none;
-  transition: all 1.2s ease;
+  transition: transform 1.2s ease, opacity 1.2s ease, box-shadow 1.2s ease, background-color 1.2s ease, border-color 1.2s ease;
 }
 
 /* ===== 主题 1：深空指挥官（默认） ===== */

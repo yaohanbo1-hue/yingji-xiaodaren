@@ -16,14 +16,12 @@
   transform: translate(-50%, -50%);
   transition: opacity 0.3s ease;
   mix-blend-mode: screen;
-}
-
-/* 菜单卡片增强 */
+}/* 菜单卡片增强 */
 .menu-card,
-.mode-card {
+.mode-card{
   position: relative;
   overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* 卡片内部光晕 */
@@ -108,11 +106,9 @@
 .menu-icon {
   display: inline-block;
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-/* 菜单项悬浮效果增强 */
-.menu-item {
-  transition: all 0.2s ease;
+}/* 菜单项悬浮效果增强 */
+.menu-item{
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .menu-item:hover {
@@ -131,11 +127,9 @@
 .mode-card:hover .mode-card-icon {
   transform: scale(1.1) rotate(5deg);
   filter: drop-shadow(0 0 10px currentColor);
-}
-
-.menu-card-icon,
-.mode-card-icon {
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}.menu-card-icon,
+.mode-card-icon{
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* 菜单标题文字光效 */
@@ -145,11 +139,9 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}
-
-.menu-card-title,
-.mode-card-title {
-  transition: all 0.3s ease;
+}.menu-card-title,
+.mode-card-title{
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
 /* 菜单描述文字 */

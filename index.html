@@ -67,10 +67,7 @@
 <meta name="theme-color" content="#00d4ff">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<!-- 缓存控制：强制浏览器每次获取最新资源 -->
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
+
 <meta name="apple-mobile-web-app-title" content="应急小达人">
 <meta name="description" content="面向中小学生的防灾教育互动游戏，通过盲盒开箱、答题闯关、情景模拟等趣味方式学习防灾知识。覆盖12种自然灾害，369张知识卡牌，32种游戏模式。">
 <meta name="keywords" content="防灾教育,应急科普,灾害模拟,互动游戏,中小学生,安全教育">
@@ -127,10 +124,10 @@ body:not(.app-ready) .page.active{opacity:1;visibility:visible;pointer-events:au
 body:not(.app-ready) #menuToolbar,body:not(.app-ready) .menu-toolbar{display:none!important}
 /* ===== 底部栏精致设计 v7（内联保底） ===== */
 .menu-toolbar{display:flex!important;justify-content:space-around!important;align-items:center!important;gap:4px!important;padding:10px 8px calc(10px + env(safe-area-inset-bottom,0px))!important;position:fixed!important;bottom:0!important;left:0!important;right:0!important;z-index:10000!important;max-width:900px!important;margin:0 auto!important;background:rgba(12,12,35,0.94)!important;backdrop-filter:blur(32px) saturate(240%)!important;-webkit-backdrop-filter:blur(32px) saturate(240%)!important;border-top:1px solid rgba(0,212,255,0.15)!important;border-top-left-radius:28px!important;border-top-right-radius:28px!important;overflow:visible!important;box-shadow:0 -6px 30px rgba(0,0,0,0.5),0 -2px 0 rgba(0,212,255,0.1)!important;transform:translateZ(0)!important;-webkit-transform:translateZ(0)!important}
-.menu-toolbar .tool-btn{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;padding:8px 3px!important;flex:1!important;max-width:100px!important;min-height:60px!important;border:none!important;border-radius:16px!important;background:transparent!important;color:rgba(255,255,255,0.55)!important;cursor:pointer;position:relative!important;transition:all 0.3s cubic-bezier(0.23,1,0.32,1)!important}
-.menu-toolbar .tool-btn .icon{font-size:28px!important;line-height:1!important;transition:all 0.3s ease!important;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.4))!important}
+.menu-toolbar .tool-btn{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;padding:8px 3px!important;flex:1!important;max-width:100px!important;min-height:60px!important;border:none!important;border-radius:16px!important;background:transparent!important;color:rgba(255,255,255,0.55)!important;cursor:pointer;position:relative!important;transition:transform 0.3s cubic-bezier(0.23,1,0.32,1),background-color 0.3s cubic-bezier(0.23,1,0.32,1),color 0.3s cubic-bezier(0.23,1,0.32,1),box-shadow 0.3s cubic-bezier(0.23,1,0.32,1)!important}
+.menu-toolbar .tool-btn .icon{font-size:28px!important;line-height:1!important;transition:transform 0.3s ease,filter 0.3s ease!important;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.4))!important}
 .menu-toolbar .tool-btn .label{font-size:12px!important;font-weight:600!important;letter-spacing:0.5px!important;color:inherit!important;line-height:1!important}
-.menu-toolbar .tool-btn::after{content:''!important;position:absolute!important;bottom:4px!important;left:50%!important;transform:translateX(-50%)!important;width:0!important;height:4px!important;border-radius:3px!important;background:#00D4FF!important;transition:all 0.35s ease!important;box-shadow:0 0 12px rgba(0,212,255,0.8)!important}
+.menu-toolbar .tool-btn::after{content:''!important;position:absolute!important;bottom:4px!important;left:50%!important;transform:translateX(-50%)!important;width:0!important;height:4px!important;border-radius:3px!important;background:#00D4FF!important;transition:width 0.35s ease,box-shadow 0.35s ease!important;box-shadow:0 0 12px rgba(0,212,255,0.8)!important}
 .menu-toolbar .tool-btn:hover{background:rgba(255,255,255,0.06)!important;color:rgba(255,255,255,0.8)!important;transform:translateY(-2px)!important}
 .menu-toolbar .tool-btn.active{color:#00D4FF!important;background:rgba(0,212,255,0.12)!important;box-shadow:0 0 20px rgba(0,212,255,0.15)!important}
 .menu-toolbar .tool-btn.active .icon{filter:drop-shadow(0 0 16px rgba(0,212,255,0.8))!important;transform:translateY(-3px) scale(1.2)!important}
@@ -156,19 +153,19 @@ body:not(.app-ready) #menuToolbar,body:not(.app-ready) .menu-toolbar{display:non
 /* ===== 主分类按钮大气优化 ===== */
 #page-menu{display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;min-height:100vh!important;padding-top:0!important;padding-bottom:160px!important}
 body #page-menu .menu-category-btns{gap:16px!important;padding:14px 16px!important;margin-bottom:10px!important}
-body #page-menu .menu-cat-btn{padding:42px 28px!important;border-radius:36px!important;min-height:160px!important;box-shadow:0 12px 48px rgba(0,0,0,0.35),0 4px 12px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.1)!important;border:2px solid rgba(255,255,255,0.14)!important;transition:all 0.35s cubic-bezier(0.23,1,0.32,1)!important}
+body #page-menu .menu-cat-btn{padding:42px 28px!important;border-radius:36px!important;min-height:160px!important;box-shadow:0 12px 48px rgba(0,0,0,0.35),0 4px 12px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.1)!important;border:2px solid rgba(255,255,255,0.14)!important;transition:transform 0.35s cubic-bezier(0.23,1,0.32,1),box-shadow 0.35s cubic-bezier(0.23,1,0.32,1),border-color 0.35s cubic-bezier(0.23,1,0.32,1)!important}
 body #page-menu .menu-cat-btn:hover{transform:translateY(-4px)!important;box-shadow:0 16px 56px rgba(0,0,0,0.4),0 6px 16px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.12)!important}
 body #page-menu .menu-cat-btn .cat-icon{font-size:58px!important;margin-bottom:12px!important}
 body #page-menu .menu-cat-btn .cat-title{font-size:24px!important;font-weight:800!important;margin-top:8px!important;letter-spacing:0.5px!important}
 body #page-menu .menu-cat-btn .cat-count{font-size:15px!important;margin-top:6px!important;color:rgba(255,255,255,0.65)!important;font-weight:500!important}
 /* ===== 返回分类按钮优化 ===== */
-body #page-menu .back-to-categories{padding:14px 24px!important;margin:10px 16px 14px!important;border-radius:16px!important;font-size:16px!important;font-weight:600!important;background:rgba(255,255,255,0.07)!important;border:1px solid rgba(255,255,255,0.12)!important;transition:all 0.3s ease!important}
+body #page-menu .back-to-categories{padding:14px 24px!important;margin:10px 16px 14px!important;border-radius:16px!important;font-size:16px!important;font-weight:600!important;background:rgba(255,255,255,0.07)!important;border:1px solid rgba(255,255,255,0.12)!important;transition:transform 0.3s ease,background-color 0.3s ease!important}
 body #page-menu .back-to-categories:hover{background:rgba(255,255,255,0.1)!important;transform:translateY(-2px)!important}
 /* ===== 模块区域大气优化（高特异性覆盖） ===== */
 body #page-menu .menu-section.expanded{padding-bottom:140px!important;margin-bottom:24px!important}
 body #page-menu .menu-section-title{font-size:18px!important;padding:14px 18px!important;margin:10px 16px 12px!important;border-radius:16px!important;background:rgba(255,255,255,0.05)!important;border:1px solid rgba(255,255,255,0.08)!important;font-weight:700!important;letter-spacing:0.5px!important}
 body #page-menu .menu-grid{gap:10px!important;padding:0 0 24px!important;display:grid!important;grid-template-columns:repeat(2,1fr)!important;justify-items:stretch!important;align-items:stretch!important}
-body #page-menu .mode-btn{padding:48px 24px!important;border-radius:36px!important;min-height:220px!important;width:100%!important;max-width:none!important;box-sizing:border-box!important;box-shadow:0 16px 56px rgba(0,0,0,0.35),0 6px 20px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.1)!important;border:2px solid rgba(255,255,255,0.14)!important;transition:all 0.35s cubic-bezier(0.23,1,0.32,1)!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important}
+body #page-menu .mode-btn{padding:48px 24px!important;border-radius:36px!important;min-height:220px!important;width:100%!important;max-width:none!important;box-sizing:border-box!important;box-shadow:0 16px 56px rgba(0,0,0,0.35),0 6px 20px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.1)!important;border:2px solid rgba(255,255,255,0.14)!important;transition:transform 0.35s cubic-bezier(0.23,1,0.32,1),box-shadow 0.35s cubic-bezier(0.23,1,0.32,1),border-color 0.35s cubic-bezier(0.23,1,0.32,1)!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important}
 body #page-menu .mode-btn:hover{transform:translateY(-4px)!important;box-shadow:0 20px 64px rgba(0,0,0,0.4),0 8px 24px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.12)!important;border-color:rgba(0,212,255,0.2)!important}
 body #page-menu .mode-btn:active{transform:translateY(-2px) scale(0.98)!important}
 body #page-menu .mode-btn .mode-icon{font-size:72px!important;margin-bottom:14px!important}
@@ -193,7 +190,7 @@ body #page-menu .menu-stats{padding:14px 20px!important;margin:10px 16px 24px!im
 .settings-container{padding:0 16px 48px!important}
 .settings-section{margin-bottom:32px!important}
 .settings-section-title{font-size:16px!important;padding:12px 0!important;margin-bottom:12px!important;color:rgba(255,255,255,0.75)!important;font-weight:700!important;letter-spacing:0.5px!important}
-.settings-card{padding:16px 20px!important;margin-bottom:14px!important;border-radius:18px!important;background:rgba(255,255,255,0.05)!important;border:1px solid rgba(255,255,255,0.1)!important;transition:all 0.3s ease!important}
+.settings-card{padding:16px 20px!important;margin-bottom:14px!important;border-radius:18px!important;background:rgba(255,255,255,0.05)!important;border:1px solid rgba(255,255,255,0.1)!important;transition:background-color 0.3s ease,border-color 0.3s ease!important}
 .settings-card:hover{background:rgba(255,255,255,0.07)!important;border-color:rgba(255,255,255,0.14)!important}
 .settings-card-icon{font-size:28px!important;width:48px!important;height:48px!important;border-radius:14px!important}
 .settings-card-name{font-size:16px!important;font-weight:700!important}
@@ -209,7 +206,7 @@ body #page-menu .menu-stats{padding:14px 20px!important;margin:10px 16px 24px!im
 ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.2)!important;border-radius:4px!important}
 ::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,0.3)!important}
 /* ===== 答题选项大气优化 ===== */
-.quiz-option{padding:16px 18px!important;border-radius:16px!important;margin-bottom:12px!important;font-size:15px!important;font-weight:500!important;transition:all 0.3s ease!important}
+.quiz-option{padding:16px 18px!important;border-radius:16px!important;margin-bottom:12px!important;font-size:15px!important;font-weight:500!important;transition:transform 0.3s ease,background-color 0.3s ease,border-color 0.3s ease!important}
 .quiz-option:hover{border-color:rgba(0,212,255,0.5)!important;background:rgba(0,212,255,0.06)!important;transform:translateX(4px)!important}
 /* ===== 结果页大气优化 ===== */
 .result-box{padding:32px 24px!important;border-radius:24px!important;margin-bottom:20px!important;box-shadow:0 12px 40px rgba(0,0,0,0.3)!important}
@@ -222,12 +219,12 @@ body #page-menu .menu-stats{padding:14px 20px!important;margin:10px 16px 24px!im
 .leaderboard-content{padding:0 16px 48px!important}
 .character-content{padding:0 16px 48px!important}
 /* ===== 按钮通用大气优化 ===== */
-.btn-primary{padding:14px 28px!important;border-radius:14px!important;font-size:16px!important;font-weight:700!important;transition:all 0.3s ease!important;box-shadow:0 4px 16px rgba(0,0,0,0.2)!important}
+.btn-primary{padding:14px 28px!important;border-radius:14px!important;font-size:16px!important;font-weight:700!important;transition:transform 0.3s ease,box-shadow 0.3s ease!important;box-shadow:0 4px 16px rgba(0,0,0,0.2)!important}
 .btn-primary:hover{transform:translateY(-2px)!important;box-shadow:0 6px 24px rgba(0,0,0,0.3)!important}
-.btn-secondary{padding:12px 24px!important;border-radius:14px!important;font-size:15px!important;font-weight:600!important;transition:all 0.3s ease!important}
+.btn-secondary{padding:12px 24px!important;border-radius:14px!important;font-size:15px!important;font-weight:600!important;transition:transform 0.3s ease!important}
 .btn-secondary:hover{transform:translateY(-2px)!important}
 /* ===== 输入框优化 ===== */
-input,select,textarea{padding:12px 16px!important;border-radius:12px!important;font-size:15px!important;font-weight:500!important;border:1px solid rgba(255,255,255,0.12)!important;background:rgba(255,255,255,0.06)!important;color:#fff!important;transition:all 0.3s ease!important}
+input,select,textarea{padding:12px 16px!important;border-radius:12px!important;font-size:15px!important;font-weight:500!important;border:1px solid rgba(255,255,255,0.12)!important;background:rgba(255,255,255,0.06)!important;color:#fff!important;transition:border-color 0.3s ease,box-shadow 0.3s ease!important}
 input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!important;outline:none!important;box-shadow:0 0 0 3px rgba(0,212,255,0.12)!important}
 </style>
 <style>
@@ -484,34 +481,58 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
   }
 </style>
 <link rel="stylesheet" href="all-styles-v55.css?v=57">
-  <link rel="stylesheet" href="v5-glass-3d.css?v=57">
-  <link rel="stylesheet" href="clean-ui.css?v=57">
-  <link rel="stylesheet" href="bg-premium.css?v=57">
-  <link rel="stylesheet" href="bg-themes.css?v=57">
-  <link rel="stylesheet" href="menu-premium.css?v=57">
-  <link rel="stylesheet" href="fx-effects.css?v=57">
-  <link rel="stylesheet" href="ai-tutor.css?v=57">
-  <link rel="stylesheet" href="certification.css?v=57">
-  <link rel="stylesheet" href="disaster-sim.css?v=57">
-  <link rel="stylesheet" href="real-cases.css?v=57">
-  <link rel="stylesheet" href="fix-click.css?v=57">
+  <link rel="stylesheet" href="v5-glass-3d.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="v5-glass-3d.css?v=57"></noscript>
+  <link rel="stylesheet" href="clean-ui.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="clean-ui.css?v=57"></noscript>
+  <link rel="stylesheet" href="bg-premium.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="bg-premium.css?v=57"></noscript>
+  <link rel="stylesheet" href="bg-themes.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="bg-themes.css?v=57"></noscript>
+  <link rel="stylesheet" href="menu-premium.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="menu-premium.css?v=57"></noscript>
+  <link rel="stylesheet" href="fx-effects.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="fx-effects.css?v=57"></noscript>
+  <link rel="stylesheet" href="ai-tutor.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="ai-tutor.css?v=57"></noscript>
+  <link rel="stylesheet" href="certification.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="certification.css?v=57"></noscript>
+  <link rel="stylesheet" href="disaster-sim.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="disaster-sim.css?v=57"></noscript>
+  <link rel="stylesheet" href="real-cases.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="real-cases.css?v=57"></noscript>
+  <link rel="stylesheet" href="fix-click.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="fix-click.css?v=57"></noscript>
   <script src="fix-click.js?v=57" defer></script>
   <script src="menu-manager.js?v=57" defer></script>
   <script src="loading.js?v=57" defer></script>
-  <link rel="stylesheet" href="transitions.css?v=57">
-  <link rel="stylesheet" href="accessibility.css?v=57">
-  <link rel="stylesheet" href="wrong-book.css?v=57">
+  <link rel="stylesheet" href="transitions.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="transitions.css?v=57"></noscript>
+  <link rel="stylesheet" href="accessibility.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="accessibility.css?v=57"></noscript>
+  <link rel="stylesheet" href="wrong-book.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="wrong-book.css?v=57"></noscript>
   <link rel="stylesheet" href="loading.css?v=57">
-  <link rel="stylesheet" href="guide-enhance.css?v=57">
-  <link rel="stylesheet" href="cert-enhance.css?v=57">
-  <link rel="stylesheet" href="menu-enhance.css?v=57">
-  <link rel="stylesheet" href="share.css?v=57">
-  <link rel="stylesheet" href="i18n.css?v=57">
-  <link rel="stylesheet" href="layout-fix.css?v=57">
-  <link rel="stylesheet" href="ai-float.css?v=57">
-  <link rel="stylesheet" href="ui-ultimate.css?v=57">
-  <link rel="stylesheet" href="settings.css?v=57">
-  <link rel="stylesheet" href="optimizer-mobile.css?v=57">
+  <link rel="stylesheet" href="guide-enhance.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="guide-enhance.css?v=57"></noscript>
+  <link rel="stylesheet" href="cert-enhance.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="cert-enhance.css?v=57"></noscript>
+  <link rel="stylesheet" href="menu-enhance.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="menu-enhance.css?v=57"></noscript>
+  <link rel="stylesheet" href="share.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="share.css?v=57"></noscript>
+  <link rel="stylesheet" href="i18n.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="i18n.css?v=57"></noscript>
+  <link rel="stylesheet" href="layout-fix.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="layout-fix.css?v=57"></noscript>
+  <link rel="stylesheet" href="ai-float.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="ai-float.css?v=57"></noscript>
+  <link rel="stylesheet" href="ui-ultimate.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="ui-ultimate.css?v=57"></noscript>
+  <link rel="stylesheet" href="settings.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="settings.css?v=57"></noscript>
+  <link rel="stylesheet" href="optimizer-mobile.css?v=57" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="optimizer-mobile.css?v=57"></noscript>
 <style>
 /* ===== 标题与图标可见性优化 ===== */
 .menu-logo-title { font-weight: 900 !important; text-shadow: 0 0 50px rgba(255,100,0,0.7), 0 0 100px rgba(255,0,0,0.4), 0 6px 16px rgba(0,0,0,0.7) !important; letter-spacing: 8px !important; font-size: 64px !important; background: linear-gradient(180deg,#fff 0%,#ffe4a0 25%,#ff9d00 50%,#ff4d00 75%,#ff0000 100%) !important; color: #ff9d00 !important; /* fallback */
@@ -562,7 +583,7 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
   color: var(--text-primary);
   cursor: pointer;
   text-align: center;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   transform-style: preserve-3d;
   position: relative;
   overflow: hidden;
@@ -663,7 +684,7 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
   color: rgba(255,255,255,0.6);
   cursor: pointer;
   font-size: 13px;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
   align-items: center;
   gap: 6px;
   width: fit-content;
@@ -2403,8 +2424,8 @@ body #page-menu {
 </div>
 
 <!-- ======== 通用弹窗 ======== -->
-<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)Modal.hide()">
-  <div class="modal-box">
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box" style="position:relative">
     <div id="modalContent">
       <div style="font-size:3rem;margin-bottom:var(--space-md)">📢</div>
       <h3 style="margin-bottom:var(--space-sm)" id="modalTitle">提示</h3>
@@ -2697,6 +2718,8 @@ body #page-menu {
     }
   });
   function unlockAudio() {
+    if (unlockAudio._done) return;
+    unlockAudio._done = true;
     try {
       if (typeof BGMEngine !== 'undefined') BGMEngine.init();
       if (typeof AudioManager !== 'undefined') {
@@ -2704,13 +2727,10 @@ body #page-menu {
         if (ctx2 && ctx2.state === 'suspended') ctx2.resume();
       }
     } catch(e) {}
-    document.removeEventListener('click', unlockAudio);
-    document.removeEventListener('touchstart', unlockAudio);
-    document.removeEventListener('keydown', unlockAudio);
   }
-  document.addEventListener('click', unlockAudio);
-  document.addEventListener('touchstart', unlockAudio);
-  document.addEventListener('keydown', unlockAudio);
+  document.addEventListener('click', unlockAudio, { once: true });
+  document.addEventListener('touchstart', unlockAudio, { once: true });
+  document.addEventListener('keydown', unlockAudio, { once: true });
 })();
 </script>
 <script src="optimizer-mobile.js?v=57" defer></script>

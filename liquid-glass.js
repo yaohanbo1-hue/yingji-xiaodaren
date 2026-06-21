@@ -51,13 +51,13 @@
       style.textContent = `
         /* ===== 丝滑全局过渡 ===== */
         .liquid-smooth {
-          transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1) !important;
+          transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.6s cubic-bezier(0.23, 1, 0.32, 1)!important;
         }
         .liquid-smooth-fast {
-          transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1) !important;
+          transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s cubic-bezier(0.23, 1, 0.32, 1)!important;
         }
         .liquid-smooth-slow {
-          transition: all 1s cubic-bezier(0.23, 1, 0.32, 1) !important;
+          transition: transform 1s cubic-bezier(0.23, 1, 0.32, 1), opacity 1s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 1s cubic-bezier(0.23, 1, 0.32, 1)!important;
         }
 
         /* ===== 3D 透视容器 ===== */
@@ -148,13 +148,13 @@
           border: none !important;
           border-radius: 14px !important;
           overflow: hidden !important;
-          transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+          transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94)!important;
           cursor: pointer;
         }
         .liquid-btn .icon {
           font-size: 26px !important;
           line-height: 1 !important;
-          transition: all 0.3s ease !important;
+          transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease!important;
           filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4)) !important;
         }
         .liquid-btn.active {
@@ -190,7 +190,7 @@
           height: 3px;
           border-radius: 2px;
           background: #00D4FF;
-          transition: all 0.3s ease;
+          transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
           box-shadow: 0 0 10px rgba(0, 212, 255, 0.6);
         }
         .liquid-btn.active::after {
@@ -258,7 +258,7 @@
         .liquid-enter {
           opacity: 0;
           transform: translateY(30px) scale(0.95);
-          transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+          transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.8s cubic-bezier(0.23, 1, 0.32, 1);
         }
         .liquid-enter.visible {
           opacity: 1;
@@ -423,7 +423,7 @@
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
-          transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1) !important;
+          transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s cubic-bezier(0.23, 1, 0.32, 1)!important;
           box-shadow: 0 4px 16px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.05) !important;
           animation: btnFloat 4s ease-in-out infinite !important;
         }
@@ -744,7 +744,7 @@
           pointer-events: none;
           z-index: 9998;
           box-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
-          transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+          transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.8s cubic-bezier(0.23, 1, 0.32, 1);
         `;
         document.body.appendChild(dot);
         trail.push(dot);

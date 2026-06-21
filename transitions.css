@@ -38,25 +38,35 @@
   filter: blur(0);
 }
 
-/* 页面退出效果：向上滑出 + 模糊淡出 */
+/* 页面退出效果：向上滑出 + 缩小淡出（移除性能杀手 blur） */
 .page:not(.active) {
-  filter: blur(2px);
+  opacity: 0.4;
+  transform: translateY(-12px) scale(0.96);
 }
 
-/* 页面进入方向：从下方滑入 */
+/* 页面进入方向：从下方弹性滑入 */
 .page.enter-from-bottom {
-  transform: translateY(30px) scale(0.96);
+  transform: translateY(30px) scale(0.92);
 }
 .page.enter-from-bottom.active {
   transform: translateY(0) scale(1);
+  animation: pageElasticIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* 页面返回方向：从左侧滑入 */
+/* 页面返回方向：从左侧弹性滑入 */
 .page.enter-from-left {
-  transform: translateX(-30px) scale(0.96);
+  transform: translateX(-30px) scale(0.92);
 }
 .page.enter-from-left.active {
   transform: translateX(0) scale(1);
+  animation: pageElasticIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes pageElasticIn {
+  0% { transform: scale(0.92); opacity: 0; }
+  60% { transform: scale(1.02); opacity: 1; }
+  80% { transform: scale(0.98); }
+  100% { transform: scale(1); }
 }
 
 /* 骨架屏容器 */
@@ -143,11 +153,9 @@
     opacity: 1;
     transform: translateY(0) scale(1);
   }
-}
-
-/* ===== 分类按钮切换动画 ===== */
-.menu-cat-btn {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}/* ===== 分类按钮切换动画 ===== */
+.menu-cat-btn{
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .menu-cat-btn.active {
@@ -179,7 +187,31 @@
   }
 }
 
-/* ===== 弹窗进入动画 ===== */
+.correct-pulse {
+  animation: correctPulse 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes correctPulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.4); }
+  50% { transform: scale(1.03); box-shadow: 0 0 0 12px rgba(0, 230, 118, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); }
+}
+
+.wrong-shake {
+  animation: wrongShake 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes wrongShake {
+  0%, 100% { transform: translateX(0); }
+  15% { transform: translateX(-8px); }
+  30% { transform: translateX(8px); }
+  45% { transform: translateX(-6px); }
+  60% { transform: translateX(6px); }
+  75% { transform: translateX(-3px); }
+  90% { transform: translateX(3px); }
+}
+
+/* ===== 弹窗进入动画（增强弹性） ===== */
 .modal-overlay {
   transition: opacity 0.3s ease, backdrop-filter 0.3s ease;
 }
@@ -194,18 +226,24 @@
 }
 
 .modal-content {
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-              opacity 0.3s ease;
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.35s ease;
 }
 
 .modal-overlay:not(.active) .modal-content {
-  transform: scale(0.9) translateY(20px);
+  transform: scale(0.85) translateY(30px);
   opacity: 0;
 }
 
 .modal-overlay.active .modal-content {
-  transform: scale(1) translateY(0);
-  opacity: 1;
+  animation: modalElasticIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes modalElasticIn {
+  0% { transform: scale(0.85) translateY(30px); opacity: 0; }
+  55% { transform: scale(1.04) translateY(-4px); opacity: 1; }
+  75% { transform: scale(0.98) translateY(2px); }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
 }
 
 /* ===== 按钮点击反馈（全面增强） ===== */
@@ -295,9 +333,7 @@ button:active,
 .menu-toolbar .tool-btn {
   position: relative;
   overflow: hidden;
-}
-
-.menu-toolbar .tool-btn::before {
+}.menu-toolbar .tool-btn::before{
   content: '';
   position: absolute;
   bottom: 0;
@@ -305,7 +341,7 @@ button:active,
   width: 0;
   height: 2px;
   background: linear-gradient(90deg, #3b82f6, #06b6d4);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform: translateX(-50%);
   border-radius: 2px;
 }
@@ -416,9 +452,7 @@ button:active,
 
 .wrong {
   animation: errorShake 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* ===== 悬浮卡片效果（增强版） ===== */
+}/* ===== 悬浮卡片效果（增强版） ===== */
 .mode-btn:hover,
 .case-card:hover,
 .shop-item:hover,
@@ -427,9 +461,9 @@ button:active,
 .codex-card:hover,
 .settings-card:hover,
 .quiz-opt:hover,
-.scenario-opt:hover {
+.scenario-opt:hover{
   transform: translateY(-4px) scale(1.02);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* 桌面端：更精致的 hover 发光 */
