@@ -39,7 +39,7 @@
   document.getElementById = function(id) {
     if (_domCache.has(id)) {
       var el = _domCache.get(id);
-      if (el && document.body.contains(el)) return el;
+      if (el && document.body && document.body.contains(el)) return el;
     }
     var el = _origGetElementById(id);
     if (el) _domCache.set(id, el);
@@ -50,7 +50,7 @@
     var cacheKey = 'qs:' + sel;
     if (_domCache.has(cacheKey)) {
       var el = _domCache.get(cacheKey);
-      if (el && document.body.contains(el)) return el;
+      if (el && document.body && document.body.contains(el)) return el;
     }
     var el = _origQuerySelector(sel);
     if (el) _domCache.set(cacheKey, el);
@@ -59,6 +59,7 @@
 
   // 每30秒清理一次失效缓存
   setInterval(function() {
+    if (!document.body) return;
     _domCache.forEach(function(el, key) {
       if (!el || !document.body.contains(el)) {
         _domCache.delete(key);
