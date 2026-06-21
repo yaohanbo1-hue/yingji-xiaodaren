@@ -6370,6 +6370,13 @@ body.theme-warm-light .settings-volume-value {
 
 /* ===== 弹窗进入动画 ===== */
 .modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: opacity 0.3s ease, backdrop-filter 0.3s ease;
 }
 

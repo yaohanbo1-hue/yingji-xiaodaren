@@ -121,7 +121,6 @@
 #loadingScreen{position:fixed;inset:0;z-index:9999;background:#05050f;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Courier New',monospace}
 #loadingScreen.hidden{opacity:0;visibility:hidden;pointer-events:none}
 body:not(.app-ready) .page{display:none!important}
-body:not(.app-ready) .page{opacity:0;visibility:hidden;position:fixed;inset:0;pointer-events:none;transform:translateY(20px) scale(0.98);transition:opacity .4s cubic-bezier(.4,0,.2,1),transform .4s cubic-bezier(.4,0,.2,1),visibility .4s ease}
 body:not(.app-ready) .page.active{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0) scale(1)}
 .page:not(.active){opacity:0;visibility:hidden;position:fixed;inset:0;pointer-events:none;transform:translateY(20px) scale(0.98);transition:opacity .35s cubic-bezier(.4,0,.2,1),transform .35s cubic-bezier(.4,0,.2,1),visibility .35s ease}
 .page.active{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0) scale(1);transition:opacity .4s cubic-bezier(.4,0,.2,1),transform .4s cubic-bezier(.4,0,.2,1),visibility .4s ease}
@@ -722,11 +721,7 @@ body #page-menu {
   align-items: center !important;
   min-height: 100vh !important;
 }
-/* ===== 按钮点击兜底 ===== */
-body:not(.app-ready) .page {
-  pointer-events: auto !important;
-}
-</style>
+    <!-- ===== 加载界面 v3.0 ===== -->
 </head>
 <body style="background-color: #05050f !important; min-height: 100vh;">
 <div class="cyber-grid"></div>
@@ -2430,6 +2425,7 @@ body:not(.app-ready) .page {
 <script src="js/core/utils.js?v=56" defer></script>
 <script src="js/core/game-core.js?v=56" defer></script>
 <script src="game-engines.js?v=56" defer></script>
+<script src="js/engines/PageManager.js?v=56" defer></script>
 <script src="game.js?v=56" defer></script>
 <script src="v10-interactions.js?v=56" defer></script>
 
@@ -2613,9 +2609,9 @@ body:not(.app-ready) .page {
     ctx.stroke();
 
     frame++;
-    requestAnimationFrame(drawParticles);
+    particleFrame = requestAnimationFrame(drawParticles);
   }
-  drawParticles();
+  var particleFrame = requestAnimationFrame(drawParticles);
 
   // 安全提示轮播
   var tipIdx = 0;
@@ -2627,7 +2623,7 @@ body:not(.app-ready) .page {
       tip.style.opacity = '1';
     }, 400);
   }
-  setInterval(rotateTip, 3500);
+  var tipInterval = setInterval(rotateTip, 3500);
   tip.textContent = tips[0];
 
   // 加载进度 — 基于真实资源加载
@@ -2655,6 +2651,8 @@ body:not(.app-ready) .page {
           if (typeof LiquidGlass !== 'undefined') {
             LiquidGlass.createParticles(20);
           }
+          if (particleFrame) cancelAnimationFrame(particleFrame);
+          if (tipInterval) clearInterval(tipInterval);
         }, 400);
         setTimeout(function(){ screen.style.display = 'none'; screen.remove(); }, 1200);
       }
