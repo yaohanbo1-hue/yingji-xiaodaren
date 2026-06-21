@@ -24,7 +24,7 @@
 .loading-title { font-size: 32px; font-weight: 700; color: #5BA4CF; margin: 0 0 8px 0; letter-spacing: 2px; }
 .loading-subtitle { font-size: 14px; color: #9AA0AB; letter-spacing: 2px; margin: 0; }
 .loading-bar-container { width: 240px; height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; margin: 0 auto 16px; overflow: hidden; }
-.loading-bar { height: 100%; width: 0%; background: #5BA4CF; border-radius: 2px; transition: width 0.1s ease; }
+.loading-bar { height: 100%; width: 100%; background: #5BA4CF; border-radius: 2px; transform: scaleX(0); transform-origin: left; transition: transform 0.1s ease; }
 .loading-percent { font-size: 36px; font-weight: 700; color: #5BA4CF; margin: 0 0 8px 0; letter-spacing: 2px; font-variant-numeric: tabular-nums; min-height: 44px; display: flex; align-items: center; justify-content: center; }
 .loading-tip { font-size: 13px; color: #5F6570; margin: 0; transition: opacity 0.15s ease; min-height: 20px; }
 .loading-complete-flash { animation: loadingFlashComplete 0.6s ease-out forwards; }

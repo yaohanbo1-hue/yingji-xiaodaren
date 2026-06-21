@@ -87,7 +87,7 @@ const LoadingScreen = {
       if (progress > 100) progress = 100;
 
       if (self._bar) {
-        self._bar.style.width = progress + '%';
+        self._bar.style.transform = 'scaleX(' + (progress / 100) + ')';
       }
       if (self._percentEl) {
         self._percentEl.textContent = progress + '%';
