@@ -25,3 +25,12 @@ temp-*.js
 temp-*.json
 trace-*.js
 code_review_report*
+# Debug/trace files
+correct-trace.js
+detailed-trace.js
+fresh-trace.js
+show-raw-bytes.js
+show-strings.js
+simple-test.js
+test-strings.js
+verify-string-state.js
