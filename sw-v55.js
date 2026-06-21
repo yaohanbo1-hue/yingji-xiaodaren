@@ -77,15 +77,21 @@ const STATIC_ASSETS = [
   './js/core/game-core.js'
 ];
 
-// 安装：缓存核心资源
+// 安装：缓存核心资源（容错：任一资源失败不影响整体）
 self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(CACHE_NAME).then(function(cache) {
-      return cache.addAll(STATIC_ASSETS);
+      return Promise.all(
+        STATIC_ASSETS.map(function(url) {
+          return cache.add(url).catch(function(err) {
+            console.log('[SW] 跳过缓存失败:', url);
+          });
+        })
+      );
     }).then(function() {
       return self.skipWaiting();
     }).catch(function(err) {
-      console.log('[SW] 缓存失败（部分资源可能不存在）:', err);
+      console.log('[SW] 安装失败:', err);
     })
   );
 });
