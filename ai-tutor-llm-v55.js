@@ -12,9 +12,9 @@ const BailianAPI = {
   // ===== 安全控制：严格限制防止盗刷 =====
   _requestLock: false,       // 请求锁
   _callCount: 0,             // 本会话调用次数
-  _maxCallsPerSession: 3,    // 单会话最多 3 次（非常严格）
+  _maxCallsPerSession: 20,   // 单会话最大调用次数（正常聊天20条足够）
   _lastCallTime: 0,          // 上次调用时间
-  _minInterval: 60000,       // 最小间隔 60 秒（1分钟）
+  _minInterval: 3000,       // 最小调用间隔 3 秒（防止连点）
   _callLog: [],              // 调用日志
   _sessionStart: Date.now(), // 会话开始时间
   
@@ -32,7 +32,7 @@ const BailianAPI = {
     // 2. 检查调用次数限制
     if (this._callCount >= this._maxCallsPerSession) {
       console.warn('百炼 API: 单会话调用次数已达上限 ' + this._maxCallsPerSession);
-      return { error: '本会话 AI 调用次数已达上限（3次），请刷新页面后再试。' };
+      return { error: '本会话 AI 调用次数已达上限（20次），请刷新页面后再试。' };
     }
     
     // 3. 检查最小调用间隔（60秒）
