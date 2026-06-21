@@ -331,6 +331,7 @@ button:focus-visible,
   width: 380px !important;
   max-height: 520px !important;
   z-index: 9997 !important;
+  background: rgba(15, 23, 42, 0.95) !important; /* fallback for no backdrop-filter */
   background: rgba(15, 23, 42, 0.92) !important;
   backdrop-filter: blur(24px) !important;
   -webkit-backdrop-filter: blur(24px) !important;
@@ -449,6 +450,13 @@ button:focus-visible,
 .ai-float-body::-webkit-scrollbar {
   width: 4px !important;
 }
+
+
+.ai-float-body {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
 
 .ai-float-body::-webkit-scrollbar-track {
   background: transparent !important;
@@ -710,6 +718,7 @@ button:focus-visible,
     rgba(167, 139, 250, 0.06) 50%,
     rgba(59, 130, 246, 0.04) 100%);
   border: 1px solid rgba(96, 165, 250, 0.15);
+  background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow: 
@@ -817,6 +826,7 @@ button:focus-visible,
   font-size: 22px;
   font-weight: 700;
   background: linear-gradient(135deg, #60A5FA, #A78BFA);
+  color: #A78BFA; /* fallback for no background-clip support */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -833,6 +843,7 @@ button:focus-visible,
 .radar-card {
   border-radius: 20px;
   padding: 20px;
+  background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(16px);
@@ -1081,6 +1092,7 @@ button:focus-visible,
 .terminal-card {
   border-radius: 20px;
   overflow: hidden;
+  background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
   background: rgba(15, 23, 42, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(20px);
@@ -1155,6 +1167,13 @@ button:focus-visible,
 .terminal-body::-webkit-scrollbar {
   width: 4px;
 }
+
+
+.terminal-body {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
 
 .terminal-body::-webkit-scrollbar-track {
   background: transparent;
@@ -2369,6 +2388,7 @@ body.theme-warm-light .ai-float-input::placeholder {
     rgba(167, 139, 250, 0.06) 50%,
     rgba(59, 130, 246, 0.04) 100%);
   border: 1px solid rgba(96, 165, 250, 0.15);
+  background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow: 
@@ -2439,6 +2459,7 @@ body.theme-warm-light .ai-float-input::placeholder {
   font-size: 28px;
   font-weight: 700;
   background: linear-gradient(135deg, #60A5FA, #A78BFA);
+  color: #A78BFA; /* fallback for no background-clip support */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -2454,6 +2475,7 @@ body.theme-warm-light .ai-float-input::placeholder {
 .cert-stats-card {
   border-radius: 20px;
   padding: 20px;
+  background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(16px);
@@ -2507,6 +2529,7 @@ body.theme-warm-light .ai-float-input::placeholder {
 .cert-levels-card {
   border-radius: 20px;
   padding: 20px;
+  background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(16px);
@@ -2631,6 +2654,7 @@ body.theme-warm-light .ai-float-input::placeholder {
   position: fixed;
   inset: 0;
   z-index: 10000;
+  background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(8px);
   display: flex;
@@ -2917,6 +2941,7 @@ body {
   font-weight: 900 !important;
   letter-spacing: 8px !important;
   background: linear-gradient(180deg,#fff 0%,#ffe4a0 25%,#ff9d00 50%,#ff4d00 75%,#ff0000 100%) !important;
+  color: #ff9d00 !important; /* fallback for no background-clip support */
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
@@ -2955,6 +2980,7 @@ body {
 }
 
 .menu-cat-btn {
+  background: rgba(15, 23, 42, 0.95) !important; /* fallback for no backdrop-filter */
   background: var(--glass-bg) !important;
   border: 1px solid var(--glass-border) !important;
   backdrop-filter: blur(8px) !important;
@@ -3013,6 +3039,7 @@ body {
 
 /* ===== 模式按钮 — 统一简洁 ===== */
 .mode-btn {
+  background: rgba(15, 23, 42, 0.95) !important; /* fallback for no backdrop-filter */
   background: var(--glass-bg) !important;
   backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
@@ -3110,6 +3137,7 @@ body {
 .quiz-opt, .scenario-opt, .quiz-card, .scenario-card,
 .survival-hud, .result-box, .scenario-feedback,
 .quiz-exp-box, .explanation-box {
+  background: rgba(15, 23, 42, 0.95) !important; /* fallback for no backdrop-filter */
   background: var(--glass-bg) !important;
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate)) !important;
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate)) !important;
@@ -3182,6 +3210,7 @@ body {
 
 /* ===== 模态框 — 简洁 ===== */
 .modal-box {
+  background: rgba(15, 23, 42, 0.95) !important; /* fallback for no backdrop-filter */
   background: rgba(20,22,30,0.95) !important;
   backdrop-filter: blur(16px) !important;
   border: 1px solid rgba(255,255,255,0.08) !important;
@@ -3191,6 +3220,7 @@ body {
 
 /* ===== 玻璃卡片通用 ===== */
 .glass-card {
+  background: rgba(15, 23, 42, 0.95) !important; /* fallback for no backdrop-filter */
   background: rgba(25,27,35,0.7) !important;
   backdrop-filter: blur(12px) !important;
   border: 1px solid rgba(255,255,255,0.06) !important;
@@ -3210,6 +3240,7 @@ body {
   font-size: clamp(1.4rem,4vw,2rem) !important;
   font-weight: 700 !important;
   background: linear-gradient(135deg, var(--cyber-blue), var(--gold)) !important;
+  color: var(--cyber-blue) !important; /* fallback for no background-clip support */
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
@@ -3239,6 +3270,11 @@ body {
 }
 
 /* ===== 滚动条 ===== */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+
 ::-webkit-scrollbar {
   width: 4px !important;
 }
@@ -3288,6 +3324,7 @@ body {
 
 /* ===== 底部导航栏 ===== */
 .nav-bar {
+  background: rgba(15, 23, 42, 0.95) !important; /* fallback for no backdrop-filter */
   background: rgba(15,17,23,0.95) !important;
   border-top: 1px solid rgba(255,255,255,0.06) !important;
   box-shadow: 0 -2px 8px rgba(0,0,0,0.2) !important;
@@ -3336,6 +3373,7 @@ body {
 
 .story-title {
   background: linear-gradient(135deg, var(--cyber-blue), var(--gold)) !important;
+  color: var(--cyber-blue) !important; /* fallback for no background-clip support */
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
@@ -3498,6 +3536,7 @@ body {
 .sim-info-card {
   border-radius: 16px;
   padding: 16px;
+  background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(16px);
@@ -3591,6 +3630,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 12px;
+  background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(16px);
@@ -4159,6 +4199,7 @@ body {
   position: fixed;
   inset: 0;
   z-index: 50;
+  background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
   animation: guideFadeIn 0.3s ease;
@@ -4189,6 +4230,9 @@ body {
 .guide-tooltip::-webkit-scrollbar {
   width: 4px;
 }
+
+
+
 .guide-tooltip::-webkit-scrollbar-track {
   background: transparent;
 }
@@ -4681,6 +4725,7 @@ body {
   font-size: 36px;
   font-weight: 700;
   background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #fbbf24 100%);
+  color: #fbbf24; /* fallback for no background-clip support */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -4917,6 +4962,7 @@ body {
 .menu-card:hover .menu-card-title,
 .mode-card:hover .mode-card-title {
   background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  color: #8b5cf6; /* fallback for no background-clip support */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -4982,6 +5028,7 @@ body {
 
 /* ===== 分类按钮增强 ===== */
 .menu-cat-btn {
+  background: rgba(15, 23, 42, 0.95) !important; /* fallback for no backdrop-filter */
   background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%) !important;
   border: 1px solid rgba(255,255,255,0.1) !important;
   backdrop-filter: blur(12px) !important;
@@ -5077,6 +5124,7 @@ body {
 
 /* ===== 模式按钮增强 ===== */
 .mode-btn {
+  background: rgba(15, 23, 42, 0.95) !important; /* fallback for no backdrop-filter */
   background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%) !important;
   backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
@@ -5208,6 +5256,7 @@ body {
 
 /* ===== 底部状态栏 ===== */
 .status-bar {
+  background: rgba(15, 23, 42, 0.95) !important; /* fallback for no backdrop-filter */
   background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%) !important;
   backdrop-filter: blur(12px) !important;
   border-top: 1px solid rgba(255,255,255,0.06) !important;
@@ -5278,6 +5327,7 @@ body {
   text-align: center;
   padding: 24px 16px;
   border-radius: 16px;
+  background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(16px);
@@ -5313,6 +5363,7 @@ body {
   gap: 14px;
   padding: 16px;
   border-radius: 14px;
+  background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
   cursor: pointer;
@@ -5372,6 +5423,7 @@ body {
   gap: 16px;
   padding: 20px;
   border-radius: 16px;
+  background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(16px);
@@ -6136,6 +6188,7 @@ body.theme-warm-light .settings-volume-value {
   position: fixed;
   inset: 0;
   z-index: 99999;
+  background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(8px);
   display: flex;
@@ -6258,6 +6311,7 @@ body.theme-warm-light .settings-volume-value {
   padding: 12px 20px;
   border-radius: 50px;
   border: 1px solid rgba(59, 130, 246, 0.3);
+  background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
   background: rgba(15, 23, 42, 0.9);
   backdrop-filter: blur(12px);
   color: #60a5fa;
@@ -6506,6 +6560,13 @@ button:active {
 .page::-webkit-scrollbar {
   width: 6px;
 }
+
+
+.page {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) rgba(255, 255, 255, 0.02);
+}
+
 
 .page::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.02);
@@ -6971,6 +7032,7 @@ button:active {
   width: 40px !important;
   height: 40px !important;
   border-radius: 50% !important;
+  background: rgba(15, 23, 42, 0.95) !important; /* fallback for no backdrop-filter */
   background: rgba(255,255,255,0.08) !important;
   backdrop-filter: blur(10px) !important;
   border: 1px solid rgba(255,255,255,0.1) !important;
@@ -7077,6 +7139,7 @@ body {
 .scenario-card, .quiz-exp-box, .explanation-box,
 .mode-btn, .survival-hud, .result-box, .scenario-feedback {
   position: relative;
+  background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
   background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0.06) 100%);
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate)) brightness(1.05);
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate)) brightness(1.05);
@@ -7294,6 +7357,7 @@ body {
   font-size: 0.9em;
   color: #80cbc4;
   padding: 12px 16px;
+  background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
   background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(0,212,255,0.04));
   border-radius: 12px;
   border-left: 3px solid rgba(0,212,255,0.5);
@@ -7539,6 +7603,7 @@ body {
 .menu-section-title {
   position: relative;
   padding: 12px 24px;
+  background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
   background: linear-gradient(90deg, rgba(0, 212, 255, 0.08), rgba(168, 85, 247, 0.08), rgba(0, 230, 118, 0.08));
   backdrop-filter: blur(12px) saturate(1.4);
   -webkit-backdrop-filter: blur(12px) saturate(1.4);
@@ -7555,6 +7620,7 @@ body {
 
 /* 底部导航栏液态玻璃增强 */
 .menu-toolbar {
+  background: rgba(15, 23, 42, 0.95) !important; /* fallback for no backdrop-filter */
   background: linear-gradient(180deg, rgba(12, 12, 35, 0.92) 0%, rgba(8, 8, 24, 0.96) 100%) !important;
   backdrop-filter: blur(28px) saturate(220%) !important;
   -webkit-backdrop-filter: blur(28px) saturate(220%) !important;
@@ -7616,6 +7682,7 @@ body {
 
 /* 进度条液态玻璃 */
 .quiz-progress-bar {
+  background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
   background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -7636,6 +7703,7 @@ body {
 
 /* HP 血条液态玻璃 */
 .hp-bar-container {
+  background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
   background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -7681,6 +7749,7 @@ body {
 
 /* 返回按钮液态玻璃 */
 .back-float {
+  background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
   backdrop-filter: blur(12px) saturate(1.4);
   -webkit-backdrop-filter: blur(12px) saturate(1.4);
@@ -7715,6 +7784,7 @@ body {
   justify-content: center;
   margin: 20px 0;
   padding: 20px;
+  background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
   background: rgba(255,255,255,0.05);
   border-radius: 16px;
   backdrop-filter: blur(10px);
@@ -7732,6 +7802,7 @@ body {
   font-size: 32px;
   font-weight: 700;
   background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  color: #a78bfa; /* fallback for no background-clip support */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -7755,6 +7826,7 @@ body {
   padding: 10px 20px;
   border-radius: 10px;
   border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
   background: rgba(255,255,255,0.08);
   color: rgba(255,255,255,0.9);
   font-size: 14px;
@@ -7963,6 +8035,13 @@ body {
 .wrong-book-list::-webkit-scrollbar {
   width: 6px;
 }
+
+
+.wrong-book-list {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.15) rgba(255,255,255,0.03);
+}
+
 
 .wrong-book-list::-webkit-scrollbar-track {
   background: rgba(255,255,255,0.03);

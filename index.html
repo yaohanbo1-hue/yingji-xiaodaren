@@ -148,7 +148,8 @@ body:not(.app-ready) #menuToolbar,body:not(.app-ready) .menu-toolbar{display:non
 .shield-left,.shield-right{font-size:24px!important;animation:shieldRotate 3s ease-in-out infinite!important;filter:drop-shadow(0 0 8px rgba(255,0,0,0.4))!important}
 .shield-left{animation-delay:0.5s!important}
 .shield-right{animation-delay:1s!important}
-.menu-logo-title{font-size:64px!important;margin:0!important;letter-spacing:8px!important;font-weight:900!important;font-family:'Microsoft YaHei','PingFang SC',sans-serif!important;text-shadow:0 0 50px rgba(255,100,0,0.7),0 0 100px rgba(255,0,0,0.4),0 6px 16px rgba(0,0,0,0.7)!important;background:linear-gradient(180deg,#fff 0%,#ffe4a0 25%,#ff9d00 50%,#ff4d00 75%,#ff0000 100%)!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important;position:relative!important;animation:titlePulse 2.5s ease-in-out infinite!important}
+.menu-logo-title{font-size:64px!important;margin:0!important;letter-spacing:8px!important;font-weight:900!important;font-family:'Microsoft YaHei','PingFang SC',sans-serif!important;text-shadow:0 0 50px rgba(255,100,0,0.7),0 0 100px rgba(255,0,0,0.4),0 6px 16px rgba(0,0,0,0.7)!important;background:linear-gradient(180deg,#fff 0%,#ffe4a0 25%,#ff9d00 50%,#ff4d00 75%,#ff0000 100%)!important;color:#ff9d00!important;
+  -webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important;position:relative!important;animation:titlePulse 2.5s ease-in-out infinite!important}
 .menu-logo-title::before{content:'';position:absolute;inset:-8px -20px;background:radial-gradient(ellipse,rgba(255,100,0,0.15) 0%,transparent 70%)!important;z-index:-1;pointer-events:none;animation:flareRotate 4s linear infinite!important}
 .menu-logo-sub{font-size:16px!important;margin:6px 0 8px!important;opacity:0.9!important;letter-spacing:2px!important;font-weight:600!important;color:rgba(255,255,255,0.85)!important;text-shadow:0 0 15px rgba(255,255,255,0.15)!important}
 .version-tag{font-size:14px!important;padding:6px 18px!important;margin-top:8px!important;border-radius:24px!important;font-weight:700!important;letter-spacing:1px!important;background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(0,212,255,0.15))!important;border:1px solid rgba(255,215,0,0.3)!important;color:#FFD700!important;box-shadow:0 0 20px rgba(255,215,0,0.2),inset 0 1px 0 rgba(255,255,255,0.1)!important;animation:tagPulse 2s ease-in-out infinite!important}
@@ -513,7 +514,8 @@ input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!importa
   <link rel="stylesheet" href="optimizer-mobile.css?v=56">
 <style>
 /* ===== 标题与图标可见性优化 ===== */
-.menu-logo-title { font-weight: 900 !important; text-shadow: 0 0 50px rgba(255,100,0,0.7), 0 0 100px rgba(255,0,0,0.4), 0 6px 16px rgba(0,0,0,0.7) !important; letter-spacing: 8px !important; font-size: 64px !important; background: linear-gradient(180deg,#fff 0%,#ffe4a0 25%,#ff9d00 50%,#ff4d00 75%,#ff0000 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; background-clip: text !important; animation: titlePulse 2.5s ease-in-out infinite !important; }
+.menu-logo-title { font-weight: 900 !important; text-shadow: 0 0 50px rgba(255,100,0,0.7), 0 0 100px rgba(255,0,0,0.4), 0 6px 16px rgba(0,0,0,0.7) !important; letter-spacing: 8px !important; font-size: 64px !important; background: linear-gradient(180deg,#fff 0%,#ffe4a0 25%,#ff9d00 50%,#ff4d00 75%,#ff0000 100%) !important; color: #ff9d00 !important; /* fallback */
+  -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; background-clip: text !important; animation: titlePulse 2.5s ease-in-out infinite !important; }
 .menu-title-decor { display: flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; margin: 8px 0 !important; }
 .title-deco-icon { font-size: 28px !important; animation: decoPulse 2s ease-in-out infinite !important; filter: drop-shadow(0 0 12px rgba(255,215,0,0.5)) !important; }
 .title-shield { display: flex !important; align-items: center !important; justify-content: center !important; gap: 6px !important; position: relative !important; }
@@ -701,6 +703,7 @@ body .menu-logo-title {
   display: block !important;
   text-shadow: 0 0 50px rgba(255,100,0,0.7), 0 0 100px rgba(255,0,0,0.4), 0 6px 16px rgba(0,0,0,0.7) !important;
   background: linear-gradient(180deg,#fff 0%,#ffe4a0 25%,#ff9d00 50%,#ff4d00 75%,#ff0000 100%) !important;
+  color: #ff9d00 !important; /* fallback */
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
@@ -2425,7 +2428,7 @@ body #page-menu {
 <script src="js/core/utils.js?v=56" defer></script>
 <script src="js/core/game-core.js?v=56" defer></script>
 <script src="game-engines.js?v=56" defer></script>
-<script src="js/engines/PageManager.js?v=56" defer></script>
+
 <script src="game.js?v=56" defer></script>
 <script src="v10-interactions.js?v=56" defer></script>
 
