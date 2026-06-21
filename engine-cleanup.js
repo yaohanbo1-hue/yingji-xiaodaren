@@ -66,11 +66,15 @@ window.addEventListener('beforeunload', function() {
   EngineCleanup.cleanAll();
 });
 
-// 如果 PageManager 存在，hook 其 navigate 方法自动清理
+// 如果 PageManager 存在，使用 Object.defineProperty 稳健地 hook navigate 方法
 if (typeof PageManager !== 'undefined' && typeof PageManager.navigate === 'function') {
   var _origNavigate = PageManager.navigate.bind(PageManager);
-  PageManager.navigate = function(page) {
-    EngineCleanup.cleanAll();
-    return _origNavigate(page);
-  };
+  Object.defineProperty(PageManager, 'navigate', {
+    value: function(page) {
+      EngineCleanup.cleanAll();
+      return _origNavigate(page);
+    },
+    writable: true,
+    configurable: true
+  });
 }

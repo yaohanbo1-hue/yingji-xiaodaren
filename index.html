@@ -1950,6 +1950,9 @@
 <!-- ===== 加载进度 + AudioContext 解锁 ===== -->
 <script>
 (function() {
+  // 如果 LoadingScreen 已加载（loading.js），让它主导加载流程
+  if (typeof LoadingScreen !== 'undefined' && LoadingScreen.init) return;
+
   var tips = [
     '// 地震时先躲避再撤离，不要贪恋财物',
     '// 火灾逃生要弯腰捂鼻，沿墙壁摸索前进',
