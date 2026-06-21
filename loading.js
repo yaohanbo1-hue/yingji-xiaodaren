@@ -1,18 +1,17 @@
 /**
  * ===========================================================================
- * 应急小达人 v1.3.0 — 品牌加载动画 + 骨架屏
+ * 应急小达人 v1.4.0 — 简洁加载动画 + 骨架屏
  * ===========================================================================
- * 
- * 首次打开时显示 3 秒品牌动画，之后不再显示（localStorage 记录）
- * 新增：骨架屏效果，在内容加载期间显示渐进式骨架
- * 
- * @version 1.3.0
+ *
+ * 首次打开时显示品牌动画，之后不再显示（localStorage 记录）
+ * 骨架屏：内容加载期间显示渐进式骨架
+ * 优化：使用现有 HTML 加载界面，避免 DOM 重复创建
+ * 优化：减少动画，适配 prefers-reduced-motion
+ *
+ * @version 1.4.0
  * ===========================================================================
  */
 
-/**
- * 加载提示语数组（必须在 LoadingScreen 之前定义）
- */
 const tips = [
   '正在加载防灾知识库...',
   '正在连接灾害预警系统...',
@@ -27,145 +26,158 @@ const tips = [
 const LoadingScreen = {
   _shown: false,
   _skeleton: null,
-  
+  _overlay: null,
+  _bar: null,
+  _tip: null,
+  _percentEl: null,
+  _container: null,
+  _interval: null,
+  _reducedMotion: false,
+
   init() {
-    // 检查是否已显示过
+    // 检测用户是否偏好减少动画
+    this._reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    this._overlay = document.getElementById('loadingScreen');
+    if (!this._overlay) {
+      // 保底：如果 HTML 中没有加载界面，直接显示骨架屏
+      this._showSkeleton();
+      this._waitForReady();
+      return;
+    }
+
+    // 绑定已有元素
+    this._bar = document.getElementById('loadingBar');
+    this._tip = document.getElementById('loadingTip');
+    this._percentEl = document.getElementById('loadingPercent');
+    this._container = document.getElementById('loadingContainer');
+
     try {
       if (localStorage.getItem('disaster_hq_loading_shown')) {
-        // 即使跳过品牌动画，仍显示骨架屏
+        // 已展示过品牌动画：直接跳过，显示骨架屏
+        this._overlay.classList.add('hidden');
+        setTimeout(() => {
+          if (this._overlay) this._overlay.style.display = 'none';
+        }, this._reducedMotion ? 50 : 500);
         this._showSkeleton();
+        this._waitForReady();
         return;
       }
-    } catch(e) { return; }
-    
+    } catch (e) {
+      // localStorage 不可用，直接跳过品牌动画
+      this._overlay.classList.add('hidden');
+      this._showSkeleton();
+      this._waitForReady();
+      return;
+    }
+
     this._shown = true;
     this._show();
   },
-  
+
   _show() {
-    var overlay = document.createElement('div');
-    overlay.id = 'loadingScreen';
-    overlay.innerHTML = `
-      <div class="loading-container" id="loadingContainer">
-        <div class="loading-logo">
-          <div class="loading-icon">🌪️</div>
-          <h1 class="loading-title">应急小达人</h1>
-          <p class="loading-subtitle">Disaster Blind Box Command HQ</p>
-        </div>
-        
-        <div class="loading-percent" id="loadingPercent">0%</div>
-        
-        <div class="loading-bar-container">
-          <div class="loading-bar"></div>
-        </div>
-        
-        <p class="loading-tip" id="loadingTip">正在加载防灾知识库...</p>
-        
-        <div class="loading-particles">
-          <span></span><span></span><span></span><span></span><span></span>
-          <span></span><span></span><span></span>
-        </div>
-      </div>
-    `;
-    
-    document.body.appendChild(overlay);
-    
-    // 动画进度条
-    var bar = overlay.querySelector('.loading-bar');
-    var tip = overlay.querySelector('#loadingTip');
-    var percentEl = overlay.querySelector('#loadingPercent');
-    var container = overlay.querySelector('#loadingContainer');
     var progress = 0;
     var tipIndex = 0;
-    
-    var interval = setInterval(function() {
-      progress += 2;
-      bar.style.width = progress + '%';
-      if (percentEl) {
-        percentEl.textContent = progress + '%';
+    var self = this;
+    var step = this._reducedMotion ? 5 : 2; // 减少动画时加速
+    var intervalMs = this._reducedMotion ? 30 : 50;
+
+    this._interval = setInterval(function() {
+      progress += step;
+      if (progress > 100) progress = 100;
+
+      if (self._bar) {
+        self._bar.style.width = progress + '%';
       }
-      
-      if (progress >= 20 * (tipIndex + 1) && tipIndex < tips.length - 1) {
+      if (self._percentEl) {
+        self._percentEl.textContent = progress + '%';
+      }
+
+      if (progress >= 15 * (tipIndex + 1) && tipIndex < tips.length - 1) {
         tipIndex++;
-        tip.style.opacity = '0';
-        setTimeout(function() {
-          tip.textContent = tips[tipIndex];
-          tip.style.opacity = '1';
-        }, 150);
-      }
-      
-      if (progress >= 100) {
-        clearInterval(interval);
-        if (percentEl) {
-          percentEl.textContent = '100% 🎉';
-        }
-        if (container) {
-          container.classList.add('loading-complete');
-        }
-        overlay.classList.add('loading-complete-flash');
-        setTimeout(function() {
-          overlay.classList.add('loading-fade-out');
+        if (self._tip) {
+          self._tip.style.opacity = '0';
           setTimeout(function() {
-            overlay.remove();
+            if (self._tip) {
+              self._tip.textContent = tips[tipIndex];
+              self._tip.style.opacity = '1';
+            }
+          }, 150);
+        }
+      }
+
+      if (progress >= 100) {
+        clearInterval(self._interval);
+        if (self._percentEl) {
+          self._percentEl.textContent = '100% 🎉';
+        }
+        if (self._container) {
+          self._container.classList.add('loading-complete');
+        }
+        if (!self._reducedMotion) {
+          self._overlay.classList.add('loading-complete-flash');
+        }
+        setTimeout(function() {
+          self._overlay.classList.add('loading-fade-out');
+          setTimeout(function() {
+            self._overlay.style.display = 'none';
             try {
               localStorage.setItem('disaster_hq_loading_shown', '1');
-            } catch(e) { console.error('Storage error:', e); }
+            } catch (e) { /* ignore */ }
             // 品牌动画结束后显示骨架屏
-            LoadingScreen._showSkeleton();
-          }, 500);
-        }, 600);
+            self._showSkeleton();
+            self._waitForReady();
+          }, self._reducedMotion ? 50 : 500);
+        }, self._reducedMotion ? 100 : 600);
       }
-    }, 50); // 总共约 2.5 秒
+    }, intervalMs);
   },
-  
+
   // 骨架屏：内容加载期间显示
   _showSkeleton() {
-    var skeleton = document.createElement('div');
-    skeleton.id = 'skeletonScreen';
-    skeleton.className = 'skeleton-screen show';
-    skeleton.innerHTML = `
-      <div class="skeleton-header"></div>
-      <div class="skeleton-grid">
-        <div class="skeleton-card"></div>
-        <div class="skeleton-card"></div>
-        <div class="skeleton-card"></div>
-        <div class="skeleton-card"></div>
-        <div class="skeleton-card"></div>
-        <div class="skeleton-card"></div>
-      </div>
-    `;
-    document.body.appendChild(skeleton);
+    var skeleton = document.getElementById('skeletonScreen');
+    if (!skeleton) {
+      skeleton = document.createElement('div');
+      skeleton.id = 'skeletonScreen';
+      skeleton.className = 'skeleton-screen show';
+      skeleton.innerHTML = `
+        <div class="skeleton-header"></div>
+        <div class="skeleton-grid">
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+        </div>
+      `;
+      document.body.appendChild(skeleton);
+    }
     this._skeleton = skeleton;
-    
-    // 检测页面是否准备好，然后渐隐骨架屏
-    this._waitForReady();
   },
-  
+
   _waitForReady() {
     var self = this;
     var checkReady = function() {
-      // 检查 app-ready 类或关键元素是否存在
       var bodyReady = document.body.classList.contains('app-ready');
-      var menuReady = document.getElementById('page-menu') && 
+      var menuReady = document.getElementById('page-menu') &&
                       document.getElementById('page-menu').classList.contains('active');
-      var contentLoaded = document.querySelector('.menu-grid') && 
+      var contentLoaded = document.querySelector('.menu-grid') &&
                           document.querySelector('.menu-grid').children.length > 0;
-      
+
       if (bodyReady || menuReady || contentLoaded) {
         self._hideSkeleton();
       } else {
         setTimeout(checkReady, 100);
       }
     };
-    
-    // 最多等待 5 秒
+
+    // 最多等待 8 秒（给用户更多时间加载大资源）
     setTimeout(function() {
       self._hideSkeleton();
-    }, 5000);
-    
+    }, 8000);
+
     checkReady();
   },
-  
+
   _hideSkeleton() {
     if (!this._skeleton) return;
     this._skeleton.classList.remove('show');
@@ -176,7 +188,7 @@ const LoadingScreen = {
       }
     }, 400);
   },
-  
+
   // 手动隐藏骨架屏（供外部调用）
   hideSkeleton() {
     this._hideSkeleton();

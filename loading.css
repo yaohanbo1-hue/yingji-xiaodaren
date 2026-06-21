@@ -1,6 +1,6 @@
 /**
  * ===========================================================================
- * 加载动画样式 — 品牌展示
+ * 加载动画样式 — 简洁品牌展示
  * ===========================================================================
  */
 
@@ -8,11 +8,12 @@
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: linear-gradient(135deg, #0F172A 0%, #111827 50%, #0F172A 100%);
+  background: linear-gradient(180deg, #0F1117, #141620, #0F1117);
   display: flex;
   align-items: center;
   justify-content: center;
   animation: loadingFadeIn 0.5s ease;
+  font-family: 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', sans-serif;
 }
 
 #loadingScreen.loading-fade-out {
@@ -37,14 +38,14 @@
 
 /* Logo 区域 */
 .loading-logo {
-  margin-bottom: 40px;
-  animation: loadingLogoEnter 0.8s ease-out;
+  margin-bottom: 32px;
+  animation: loadingLogoEnter 0.6s ease-out;
 }
 
 @keyframes loadingLogoEnter {
   from {
     opacity: 0;
-    transform: translateY(-30px) scale(0.8);
+    transform: translateY(-20px) scale(0.9);
   }
   to {
     opacity: 1;
@@ -53,171 +54,85 @@
 }
 
 .loading-icon {
-  font-size: 80px;
-  margin-bottom: 20px;
-  animation: loadingIconPulse 2s ease-in-out infinite;
-  filter: drop-shadow(0 0 30px rgba(59,130,246,0.5));
-}
-
-@keyframes loadingIconPulse {
-  0%, 100% { transform: scale(1) rotate(0deg); }
-  25% { transform: scale(1.1) rotate(-5deg); }
-  75% { transform: scale(1.1) rotate(5deg); }
+  font-size: 72px;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
 }
 
 .loading-title {
-  font-size: 36px;
+  font-size: 32px;
   font-weight: 700;
-  background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #fbbf24 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin: 0 0 10px 0;
-  letter-spacing: 4px;
+  color: #5BA4CF;
+  margin: 0 0 8px 0;
+  letter-spacing: 2px;
 }
 
 .loading-subtitle {
   font-size: 14px;
-  color: rgba(255,255,255,0.4);
+  color: #9AA0AB;
   letter-spacing: 2px;
-  text-transform: uppercase;
   margin: 0;
 }
 
 /* 进度条 */
 .loading-bar-container {
-  width: 280px;
+  width: 240px;
   height: 4px;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.08);
   border-radius: 2px;
-  margin: 0 auto 20px;
+  margin: 0 auto 16px;
   overflow: hidden;
 }
 
 .loading-bar {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #f59e0b);
+  background: #5BA4CF;
   border-radius: 2px;
   transition: width 0.1s ease;
-  box-shadow: 0 0 10px rgba(99,102,241,0.5);
 }
 
 /* 加载百分比数字 */
 .loading-percent {
-  font-size: 42px;
+  font-size: 36px;
   font-weight: 700;
-  background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #fbbf24 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #5BA4CF;
   margin: 0 0 8px 0;
   letter-spacing: 2px;
   font-variant-numeric: tabular-nums;
-  min-height: 52px;
+  min-height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: percentPulse 1s ease-in-out infinite;
-}
-
-@keyframes percentPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.08); }
 }
 
 /* 加载完成闪光效果 */
 .loading-complete-flash {
-  animation: loadingFlashComplete 0.8s ease-out forwards;
+  animation: loadingFlashComplete 0.6s ease-out forwards;
 }
 
 @keyframes loadingFlashComplete {
   0% { filter: brightness(1); }
-  30% { filter: brightness(2) saturate(1.5); }
-  60% { filter: brightness(1.2) saturate(1.2); }
+  50% { filter: brightness(1.2); }
   100% { filter: brightness(1); }
 }
 
 .loading-container.loading-complete .loading-icon {
-  animation: loadingIconCelebrate 0.6s ease-out forwards;
+  animation: loadingIconCelebrate 0.5s ease-out forwards;
 }
 
 @keyframes loadingIconCelebrate {
   0% { transform: scale(1) rotate(0deg); }
-  40% { transform: scale(1.3) rotate(-10deg); }
-  70% { transform: scale(1.2) rotate(5deg); }
+  50% { transform: scale(1.15) rotate(-5deg); }
   100% { transform: scale(1) rotate(0deg); }
 }
+
 .loading-tip {
   font-size: 13px;
-  color: rgba(255,255,255,0.5);
+  color: #5F6570;
   margin: 0;
   transition: opacity 0.15s ease;
   min-height: 20px;
-}
-
-/* 浮动粒子 */
-.loading-particles {
-  position: absolute;
-  inset: -100px;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.loading-particles span {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background: rgba(99,102,241,0.6);
-  border-radius: 50%;
-  animation: loadingParticleFloat 4s ease-in-out infinite;
-}
-
-.loading-particles span:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; background: rgba(59,130,246,0.6); }
-.loading-particles span:nth-child(2) { left: 20%; top: 60%; animation-delay: 0.5s; background: rgba(167,139,250,0.6); }
-.loading-particles span:nth-child(3) { left: 35%; top: 30%; animation-delay: 1s; background: rgba(251,191,36,0.6); }
-.loading-particles span:nth-child(4) { left: 50%; top: 70%; animation-delay: 1.5s; background: rgba(52,211,153,0.6); }
-.loading-particles span:nth-child(5) { left: 65%; top: 25%; animation-delay: 2s; background: rgba(244,114,182,0.6); }
-.loading-particles span:nth-child(6) { left: 75%; top: 55%; animation-delay: 2.5s; background: rgba(59,130,246,0.6); }
-.loading-particles span:nth-child(7) { left: 85%; top: 35%; animation-delay: 3s; background: rgba(167,139,250,0.6); }
-.loading-particles span:nth-child(8) { left: 90%; top: 65%; animation-delay: 3.5s; background: rgba(251,191,36,0.6); }
-
-@keyframes loadingParticleFloat {
-  0%, 100% {
-    transform: translateY(0) scale(1);
-    opacity: 0.6;
-  }
-  50% {
-    transform: translateY(-40px) scale(1.5);
-    opacity: 1;
-  }
-}
-
-/* 背景光晕 */
-#loadingScreen::before {
-  content: '';
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%);
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: loadingGlow 3s ease-in-out infinite;
-}
-
-@keyframes loadingGlow {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-  50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
-}
-
-/* 移动端适配 */
-@media (max-width: 480px) {
-  .loading-icon { font-size: 60px; }
-  .loading-title { font-size: 28px; letter-spacing: 2px; }
-  .loading-subtitle { font-size: 12px; }
-  .loading-bar-container { width: 220px; }
 }
 
 /* ===========================================================================
@@ -228,7 +143,7 @@
   position: fixed;
   inset: 0;
   z-index: 99999;
-  background: linear-gradient(135deg, #0F172A 0%, #111827 50%, #0F172A 100%);
+  background: linear-gradient(180deg, #0F1117, #141620, #0F1117);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -272,16 +187,46 @@
 .skeleton-card:nth-child(2) { animation-delay: 0.1s; }
 .skeleton-card:nth-child(3) { animation-delay: 0.2s; }
 .skeleton-card:nth-child(4) { animation-delay: 0.3s; }
-.skeleton-card:nth-child(5) { animation-delay: 0.4s; }
-.skeleton-card:nth-child(6) { animation-delay: 0.5s; }
 
 @keyframes skeletonShimmer {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
 
-/* 骨架屏移动端适配 */
+/* ===========================================================================
+ * 响应式适配
+ * =========================================================================== */
+
+@media (max-width: 1024px) {
+  .loading-icon { font-size: 64px; }
+  .loading-title { font-size: 28px; }
+  .loading-bar-container { width: 220px; }
+  .loading-percent { font-size: 32px; }
+}
+
+@media (max-width: 768px) {
+  .loading-icon { font-size: 60px; }
+  .loading-title { font-size: 26px; letter-spacing: 1px; }
+  .loading-subtitle { font-size: 12px; }
+  .loading-bar-container { width: 200px; }
+  .loading-percent { font-size: 28px; }
+  .loading-tip { font-size: 12px; }
+}
+
+@media (max-width: 480px) {
+  .loading-icon { font-size: 56px; }
+  .loading-title { font-size: 24px; letter-spacing: 1px; }
+  .loading-subtitle { font-size: 11px; }
+  .loading-bar-container { width: 180px; }
+  .loading-percent { font-size: 26px; min-height: 36px; }
+  .loading-logo { margin-bottom: 24px; }
+}
+
 @media (max-width: 375px) {
+  .loading-icon { font-size: 48px; }
+  .loading-title { font-size: 22px; }
+  .loading-bar-container { width: 160px; }
+  .loading-percent { font-size: 24px; }
   .skeleton-grid {
     grid-template-columns: 1fr;
     gap: 12px;
@@ -295,4 +240,31 @@
     grid-template-columns: repeat(3, 1fr);
     max-width: 600px;
   }
+  .loading-bar-container { width: 280px; }
+}
+
+/* ===========================================================================
+ * 减少动画偏好
+ * =========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-logo { animation: none; }
+  .loading-container.loading-complete .loading-icon { animation: none; }
+  .loading-complete-flash { animation: none; }
+  .skeleton-header, .skeleton-card { animation: none; }
+  #loadingScreen { animation: none; }
+}
+
+/* ===========================================================================
+ * 横屏小屏设备适配
+ * =========================================================================== */
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .loading-logo { margin-bottom: 16px; }
+  .loading-icon { font-size: 40px; margin-bottom: 8px; }
+  .loading-title { font-size: 20px; margin-bottom: 4px; }
+  .loading-subtitle { font-size: 10px; margin-bottom: 12px; }
+  .loading-percent { font-size: 20px; min-height: 28px; margin-bottom: 4px; }
+  .loading-bar-container { width: 160px; margin-bottom: 8px; }
+  .loading-tip { font-size: 10px; }
 }

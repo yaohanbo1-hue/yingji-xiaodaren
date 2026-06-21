@@ -673,3 +673,452 @@ body {
   border-color: rgba(201,168,76,0.25) !important;
   animation: none !important;
 }
+
+/* ===========================================================================
+ * 响应式增强 — 覆盖常见设备尺寸
+ * =========================================================================== */
+
+/* 平板横屏 / 小桌面 */
+@media (max-width: 1024px) {
+  .mode-btn {
+    padding: 40px 20px !important;
+    min-height: 180px !important;
+    border-radius: 28px !important;
+  }
+  .mode-btn .mode-icon {
+    font-size: 56px !important;
+  }
+  .mode-btn .mode-name {
+    font-size: 20px !important;
+  }
+  .mode-btn .mode-desc {
+    font-size: 13px !important;
+  }
+  .menu-cat-btn {
+    padding: 32px 20px !important;
+    min-height: 140px !important;
+    border-radius: 28px !important;
+  }
+  .menu-cat-btn .cat-icon {
+    font-size: 44px !important;
+  }
+  .menu-cat-btn .cat-title {
+    font-size: 20px !important;
+  }
+  .title-glow {
+    font-size: clamp(1.3rem, 3.5vw, 1.8rem) !important;
+  }
+}
+
+/* 平板竖屏 / 大手机 */
+@media (max-width: 768px) {
+  .mode-btn {
+    padding: 32px 16px !important;
+    min-height: 160px !important;
+    border-radius: 24px !important;
+  }
+  .mode-btn .mode-icon {
+    font-size: 48px !important;
+    margin-bottom: 10px !important;
+  }
+  .mode-btn .mode-name {
+    font-size: 18px !important;
+    margin-top: 8px !important;
+  }
+  .mode-btn .mode-desc {
+    font-size: 12px !important;
+    margin-top: 6px !important;
+  }
+  .menu-cat-btn {
+    padding: 24px 16px !important;
+    min-height: 120px !important;
+    border-radius: 20px !important;
+  }
+  .menu-cat-btn .cat-icon {
+    font-size: 36px !important;
+    margin-bottom: 8px !important;
+  }
+  .menu-cat-btn .cat-title {
+    font-size: 16px !important;
+  }
+  .menu-cat-btn .cat-count {
+    font-size: 12px !important;
+  }
+  .menu-logo {
+    padding: 32px 0 20px !important;
+  }
+  .title-glow {
+    font-size: clamp(1.2rem, 4vw, 1.6rem) !important;
+  }
+  .quiz-opt:hover, .scenario-opt:hover {
+    transform: translateX(0) !important;
+  }
+  .back-float:hover {
+    transform: none !important;
+  }
+}
+
+/* 小手机 */
+@media (max-width: 480px) {
+  .mode-btn {
+    padding: 24px 12px !important;
+    min-height: 130px !important;
+    border-radius: 20px !important;
+  }
+  .mode-btn .mode-icon {
+    font-size: 36px !important;
+    margin-bottom: 8px !important;
+  }
+  .mode-btn .mode-name {
+    font-size: 15px !important;
+    margin-top: 6px !important;
+  }
+  .mode-btn .mode-desc {
+    font-size: 11px !important;
+    margin-top: 4px !important;
+  }
+  .mode-btn .mode-badge {
+    font-size: 9px !important;
+    padding: 2px 6px !important;
+    top: 10px !important;
+    right: 10px !important;
+  }
+  .menu-cat-btn {
+    padding: 18px 12px !important;
+    min-height: 100px !important;
+    border-radius: 16px !important;
+  }
+  .menu-cat-btn .cat-icon {
+    font-size: 28px !important;
+    margin-bottom: 6px !important;
+  }
+  .menu-cat-btn .cat-title {
+    font-size: 14px !important;
+  }
+  .menu-cat-btn .cat-count {
+    font-size: 10px !important;
+  }
+  .menu-logo {
+    padding: 24px 0 16px !important;
+  }
+  .menu-logo-icon {
+    font-size: 28px !important;
+  }
+  .nav-bar {
+    padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+  }
+  .nav-item {
+    padding: 6px 2px !important;
+  }
+  .title-glow {
+    font-size: clamp(1.1rem, 5vw, 1.4rem) !important;
+  }
+  .btn {
+    padding: 12px 20px !important;
+    font-size: 14px !important;
+  }
+  .btn-primary {
+    padding: 12px 20px !important;
+  }
+  .modal-box {
+    border-radius: 12px !important;
+    padding: 20px !important;
+  }
+  .glass-card {
+    border-radius: 8px !important;
+    padding: 14px !important;
+  }
+}
+
+/* 超小手机 */
+@media (max-width: 360px) {
+  .mode-btn {
+    padding: 20px 10px !important;
+    min-height: 110px !important;
+  }
+  .mode-btn .mode-icon {
+    font-size: 32px !important;
+  }
+  .mode-btn .mode-name {
+    font-size: 13px !important;
+  }
+  .mode-btn .mode-desc {
+    font-size: 10px !important;
+  }
+  .menu-cat-btn {
+    padding: 14px 10px !important;
+    min-height: 90px !important;
+  }
+  .menu-cat-btn .cat-icon {
+    font-size: 24px !important;
+  }
+  .menu-cat-btn .cat-title {
+    font-size: 12px !important;
+  }
+}
+
+/* 横屏小屏设备 */
+@media (max-height: 500px) and (orientation: landscape) {
+  .mode-btn {
+    padding: 16px 12px !important;
+    min-height: auto !important;
+  }
+  .mode-btn .mode-icon {
+    font-size: 28px !important;
+    margin-bottom: 4px !important;
+  }
+  .mode-btn .mode-name {
+    font-size: 13px !important;
+    margin-top: 2px !important;
+  }
+  .mode-btn .mode-desc {
+    display: none !important;
+  }
+  .menu-logo {
+    padding: 12px 0 8px !important;
+  }
+  .menu-logo-icon {
+    font-size: 24px !important;
+  }
+  .menu-logo-sub {
+    font-size: 10px !important;
+  }
+  .nav-bar {
+    padding: 4px 8px calc(4px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  .nav-item {
+    padding: 4px 2px !important;
+  }
+}
+
+/* ===========================================================================
+ * 触摸设备优化 — 移除 hover 变换的粘滞感
+ * =========================================================================== */
+
+@media (hover: none) and (pointer: coarse) {
+  .mode-btn:hover {
+    transform: none !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+  }
+  .mode-btn:active {
+    transform: scale(0.96) !important;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2) !important;
+  }
+  .menu-cat-btn:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  .menu-cat-btn:active {
+    transform: scale(0.96) !important;
+  }
+  .quiz-opt:hover, .scenario-opt:hover {
+    transform: none !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+  }
+  .quiz-opt:active, .scenario-opt:active {
+    transform: scale(0.98) !important;
+  }
+  .glass-card:hover {
+    transform: none !important;
+  }
+  .glass-card:active {
+    transform: scale(0.98) !important;
+  }
+  .btn:hover {
+    transform: none !important;
+  }
+  .btn:active {
+    transform: scale(0.96) !important;
+  }
+  .btn-primary:hover {
+    transform: none !important;
+  }
+  .btn-primary:active {
+    transform: scale(0.96) !important;
+  }
+  .back-float:hover {
+    transform: none !important;
+  }
+  .back-float:active {
+    transform: scale(0.96) !important;
+  }
+}
+
+/* ===========================================================================
+ * 按钮反馈增强 — 更明显的按压和悬停效果
+ * =========================================================================== */
+
+.btn {
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0);
+  transition: background 0.2s ease;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.btn:hover::after {
+  background: rgba(255,255,255,0.04);
+}
+
+.btn:active {
+  transform: scale(0.96) !important;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2) !important;
+}
+
+.btn-primary {
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 20px rgba(91,164,207,0.4) !important;
+}
+
+.btn-primary:active {
+  transform: scale(0.96) !important;
+  box-shadow: 0 2px 8px rgba(91,164,207,0.3) !important;
+}
+
+.btn-gold:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 20px rgba(201,168,76,0.4) !important;
+}
+
+.btn-gold:active {
+  transform: scale(0.96) !important;
+}
+
+.mode-btn {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease !important;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mode-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25) !important;
+}
+
+.mode-btn:active {
+  transform: scale(0.96) !important;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.2) !important;
+  transition-duration: 0.1s !important;
+}
+
+.menu-cat-btn {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease !important;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menu-cat-btn:hover {
+  background: rgba(255,255,255,0.08) !important;
+  border-color: rgba(255,255,255,0.15) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2) !important;
+}
+
+.menu-cat-btn:active {
+  transform: scale(0.96) !important;
+  transition-duration: 0.1s !important;
+}
+
+.quiz-opt, .scenario-opt {
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.quiz-opt:hover, .scenario-opt:hover {
+  transform: translateX(2px) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+}
+
+.quiz-opt:active, .scenario-opt:active {
+  transform: scale(0.98) !important;
+  transition-duration: 0.1s !important;
+}
+
+.glass-card {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.glass-card:hover {
+  transform: translateY(-2px) !important;
+}
+
+.glass-card:active {
+  transform: scale(0.98) !important;
+  transition-duration: 0.1s !important;
+}
+
+.back-float {
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease !important;
+}
+
+.back-float:hover {
+  transform: translateY(-1px) !important;
+}
+
+.back-float:active {
+  transform: scale(0.96) !important;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2) !important;
+}
+
+.nav-item {
+  transition: color 0.2s ease, transform 0.15s ease !important;
+}
+
+.nav-item:active {
+  transform: scale(0.92) !important;
+}
+
+.kit-item {
+  transition: transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease !important;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.kit-item:active {
+  transform: scale(0.98) !important;
+  transition-duration: 0.1s !important;
+}
+
+.diff-btn {
+  transition: transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease !important;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.diff-btn:active {
+  transform: scale(0.96) !important;
+}
+
+/* ===========================================================================
+ * 加载界面简洁化兜底
+ * =========================================================================== */
+
+#loadingScreen {
+  background: linear-gradient(180deg, #0F1117, #141620, #0F1117) !important;
+}
+
+.ls-particles, .ls-ring-outer, .ls-ring-spin, .ls-ring-inner,
+.ls-scanline, .ls-glitch-line, .ls-hexgrid {
+  display: none !important;
+}
+
+/* 标记已加载响应式样式 */
+/* clean-ui-responsive */
