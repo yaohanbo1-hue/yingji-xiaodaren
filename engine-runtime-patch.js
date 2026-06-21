@@ -159,5 +159,5 @@
     };
   }
 
-  console.log('[EnginePatch] 运行时优化已加载: DOM缓存, Fisher-Yates洗牌, 防抖, 批量渲染, 页面可见性优化');
+  // console.log('[EnginePatch] 运行时优化已加载');
 })();

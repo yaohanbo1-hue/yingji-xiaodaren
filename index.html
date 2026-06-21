@@ -1,4 +1,4 @@
-<!-- 应急小达人 v1.3.0 — 优化版 (Performance Optimized) -->
+<!-- 应急小达人 v1.3.0 — 稳定版 (Stable) -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -44,85 +44,85 @@
 <link rel="dns-prefetch" href="https://github.com">
 
 <!-- 关键 CSS — 阻塞渲染但体积小，确保首屏正确 -->
-<link rel="stylesheet" href="critical.css?v=58">
+<link rel="stylesheet" href="critical.css?v=62">
 
 <!-- CSS 变量系统 — 阻塞渲染，体积小，为后续样式提供变量基础 -->
-<link rel="stylesheet" href="css-variables.css?v=58">
+<link rel="stylesheet" href="css-variables.css?v=62">
 
 <!-- 预加载最关键资源（限制在6个以内，避免带宽竞争） -->
-<link rel="preload" href="all-styles-v55.css?v=58" as="style">
-<link rel="preload" href="js/core/utils.js?v=58" as="script" fetchpriority="high">
-<link rel="preload" href="js/core/game-core.js?v=58" as="script" fetchpriority="high">
-<link rel="preload" href="cards.js?v=58" as="script" fetchpriority="high">
-<link rel="preload" href="scenarios.js?v=58" as="script" fetchpriority="high">
-<link rel="preload" href="game-engines.js?v=58" as="script" fetchpriority="high">
+<link rel="preload" href="all-styles-v55.css?v=62" as="style">
+<link rel="preload" href="js/core/utils.js?v=62" as="script" fetchpriority="high">
+<link rel="preload" href="js/core/game-core.js?v=62" as="script" fetchpriority="high">
+<link rel="preload" href="cards.js?v=62" as="script" fetchpriority="high">
+<link rel="preload" href="scenarios.js?v=62" as="script" fetchpriority="high">
+<link rel="preload" href="game-engines.js?v=62" as="script" fetchpriority="high">
 
 <!-- 非关键 CSS — 异步加载，不阻塞渲染 -->
-<link rel="stylesheet" href="all-styles-v55.css?v=58">
-<link rel="stylesheet" href="v5-glass-3d.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="v5-glass-3d.css?v=58"></noscript>
-<link rel="stylesheet" href="clean-ui.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="clean-ui.css?v=58"></noscript>
-<link rel="stylesheet" href="bg-premium.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="bg-premium.css?v=58"></noscript>
-<link rel="stylesheet" href="bg-themes.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="bg-themes.css?v=58"></noscript>
-<link rel="stylesheet" href="menu-premium.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="menu-premium.css?v=58"></noscript>
-<link rel="stylesheet" href="fx-effects.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="fx-effects.css?v=58"></noscript>
-<link rel="stylesheet" href="ai-tutor.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="ai-tutor.css?v=58"></noscript>
-<link rel="stylesheet" href="certification.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="certification.css?v=58"></noscript>
-<link rel="stylesheet" href="disaster-sim.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="disaster-sim.css?v=58"></noscript>
-<link rel="stylesheet" href="real-cases.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="real-cases.css?v=58"></noscript>
-<link rel="stylesheet" href="fix-click.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="fix-click.css?v=58"></noscript>
-<link rel="stylesheet" href="transitions.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="transitions.css?v=58"></noscript>
-<link rel="stylesheet" href="accessibility.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="accessibility.css?v=58"></noscript>
-<link rel="stylesheet" href="wrong-book.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="wrong-book.css?v=58"></noscript>
-<link rel="stylesheet" href="loading.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="loading.css?v=58"></noscript>
-<link rel="stylesheet" href="guide-enhance.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="guide-enhance.css?v=58"></noscript>
-<link rel="stylesheet" href="cert-enhance.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="cert-enhance.css?v=58"></noscript>
-<link rel="stylesheet" href="menu-enhance.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="menu-enhance.css?v=58"></noscript>
-<link rel="stylesheet" href="share.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="share.css?v=58"></noscript>
-<link rel="stylesheet" href="i18n.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="i18n.css?v=58"></noscript>
-<link rel="stylesheet" href="layout-fix.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="layout-fix.css?v=58"></noscript>
-<link rel="stylesheet" href="ai-float.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="ai-float.css?v=58"></noscript>
-<link rel="stylesheet" href="ui-ultimate.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="ui-ultimate.css?v=58"></noscript>
-<link rel="stylesheet" href="settings.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="settings.css?v=58"></noscript>
-<link rel="stylesheet" href="optimizer-mobile.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="optimizer-mobile.css?v=58"></noscript>
+<link rel="stylesheet" href="all-styles-v55.css?v=62">
+<link rel="stylesheet" href="v5-glass-3d.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="v5-glass-3d.css?v=62"></noscript>
+<link rel="stylesheet" href="clean-ui.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="clean-ui.css?v=62"></noscript>
+<link rel="stylesheet" href="bg-premium.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="bg-premium.css?v=62"></noscript>
+<link rel="stylesheet" href="bg-themes.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="bg-themes.css?v=62"></noscript>
+<link rel="stylesheet" href="menu-premium.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="menu-premium.css?v=62"></noscript>
+<link rel="stylesheet" href="fx-effects.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="fx-effects.css?v=62"></noscript>
+<link rel="stylesheet" href="ai-tutor.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="ai-tutor.css?v=62"></noscript>
+<link rel="stylesheet" href="certification.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="certification.css?v=62"></noscript>
+<link rel="stylesheet" href="disaster-sim.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="disaster-sim.css?v=62"></noscript>
+<link rel="stylesheet" href="real-cases.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="real-cases.css?v=62"></noscript>
+<link rel="stylesheet" href="fix-click.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="fix-click.css?v=62"></noscript>
+<link rel="stylesheet" href="transitions.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="transitions.css?v=62"></noscript>
+<link rel="stylesheet" href="accessibility.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="accessibility.css?v=62"></noscript>
+<link rel="stylesheet" href="wrong-book.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="wrong-book.css?v=62"></noscript>
+<link rel="stylesheet" href="loading.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="loading.css?v=62"></noscript>
+<link rel="stylesheet" href="guide-enhance.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="guide-enhance.css?v=62"></noscript>
+<link rel="stylesheet" href="cert-enhance.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="cert-enhance.css?v=62"></noscript>
+<link rel="stylesheet" href="menu-enhance.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="menu-enhance.css?v=62"></noscript>
+<link rel="stylesheet" href="share.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="share.css?v=62"></noscript>
+<link rel="stylesheet" href="i18n.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="i18n.css?v=62"></noscript>
+<link rel="stylesheet" href="layout-fix.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="layout-fix.css?v=62"></noscript>
+<link rel="stylesheet" href="ai-float.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="ai-float.css?v=62"></noscript>
+<link rel="stylesheet" href="ui-ultimate.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="ui-ultimate.css?v=62"></noscript>
+<link rel="stylesheet" href="settings.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="settings.css?v=62"></noscript>
+<link rel="stylesheet" href="optimizer-mobile.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="optimizer-mobile.css?v=62"></noscript>
 
 <!-- 动画性能优化 — 延迟加载，非阻塞渲染 -->
-<link rel="stylesheet" href="animation-optimize.css?v=58" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="animation-optimize.css?v=58"></noscript>
+<link rel="stylesheet" href="animation-optimize.css?v=62" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="animation-optimize.css?v=62"></noscript>
 
 <!-- 预获取非关键资源（空闲时加载） -->
-<link rel="prefetch" href="juice.js?v=58" as="script">
-<link rel="prefetch" href="visual-fx.js?v=58" as="script">
-<link rel="prefetch" href="v10-interactions.js?v=58" as="script">
-<link rel="prefetch" href="menu-enhance.js?v=58" as="script">
-<link rel="prefetch" href="share.js?v=58" as="script">
-<link rel="prefetch" href="i18n.js?v=58" as="script">
-<link rel="prefetch" href="bg-themes.js?v=58" as="script">
-<link rel="prefetch" href="liquid-glass.js?v=58" as="script">
+<link rel="prefetch" href="juice.js?v=62" as="script">
+<link rel="prefetch" href="visual-fx.js?v=62" as="script">
+<link rel="prefetch" href="v10-interactions.js?v=62" as="script">
+<link rel="prefetch" href="menu-enhance.js?v=62" as="script">
+<link rel="prefetch" href="share.js?v=62" as="script">
+<link rel="prefetch" href="i18n.js?v=62" as="script">
+<link rel="prefetch" href="bg-themes.js?v=62" as="script">
+<link rel="prefetch" href="liquid-glass.js?v=62" as="script">
 
 </head>
 <body style="background-color: #0F1117 !important; min-height: 100vh;">
@@ -1808,42 +1808,43 @@
 
 
 <!-- ===== 核心基础架构（优化模块） ===== -->
-<script src="js/core/optimized/ErrorBoundary.js?v=58" defer></script>
-<script src="js/core/optimized/DOMCache.js?v=58" defer></script>
-<script src="js/core/optimized/EventDelegate.js?v=58" defer></script>
-<script src="js/core/optimized/BaseEngine.js?v=58" defer></script>
+<script src="js/core/optimized/ErrorBoundary.js?v=62" defer></script>
+<script src="js/core/optimized/DOMCache.js?v=62" defer></script>
+<script src="js/core/optimized/EventDelegate.js?v=62" defer></script>
+<script src="js/core/optimized/BaseEngine.js?v=62" defer></script>
 
 <!-- ===== 核心脚本：按依赖顺序加载 ===== -->
-<script src="js/core/utils.js?v=58" defer></script>
-<script src="js/core/utils-enhanced.js?v=58" defer></script>
-<script src="js/core/game-core.js?v=58" defer></script>
-<script src="cards.js?v=58" defer></script>
-<script src="scenarios.js?v=58" defer></script>
-<script src="kit_data.js?v=58" defer></script>
-<script src="game-engines.js?v=58" defer></script>
-<script src="engine-runtime-patch.js?v=58" defer></script>
-<script src="game.js?v=58" defer></script>
+<script src="js/core/utils.js?v=62" defer></script>
+<script src="js/core/utils-enhanced.js?v=62" defer></script>
+<script src="js/core/game-core.js?v=62" defer></script>
+<script src="cards.js?v=62" defer></script>
+<script src="scenarios.js?v=62" defer></script>
+<script src="kit_data.js?v=62" defer></script>
+<script src="game-engines.js?v=62" defer></script>
+<script src="engine-runtime-patch.js?v=62" defer></script>
+<script src="js/core/performance-patch.js?v=62" defer></script>
+<script src="game.js?v=62" defer></script>
 
 <!-- ===== 加载与交互脚本 ===== -->
-<script src="loading.js?v=58" defer></script>
-<script src="fix-click.js?v=58" defer></script>
-<script src="menu-manager.js?v=58" defer></script>
+<script src="loading.js?v=62" defer></script>
+<script src="fix-click.js?v=62" defer></script>
+<script src="menu-manager.js?v=62" defer></script>
 
 <!-- ===== 视觉特效脚本 ===== -->
-<script src="juice.js?v=58" defer></script>
-<script src="visual-fx.js?v=58" defer></script>
-<script src="v10-interactions.js?v=58" defer></script>
-<script src="menu-enhance.js?v=58" defer></script>
+<script src="juice.js?v=62" defer></script>
+<script src="visual-fx.js?v=62" defer></script>
+<script src="v10-interactions.js?v=62" defer></script>
+<script src="menu-enhance.js?v=62" defer></script>
 
 <!-- ===== 功能模块脚本 ===== -->
-<script src="share.js?v=58" defer></script>
-<script src="i18n.js?v=58" defer></script>
-<script src="bg-themes.js?v=58" defer></script>
-<script src="liquid-glass.js?v=58" defer></script>
-<script src="shuffle-fix.js?v=58" defer></script>
-<script src="html-escape.js?v=58" defer></script>
-<script src="engine-cleanup.js?v=58" defer></script>
-<script src="optimizer-mobile.js?v=58" defer></script>
+<script src="share.js?v=62" defer></script>
+<script src="i18n.js?v=62" defer></script>
+<script src="bg-themes.js?v=62" defer></script>
+<script src="liquid-glass.js?v=62" defer></script>
+<script src="shuffle-fix.js?v=62" defer></script>
+<script src="html-escape.js?v=62" defer></script>
+<script src="engine-cleanup.js?v=62" defer></script>
+<script src="optimizer-mobile.js?v=62" defer></script>
 
 <!-- ===== 补丁脚本：修复已知问题 ===== -->
 <script>

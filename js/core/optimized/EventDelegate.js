@@ -124,7 +124,13 @@ const EventDelegate = (function() {
         const [, engine, method, rawArgs] = match;
         el.dataset.action = `${engine}.${method}`;
         try {
-          const args = rawArgs ? eval(`[${rawArgs}]`) : []; // 安全：仅解析字面量
+          const args = rawArgs ? (function() {
+            try {
+              return JSON.parse('[' + rawArgs + ']');
+            } catch (e) {
+              return rawArgs.split(',').map(s => s.trim().replace(/^['"]|['"]$/g, ''));
+            }
+          })() : [];
           el.dataset.params = JSON.stringify({ args });
         } catch (_) {}
         el.removeAttribute('onclick');
