@@ -12,8 +12,11 @@
 
 - 修复 **Certificate.show()** playerName 直接拼接 innerHTML 导致的 XSS 漏洞（转义后插入）
 - 修复 **PKEngine** pkResultPlayers innerHTML 模板中 p1Name/p2Name 未转义的 XSS 漏洞（新增 `_h()` HTML 转义函数）
+- 修复 **DiaryEngine.render()** e.text 用户日记内容未转义的存储型 XSS 漏洞
+- 修复 **LeaderboardEngine.render()** entry.name 排行榜玩家名称未转义的存储型 XSS 漏洞
 - 修复 **index.html** 引用不存在的 `shuffle-fix.js` 文件（404 错误）
 - 修复 **index.html** 4 处 inline onclick 未检查引擎全局变量是否存在（`typeof TimeEscapeEngine !== 'undefined'` / `typeof ReactionEngine !== 'undefined'`）
+- 版本统一：所有资源从 `?v=62` 升级至 `?v=63`，Service Worker 缓存名更新至 `yingji-xiaodaren-v63`
 
 ### 内部迭代
 
