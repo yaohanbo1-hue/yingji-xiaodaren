@@ -46,6 +46,9 @@
 <!-- 关键 CSS — 阻塞渲染但体积小，确保首屏正确 -->
 <link rel="stylesheet" href="critical.css?v=58">
 
+<!-- CSS 变量系统 — 阻塞渲染，体积小，为后续样式提供变量基础 -->
+<link rel="stylesheet" href="css-variables.css?v=58">
+
 <!-- 预加载最关键资源（限制在6个以内，避免带宽竞争） -->
 <link rel="preload" href="all-styles-v55.css?v=58" as="style">
 <link rel="preload" href="js/core/utils.js?v=58" as="script" fetchpriority="high">
@@ -106,6 +109,10 @@
 <noscript><link rel="stylesheet" href="settings.css?v=58"></noscript>
 <link rel="stylesheet" href="optimizer-mobile.css?v=58" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="optimizer-mobile.css?v=58"></noscript>
+
+<!-- 动画性能优化 — 延迟加载，非阻塞渲染 -->
+<link rel="stylesheet" href="animation-optimize.css?v=58" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="animation-optimize.css?v=58"></noscript>
 
 <!-- 预获取非关键资源（空闲时加载） -->
 <link rel="prefetch" href="juice.js?v=58" as="script">
@@ -1800,8 +1807,15 @@
 <!-- bgm.js removed: bgm-enhanced.js provides compatibility layer -->
 
 
+<!-- ===== 核心基础架构（优化模块） ===== -->
+<script src="js/core/optimized/ErrorBoundary.js?v=58" defer></script>
+<script src="js/core/optimized/DOMCache.js?v=58" defer></script>
+<script src="js/core/optimized/EventDelegate.js?v=58" defer></script>
+<script src="js/core/optimized/BaseEngine.js?v=58" defer></script>
+
 <!-- ===== 核心脚本：按依赖顺序加载 ===== -->
 <script src="js/core/utils.js?v=58" defer></script>
+<script src="js/core/utils-enhanced.js?v=58" defer></script>
 <script src="js/core/game-core.js?v=58" defer></script>
 <script src="cards.js?v=58" defer></script>
 <script src="scenarios.js?v=58" defer></script>

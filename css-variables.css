@@ -247,3 +247,45 @@
   --transition-spring: 0.01ms;
   --transition-page: none;
 }
+
+/* ============================================================================
+ * 兼容性变量映射（旧命名 → 新命名）
+ * ============================================================================
+ * 目的：确保现有代码中的旧变量名仍然可用，实现平滑迁移。
+ * 以下变量映射 all-styles-v55.css 中的旧命名到本系统的命名规范。
+ * 这些变量提供向后兼容，新代码应优先使用新命名（如 --color-primary）。
+ * 独立的 :root 块确保可以引用主 :root 中的变量而不产生循环。
+ * ============================================================================ */
+
+:root {
+  /* 品牌色兼容 */
+  --cyber-blue: var(--color-accent-blue, #5BA4CF);
+  --cyber-blue-hover: var(--color-accent-blue-hover, #6BB8E0);
+  --cyber-blue-dim: var(--color-accent-blue-dim, rgba(91, 164, 207, 0.12));
+  --cyber-blue-glow: var(--color-accent-blue-glow, rgba(91, 164, 207, 0.2));
+  --neon-pink: var(--color-accent-pink, #D47B9C);
+  --neon-green: var(--color-accent-green, #6BC47A);
+  --gold: var(--color-accent-gold, #C9A84C);
+  --gold-dim: var(--color-accent-gold-dim, rgba(201, 168, 76, 0.15));
+
+  /* 强调色兼容 */
+  --accent-color: var(--color-primary, #00d4ff);
+  --accent-cyan: var(--color-primary, #00d4ff);
+  --accent-purple: var(--color-secondary, #a855f7);
+  --accent-green: var(--color-success, #00e676);
+  --accent-red: var(--color-accent-red, #ff1744);
+  --accent-orange: var(--color-accent-orange, #ff9800);
+
+  /* 背景色兼容 */
+  --bg-primary: var(--bg-deep, #0F1117);
+  --bg-secondary: var(--bg-deep-alt, #141620);
+
+  /* 边框兼容 */
+  --border-color: var(--border-light, rgba(255, 255, 255, 0.1));
+
+  /* 玻璃效果兼容（已在主 :root 中定义，无需重复映射） */
+  /* --glass-shadow: var(--glass-shadow, rgba(0, 0, 0, 0.3)); */
+  /* --glass-highlight: var(--glass-highlight, rgba(255, 255, 255, 0.15)); */
+}
+
+
