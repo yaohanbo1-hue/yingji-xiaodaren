@@ -149,7 +149,7 @@
       if (streakEl) {
         var match = streakEl.textContent.match(/(\d+)/);
         if (match) {
-          var combo = parseInt(match[1]);
+          var combo = parseInt(match[1], 10);
           if (combo >= 3) {
             SFXEngine.combo(combo);
           }

@@ -261,7 +261,7 @@
       input.dataset.mobileOptimized = '1';
 
       const style = window.getComputedStyle(input);
-      if (parseInt(style.fontSize) < 16) {
+      if (parseInt(style.fontSize, 10) < 16) {
         input.style.fontSize = '16px';
       }
       input.setAttribute('inputmode', input.getAttribute('inputmode') || 'text');

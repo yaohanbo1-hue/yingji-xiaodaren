@@ -58,7 +58,7 @@ const ReportEngine = {
       var gacha = SafeStorage.get('disasterGachaState', null);
       if (gacha && gacha.playTime) time = String(gacha.playTime);
     }
-    var minutes = parseInt(time || '0') || 0;
+    var minutes = parseInt(time || "0", 10) || 0;
     if (minutes < 60) return minutes + ' 分钟';
     var hours = Math.floor(minutes / 60);
     var mins = minutes % 60;
@@ -83,7 +83,7 @@ const ReportEngine = {
       var gacha = SafeStorage.get('disasterGachaState', null);
       if (gacha && gacha.totalQuizzes) count = String(gacha.totalQuizzes);
     }
-    return parseInt(count || '0') || 0;
+    return parseInt(count || "0", 10) || 0;
   },
   
   _getCorrectRate() {

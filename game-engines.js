@@ -1011,14 +1011,14 @@ const SettingsEngine = {
     GameState.save();
   },
   setBgmVolume(v) {
-    var vol = Math.max(0, Math.min(100, parseInt(v) || 60));
+    var vol = Math.max(0, Math.min(100, parseInt(v, 10) || 60));
     if (GameState._data) GameState._data.settings.bgmVolume = vol;
     if (typeof BGMEngineV2 !== 'undefined') BGMEngineV2.setVolume(vol / 100);
     if (typeof BGMEngine !== 'undefined') BGMEngine.setVolume(vol / 100);
     GameState.save();
   },
   setSfxVolume(v) {
-    var vol = Math.max(0, Math.min(100, parseInt(v) || 80));
+    var vol = Math.max(0, Math.min(100, parseInt(v, 10) || 80));
     if (GameState._data) GameState._data.settings.soundVolume = vol;
     if (typeof SFXEngine !== 'undefined') SFXEngine.setVolume(vol / 100);
     GameState.save();
