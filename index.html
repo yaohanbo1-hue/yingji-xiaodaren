@@ -2454,35 +2454,16 @@ body #page-menu {
 <script src="game.js?v=58" defer></script>
 <script src="v10-interactions.js?v=58" defer></script>
 
-<script src="encyclopedia_extra.js?v=58" defer></script>
-<script src="encyclopedia_final.js?v=58" defer></script>
-<script src="bg-premium.js?v=58" defer></script>
-<script src="ui-polish.js?v=58" defer></script>
-<script src="tilt3d.js?v=58" defer></script>
-<script src="ai-tutor-llm-v55.js?v=58" defer></script>
-<script src="ai-tutor-v55.js?v=58" defer></script>
-<script src="ai-float-v55.js?v=58" defer></script>
-<script src="certification.js?v=58" defer></script>
-<script src="disaster-sim.js?v=58" defer></script>
-<script src="real-cases.js?v=58" defer></script>
-<script src="sfx.js?v=58" defer></script>
-<script src="bgm-enhanced.js?v=58" defer></script>
-<script src="audio-integration.js?v=58" defer></script>
-<script src="accessibility.js?v=58" defer></script>
-<script src="performance.js?v=58" defer></script>
-<script src="wrong-book.js?v=58" defer></script>
-<script src="report.js?v=58" defer></script>
-<script src="voice.js?v=58" defer></script>
-<script src="guide-enhance.js?v=58" defer></script>
-<script src="cert-enhance.js?v=58" defer></script>
-<script src="disaster-particles.js?v=58" defer></script>
 <script src="menu-enhance.js?v=58" defer></script>
 <script src="share.js?v=58" defer></script>
 <script src="i18n.js?v=58" defer></script>
 <script src="bg-themes.js?v=58" defer></script>
 <script src="liquid-glass.js?v=58" defer></script>
+<script src="shuffle-fix.js?v=58" defer></script>
+<script src="html-escape.js?v=58" defer></script>
+<script src="engine-cleanup.js?v=58" defer></script>
 
-<!-- 补丁脚本：修复缺失的方法 -->
+  <!-- 补丁脚本：修复已知问题 -->
 <script>
 (function() {
   function patch() {
@@ -2500,6 +2481,34 @@ body #page-menu {
           this.finish && this.finish();
         };
       }
+    }
+    // 修复 GameState.save() 无防抖：每次调用直接写 localStorage
+    if (typeof GameState !== 'undefined' && GameState.save) {
+      var _origSave = GameState.save.bind(GameState);
+      var _saveTimer = null;
+      GameState.save = function() {
+        clearTimeout(_saveTimer);
+        _saveTimer = setTimeout(_origSave, 300);
+      };
+    }
+    // 修复 VisualFX resize 监听器不可移除
+    if (typeof VisualFX !== 'undefined' && VisualFX.startBattleParticles) {
+      var _origStart = VisualFX.startBattleParticles.bind(VisualFX);
+      VisualFX.startBattleParticles = function() {
+        this._vfxResizeHandler = null;
+        return _origStart.apply(this, arguments);
+      };
+    }
+    // 修复 AudioContext 浏览器自动暂停
+    if (typeof AudioManager !== 'undefined' && AudioManager._getCtx) {
+      var _origGetCtx = AudioManager._getCtx.bind(AudioManager);
+      AudioManager._getCtx = function() {
+        var ctx = _origGetCtx.apply(this, arguments);
+        if (ctx && ctx.state === 'suspended') {
+          try { ctx.resume(); } catch(e) {}
+        }
+        return ctx;
+      };
     }
   }
   if (document.readyState === 'loading') {
