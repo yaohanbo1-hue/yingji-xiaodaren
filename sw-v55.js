@@ -1,7 +1,7 @@
 // ===== 应急小达人 Service Worker =====
 // 离线缓存策略：Cache First, Network Fallback
 
-const CACHE_NAME = 'yingji-xiaodaren-v55';
+const CACHE_NAME = 'yingji-xiaodaren-v62';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -39,8 +39,9 @@ const STATIC_ASSETS = [
   './kit_data.js',
   './juice.js',
   './visual-fx.js',
-  './bgm.js',
-  './v10-interactions.js',
+  './engine-runtime-patch.js',
+  './shuffle-fix.js',
+  './engine-cleanup.js',
   './encyclopedia_extra.js',
   './encyclopedia_final.js',
   './bg-premium.js',
@@ -147,11 +148,13 @@ self.addEventListener('fetch', function(event) {
         return cachedResponse;
       }
 
-      // 无缓存时等待网络
+  // 无缓存时等待网络
       return networkFetch.catch(function() {
         if (request.mode === 'navigate') {
           return caches.match('./index.html');
         }
+        // 非导航资源加载失败时返回空响应，避免页面崩溃
+        return new Response('', { status: 200, headers: { 'Content-Type': 'text/plain' } });
       });
     })
   );

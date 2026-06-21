@@ -17,6 +17,7 @@
   'use strict';
 
   // ===== 1. 统一 Fisher-Yates 洗牌 =====
+  // window._shuffle 可供需要洗牌的代码显式调用，不再拦截全局 Array.prototype.sort
   window._shuffle = function(arr) {
     if (!Array.isArray(arr)) return [];
     var result = arr.slice();
@@ -27,16 +28,6 @@
       result[j] = tmp;
     }
     return result;
-  };
-
-  // 拦截所有引擎中的 .sort(() => Math.random() - 0.5)
-  // 由于代码已压缩，使用 MutationObserver 监听动态生成的选项按钮
-  var _originalSort = Array.prototype.sort;
-  Array.prototype.sort = function(compareFn) {
-    if (compareFn && compareFn.toString().indexOf('Math.random') !== -1) {
-      return window._shuffle(this);
-    }
-    return _originalSort.apply(this, arguments);
   };
 
   // ===== 2. DOM 缓存系统 =====
