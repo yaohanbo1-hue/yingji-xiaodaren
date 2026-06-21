@@ -1,67 +1,54 @@
-# 应急小达人 - 多Agent测试+修复+验证计划
+# 应急小达人 — 全面优化计划
 
-## 项目信息
-- **GitHub Pages**: https://yaohanbo1-hue.github.io/yingji-xiaodaren/
-- **本地路径**: C:\Users\hambu\Documents\kimi\workspace\yingji-xiaodaren\
-- **AI后端**: 阿里云百炼 Qwen 3.7 Plus（前端直连）
-- **当前版本**: 阿里云百炼 + 安全锁 + 20次/3秒限制
+## 目标
+无限循环 QA + 修复bug直到清零 + 优化界面/模块/排版/代码/AI/学习内容
 
-## Stage 1: 并行测试（5个Agent）
+## 阶段
 
-### 测试Agent_1: 主页面与导航测试
-- 测试标题显示、居中、动画
-- 测试菜单导航（所有工具栏按钮）
-- 测试页面切换（PageManager）
-- 测试加载界面和引导弹窗
-- 测试Edge/Chrome兼容性
+### Stage 1: 第7轮 QA（当前）
+- 修复2个Medium XSS（PKEngine innerHTML, ai-tutor-v55.js innerHTML）
+- 全面扫描是否有遗漏bug
+- 输出：修复所有Critical/High/Medium
 
-### 测试Agent_2: AI功能测试
-- 测试AI按钮显示和点击
-- 测试AI面板打开/关闭
-- 测试发送消息（只调1次API）
-- 测试快速提问按钮
-- 测试API安全锁（3秒间隔、20次限制）
-- 测试F12控制台报错
+### Stage 2: 界面与排版优化
+- 色彩系统统一（解决赛博朋克 vs 简洁风格冲突）
+- 字体层级优化（中文可读性）
+- 布局间距统一
+- 动画效果优化（减少低端设备卡顿）
+- 移动端响应式增强
+- 加载界面优化
 
-### 测试Agent_3: 游戏模块测试
-- 测试学习模式（开盲盒、每日签到等）
-- 测试战斗模式（答题、生存挑战等）
-- 测试辅助功能（急救、知识竞赛等）
-- 测试按钮点击和页面切换
-- 测试游戏逻辑是否正常运行
+### Stage 3: 代码优化
+- 添加模块化注释和文档
+- 提取公共工具函数
+- 减少重复代码
+- 性能优化（DOM操作、事件委托）
+- 错误处理完善
 
-### 测试Agent_4: 设置与辅助功能测试
-- 测试设置页面（音效、难度等）
-- 测试角色系统
-- 测试图鉴、成就、统计
-- 测试商店、宠物、日记
-- 测试博物馆、工坊、扭蛋
+### Stage 4: AI模块优化
+- AI导师对话质量提升
+- 智能推荐算法改进
+- 个性化学习路径
+- 错误反馈机制
 
-### 测试Agent_5: 响应式与兼容性测试
-- 测试不同分辨率下的布局
-- 测试Edge浏览器显示（白色背景问题）
-- 测试移动端适配
-- 测试CSS加载和JS错误
-- 测试控制台报错信息
+### Stage 5: 题目与学习内容优化
+- 题目知识准确性检查
+- 选项设计优化（避免歧义）
+- 解析内容完善
+- 学习卡片内容丰富
+- 情景模拟真实性
 
-## Stage 2: 并行修复（3-5个Agent）
-- 根据Stage 1报告，分配修复任务
-- 每个Agent修复1-2个bug
-- 修复后立即本地验证
+### Stage 6: 最终验证
+- 无bug检查
+- 功能完整性测试
+- 性能测试
+- 用户体验测试
 
-## Stage 3: 并行验证（3-5个Agent）
-- 重新测试Stage 1发现的所有问题
-- 验证修复是否生效
-- 测试是否有新引入的bug
-- 最终集成测试
-
-## 文件清单（关键文件）
-- index.html（主页面）
-- all-styles-v55.css（主样式）
-- clean-ui.css（UI样式）
-- ai-float.css（AI按钮样式）
-- ai-float-v55.js（AI浮动面板）
-- ai-tutor-v55.js（AI导师）
-- ai-tutor-llm-v55.js（AI LLM后端）
-- js/engines/PageManager.js（页面管理）
-- game-engines.js（游戏引擎）
+## 工具文件
+- engine-cleanup.js — 定时器清理
+- html-escape.js — XSS防护
+- shuffle-fix.js — 均匀洗牌
+- 新增：ui-patch.js — 界面优化补丁
+- 新增：code-patch.js — 代码优化补丁
+- 新增：ai-patch.js — AI优化补丁
+- 新增：content-patch.js — 内容优化补丁

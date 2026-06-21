@@ -2510,6 +2510,39 @@ body #page-menu {
         return ctx;
       };
     }
+    // XSS 防护：定义全局转义函数
+    window._escapeHtml = function(s) {
+      if (!s || typeof s !== 'string') return '';
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;');
+    };
+    // 修复 PKEngine endGame 的 XSS
+    if (typeof PKEngine !== 'undefined' && PKEngine.endGame) {
+      var _origEndGame = PKEngine.endGame.bind(PKEngine);
+      PKEngine.endGame = function() {
+        var p1 = _escapeHtml(this.p1Name || '玩家1');
+        var p2 = _escapeHtml(this.p2Name || '玩家2');
+        var resultEl = document.getElementById('pkResultPlayers');
+        if (resultEl) {
+          var html = '<div class="stat-label">' + p1 + '</div><div class="stat-label">' + p2 + '</div>';
+          resultEl.innerHTML = html;
+        }
+        return _origEndGame.apply(this, arguments);
+      };
+    }
+    // 修复 AI 导师气泡 XSS
+    if (typeof AITutor !== 'undefined' && AITutor._showBubble) {
+      var _origShowBubble = AITutor._showBubble.bind(AITutor);
+      AITutor._showBubble = function(text) {
+        var safeText = _escapeHtml(text).replace(/\n/g, '<br>');
+        return _origShowBubble.call(this, safeText);
+      };
+    }
+    // 界面优化：平滑滚动
+    document.documentElement.style.scrollBehavior = 'smooth';
+    // 界面优化：按钮反馈增强
+    var style = document.createElement('style');
+    style.textContent = '.btn, .mode-btn, .tool-btn, .quiz-opt { transition: transform 0.15s ease, box-shadow 0.15s ease; } .btn:active, .mode-btn:active, .tool-btn:active, .quiz-opt:active { transform: scale(0.96); }';
+    document.head.appendChild(style);
   }
   if (document.readyState === 'loading') {
     window.addEventListener('load', patch);
