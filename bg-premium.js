@@ -97,7 +97,7 @@ function drawLines() {
 }
 
 function animate() {
-  if (document.hidden) { requestAnimationFrame(animate); return; }
+  if (document.hidden) { frame = null; return; }
   frame++;
   ctx.clearRect(0, 0, W, H);
   ctx.globalAlpha = 1;
@@ -108,5 +108,13 @@ function animate() {
   
   requestAnimationFrame(animate);
 }
+let visHandler = () => {
+  if (!document.hidden && !frame) frame = requestAnimationFrame(animate);
+};
+document.addEventListener('visibilitychange', visHandler);
+window.addEventListener('beforeunload', () => {
+  document.removeEventListener('visibilitychange', visHandler);
+});
+
 animate();
 }

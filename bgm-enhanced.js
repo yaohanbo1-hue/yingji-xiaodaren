@@ -63,7 +63,7 @@ const BGMEngineV2 = {
       
       this._masterGain.connect(this._ctx.destination);
     } catch (e) {
-      console.warn('AudioContext not available');
+      console.warn('AudioContext not available:', e);
     }
   },
   
@@ -99,7 +99,7 @@ const BGMEngineV2 = {
       this._timeoutId = null;
     }
     this._nodes.forEach(n => {
-      try { n.stop(); } catch(e) {}
+      try { n.stop(); } catch(e) { if(location.hostname==='localhost')console.warn('BGM stop error:', e); }
     });
     this._nodes = [];
   },

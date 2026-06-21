@@ -15,6 +15,17 @@
  * ===========================================================================
  */
 
+// XSS防护：HTML转义辅助函数
+function escapeHtml(text) {
+  if (!text) return '';
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 const AITutorEngine = {
   _data: null,
   _radarAnimProgress: 0,
@@ -496,36 +507,30 @@ const AITutorEngine = {
     msg.appendChild(bubble);
     body.appendChild(msg);
     
-    if (type === 'ai' && text.length > 30) {
-      // 智能打字动画：按词打字，自动解析 HTML 标签
-      let plainText = text.replace(/<[^>]+>/g, ''); // 临时计算长度
+    // XSS安全：先转义HTML
+    const safeText = escapeHtml(text);
+    
+    if (type === 'ai' && safeText.length > 30) {
       const speed = 18;
       let i = 0;
-      let inTag = false;
       let displayText = '';
       
       const typeChar = () => {
-        if (i < text.length) {
-          const char = text[i];
-          if (char === '<') inTag = true;
-          if (inTag) {
-            displayText += char;
-            if (char === '>') inTag = false;
-          } else {
-            displayText += char;
-          }
+        if (i < safeText.length) {
+          const char = safeText[i];
+          displayText += char;
           i++;
           
           // 遇到标点或空格时暂停稍长，模拟自然阅读节奏
           let delay = speed;
-          if (!inTag && /[。！？\n]/.test(char)) delay = speed * 6;
-          else if (!inTag && /[，；：]/.test(char)) delay = speed * 3;
-          else if (!inTag && char === ' ') delay = speed * 1.5;
+          if (/[。！？\n]/.test(char)) delay = speed * 6;
+          else if (/[，；：]/.test(char)) delay = speed * 3;
+          else if (char === ' ') delay = speed * 1.5;
           
           bubble.innerHTML = displayText.replace(/\n/g, '<br>');
           body.scrollTop = body.scrollHeight;
           
-          if (i < text.length) {
+          if (i < safeText.length) {
             setTimeout(typeChar, delay);
           } else {
             if (callback) callback();
@@ -536,7 +541,7 @@ const AITutorEngine = {
       };
       typeChar();
     } else {
-      bubble.innerHTML = text.replace(/\n/g, '<br>');
+      bubble.innerHTML = safeText.replace(/\n/g, '<br>');
       body.scrollTop = body.scrollHeight;
       if (callback) callback();
     }
@@ -570,6 +575,7 @@ const AITutorEngine = {
   },
   
   handleInput() {
+    if(!navigator.onLine){this._typeMessage('ai','⚠️ 网络已断开，请检查网络连接后重试。');this._askingLock=false;return;}
     if (this._askingLock) {
       console.warn('AI 请求锁已激活，跳过重复调用');
       return;
@@ -597,7 +603,7 @@ const AITutorEngine = {
         this._askingLock = false;
       }).catch(err => {
         this.hideTyping();
-        console.error('AI回复错误:', err);
+        if(location.hostname==='localhost')console.error('AI回复错误:', err);
         this._typeMessage('ai', '抱歉，AI引擎暂时出错了，请稍后再试。');
         this._askingLock = false;
       });
@@ -609,6 +615,7 @@ const AITutorEngine = {
   },
   
   quickAsk(type) {
+    if(!navigator.onLine){this._typeMessage('ai','⚠️ 网络已断开，请检查网络连接后重试。');return;}
     if (this._askingLock) {
       console.warn('AI 请求锁已激活，跳过重复调用');
       return;
@@ -641,7 +648,7 @@ const AITutorEngine = {
         this._askingLock = false;
       }).catch(err => {
         this.hideTyping();
-        console.error('AI回复错误:', err);
+        if(location.hostname==='localhost')console.error('AI回复错误:', err);
         this._typeMessage('ai', '抱歉，AI引擎暂时出错了，请稍后再试。');
         this._askingLock = false;
       });

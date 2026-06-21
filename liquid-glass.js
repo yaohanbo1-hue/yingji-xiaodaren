@@ -811,8 +811,9 @@
         mouseY = e.clientY;
       });
       
+      let animFrame;
       function draw() {
-        if (document.hidden) { requestAnimationFrame(draw); return; }
+        if (document.hidden) { animFrame = null; return; }
         ctx.clearRect(0, 0, w, h);
         
         // 更新位置
@@ -857,9 +858,16 @@
           }
         }
         
-        requestAnimationFrame(draw);
+        animFrame = requestAnimationFrame(draw);
       }
       draw();
+      
+      const visHandler = () => { if (!document.hidden && !animFrame) draw(); };
+      document.addEventListener('visibilitychange', visHandler);
+      LiquidGlass._cleanupFns.push(() => {
+        document.removeEventListener('visibilitychange', visHandler);
+        if (animFrame) cancelAnimationFrame(animFrame);
+      });
     },
 
     // 水波纹点击

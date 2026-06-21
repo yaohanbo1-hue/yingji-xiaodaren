@@ -1,0 +1,327 @@
+/**
+ * ============================================================================
+ * GameState
+ * ============================================================================
+ * 
+ *
+ * Auto-generated from game.js refactoring.
+ * ============================================================================
+ */
+
+const GameState = {
+_data:null,
+_version:2,
+_keys:["coins",
+"cards",
+"equipment",
+"achievements",
+"stats",
+"settings",
+"activeBg",
+"activeFrame",
+"level",
+"exp",
+"cardLevels",
+"cardFragments",
+"blindboxPity",
+"blindboxHistory",
+"pets",
+"activePet",
+"outfits",
+"baseDecor",
+"diary",
+"comicsRead",
+"documentariesWatched",
+"museumProgress",
+"eggsFound",
+"dailyTasks",
+"weeklyChallenges",
+"checkinDates",
+"checkinStreak",
+"lastCheckin",
+"dailyStreak",
+"lastDaily",
+"lastFreeBlindbox",
+"lastFreeSpin",
+"language",
+"titles",
+"activeTitle",
+"musicUnlocked",
+"difficultyStats"],
+_defaults:{
+version:2,
+coins:0,
+level:1,
+exp:0,
+cards:[],
+equipment:[],
+cardLevels:{
+
+}
+,
+cardFragments:{
+
+}
+,
+achievements:[],
+titles:[],
+activeTitle:"",
+stats:{
+gamesPlayed:0,
+correct:0,
+wrong:0,
+highestScore:0,
+lastPlayed:null,
+maxStreak:0,
+scenariosPlayed:0,
+kitsPlayed:0,
+scenarioScore:0,
+bestScenarioAccuracy:0,
+bestKitGrade:null,
+kitTypesCompleted:[],
+totalEarned:0,
+shopPurchases:0,
+hasCertificate:!1,
+blindboxOpened:0,
+cardsUpgraded:0,
+cardsSynthesized:0,
+bossDefeated:0,
+bossKingDefeated:!1,
+battleWins:0,
+battleLosses:0,
+dailyTasksCompleted:0,
+weeklyChallengesCompleted:0,
+gachaPlayed:0,
+roulettePlayed:0,
+scratchPlayed:0,
+monopolyPlayed:0,
+firstAidPlayed:0,
+escapePlayed:0,
+docsWatched:0,
+museumRoomsVisited:0,
+diaryEntries:0,
+comicsReadCount:0,
+eggsFound:0,
+petsUnlocked:0
+}
+,
+settings:{
+sound:!0,
+voice:!0,
+autoSave:!0,
+soundVolume:80,
+bgmVolume:60
+}
+,
+activeBg:"bg_default",
+activeFrame:"frame_default",
+activePet:"",
+outfits:{
+head:"",
+body:"",
+gloves:"",
+shoes:"",
+accessory:""
+}
+,
+baseDecor:{
+wall:"default",
+floor:"default",
+furniture:[],
+showcase:[],
+trophies:[]
+}
+,
+blindboxPity:{
+rare:0,
+epic:0,
+legendary:0
+}
+,
+blindboxHistory:[],
+pets:{
+
+}
+,
+diary:[],
+comicsRead:[],
+documentariesWatched:[],
+museumProgress:{
+visited:[]
+}
+,
+eggsFound:[],
+dailyTasks:{
+date:null,
+tasks:[],
+allDone:!1
+}
+,
+weeklyChallenges:{
+week:null,
+completed:0
+}
+,
+checkinDates:[],
+checkinStreak:0,
+lastCheckin:null,
+dailyStreak:0,
+lastDaily:null,
+lastFreeBlindbox:null,
+lastFreeSpin:null,
+language:"zh",
+musicUnlocked:[],
+difficultyStats:{
+
+}
+
+}
+,
+init(){
+try{
+const saved=localStorage.getItem("disasterGachaState");
+saved&&(this._data=JSON.parse(saved))
+}
+catch(e){
+
+}
+this._data&&"object"==typeof this._data||(this._data=JSON.parse(JSON.stringify(this._defaults))),
+this._ensureDefaults(),
+this._updateUI()
+}
+,
+_ensureDefaults(){
+var d=this._defaults;
+(!this._data.version||this._data.version<2)&&(this._data.version=2,
+this._data.level=this._data.level||1,
+this._data.exp=this._data.exp||0);
+for(var i=0;
+i<this._keys.length;
+i++){
+var key=this._keys[i];
+if(void 0!==d[key]){
+if(void 0===this._data[key])this._data[key]=JSON.parse(JSON.stringify(d[key]));
+else if("object"==typeof d[key]&&null!==d[key]&&!Array.isArray(d[key])){
+var dv=d[key],
+sv=this._data[key];
+for(var sub in dv)if(void 0===sv[sub])sv[sub]=JSON.parse(JSON.stringify(dv[sub]));
+else if("object"==typeof dv[sub]&&null!==dv[sub]&&!Array.isArray(dv[sub])&&"object"==typeof sv[sub])for(var sub2 in dv[sub])void 0===sv[sub][sub2]&&(sv[sub][sub2]=JSON.parse(JSON.stringify(dv[sub][sub2])))
+}
+
+}
+else void 0===this._data[key]&&(this._data[key]=null)
+}
+this._data.stats=Object.assign({
+
+}
+,
+this._defaults.stats,
+this._data.stats),
+this._data.settings=Object.assign({
+
+}
+,
+this._defaults.settings,
+this._data.settings)
+}
+,
+get(key){
+if(!this._data)return null;
+return this._data[key]
+}
+,
+set(key,
+val){
+this._data[key]=val,
+this.save()
+}
+,
+save(){
+try{
+localStorage.setItem("disasterGachaState",
+JSON.stringify(this._data))
+}
+catch(e){
+
+}
+this._updateUI()
+}
+,
+reset(){
+this._data=JSON.parse(JSON.stringify(this._defaults)),
+this.save()
+}
+,
+_updateUI(){
+var d=this._data,
+el=document.getElementById("menuStats");
+el&&(el.innerHTML="<span>Lv."+(d.level||1)+"</span> <span>💰 "+(d.coins||0)+"</span> <span>📦 "+(d.cards||[]).length+"/369</span> <span>🏆 "+(d.achievements||[]).length+"</span>");
+for(var coinEls=document.querySelectorAll(".coin-display,
+ #menuCoins"),
+i=0;
+i<coinEls.length;
+i++)coinEls[i].textContent=d.coins||0
+}
+,
+addExp(amount){
+this._data.exp=(this._data.exp||0)+amount;
+for(var needed=100*this._data.level;
+this._data.exp>=needed;
+)this._data.exp-=needed,
+this._data.level++,
+needed=100*this._data.level;
+this.save()
+}
+,
+addCoins(amount){
+this._data.coins=(this._data.coins||0)+amount,
+this._data.stats.totalEarned=(this._data.stats.totalEarned||0)+Math.max(0,
+amount),
+this.save()
+}
+,
+spendCoins(amount){
+return!(this._data.coins<amount||(this._data.coins-=amount,
+this.save(),
+0))
+}
+,
+addCard(cardId){
+return this._data.cards||(this._data.cards=[]),
+!this._data.cards.includes(cardId)&&(this._data.cards.push(cardId),
+this.save(),
+!0)
+}
+,
+hasCard(cardId){
+return(this._data.cards||[]).includes(cardId)
+}
+,
+addAchievement(id){
+return this._data.achievements||(this._data.achievements=[]),
+!this._data.achievements.includes(id)&&(this._data.achievements.push(id),
+this.save(),
+!0)
+}
+,
+exportSave(){
+return JSON.stringify(this._data)
+}
+,
+importSave(json){
+try{
+var data=JSON.parse(json);
+if(data&&"object"==typeof data)return this._data=data,
+this._ensureDefaults(),
+this.save(),
+!0
+}
+catch(e){
+
+}
+return!1
+}
+
+}
+;
+

@@ -7937,3 +7937,13 @@ body {
   background: rgba(255,255,255,0.25);
 }
 
+
+/* ===== 触摸设备 hover 粘滞修复 ===== */
+@media (hover: none) {
+  .mode-btn:hover, .menu-cat-btn:hover, .tool-btn:hover, .quiz-opt:hover, .choice-btn:hover, .btn:hover, .back-float:hover, .settings-card:hover, .wb-btn:hover, .menu-toolbar .tool-btn:hover, .sim-action-btn:hover, .wb-btn:hover {
+    transform: none !important;
+    box-shadow: none !important;
+    background-color: inherit !important;
+    border-color: inherit !important;
+  }
+}

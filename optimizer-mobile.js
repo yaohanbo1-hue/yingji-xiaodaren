@@ -382,6 +382,9 @@
       if (isLowEnd) {
         this._isLowPerf = true;
         document.body.classList.add('low-perf-mode');
+        var style = document.createElement('style');
+        style.textContent = '.low-perf-mode .bg-orb,.low-perf-mode .bg-gradient,.low-perf-mode .bg-grid,.low-perf-mode .bg-noise,.low-perf-mode .bg-meteor,.low-perf-mode .fx-layer,.low-perf-mode .liquid-particles,.low-perf-mode .liquid-aurora,.low-perf-mode .liquid-scanline,.low-perf-mode .ls-hexgrid,.low-perf-mode .ls-particles,.low-perf-mode .ls-scanline,.low-perf-mode .ls-glitch-line,.low-perf-mode .ls-ring-outer,.low-perf-mode .ls-ring-spin,.low-perf-mode .ls-ring-inner{display:none!important}.low-perf-mode .bg-gradient{animation:none!important}';
+        document.head.appendChild(style);
         console.log('⚡ Low performance mode activated (cores:' + cores + ', memory:' + memory + 'GB)');
       }
     },

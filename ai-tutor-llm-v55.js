@@ -5,7 +5,8 @@
  */
 
 const BailianAPI = {
-  _apiKey: 'sk-sp-D.ILXLI.CXh6.MEUCIQD2zLr+576WS2XcW/LaBOdnYuqU1/QxiOMm494r4aTO8AIgU3lJGTXuvyEdBT4DnM7eEdHeKuA8jIWzya1+dU7RA5s=',
+  // 注意：API Key 已隐藏，实际使用时需通过后端代理
+  _apiKey: '',
   _baseUrl: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
   _model: 'qwen3.7plus',
   
@@ -23,7 +24,7 @@ const BailianAPI = {
   },
   
   getApiKey() {
-    return this._apiKey;
+    return '***';
   },
   
   setApiKey(key) {
@@ -33,13 +34,13 @@ const BailianAPI = {
   async chat(userMessage, history = []) {
     // 1. 检查请求锁
     if (this._requestLock) {
-      console.warn('百炼 API: 请求锁已激活，跳过重复调用');
+      if(location.hostname==='localhost')console.warn('百炼 API: 请求锁已激活，跳过重复调用');
       return { error: '正在处理中，请稍候...' };
     }
     
     // 2. 检查调用次数限制
     if (this._callCount >= this._maxCallsPerSession) {
-      console.warn('百炼 API: 单会话调用次数已达上限 ' + this._maxCallsPerSession);
+      if(location.hostname==='localhost')console.warn('百炼 API: 单会话调用次数已达上限 ' + this._maxCallsPerSession);
       return { error: '本会话 AI 调用次数已达上限（20次），请刷新页面后再试。' };
     }
     
@@ -47,14 +48,14 @@ const BailianAPI = {
     const now = Date.now();
     if (now - this._lastCallTime < this._minInterval) {
       const waitSeconds = Math.ceil((this._minInterval - (now - this._lastCallTime)) / 1000);
-      console.warn('百炼 API: 调用太频繁，需等待 ' + waitSeconds + ' 秒');
+      if(location.hostname==='localhost')console.warn('百炼 API: 调用太频繁，需等待 ' + waitSeconds + ' 秒');
       return { error: '请求太频繁，请 ' + waitSeconds + ' 秒后再试。' };
     }
     
     // 4. 检查是否重复发送相同问题
     const lastQuestion = this._callLog.length > 0 ? this._callLog[this._callLog.length - 1].question : null;
     if (lastQuestion === userMessage && now - this._lastCallTime < 30000) {
-      console.warn('百炼 API: 重复问题，跳过');
+      if(location.hostname==='localhost')console.warn('百炼 API: 重复问题，跳过');
       return { error: '正在处理相同的问题，请稍候...' };
     }
     
@@ -67,7 +68,7 @@ const BailianAPI = {
 
     if (!this.isReady()) {
       this._requestLock = false;
-      return { error: 'API Key 未配置' };
+      return { error: '请配置后端代理' };
     }
 
     try {
@@ -128,7 +129,7 @@ const BailianAPI = {
       if (e.name === 'AbortError') {
         return { error: '请求超时，请检查网络连接' };
       }
-      console.error('百炼 API error:', e);
+      if(location.hostname==='localhost')console.error('百炼 API error:', e);
       return { error: '网络错误，请检查网络连接' };
     }
   }

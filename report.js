@@ -13,7 +13,7 @@
  * ===========================================================================
  */
 
-const SafeStorage = {
+var SafeStorage = {
   set(key, value) {
     try { localStorage.setItem(key, JSON.stringify(value)); } catch(e) { console.error('Storage error:', e); }
   },

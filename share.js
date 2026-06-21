@@ -13,17 +13,19 @@
  * ===========================================================================
  */
 
-const SafeStorage = {
-  set(key, value) {
-    try { localStorage.setItem(key, JSON.stringify(value)); } catch(e) { console.error('Storage error:', e); }
-  },
-  get(key, defaultVal) {
-    try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : defaultVal; } catch(e) { return defaultVal; }
-  },
-  getString(key, defaultVal) {
-    try { return localStorage.getItem(key) || defaultVal; } catch(e) { return defaultVal; }
-  }
-};
+if (typeof SafeStorage === 'undefined') {
+  var SafeStorage = {
+    set(key, value) {
+      try { localStorage.setItem(key, JSON.stringify(value)); } catch(e) { console.error('Storage error:', e); }
+    },
+    get(key, defaultVal) {
+      try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : defaultVal; } catch(e) { return defaultVal; }
+    },
+    getString(key, defaultVal) {
+      try { return localStorage.getItem(key) || defaultVal; } catch(e) { return defaultVal; }
+    }
+  };
+}
 
 const ShareEngine = {
   

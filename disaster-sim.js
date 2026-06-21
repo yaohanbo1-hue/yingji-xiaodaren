@@ -108,6 +108,26 @@ const DisasterSimEngine = {
     this.startAnimation();
   },
   
+  cleanup() {
+    if (this._resizeHandler) {
+      window.removeEventListener('resize', this._resizeHandler);
+      this._resizeHandler = null;
+    }
+    if (this._resizeTimer) {
+      clearTimeout(this._resizeTimer);
+      this._resizeTimer = null;
+    }
+    if (this._animFrame) {
+      cancelAnimationFrame(this._animFrame);
+      this._animFrame = null;
+    }
+    if (this._visHandler) {
+      document.removeEventListener('visibilitychange', this._visHandler);
+      this._visHandler = null;
+    }
+  },
+  },
+  
   resize() {
     if (!this._canvas) return;
     const rect = this._canvas.parentElement.getBoundingClientRect();
@@ -222,6 +242,7 @@ const DisasterSimEngine = {
   },
   
   continuePractice() {
+    this.cleanup();
     // 重置 UI 到选择器
     const selector = document.getElementById('simSelector');
     const canvasWrapper = document.getElementById('simCanvasWrapper');
@@ -238,8 +259,18 @@ const DisasterSimEngine = {
   
   // ===== 动画循环 =====
   startAnimation() {
+    if (this._visHandler) {
+      document.removeEventListener('visibilitychange', this._visHandler);
+    }
+    this._visHandler = () => {
+      if (!document.hidden && !this._animFrame) {
+        this._animFrame = requestAnimationFrame(animate);
+      }
+    };
+    document.addEventListener('visibilitychange', this._visHandler);
+    
     const animate = () => {
-      if (document.hidden) { this._animFrame = requestAnimationFrame(animate); return; }
+      if (document.hidden) { this._animFrame = null; return; }
       this._scenePhase += 0.005;
       
       switch (this._currentDisaster) {

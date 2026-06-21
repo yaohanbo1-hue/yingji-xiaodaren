@@ -41,17 +41,17 @@ const BGTheme = {
     const descEl = document.getElementById('currentThemeDesc');
     if (nameEl) nameEl.textContent = icons[this._current] + ' ' + names[this._current];
     if (descEl) descEl.textContent = '当前主题：' + names[this._current];
-    console.log('🎨 背景主题系统已启动：' + this._current);
+    if(location.hostname==='localhost')console.log('🎨 背景主题系统已启动：' + this._current);
   },
 
   // 检测系统主题偏好
   _detectSystemTheme() {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
       this._current = 'dawn-light';
-      console.log('🌅 检测到系统浅色主题，自动切换为自然晨曦');
+      if(location.hostname==='localhost')console.log('🌅 检测到系统浅色主题，自动切换为自然晨曦');
     } else {
       this._current = 'deep-space';
-      console.log('🌌 检测到系统深色主题，使用默认深空指挥官');
+      if(location.hostname==='localhost')console.log('🌌 检测到系统深色主题，使用默认深空指挥官');
     }
   },
 
@@ -82,7 +82,7 @@ const BGTheme = {
     try {
       localStorage.setItem('bg_theme', theme);
     } catch(e) {
-      console.error('Storage error:', e);
+      if(location.hostname==='localhost')console.error('Storage error:', e);
     }
     this.apply(theme);
 

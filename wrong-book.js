@@ -169,19 +169,27 @@ const WrongBookEngine = {
   // 钩入答题系统（自动收集错题）
   _hookQuizSystem() {
     var self = this;
+    if (this._hookBound) return;
+    this._hookBound = true;
     
-    // 监听答题结果
-    document.addEventListener('click', function(e) {
+    this._hookClickHandler = function(e) {
       var opt = e.target.closest('.quiz-opt, .choice-btn');
       if (!opt) return;
-      
-      // 延迟检查（等游戏逻辑处理完）
       setTimeout(function() {
         if (opt.classList.contains('wrong')) {
           self._captureWrongAnswer(opt);
         }
       }, 200);
-    });
+    };
+    document.addEventListener('click', this._hookClickHandler);
+  },
+  
+  cleanup() {
+    if (this._hookClickHandler) {
+      document.removeEventListener('click', this._hookClickHandler);
+      this._hookClickHandler = null;
+      this._hookBound = false;
+    }
   },
   
   // 捕获错误答案

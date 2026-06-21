@@ -6,6 +6,17 @@
 (function() {
   'use strict';
 
+  // XSS防护：HTML转义辅助函数
+  function escapeHtml(text) {
+    if (!text) return '';
+    return String(text)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
   // 创建浮动按钮和面板
   function createFloatUI() {
     // 浮动按钮
@@ -147,9 +158,9 @@
       this.messages.forEach(function(msg, idx) {
         if (msg.type === 'bot') {
           lastBotIdx = idx;
-          html += '<div class="ai-msg ai-msg-bot" data-idx="' + idx + '"><div class="ai-msg-avatar">🤖</div><div class="ai-msg-bubble">' + msg.text.replace(/\n/g, '<br>') + '</div></div>';
+          html += '<div class="ai-msg ai-msg-bot" data-idx="' + idx + '"><div class="ai-msg-avatar">🤖</div><div class="ai-msg-bubble">' + escapeHtml(msg.text).replace(/\n/g, '<br>') + '</div></div>';
         } else {
-          html += '<div class="ai-msg ai-msg-user"><div class="ai-msg-bubble">' + msg.text + '</div></div>';
+          html += '<div class="ai-msg ai-msg-user"><div class="ai-msg-bubble">' + escapeHtml(msg.text) + '</div></div>';
         }
       });
 
@@ -221,19 +232,17 @@
       var lastBotMsg = this.messages[lastBotIdx];
       if (lastBotMsg && lastBotMsg.typing && lastBotMsg.text.length > 30) {
         var bubbleEl = body.querySelector('.ai-msg[data-idx="' + lastBotIdx + '"]').querySelector('.ai-msg-bubble');
-        var fullText = lastBotMsg.text;
+        var fullText = escapeHtml(lastBotMsg.text);
         bubbleEl.innerHTML = '';
-        var i = 0, inTag = false, displayText = '';
+        var i = 0, displayText = '';
         var typeChar = function() {
           if (i < fullText.length) {
             var c = fullText[i];
-            if (c === '<') inTag = true;
-            if (inTag) { displayText += c; if (c === '>') inTag = false; }
-            else { displayText += c; }
+            displayText += c;
             i++;
             var delay = 18;
-            if (!inTag && /[。！？\n]/.test(c)) delay = 90;
-            else if (!inTag && /[，；：]/.test(c)) delay = 45;
+            if (/[。！？\n]/.test(c)) delay = 90;
+            else if (/[，；：]/.test(c)) delay = 45;
             bubbleEl.innerHTML = displayText.replace(/\n/g, '<br>');
             body.scrollTop = body.scrollHeight;
             if (i < fullText.length) setTimeout(typeChar, delay);
@@ -265,7 +274,7 @@
           var d = this._getMasteryEntry(mastery, key);
           var pct = d.pct;
           html += '<div class="ai-mastery-item">';
-          html += '<span style="width:70px;flex-shrink:0">' + disasters[key] + '</span>';
+          html += '<span style="width:70px;flex-shrink:0">' + escapeHtml(disasters[key]) + '</span>';
           html += '<div class="ai-mastery-bar"><div class="ai-mastery-bar-fill" style="width:' + pct + '%;background:' + colors[i % colors.length] + '"></div></div>';
           html += '<span style="width:35px;text-align:right">' + pct + '%</span>';
           html += '</div>';
@@ -395,9 +404,9 @@
       } else {
         var html = '<div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:12px;">📌 基于你的学习数据推荐</div>';
         recs.forEach(function(r) {
-          html += '<div class="ai-recommend-card" onclick="AITutorFloat.followRecommend(\'' + (r.disaster || '') + '\')">';
-          html += '<div class="ai-recommend-title">' + (r.icon || '📚') + ' ' + (r.title || r.reason || '推荐练习') + '</div>';
-          html += '<div class="ai-recommend-desc">' + (r.desc || r.reason || '点击开始练习') + '</div>';
+          html += '<div class="ai-recommend-card" onclick="AITutorFloat.followRecommend(\'' + escapeHtml(r.disaster || '') + '\')">';
+          html += '<div class="ai-recommend-title">' + escapeHtml(r.icon || '📚') + ' ' + escapeHtml(r.title || r.reason || '推荐练习') + '</div>';
+          html += '<div class="ai-recommend-desc">' + escapeHtml(r.desc || r.reason || '点击开始练习') + '</div>';
           html += '</div>';
         });
         body.innerHTML = html;
@@ -432,9 +441,10 @@
     },
 
     quickAsk: function(question) {
+      if(!navigator.onLine){this.addBotMessage('⚠️ 网络已断开，请检查网络连接后重试。',true);var body=document.getElementById('aiFloatBody');if(body)this.renderChat(body);return;}
       // 安全锁：防止重复点击导致多次 API 调用
       if (this._askingLock) {
-        console.warn('AI 请求锁已激活，跳过重复调用');
+        if(location.hostname==='localhost')console.warn('AI 请求锁已激活，跳过重复调用');
         return;
       }
       this._askingLock = true;
@@ -452,7 +462,7 @@
           if (body) AITutorFloat.renderChat(body);
           AITutorFloat._askingLock = false;
         }).catch(function(err) {
-          console.error('AI 回复错误:', err);
+          if(location.hostname==='localhost')console.error('AI 回复错误:', err);
           AITutorFloat.addBotMessage('抱歉，AI 暂时出错了，请稍后再试。', true);
           AITutorFloat._askingLock = false;
         });
