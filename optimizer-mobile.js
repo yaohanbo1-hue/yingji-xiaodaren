@@ -112,9 +112,6 @@
           setTimeout(function() {
             self._scrollInputIntoView(e.target);
           }, 300);
-          setTimeout(function() {
-            self._scrollInputIntoView(e.target);
-          }, 600);
         }
       });
 

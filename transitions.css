@@ -191,24 +191,8 @@
   animation: correctPulse 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@keyframes correctPulse {
-  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.4); }
-  50% { transform: scale(1.03); box-shadow: 0 0 0 12px rgba(0, 230, 118, 0); }
-  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); }
-}
-
 .wrong-shake {
   animation: wrongShake 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes wrongShake {
-  0%, 100% { transform: translateX(0); }
-  15% { transform: translateX(-8px); }
-  30% { transform: translateX(8px); }
-  45% { transform: translateX(-6px); }
-  60% { transform: translateX(6px); }
-  75% { transform: translateX(-3px); }
-  90% { transform: translateX(3px); }
 }
 
 /* ===== 弹窗进入动画（增强弹性） ===== */
@@ -239,12 +223,7 @@
   animation: modalElasticIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-@keyframes modalElasticIn {
-  0% { transform: scale(0.85) translateY(30px); opacity: 0; }
-  55% { transform: scale(1.04) translateY(-4px); opacity: 1; }
-  75% { transform: scale(0.98) translateY(2px); }
-  100% { transform: scale(1) translateY(0); opacity: 1; }
-}
+/* 注意：correctPulse / wrongShake / modalElasticIn 关键帧定义在 all-styles-v55.css 中 */
 
 /* ===== 按钮点击反馈（全面增强） ===== */
 .mode-btn:active,
