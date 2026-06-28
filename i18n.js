@@ -13,7 +13,7 @@
  * ===========================================================================
  */
 
-const I18nEngine = {
+var I18nEngine = {
   _currentLang: 'zh',
   _translations: {
     zh: {

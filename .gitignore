@@ -37,3 +37,10 @@ verify-string-state.js
 final-trace.js
 show-all-braces.js
 show-raw-bytes-*.js
+
+# Node deps
+node_modules/
+package-lock.json
+# Smoke/debug harness (underscore-prefixed)
+_*.js
+ppt_yingji/

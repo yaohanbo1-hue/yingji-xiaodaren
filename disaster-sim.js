@@ -126,7 +126,6 @@ const DisasterSimEngine = {
       this._visHandler = null;
     }
   },
-  },
   
   resize() {
     if (!this._canvas) return;

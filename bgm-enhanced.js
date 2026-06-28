@@ -444,6 +444,39 @@ const BGMEngine = {
       if (typeof GameState.save === 'function') GameState.save();
     }
   },
-  setBPM(bpm) { /* BGMEngineV2 内部管理 BPM，无需外部设置 */ }
+  setBPM(bpm) { /* BGMEngineV2 内部管理 BPM，无需外部设置 */ },
+  // ----- 静音兼容方法（旧版 bgm.js 提供，迁移到兼容层）-----
+  isMuted: false,
+  _prevVolume: null,
+  toggleMute() {
+    if (this.isMuted) {
+      // 取消静音：恢复之前音量
+      const v = (this._prevVolume != null) ? this._prevVolume : (BGMEngineV2._volume || 0.3);
+      BGMEngineV2.setVolume(v);
+      this.isMuted = false;
+    } else {
+      // 静音：记录当前音量后置 0
+      this._prevVolume = (typeof BGMEngineV2._volume === 'number') ? BGMEngineV2._volume : 0.3;
+      BGMEngineV2.setVolume(0);
+      this.isMuted = true;
+    }
+    const btn = document.getElementById('bgmMuteBtn');
+    if (btn) btn.textContent = this.isMuted ? '🔇' : '🔊';
+    return this.isMuted;
+  },
+  initMuteButton() {
+    if (typeof document === 'undefined' || !document.body) return;
+    if (document.getElementById('bgmMuteBtn')) return;
+    const btn = document.createElement('button');
+    btn.id = 'bgmMuteBtn';
+    btn.textContent = this.isMuted ? '🔇' : '🔊';
+    btn.title = '切换音效';
+    btn.addEventListener('click', () => {
+      BGMEngineV2.init();
+      this.toggleMute();
+      if (typeof AudioManager !== 'undefined' && AudioManager.play) AudioManager.play('click');
+    });
+    document.body.appendChild(btn);
+  }
 };
 window.BGMEngine = BGMEngine;
