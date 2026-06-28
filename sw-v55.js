@@ -1,7 +1,7 @@
 // ===== 应急小达人 Service Worker =====
 // 离线缓存策略：Cache First, Network Fallback
 
-const CACHE_NAME = 'yingji-xiaodaren-v63';
+const CACHE_NAME = 'yingji-xiaodaren-v64';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -17,7 +17,6 @@ const STATIC_ASSETS = [
   './certification.css',
   './disaster-sim.css',
   './real-cases.css',
-  './fix-click.css',
   './transitions.css',
   './accessibility.css',
   './wrong-book.css',
@@ -39,9 +38,6 @@ const STATIC_ASSETS = [
   './kit_data.js',
   './juice.js',
   './visual-fx.js',
-  './engine-runtime-patch.js',
-  './shuffle-fix.js',
-  './engine-cleanup.js',
   './encyclopedia_extra.js',
   './encyclopedia_final.js',
   './bg-premium.js',
@@ -59,7 +55,6 @@ const STATIC_ASSETS = [
   './accessibility.js',
   './performance.js',
   './wrong-book.js',
-  './report.js',
   './voice.js',
   './guide-enhance.js',
   './cert-enhance.js',
@@ -69,7 +64,6 @@ const STATIC_ASSETS = [
   './i18n.js',
   './liquid-glass.js',
   './bg-themes.js',
-  './fix-click.js',
   './menu-manager.js',
   './game-engines.js',
   './optimizer-mobile.css',
@@ -125,8 +119,8 @@ self.addEventListener('fetch', function(event) {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
-  // 去除查询参数用于缓存匹配（index.html 中资源带 ?v=50）
-  const cacheRequest = url.search ? new Request(url.pathname) : request;
+  // 缓存键保留查询参数（含 ?v=xx），使版本号真正生效、避免新旧版本混用同一缓存
+  const cacheRequest = request;
 
   event.respondWith(
     caches.match(cacheRequest).then(function(cachedResponse) {

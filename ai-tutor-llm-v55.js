@@ -496,6 +496,11 @@ const AITutorBrain = {
 // ===== DeepSeek API 集成（代理模式）=====
 const DeepSeekAPI = {
   _proxyUrl: localStorage.getItem('deepseek_proxy_url') || 'https://yingji-ai-proxy-aqrbvhqfkf.cn-hangzhou.fcapp.run',
+  // 默认使用更低一档（更便宜）的通义千问模型；可用 localStorage 'aitutor_model' 覆盖
+  // 可选: qwen-flash(最便宜) < qwen-turbo < qwen-plus < qwen-max
+  _model: localStorage.getItem('aitutor_model') || 'qwen-flash',
+  setModel(m){ if(m){ this._model = m; try{ localStorage.setItem('aitutor_model', m); }catch(e){} } },
+  getModel(){ return this._model; },
   _systemPrompt: `...`,
   
   // ===== 安全控制：防止重复调用导致高额费用 =====
@@ -563,7 +568,7 @@ const DeepSeekAPI = {
       const response = await fetch(this._proxyUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userMessage, history: history.slice(-6) }),
+        body: JSON.stringify({ message: userMessage, history: history.slice(-6), model: this._model }),
         signal: controller.signal
       });
       clearTimeout(timeoutId);

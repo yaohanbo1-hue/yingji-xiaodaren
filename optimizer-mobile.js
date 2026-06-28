@@ -276,7 +276,8 @@
       const EDGE_ZONE = 30;            // 边缘触发区宽度
 
       document.addEventListener('touchstart', function(e) {
-        const touch = e.touches[0];
+        const touch = e.touches && e.touches[0];
+        if (!touch) return;
         startX = touch.clientX;
         startY = touch.clientY;
         startTime = Date.now();
@@ -285,7 +286,8 @@
       document.addEventListener('touchmove', function(e) {
         if (!startX || !startY) return;
         // 防止水平滑动时页面上下滚动（在可滑动区域）
-        const touch = e.touches[0];
+        const touch = e.touches && e.touches[0];
+        if (!touch) return;
         const deltaX = touch.clientX - startX;
         const deltaY = touch.clientY - startY;
 
@@ -301,7 +303,8 @@
       document.addEventListener('touchend', function(e) {
         if (!startX || !startY) return;
 
-        const touch = e.changedTouches[0];
+        const touch = e.changedTouches && e.changedTouches[0];
+        if (!touch) { startX = startY = null; return; }
         const deltaX = touch.clientX - startX;
         const deltaY = touch.clientY - startY;
         const elapsed = Date.now() - startTime;
