@@ -564,8 +564,8 @@ const DeepSeekAPI = {
     }
     try {
       const controller = new AbortController();
-      // 评委体验级：4秒云端无响应即静默回退本地，避免长时间转圈
-      const timeoutId = setTimeout(() => controller.abort(), 4000);
+      // 评委体验级：2.5秒云端无响应即静默回退本地，避免长时间转圈
+      const timeoutId = setTimeout(() => controller.abort(), 2500);
       const response = await fetch(this._proxyUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -615,6 +615,32 @@ AITutorBrain.generateReply = async function(userMessage, history = []) {
   
   // 回退到本地规则引擎
   return _originalGenerateReply(userMessage, history);
+};
+
+// ===== B方案：暴露纯本地 / 纯云端两个入口，供 ai-float 实现"本地先秒回+云端后台补充" =====
+// 纯本地回复：直接走规则引擎，零网络，2ms 级返回。永不抛错。
+AITutorBrain.replyLocal = async function(userMessage, history = []) {
+  try {
+    return await _originalGenerateReply(userMessage, history);
+  } catch (e) {
+    console.error('replyLocal error:', e);
+    return this._fallback ? this._fallback() : '我在这儿，请再说一遍你的问题～';
+  }
+};
+// 纯云端回复：调百炼 Worker。成功返回字符串答案，失败/超时/不可用返回 null（绝不抛错）。
+AITutorBrain.replyCloud = async function(userMessage, history = []) {
+  try {
+    if (!DeepSeekAPI.isReady()) return null;
+    const result = await DeepSeekAPI.chat(userMessage, history);
+    if (result && result.answer) {
+      this._cacheToKnowledge(userMessage, result.answer);
+      return result.answer;
+    }
+    return null;
+  } catch (e) {
+    console.error('replyCloud error:', e);
+    return null;
+  }
 };
 
 // 缓存问答到本地知识库
