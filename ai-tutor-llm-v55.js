@@ -495,10 +495,10 @@ const AITutorBrain = {
 
 // ===== DeepSeek API 集成（代理模式）=====
 const DeepSeekAPI = {
-  _proxyUrl: localStorage.getItem('deepseek_proxy_url') || 'https://yingji-ai-proxy-aqrbvhqfkf.cn-hangzhou.fcapp.run',
-  // 默认使用更低一档（更便宜）的通义千问模型；可用 localStorage 'aitutor_model' 覆盖
-  // 可选: qwen-flash(最便宜) < qwen-turbo < qwen-plus < qwen-max
-  _model: localStorage.getItem('aitutor_model') || 'qwen-flash',
+  _proxyUrl: localStorage.getItem('deepseek_proxy_url') || 'https://yingji-ai-proxy.hamburgerjimmy.workers.dev',
+  // 默认使用 token-plan 套餐的快速款；可用 localStorage 'aitutor_model' 覆盖
+  // 套餐可选: qwen3.6-flash(快) / qwen3.6-plus / qwen3.7-plus / deepseek-v4-flash / glm-5.1 / kimi-k2.6
+  _model: localStorage.getItem('aitutor_model') || 'qwen3.6-flash',
   setModel(m){ if(m){ this._model = m; try{ localStorage.setItem('aitutor_model', m); }catch(e){} } },
   getModel(){ return this._model; },
   _systemPrompt: `...`,
@@ -564,7 +564,8 @@ const DeepSeekAPI = {
     }
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 20000);
+      // 评委体验级：4秒云端无响应即静默回退本地，避免长时间转圈
+      const timeoutId = setTimeout(() => controller.abort(), 4000);
       const response = await fetch(this._proxyUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
