@@ -595,14 +595,14 @@ window.DeepSeekAPI = DeepSeekAPI;
 
 // ===== Ollama 本地 API 集成（qwen3.5:9b）=====
 const OllamaAPI = {
-  _url: 'https://transmission-cal-clinics-officers.trycloudflare.com/api/chat',
+  _url: 'https://aside-rural-pst-means.trycloudflare.com/api/chat',
   _model: 'qwen3.5:9b',
   _isAvailable: null, // null=未检测, true=可用, false=不可用
   
   // 检测是否可用
   async detect() {
     try {
-      const r = await fetch('https://transmission-cal-clinics-officers.trycloudflare.com/api/tags', { method: 'GET', signal: AbortSignal.timeout(2000) });
+      const r = await fetch('https://aside-rural-pst-means.trycloudflare.com/api/tags', { method: 'GET', signal: AbortSignal.timeout(2000) });
       if (r.ok) {
         this._isAvailable = true;
         return true;
