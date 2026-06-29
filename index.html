@@ -1,85 +1,19 @@
-<!--
-================================================================================
-  应急小达人 v1.3.0 — Disaster Blind Box Command HQ
-  Copyright (c) 2026 应急小达人开发团队
-  
-  📖 项目简介
-  一款面向中小学生的防灾教育互动游戏，通过盲盒开箱、答题闯关、情景模拟
-  等趣味方式学习防灾知识。游戏涵盖 12 种自然灾害，34 个情景场景，369 张
-  知识卡牌。
-  
-  🎮 游戏模式 (32 种)
-  学习中心: 开盲盒、每日签到、学习模式、急救模拟、防灾馆、宠物、
-           防灾日记、卡牌工坊、百科、新手引导
-  闯关挑战: 防灾大擂台、自由模式、速答挑战、双人PK、每日挑战、
-           生存挑战、Boss Rush、限时挑战、故事模式、闪电问答、
-           精准投放、扭蛋机、音乐、彩蛋、基地、限时逃生、精准打击、
-           大冒险、记忆翻牌、反应速度、知识竞速
-  
-  🏗️ 技术架构
-  - 纯前端: HTML5 + CSS3 + JavaScript (ES6)
-  - 零依赖: 无需 npm、无需构建工具、无需后端服务器
-  - 单文件交付: ZIP 压缩包，解压后双击 index.html 即可运行
-  - 数据存储: localStorage 本地持久化
-  
-  🎨 视觉设计
-  - 赛博朋克风格: 深空背景 + 霓虹发光 + 液态玻璃
-  - 3D 交互: 鼠标跟随倾斜、透视变换、深度阴影
-  - 动画系统: 页面转场、粒子效果、数字滚动、水波纹
-  
-  📱 兼容性
-  - Chrome 80+ / Edge 80+ / Firefox 75+ / Safari 13+
-  - 移动端自适应 (iOS 13+ / Android 10+)
-  - 支持横屏/竖屏切换
-  
-  📂 文件结构
-  index.html            - 主页面 (23 个子页面模块)
-  all-styles-v55.css     - 核心样式表 (合并版)
-  game.js               - 游戏引擎 (50+ 模块)
-  cards.js              - 卡牌数据 (369 张)
-  scenarios.js          - 情景数据 (12 类灾害，34 个场景)
-  bgm.js                - BGM 步进音序器
-  visual-fx.js          - 视觉特效引擎
-  juice.js              - 屏幕震动/浮字/纸屑
-  tilt3d.js             - 鼠标跟随 3D 倾斜
-  ui-polish.js          - UI 润色
-  v10-interactions.js   - 交互动画
-  encyclopedia_extra.js - 百科核心引擎
-  encyclopedia_final.js - 百科扩展
-  bg.js                 - Canvas 极光粒子背景
-  kit_data.js           - 应急包数据
-  
-  🔧 开发信息
-  版本: v1.3.0
-  日期: 2026-06-05
-  作者: 应急小达人开发团队
-  
-  📜 版权声明
-  本项目仅供教育用途，未经授权不得用于商业目的。
-  灾害知识内容参考自中国应急管理部公开资料。
-================================================================================
--->
+<!-- 应急小达人 v1.3.1 — 稳定版 (Stable) -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover,interactive-widget=resizes-content">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#00d4ff">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<!-- 缓存控制：强制浏览器每次获取最新资源 -->
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
 <meta name="apple-mobile-web-app-title" content="应急小达人">
 <meta name="description" content="面向中小学生的防灾教育互动游戏，通过盲盒开箱、答题闯关、情景模拟等趣味方式学习防灾知识。覆盖12种自然灾害，369张知识卡牌，32种游戏模式。">
 <meta name="keywords" content="防灾教育,应急科普,灾害模拟,互动游戏,中小学生,安全教育">
 <meta name="author" content="应急小达人开发团队">
-<meta name="generator" content="应急小达人 v1.3.0">
 <meta name="robots" content="index, follow">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<!-- ===== Open Graph / 社交媒体分享标签 ===== -->
+<!-- Open Graph -->
 <meta property="og:title" content="应急小达人 — 防灾教育互动游戏">
 <meta property="og:description" content="面向中小学生的防灾教育互动游戏，盲盒开箱、答题闯关、情景模拟，32种游戏模式，12类自然灾害，369张知识卡牌。">
 <meta property="og:type" content="website">
@@ -95,665 +29,117 @@
 <meta name="twitter:description" content="面向中小学生的防灾教育互动游戏，32种游戏模式，12类自然灾害，369张知识卡牌。">
 <meta name="twitter:image" content="https://github.com/yaohanbo1-hue/yingji-xiaodaren/raw/main/favicon.svg">
 
-<!-- ===== Favicon + PWA 图标 ===== -->
+<!-- Favicon + PWA -->
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="shortcut icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="favicon.svg">
 <link rel="mask-icon" href="favicon.svg" color="#00d4ff">
 <link rel="manifest" href="manifest.json">
 
-<title>应急小达人 — 防灾教育互动游戏 v1.3.0</title>
-<meta name="version" content="v1.3.0">
+<title>应急小达人 — 防灾教育互动游戏 v1.3.1</title>
+<meta name="version" content="v1.3.1">
 
-<!-- ===== 资源预连接：字体 CDN ===== -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- 预连接第三方域名 -->
+<link rel="dns-prefetch" href="https://github.com">
 
-<!-- ===== 预加载最关键资源（不超过5个，避免带宽竞争） ===== -->
-<link rel="preload" href="all-styles-v55.css?v=56" as="style">
-<link rel="preload" href="game-engines.js?v=56" as="script">
-<link rel="preload" href="cards.js?v=56" as="script">
-<link rel="preload" href="scenarios.js?v=56" as="script">
-<link rel="preload" href="liquid-glass.js?v=56" as="script">
+<!-- 关键 CSS — 阻塞渲染但体积小，确保首屏正确 -->
+<link rel="stylesheet" href="critical.css?v=69">
 
-<!-- 加载画面最简样式：确保第一帧就覆盖全屏 -->
-<style>
-#loadingScreen{position:fixed;inset:0;z-index:9999;background:#05050f;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Courier New',monospace}
-#loadingScreen.hidden{opacity:0;visibility:hidden;pointer-events:none}
-body:not(.app-ready) .page{display:none!important}
-body:not(.app-ready) .page{opacity:0;visibility:hidden;position:fixed;inset:0;pointer-events:none;transform:translateY(20px) scale(0.98);transition:opacity .4s cubic-bezier(.4,0,.2,1),transform .4s cubic-bezier(.4,0,.2,1),visibility .4s ease}
-body:not(.app-ready) .page.active{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0) scale(1)}
-.page:not(.active){opacity:0;visibility:hidden;position:fixed;inset:0;pointer-events:none;transform:translateY(20px) scale(0.98);transition:opacity .35s cubic-bezier(.4,0,.2,1),transform .35s cubic-bezier(.4,0,.2,1),visibility .35s ease}
-.page.active{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0) scale(1);transition:opacity .4s cubic-bezier(.4,0,.2,1),transform .4s cubic-bezier(.4,0,.2,1),visibility .4s ease}
-body:not(.app-ready) #menuToolbar,body:not(.app-ready) .menu-toolbar{display:none!important}
-/* ===== 底部栏精致设计 v7（内联保底） ===== */
-.menu-toolbar{display:flex!important;justify-content:space-around!important;align-items:center!important;gap:4px!important;padding:10px 8px calc(10px + env(safe-area-inset-bottom,0px))!important;position:fixed!important;bottom:0!important;left:0!important;right:0!important;z-index:10000!important;max-width:900px!important;margin:0 auto!important;background:rgba(12,12,35,0.94)!important;backdrop-filter:blur(32px) saturate(240%)!important;-webkit-backdrop-filter:blur(32px) saturate(240%)!important;border-top:1px solid rgba(0,212,255,0.15)!important;border-top-left-radius:28px!important;border-top-right-radius:28px!important;overflow:visible!important;box-shadow:0 -6px 30px rgba(0,0,0,0.5),0 -2px 0 rgba(0,212,255,0.1)!important;transform:translateZ(0)!important;-webkit-transform:translateZ(0)!important}
-.menu-toolbar .tool-btn{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;padding:8px 3px!important;flex:1!important;max-width:100px!important;min-height:60px!important;border:none!important;border-radius:16px!important;background:transparent!important;color:rgba(255,255,255,0.55)!important;cursor:pointer;position:relative!important;transition:all 0.3s cubic-bezier(0.23,1,0.32,1)!important}
-.menu-toolbar .tool-btn .icon{font-size:28px!important;line-height:1!important;transition:all 0.3s ease!important;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.4))!important}
-.menu-toolbar .tool-btn .label{font-size:12px!important;font-weight:600!important;letter-spacing:0.5px!important;color:inherit!important;line-height:1!important}
-.menu-toolbar .tool-btn::after{content:''!important;position:absolute!important;bottom:4px!important;left:50%!important;transform:translateX(-50%)!important;width:0!important;height:4px!important;border-radius:3px!important;background:#00D4FF!important;transition:all 0.35s ease!important;box-shadow:0 0 12px rgba(0,212,255,0.8)!important}
-.menu-toolbar .tool-btn:hover{background:rgba(255,255,255,0.06)!important;color:rgba(255,255,255,0.8)!important;transform:translateY(-2px)!important}
-.menu-toolbar .tool-btn.active{color:#00D4FF!important;background:rgba(0,212,255,0.12)!important;box-shadow:0 0 20px rgba(0,212,255,0.15)!important}
-.menu-toolbar .tool-btn.active .icon{filter:drop-shadow(0 0 16px rgba(0,212,255,0.8))!important;transform:translateY(-3px) scale(1.2)!important}
-.menu-toolbar .tool-btn.active .label{color:#00D4FF!important;font-weight:700!important;letter-spacing:0.6px!important}
-.menu-toolbar .tool-btn.active::after{width:28px!important}
-/* ===== 页面内容底部渐变过渡 ===== */
-.page::after{content:'';position:fixed;bottom:75px;left:0;right:0;height:50px;background:linear-gradient(to top,rgba(10,10,30,0.7),transparent);pointer-events:none;z-index:1}
-/* ===== 全局页面优化 ===== */
-.page{padding-bottom:140px!important}
-/* ===== Logo区域大气优化 ===== */
-.menu-logo{padding:48px 0 24px!important;margin-bottom:20px!important;margin-top:auto!important;text-align:center!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;position:relative!important}
-.menu-title-decor{display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;margin:8px 0!important}
-.title-deco-icon{font-size:28px!important;animation:decoPulse 2s ease-in-out infinite!important;filter:drop-shadow(0 0 12px rgba(255,215,0,0.5))!important}
-.title-shield{display:flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;position:relative!important}
-.shield-left,.shield-right{font-size:24px!important;animation:shieldRotate 3s ease-in-out infinite!important;filter:drop-shadow(0 0 8px rgba(255,0,0,0.4))!important}
-.shield-left{animation-delay:0.5s!important}
-.shield-right{animation-delay:1s!important}
-.menu-logo-title{font-size:64px!important;margin:0!important;letter-spacing:8px!important;font-weight:900!important;font-family:'Microsoft YaHei','PingFang SC',sans-serif!important;text-shadow:0 0 50px rgba(255,100,0,0.7),0 0 100px rgba(255,0,0,0.4),0 6px 16px rgba(0,0,0,0.7)!important;background:linear-gradient(180deg,#fff 0%,#ffe4a0 25%,#ff9d00 50%,#ff4d00 75%,#ff0000 100%)!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important;position:relative!important;animation:titlePulse 2.5s ease-in-out infinite!important}
-.menu-logo-title::before{content:'';position:absolute;inset:-8px -20px;background:radial-gradient(ellipse,rgba(255,100,0,0.15) 0%,transparent 70%)!important;z-index:-1;pointer-events:none;animation:flareRotate 4s linear infinite!important}
-.menu-logo-sub{font-size:16px!important;margin:6px 0 8px!important;opacity:0.9!important;letter-spacing:2px!important;font-weight:600!important;color:rgba(255,255,255,0.85)!important;text-shadow:0 0 15px rgba(255,255,255,0.15)!important}
-.version-tag{font-size:14px!important;padding:6px 18px!important;margin-top:8px!important;border-radius:24px!important;font-weight:700!important;letter-spacing:1px!important;background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(0,212,255,0.15))!important;border:1px solid rgba(255,215,0,0.3)!important;color:#FFD700!important;box-shadow:0 0 20px rgba(255,215,0,0.2),inset 0 1px 0 rgba(255,255,255,0.1)!important;animation:tagPulse 2s ease-in-out infinite!important}
-/* ===== 主分类按钮大气优化 ===== */
-#page-menu{display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;min-height:100vh!important;padding-top:0!important;padding-bottom:160px!important}
-body #page-menu .menu-category-btns{gap:16px!important;padding:14px 16px!important;margin-bottom:10px!important}
-body #page-menu .menu-cat-btn{padding:42px 28px!important;border-radius:36px!important;min-height:160px!important;box-shadow:0 12px 48px rgba(0,0,0,0.35),0 4px 12px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.1)!important;border:2px solid rgba(255,255,255,0.14)!important;transition:all 0.35s cubic-bezier(0.23,1,0.32,1)!important}
-body #page-menu .menu-cat-btn:hover{transform:translateY(-4px)!important;box-shadow:0 16px 56px rgba(0,0,0,0.4),0 6px 16px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.12)!important}
-body #page-menu .menu-cat-btn .cat-icon{font-size:58px!important;margin-bottom:12px!important}
-body #page-menu .menu-cat-btn .cat-title{font-size:24px!important;font-weight:800!important;margin-top:8px!important;letter-spacing:0.5px!important}
-body #page-menu .menu-cat-btn .cat-count{font-size:15px!important;margin-top:6px!important;color:rgba(255,255,255,0.65)!important;font-weight:500!important}
-/* ===== 返回分类按钮优化 ===== */
-body #page-menu .back-to-categories{padding:14px 24px!important;margin:10px 16px 14px!important;border-radius:16px!important;font-size:16px!important;font-weight:600!important;background:rgba(255,255,255,0.07)!important;border:1px solid rgba(255,255,255,0.12)!important;transition:all 0.3s ease!important}
-body #page-menu .back-to-categories:hover{background:rgba(255,255,255,0.1)!important;transform:translateY(-2px)!important}
-/* ===== 模块区域大气优化（高特异性覆盖） ===== */
-body #page-menu .menu-section.expanded{padding-bottom:140px!important;margin-bottom:24px!important}
-body #page-menu .menu-section-title{font-size:18px!important;padding:14px 18px!important;margin:10px 16px 12px!important;border-radius:16px!important;background:rgba(255,255,255,0.05)!important;border:1px solid rgba(255,255,255,0.08)!important;font-weight:700!important;letter-spacing:0.5px!important}
-body #page-menu .menu-grid{gap:10px!important;padding:0 0 24px!important;display:grid!important;grid-template-columns:repeat(2,1fr)!important;justify-items:stretch!important;align-items:stretch!important}
-body #page-menu .mode-btn{padding:48px 24px!important;border-radius:36px!important;min-height:220px!important;width:100%!important;max-width:none!important;box-sizing:border-box!important;box-shadow:0 16px 56px rgba(0,0,0,0.35),0 6px 20px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.1)!important;border:2px solid rgba(255,255,255,0.14)!important;transition:all 0.35s cubic-bezier(0.23,1,0.32,1)!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important}
-body #page-menu .mode-btn:hover{transform:translateY(-4px)!important;box-shadow:0 20px 64px rgba(0,0,0,0.4),0 8px 24px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.12)!important;border-color:rgba(0,212,255,0.2)!important}
-body #page-menu .mode-btn:active{transform:translateY(-2px) scale(0.98)!important}
-body #page-menu .mode-btn .mode-icon{font-size:72px!important;margin-bottom:14px!important}
-body #page-menu .mode-btn .mode-name{font-size:24px!important;font-weight:800!important;margin-top:12px!important;letter-spacing:0.5px!important}
-body #page-menu .mode-desc{font-size:15px!important;margin-top:8px!important;line-height:1.5!important;color:rgba(255,255,255,0.65)!important;font-weight:500!important}
-body #page-menu .mode-btn .mode-badge{font-size:14px!important;padding:7px 16px!important;border-radius:14px!important;top:16px!important;right:16px!important;font-weight:700!important;box-shadow:0 2px 10px rgba(0,0,0,0.3)!important}
-/* ===== 底部统计栏优化 ===== */
-body #page-menu .menu-stats{padding:14px 20px!important;margin:10px 16px 24px!important;border-radius:18px!important;font-size:14px!important;gap:24px!important;background:rgba(255,255,255,0.06)!important;border:1px solid rgba(255,255,255,0.1)!important;font-weight:500!important}
-/* ===== 子页面通用大气优化 ===== */
-.page-content{padding:70px 12px 140px!important;overflow-y:auto!important;height:100vh!important}
-.back-float{top:14px!important;left:14px!important;padding:12px 18px!important;font-size:16px!important;border-radius:14px!important;font-weight:600!important;background:rgba(255,255,255,0.1)!important;border:1px solid rgba(255,255,255,0.12)!important;backdrop-filter:blur(12px)!important}
-.preview-header{padding:28px 0 18px!important;margin-bottom:14px!important}
-.preview-icon{font-size:48px!important;margin-bottom:8px!important}
-.preview-title{font-size:28px!important;margin-bottom:8px!important;font-weight:800!important;letter-spacing:0.5px!important}
-.preview-desc{font-size:14px!important;max-width:340px!important;margin:8px auto!important;color:rgba(255,255,255,0.65)!important;line-height:1.5!important}
-.preview-container{padding:0 16px 48px!important}
-/* ===== 设置页面大气优化 ===== */
-.settings-header{padding:28px 0 18px!important;margin-bottom:14px!important}
-.settings-header-icon{font-size:48px!important;margin-bottom:8px!important}
-.settings-title{font-size:28px!important;margin-bottom:6px!important;font-weight:800!important;letter-spacing:0.5px!important}
-.settings-subtitle{font-size:14px!important;color:rgba(255,255,255,0.65)!important;line-height:1.5!important}
-.settings-container{padding:0 16px 48px!important}
-.settings-section{margin-bottom:32px!important}
-.settings-section-title{font-size:16px!important;padding:12px 0!important;margin-bottom:12px!important;color:rgba(255,255,255,0.75)!important;font-weight:700!important;letter-spacing:0.5px!important}
-.settings-card{padding:16px 20px!important;margin-bottom:14px!important;border-radius:18px!important;background:rgba(255,255,255,0.05)!important;border:1px solid rgba(255,255,255,0.1)!important;transition:all 0.3s ease!important}
-.settings-card:hover{background:rgba(255,255,255,0.07)!important;border-color:rgba(255,255,255,0.14)!important}
-.settings-card-icon{font-size:28px!important;width:48px!important;height:48px!important;border-radius:14px!important}
-.settings-card-name{font-size:16px!important;font-weight:700!important}
-.settings-card-desc{font-size:13px!important;color:rgba(255,255,255,0.6)!important;line-height:1.4!important}
-.settings-card-value{font-size:15px!important;color:rgba(255,255,255,0.75)!important;font-weight:600!important}
-/* ===== 游戏头部大气优化 ===== */
-.game-header{padding:16px 22px!important;margin-bottom:14px!important;border-radius:18px!important}
-.game-header-title{font-size:24px!important;font-weight:800!important;letter-spacing:0.5px!important}
-.game-header-sub{font-size:14px!important;color:rgba(255,255,255,0.65)!important;font-weight:500!important}
-/* ===== 滚动条优化 ===== */
-::-webkit-scrollbar{width:8px!important}
-::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)!important;border-radius:4px!important}
-::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.2)!important;border-radius:4px!important}
-::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,0.3)!important}
-/* ===== 答题选项大气优化 ===== */
-.quiz-option{padding:16px 18px!important;border-radius:16px!important;margin-bottom:12px!important;font-size:15px!important;font-weight:500!important;transition:all 0.3s ease!important}
-.quiz-option:hover{border-color:rgba(0,212,255,0.5)!important;background:rgba(0,212,255,0.06)!important;transform:translateX(4px)!important}
-/* ===== 结果页大气优化 ===== */
-.result-box{padding:32px 24px!important;border-radius:24px!important;margin-bottom:20px!important;box-shadow:0 12px 40px rgba(0,0,0,0.3)!important}
-.result-title{font-size:28px!important;margin-bottom:10px!important;font-weight:800!important}
-.result-desc{font-size:15px!important;color:rgba(255,255,255,0.65)!important;margin-bottom:20px!important;line-height:1.5!important}
-/* ===== 卡片网格大气优化 ===== */
-.codex-grid{padding:0 16px 48px!important;gap:16px!important}
-.achievement-list{padding:0 16px 48px!important;gap:12px!important}
-.shop-list{padding:0 16px 48px!important;gap:16px!important}
-.leaderboard-content{padding:0 16px 48px!important}
-.character-content{padding:0 16px 48px!important}
-/* ===== 按钮通用大气优化 ===== */
-.btn-primary{padding:14px 28px!important;border-radius:14px!important;font-size:16px!important;font-weight:700!important;transition:all 0.3s ease!important;box-shadow:0 4px 16px rgba(0,0,0,0.2)!important}
-.btn-primary:hover{transform:translateY(-2px)!important;box-shadow:0 6px 24px rgba(0,0,0,0.3)!important}
-.btn-secondary{padding:12px 24px!important;border-radius:14px!important;font-size:15px!important;font-weight:600!important;transition:all 0.3s ease!important}
-.btn-secondary:hover{transform:translateY(-2px)!important}
-/* ===== 输入框优化 ===== */
-input,select,textarea{padding:12px 16px!important;border-radius:12px!important;font-size:15px!important;font-weight:500!important;border:1px solid rgba(255,255,255,0.12)!important;background:rgba(255,255,255,0.06)!important;color:#fff!important;transition:all 0.3s ease!important}
-input:focus,select:focus,textarea:focus{border-color:rgba(0,212,255,0.5)!important;outline:none!important;box-shadow:0 0 0 3px rgba(0,212,255,0.12)!important}
-</style>
-<style>
-/* ===== 加载界面 v4.0 — 赛博控制台 ===== */
-#loadingScreen {
-  position: fixed; inset: 0; z-index: 9999;
-  background: #05050f;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.8s ease;
-  overflow: hidden;
-  font-family: 'Courier New', monospace;
-}
-#loadingScreen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+<!-- CSS 变量系统 — 阻塞渲染，体积小，为后续样式提供变量基础 -->
+<link rel="stylesheet" href="css-variables.css?v=69">
 
-/* 六角网格背景 */
-.ls-hexgrid {
-  position: absolute; inset: 0; opacity: 0.06;
-  background-image:
-    linear-gradient(30deg, #00d4ff 12%, transparent 12.5%, transparent 87%, #00d4ff 87.5%, #00d4ff),
-    linear-gradient(150deg, #00d4ff 12%, transparent 12.5%, transparent 87%, #00d4ff 87.5%, #00d4ff),
-    linear-gradient(30deg, #00d4ff 12%, transparent 12.5%, transparent 87%, #00d4ff 87.5%, #00d4ff),
-    linear-gradient(150deg, #00d4ff 12%, transparent 12.5%, transparent 87%, #00d4ff 87.5%, #00d4ff),
-    linear-gradient(60deg, #9b59b6 25%, transparent 25.5%, transparent 75%, #9b59b6 75%, #9b59b6),
-    linear-gradient(60deg, #9b59b6 25%, transparent 25.5%, transparent 75%, #9b59b6 75%, #9b59b6);
-  background-size: 80px 140px;
-  background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
-}
+<!-- 预加载最关键资源（限制在6个以内，避免带宽竞争） -->
+<link rel="preload" href="all-styles-v55.css?v=69" as="style">
+<link rel="preload" href="js/core/utils.js?v=69" as="script" fetchpriority="high">
+<link rel="preload" href="js/core/game-core.js?v=69" as="script" fetchpriority="high">
+<link rel="preload" href="cards.js?v=69" as="script" fetchpriority="high">
+<link rel="preload" href="scenarios.js?v=69" as="script" fetchpriority="high">
+<link rel="preload" href="game-engines.js?v=69" as="script" fetchpriority="high">
 
-/* 粒子矩阵 Canvas */
-.ls-particles {
-  position: absolute; inset: 0; z-index: 0;
-}
+<!-- 非关键 CSS — 异步加载，不阻塞渲染 -->
+<link rel="stylesheet" href="all-styles-v55.css?v=69">
+<link rel="stylesheet" href="v5-glass-3d.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="v5-glass-3d.css?v=69"></noscript>
+<link rel="stylesheet" href="clean-ui.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="clean-ui.css?v=69"></noscript>
+<link rel="stylesheet" href="bg-premium.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="bg-premium.css?v=69"></noscript>
+<link rel="stylesheet" href="bg-themes.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="bg-themes.css?v=69"></noscript>
+<link rel="stylesheet" href="menu-premium.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="menu-premium.css?v=69"></noscript>
+<link rel="stylesheet" href="fx-effects.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="fx-effects.css?v=69"></noscript>
+<link rel="stylesheet" href="ai-tutor.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="ai-tutor.css?v=69"></noscript>
+<link rel="stylesheet" href="certification.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="certification.css?v=69"></noscript>
+<link rel="stylesheet" href="disaster-sim.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="disaster-sim.css?v=69"></noscript>
+<link rel="stylesheet" href="real-cases.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="real-cases.css?v=69"></noscript>
+<link rel="stylesheet" href="fix-click.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="fix-click.css?v=69"></noscript>
+<link rel="stylesheet" href="transitions.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="transitions.css?v=69"></noscript>
+<link rel="stylesheet" href="accessibility.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="accessibility.css?v=69"></noscript>
+<link rel="stylesheet" href="wrong-book.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="wrong-book.css?v=69"></noscript>
+<link rel="stylesheet" href="loading.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="loading.css?v=69"></noscript>
+<link rel="stylesheet" href="guide-enhance.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="guide-enhance.css?v=69"></noscript>
+<link rel="stylesheet" href="cert-enhance.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="cert-enhance.css?v=69"></noscript>
+<link rel="stylesheet" href="menu-enhance.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="menu-enhance.css?v=69"></noscript>
+<link rel="stylesheet" href="share.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="share.css?v=69"></noscript>
+<link rel="stylesheet" href="i18n.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="i18n.css?v=69"></noscript>
+<link rel="stylesheet" href="layout-fix.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="layout-fix.css?v=69"></noscript>
+<link rel="stylesheet" href="ai-float.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="ai-float.css?v=69"></noscript>
+<link rel="stylesheet" href="ui-ultimate.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="ui-ultimate.css?v=69"></noscript>
+<link rel="stylesheet" href="settings.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="settings.css?v=69"></noscript>
+<link rel="stylesheet" href="optimizer-mobile.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="optimizer-mobile.css?v=69"></noscript>
 
-/* 中央全息环 */
-.ls-ring-outer {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-  width: 220px; height: 220px; border-radius: 50%;
-  border: 1px solid rgba(0,212,255,0.15);
-  animation: ringPulse 4s ease-in-out infinite;
-}
-@keyframes ringPulse { 0%,100%{opacity:0.3;transform:translate(-50%,-50%) scale(1)} 50%{opacity:0.7;transform:translate(-50%,-50%) scale(1.05)} }
-@keyframes logoFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
-@keyframes tagPulse { 0%,100%{box-shadow:0 0 20px rgba(255,215,0,0.2),inset 0 1px 0 rgba(255,255,255,0.1)} 50%{box-shadow:0 0 30px rgba(255,215,0,0.4),inset 0 1px 0 rgba(255,255,255,0.15)} }
-@keyframes titlePulse { 0%,100%{text-shadow:0 0 40px rgba(255,100,0,0.6),0 0 80px rgba(255,0,0,0.3),0 4px 12px rgba(0,0,0,0.7);transform:scale(1)} 50%{text-shadow:0 0 60px rgba(255,100,0,0.8),0 0 120px rgba(255,0,0,0.5),0 4px 12px rgba(0,0,0,0.7);transform:scale(1.02)} }
-@keyframes decoPulse { 0%,100%{opacity:0.7;transform:scale(1)} 50%{opacity:1;transform:scale(1.15)} }
-@keyframes shieldRotate { 0%,100%{transform:rotate(0deg)} 25%{transform:rotate(15deg)} 75%{transform:rotate(-15deg)} }
-@keyframes flareRotate { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+<!-- 动画性能优化 — 延迟加载，非阻塞渲染 -->
+<link rel="stylesheet" href="animation-optimize.css?v=69" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="animation-optimize.css?v=69"></noscript>
 
-.ls-ring-spin {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-  width: 180px; height: 180px; border-radius: 50%;
-  border: 2px dashed rgba(155,89,182,0.2);
-  animation: ringSpin 8s linear infinite;
-}
-@keyframes ringSpin { 0%{transform:translate(-50%,-50%) rotate(0deg)} 100%{transform:translate(-50%,-50%) rotate(360deg)} }
+<!-- 预获取非关键资源（空闲时加载） -->
+<link rel="prefetch" href="juice.js?v=69" as="script">
+<link rel="prefetch" href="visual-fx.js?v=69" as="script">
+<link rel="prefetch" href="v10-interactions.js?v=69" as="script">
+<link rel="prefetch" href="menu-enhance.js?v=69" as="script">
+<link rel="prefetch" href="share.js?v=69" as="script">
+<link rel="prefetch" href="i18n.js?v=69" as="script">
+<link rel="prefetch" href="bg-themes.js?v=69" as="script">
+<link rel="prefetch" href="liquid-glass.js?v=69" as="script">
 
-.ls-ring-inner {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-  width: 130px; height: 130px; border-radius: 50%;
-  border: 1px solid rgba(0,212,255,0.1);
-  animation: ringSpin 5s linear infinite reverse;
-}
-
-/* 扫描线 */
-.ls-scanline {
-  position: absolute; top: 0; left: 0; width: 100%; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(0,212,255,0.6), transparent);
-  box-shadow: 0 0 20px rgba(0,212,255,0.3);
-  animation: scanMove 2.5s linear infinite;
-}
-@keyframes scanMove { 0%{top:0} 100%{top:100%} }
-
-/* 水平干扰线 */
-.ls-glitch-line {
-  position: absolute; left: 0; width: 100%; height: 1px;
-  background: rgba(255,0,80,0.15);
-  animation: glitchLine 6s step-end infinite;
-}
-.ls-glitch-line:nth-child(2) { animation-delay: 2s; }
-.ls-glitch-line:nth-child(3) { animation-delay: 4s; }
-@keyframes glitchLine {
-  0%,95%{opacity:0;top:0} 96%{opacity:1;top:20%} 97%{opacity:0;top:60%} 98%{opacity:1;top:80%} 99%{opacity:0}
-}
-
-/* 主图标 — 全息投影效果 */
-.ls-icon {
-  position: relative; z-index: 2;
-  font-size: 64px;
-  filter: drop-shadow(0 0 20px rgba(0,212,255,0.6));
-  animation: iconGlitch 4s ease-in-out infinite;
-}
-@keyframes iconGlitch {
-  0%,90%,100%{transform:translate(0,0);filter:drop-shadow(0 0 20px rgba(0,212,255,0.6))}
-  91%{transform:translate(-2px,1px);filter:drop-shadow(2px 0 rgba(255,0,80,0.6)) drop-shadow(-2px 0 rgba(0,212,255,0.6))}
-  92%{transform:translate(2px,-1px);filter:drop-shadow(-2px 0 rgba(255,0,80,0.6)) drop-shadow(2px 0 rgba(0,212,255,0.6))}
-  93%{transform:translate(0,0);filter:drop-shadow(0 0 20px rgba(0,212,255,0.6))}
-  95%{transform:translate(1px,2px)}
-}
-
-/* 标题 — 故障文字 */
-.ls-title {
-  position: relative; z-index: 2;
-  font-size: 26px; font-weight: 900; letter-spacing: 8px;
-  color: #00d4ff;
-  text-shadow: 0 0 10px rgba(0,212,255,0.5), 0 0 40px rgba(0,212,255,0.2);
-  margin-bottom: 6px;
-  animation: textGlitch 5s step-end infinite;
-}
-.ls-title::before, .ls-title::after {
-  content: attr(data-text);
-  position: absolute; top: 0; left: 0;
-  width: 100%; height: 100%;
-}
-.ls-title::before {
-  color: #ff0050;
-  animation: glitch1 3s step-end infinite;
-  clip-path: inset(0 0 85% 0);
-}
-.ls-title::after {
-  color: #9b59b6;
-  animation: glitch2 3s step-end infinite;
-  clip-path: inset(85% 0 0 0);
-}
-@keyframes glitch1 {
-  0%,92%{transform:translate(0)} 93%{transform:translate(-3px,1px)} 94%{transform:translate(3px,-1px)} 95%{transform:translate(0)}
-}
-@keyframes glitch2 {
-  0%,94%{transform:translate(0)} 95%{transform:translate(2px,-1px)} 96%{transform:translate(-2px,1px)} 97%{transform:translate(0)}
-}
-
-/* 副标题 — 打字机效果 */
-.ls-sub {
-  position: relative; z-index: 2;
-  color: rgba(0,212,255,0.3); font-size: 10px; letter-spacing: 6px;
-  text-transform: uppercase; margin-bottom: 40px;
-  border-right: 2px solid rgba(0,212,255,0.4);
-  animation: blink 1s step-end infinite;
-  padding-right: 6px;
-}
-@keyframes blink { 0%,100%{border-color:rgba(0,212,255,0.4)} 50%{border-color:transparent} }
-
-/* 进度条 — 赛博风格 */
-.ls-bar-wrap {
-  position: relative; z-index: 2;
-  width: 280px; height: 2px;
-  background: rgba(0,212,255,0.08);
-  margin-bottom: 12px;
-  overflow: visible;
-}
-.ls-bar-fill {
-  height: 100%; width: 0%;
-  background: linear-gradient(90deg, #00d4ff, #9b59b6);
-  transition: width 0.4s ease;
-  position: relative;
-  box-shadow: 0 0 8px rgba(0,212,255,0.5);
-}
-.ls-bar-fill::before {
-  content: ''; position: absolute; left: 0; top: -1px; width: 100%; height: 4px;
-  background: linear-gradient(90deg, transparent 80%, rgba(0,212,255,0.3));
-  filter: blur(2px);
-}
-.ls-bar-fill::after {
-  content: ''; position: absolute; right: -4px; top: -4px;
-  width: 10px; height: 10px; border-radius: 50%;
-  background: #00d4ff;
-  box-shadow: 0 0 12px rgba(0,212,255,0.8);
-}
-
-/* 百分比 */
-.ls-pct {
-  position: relative; z-index: 2;
-  font-size: 12px; color: rgba(0,212,255,0.4);
-  letter-spacing: 4px; margin-bottom: 30px;
-}
-
-/* 安全提示 — 终端风格 */
-.ls-tip {
-  position: relative; z-index: 2;
-  color: rgba(255,255,255,0.15); font-size: 11px;
-  max-width: 320px; text-align: center; line-height: 1.6;
-  transition: opacity 0.4s;
-}
-
-/* 四角装饰框 */
-.ls-corner {
-  position: absolute; width: 40px; height: 40px; z-index: 2;
-  border-color: rgba(0,212,255,0.2); border-style: solid; border-width: 0;
-}
-.ls-corner.tl { top: 20px; left: 20px; border-top-width: 1px; border-left-width: 1px; }
-.ls-corner.tr { top: 20px; right: 20px; border-top-width: 1px; border-right-width: 1px; }
-.ls-corner.bl { bottom: 20px; left: 20px; border-bottom-width: 1px; border-left-width: 1px; }
-.ls-corner.br { bottom: 20px; right: 20px; border-bottom-width: 1px; border-right-width: 1px; }
-
-/* 角标文字 */
-.ls-coord {
-  position: absolute; z-index: 2;
-  font-size: 8px; color: rgba(0,212,255,0.15);
-  letter-spacing: 2px;
-}
-.ls-coord.top { top: 8px; left: 50%; transform: translateX(-50%); }
-.ls-coord.bottom { bottom: 8px; left: 50%; transform: translateX(-50%); }
-.ls-coord.left { left: 8px; top: 50%; transform: translateY(-50%) rotate(-90deg); }
-.ls-coord.right { right: 8px; top: 50%; transform: translateY(-50%) rotate(90deg); }
-
-  /* ===== 主菜单分区样式 ===== */
-  .menu-section {
-    margin: 20px 0;
-    padding-bottom: 80px;
-  }
-  .menu-section-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.2em;
-    font-weight: 700;
-    margin: 0 0 14px 0;
-    padding: 8px 0 8px 16px;
-    position: relative;
-    letter-spacing: 2px;
-    border-bottom: 2px solid transparent;
-  }
-  .menu-section-title::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 4px;
-    bottom: 4px;
-    width: 4px;
-    border-radius: 2px;
-  }
-  .learn-title {
-    color: #39ff14;
-    text-shadow: 0 0 10px rgba(57,255,20,0.4), 0 0 30px rgba(57,255,20,0.15);
-    border-bottom: 2px solid transparent;
-    border-image: linear-gradient(90deg, #39ff14, #00f0ff, transparent) 1;
-  }
-  .learn-title::before {
-    background: linear-gradient(180deg, #39ff14, #00f0ff);
-    box-shadow: 0 0 8px rgba(57,255,20,0.5);
-  }
-  .battle-title {
-    color: #ff2d95;
-    text-shadow: 0 0 10px rgba(255,45,149,0.4), 0 0 30px rgba(255,45,149,0.15);
-    border-bottom: 2px solid transparent;
-    border-image: linear-gradient(90deg, #ff2d95, #ff6b35, transparent) 1;
-  }
-  .battle-title::before {
-    background: linear-gradient(180deg, #ff2d95, #ff6b35);
-    box-shadow: 0 0 8px rgba(255,45,149,0.5);
-  }
-  .learn-grid, .battle-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-    padding: 0 0 20px;
-  }
-</style>
-<link rel="stylesheet" href="all-styles-v55.css?v=56">
-  <link rel="stylesheet" href="v5-glass-3d.css?v=56">
-  <link rel="stylesheet" href="clean-ui.css?v=56">
-  <link rel="stylesheet" href="bg-premium.css?v=56">
-  <link rel="stylesheet" href="bg-themes.css?v=56">
-  <link rel="stylesheet" href="menu-premium.css?v=56">
-  <link rel="stylesheet" href="fx-effects.css?v=56">
-  <link rel="stylesheet" href="ai-tutor.css?v=56">
-  <link rel="stylesheet" href="certification.css?v=56">
-  <link rel="stylesheet" href="disaster-sim.css?v=56">
-  <link rel="stylesheet" href="real-cases.css?v=56">
-  <link rel="stylesheet" href="fix-click.css?v=56">
-  <script src="fix-click.js?v=56" defer></script>
-  <script src="menu-manager.js?v=56" defer></script>
-  <script src="loading.js?v=56" defer></script>
-  <link rel="stylesheet" href="transitions.css?v=56">
-  <link rel="stylesheet" href="accessibility.css?v=56">
-  <link rel="stylesheet" href="wrong-book.css?v=56">
-  <link rel="stylesheet" href="loading.css?v=56">
-  <link rel="stylesheet" href="guide-enhance.css?v=56">
-  <link rel="stylesheet" href="cert-enhance.css?v=56">
-  <link rel="stylesheet" href="menu-enhance.css?v=56">
-  <link rel="stylesheet" href="share.css?v=56">
-  <link rel="stylesheet" href="i18n.css?v=56">
-  <link rel="stylesheet" href="layout-fix.css?v=56">
-  <link rel="stylesheet" href="ai-float.css?v=56">
-  <link rel="stylesheet" href="ui-ultimate.css?v=56">
-  <link rel="stylesheet" href="settings.css?v=56">
-  <link rel="stylesheet" href="optimizer-mobile.css?v=56">
-<style>
-/* ===== 标题与图标可见性优化 ===== */
-.menu-logo-title { font-weight: 900 !important; text-shadow: 0 0 50px rgba(255,100,0,0.7), 0 0 100px rgba(255,0,0,0.4), 0 6px 16px rgba(0,0,0,0.7) !important; letter-spacing: 8px !important; font-size: 64px !important; background: linear-gradient(180deg,#fff 0%,#ffe4a0 25%,#ff9d00 50%,#ff4d00 75%,#ff0000 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; background-clip: text !important; animation: titlePulse 2.5s ease-in-out infinite !important; }
-.menu-title-decor { display: flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; margin: 8px 0 !important; }
-.title-deco-icon { font-size: 28px !important; animation: decoPulse 2s ease-in-out infinite !important; filter: drop-shadow(0 0 12px rgba(255,215,0,0.5)) !important; }
-.title-shield { display: flex !important; align-items: center !important; justify-content: center !important; gap: 6px !important; position: relative !important; }
-.shield-left, .shield-right { font-size: 24px !important; animation: shieldRotate 3s ease-in-out infinite !important; filter: drop-shadow(0 0 8px rgba(255,0,0,0.4)) !important; }
-.menu-logo-sub { font-weight: 600 !important; text-shadow: 0 0 15px rgba(255,255,255,0.2) !important; font-size: 16px !important; letter-spacing: 2px !important; color: rgba(255,255,255,0.85) !important; }
-.preview-title { font-weight: 800 !important; font-size: 1.6rem !important; text-shadow: 0 0 12px rgba(255,255,255,0.15) !important; }
-.preview-icon { font-size: 3.2rem !important; text-shadow: 0 0 20px rgba(255,255,255,0.2) !important; filter: drop-shadow(0 0 10px rgba(0,212,255,0.2)); }
-.game-header .mode-label { font-size: 18px !important; font-weight: 800 !important; text-shadow: 0 0 12px rgba(255,255,255,0.15) !important; }
-.cat-icon { font-size: 28px !important; filter: drop-shadow(0 0 6px rgba(255,255,255,0.2)); }
-.cat-title { font-weight: 700 !important; font-size: 15px !important; }
-.menu-section-title { font-weight: 800 !important; font-size: 1.2rem !important; text-shadow: 0 0 8px rgba(255,255,255,0.1) !important; }
-.mode-icon { font-size: 32px !important; filter: drop-shadow(0 0 8px rgba(0,212,255,0.2)); }
-.mode-name { font-weight: 700 !important; font-size: 15px !important; }
-</style>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-<noscript><link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet"></noscript>
-<style>
-  /* 断网 fallback：3秒后强制切系统字体 */
-  @font-face { font-family: 'Orbitron'; font-style: normal; font-weight: 400; font-display: swap; src: local('Orbitron'), local('Segoe UI'), local('Arial'); }
-  @font-face { font-family: 'Orbitron'; font-style: normal; font-weight: 700; font-display: swap; src: local('Orbitron Bold'), local('Segoe UI Bold'), local('Arial Bold'); }
-  @font-face { font-family: 'Rajdhani'; font-style: normal; font-weight: 400; font-display: swap; src: local('Rajdhani'), local('Segoe UI'), local('Microsoft YaHei'); }
-  @font-face { font-family: 'Rajdhani'; font-style: normal; font-weight: 700; font-display: swap; src: local('Rajdhani Bold'), local('Segoe UI Bold'), local('Microsoft YaHei Bold'); }
-</style>
-<!-- 性能优化：预加载关键资源（避免重复） -->
-
-<style>
-/* ===== 折叠式主菜单 ===== */
-.menu-category-btns {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  padding: 20px 16px;
-  margin-bottom: 8px;
-}
-.menu-cat-btn {
-  flex: 1;
-  max-width: 220px;
-  padding: 20px 16px;
-  border-radius: 20px;
-  border: 2px solid rgba(255,255,255,0.1);
-  background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-  backdrop-filter: blur(20px) saturate(1.6);
-  -webkit-backdrop-filter: blur(20px) saturate(1.6);
-  color: var(--text-primary);
-  cursor: pointer;
-  text-align: center;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  transform-style: preserve-3d;
-  position: relative;
-  overflow: hidden;
-}
-.menu-cat-btn::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 50%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
-  pointer-events: none;
-  border-radius: 20px 20px 0 0;
-}
-.menu-cat-btn:hover {
-  transform: translateY(-4px) scale(1.02);
-  border-color: var(--cyber-blue);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 30px rgba(0,212,255,0.15);
-}
-.menu-cat-btn:active {
-  transform: translateY(0) scale(0.98);
-}
-.menu-cat-btn.active {
-  border-color: var(--cyber-blue);
-  background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(124,77,255,0.1));
-  box-shadow: 0 0 30px rgba(0,212,255,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
-}
-.menu-cat-btn .cat-icon {
-  font-size: 36px;
-  display: block;
-  margin-bottom: 8px;
-  animation: catIconFloat 3s ease-in-out infinite;
-}
-.menu-cat-btn .cat-title {
-  font-size: 18px;
-  font-weight: 700;
-  display: block;
-}
-.menu-cat-btn .cat-count {
-  font-size: 12px;
-  color: rgba(255,255,255,0.4);
-  margin-top: 4px;
-  display: block;
-}
-@keyframes catIconFloat {
-  0%,100%{transform:translateY(0) scale(1)}
-  50%{transform:translateY(-4px) scale(1.1)}
-}
-.menu-cat-btn.battle-btn .cat-icon { animation-delay: 0.5s; }
-
-/* 可折叠的菜单网格 */
-.menu-section {
-  max-height: 0 !important;
-  overflow: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-  transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease, margin 0.3s ease, padding 0.3s ease !important;
-  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-.menu-section.expanded {
-  max-height: 2000px !important;
-  overflow: visible !important;
-  opacity: 1 !important;
-  pointer-events: auto !important;
-  margin-bottom: 20px !important;
-  padding-bottom: 80px !important;
-}
-
-/* 收起箭头 */
-.menu-section-title {
-  cursor: pointer;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-right: 40px;
-}
-.menu-section-title .collapse-arrow {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%) rotate(0deg);
-  transition: transform 0.3s ease;
-  font-size: 14px;
-}
-.menu-section.expanded .collapse-arrow {
-  transform: translateY(-50%) rotate(180deg);
-}
-
-/* 返回按钮 */
-.back-to-categories {
-  display: none;
-  padding: 8px 16px;
-  margin-bottom: 12px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 12px;
-  color: rgba(255,255,255,0.6);
-  cursor: pointer;
-  font-size: 13px;
-  transition: all 0.2s ease;
-  align-items: center;
-  gap: 6px;
-  width: fit-content;
-}
-.back-to-categories:hover {
-  background: rgba(255,255,255,0.1);
-  color: var(--text-primary);
-}
-.back-to-categories.show {
-  display: flex;
-}
-</style>
-<style>
-/* ===== 减少动画偏好：对眩晕/敏感用户友好 ===== */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-  .ls-hexgrid, .ls-particles, .ls-scanline, .ls-glitch-line,
-  .ls-ring-outer, .ls-ring-spin, .ls-ring-inner,
-  .dust, .light-sweep, .geo-ring, .pulse-ring, .meteor,
-  .gradient-bar, .data-stream, .bg-orb, .bg-grid {
-    display: none !important;
-  }
-}
-</style>
-<style>
-/* ===== 标题最终兜底覆盖 ===== */
-body .menu-logo-title {
-  font-size: 64px !important;
-  font-weight: 900 !important;
-  letter-spacing: 8px !important;
-  text-align: center !important;
-  display: block !important;
-  text-shadow: 0 0 50px rgba(255,100,0,0.7), 0 0 100px rgba(255,0,0,0.4), 0 6px 16px rgba(0,0,0,0.7) !important;
-  background: linear-gradient(180deg,#fff 0%,#ffe4a0 25%,#ff9d00 50%,#ff4d00 75%,#ff0000 100%) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-  animation: titlePulse 2.5s ease-in-out infinite !important;
-}
-body .menu-logo {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-align: center !important;
-  padding: 48px 0 24px !important;
-}
-body #page-menu {
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  align-items: center !important;
-  min-height: 100vh !important;
-}
-/* ===== 按钮点击兜底 ===== */
-body:not(.app-ready) .page {
-  pointer-events: auto !important;
-}
-</style>
 </head>
-<body>
+<body style="background-color: #0F1117 !important; min-height: 100vh;">
 <div class="cyber-grid"></div>
 
 <!-- ===== 加载界面 v3.0 ===== -->
 <div id="loadingScreen">
-  <div class="ls-hexgrid"></div>
-  <canvas class="ls-particles" id="lsCanvas"></canvas>
-  <div class="ls-scanline"></div>
-  <div class="ls-glitch-line"></div>
-  <div class="ls-glitch-line"></div>
-  <div class="ls-glitch-line"></div>
-  <div class="ls-ring-outer"></div>
-  <div class="ls-ring-spin"></div>
-  <div class="ls-ring-inner"></div>
-  <div class="ls-icon">🚨</div>
-  <div class="ls-title" data-text="应急小达人">应急小达人</div>
-  <div class="ls-sub">DISASTER COMMAND HQ</div>
-  <div class="ls-bar-wrap"><div class="ls-bar-fill" id="loadBar"></div></div>
-  <div class="ls-pct" id="loadPct">0%</div>
-  <div class="ls-tip" id="loadTip">// 初始化防灾系统...</div>
-  <div class="ls-corner tl"></div>
-  <div class="ls-corner tr"></div>
-  <div class="ls-corner bl"></div>
-  <div class="ls-corner br"></div>
-  <div class="ls-coord top">SYS://DISASTER_HQ_v1.3.0</div>
-  <div class="ls-coord bottom">NODE://LOCAL_STORAGE</div>
+  <div class="loading-container" id="loadingContainer">
+    <div class="loading-logo">
+      <div class="loading-icon">🌪️</div>
+      <h1 class="loading-title">应急小达人</h1>
+      <p class="loading-subtitle">防灾教育互动游戏</p>
+    </div>
+    <div class="loading-percent" id="loadingPercent">0%</div>
+    <div class="loading-bar-container">
+      <div class="loading-bar" id="loadingBar"></div>
+    </div>
+    <p class="loading-tip" id="loadingTip">正在加载防灾知识库...</p>
+  </div>
 </div>
 
 <!-- 背景层 — 高级多层系统 -->
@@ -851,23 +237,21 @@ body:not(.app-ready) .page {
 
     <!-- 主分类按钮 -->
     <div class="menu-category-btns">
-      <div class="menu-cat-btn learn-btn" onclick="MenuManager.toggleCategory('learn')" id="catBtnLearn">
+      <div class="menu-cat-btn learn-btn" onclick="MenuManager.toggleCategory('learn')" id="catBtnLearn" role="button" aria-label="学习中心分类">
         <span class="cat-icon">📚</span>
         <span class="cat-title">学习中心</span>
         <span class="cat-count">9 个模块</span>
       </div>
-      <div class="menu-cat-btn battle-btn" onclick="MenuManager.toggleCategory('battle')" id="catBtnBattle">
+      <div class="menu-cat-btn battle-btn" onclick="MenuManager.toggleCategory('battle')" id="catBtnBattle" role="button" aria-label="闯关挑战分类">
         <span class="cat-icon">⚔️</span>
         <span class="cat-title">闯关挑战</span>
         <span class="cat-count">20 个模式</span>
       </div>
     </div>
     
-    <div id="backToCategories" class="back-to-categories" onclick="MenuManager.collapseAll()">
+    <div id="backToCategories" class="back-to-categories" onclick="MenuManager.collapseAll()" role="button" aria-label="返回分类">
       <span>←</span> 返回分类
     </div>
-
-
 
     <!-- 📚 学习区 -->
     <div class="menu-section">
@@ -890,7 +274,7 @@ body:not(.app-ready) .page {
           <span class="mode-name">学习模式</span>
           <span class="mode-desc">系统学习防灾知识</span>
         </div>
-        <div class="mode-btn" onclick="PageManager.navigate('firstaid');setTimeout(function(){var el=document.getElementById('firstaid-content');if(el)el.innerHTML=FirstAidEngine.render()},100)" style="border-color:rgba(255,82,82,0.3);">
+        <div class="mode-btn" onclick="PageManager.navigate('firstaid');setTimeout(function(){var el=document.getElementById('firstAidContainer');if(el)el.innerHTML=FirstAidEngine.render()},100)" style="border-color:rgba(255,82,82,0.3);">
           <span class="mode-icon">🩺</span>
           <span class="mode-name">急救模拟</span>
           <span class="mode-desc">8个场景学急救</span>
@@ -1058,7 +442,7 @@ body:not(.app-ready) .page {
           <span class="mode-name">基地</span>
           <span class="mode-desc">布置基地+换装</span>
         </div>
-        <div class="mode-btn" onclick="TimeEscapeEngine.init()" style="border-color:rgba(255,0,110,0.4);">
+        <div class="mode-btn" onclick="typeof TimeEscapeEngine!=='undefined'&&TimeEscapeEngine.init()" style="border-color:rgba(255,0,110,0.4);">
           <span class="mode-badge" style="background:linear-gradient(135deg,#FF006E,#FF6B35);color:#fff;">🔥 新</span>
           <span class="mode-icon">⏰</span>
           <span class="mode-name">限时逃生</span>
@@ -1082,7 +466,7 @@ body:not(.app-ready) .page {
           <span class="mode-name">记忆翻牌</span>
           <span class="mode-desc">翻牌配对，考验记忆力</span>
         </div>
-        <div class="mode-btn" onclick="ReactionEngine.init()" style="border-color:rgba(255,0,110,0.4);">
+        <div class="mode-btn" onclick="typeof ReactionEngine!=='undefined'&&ReactionEngine.init()" style="border-color:rgba(255,0,110,0.4);">
           <span class="mode-badge" style="background:linear-gradient(135deg,#FF006E,#FFD700);color:#fff;">⚡ 新</span>
           <span class="mode-icon">⚡</span>
           <span class="mode-name">反应速度</span>
@@ -1235,12 +619,12 @@ body:not(.app-ready) .page {
       <div class="pk-name-inputs">
         <div class="pk-name-group">
           <span class="pk-name-icon pk-p1">🦸</span>
-          <input class="pk-name-input" id="pkName1" placeholder="玩家1 名字" value="玩家1" maxlength="8">
+          <input class="pk-name-input" id="pkName1" placeholder="玩家1 名字" value="玩家1" maxlength="8" aria-label="玩家1名字">
         </div>
         <div class="pk-vs">VS</div>
         <div class="pk-name-group">
           <span class="pk-name-icon pk-p2">🦹</span>
-          <input class="pk-name-input" id="pkName2" placeholder="玩家2 名字" value="玩家2" maxlength="8">
+          <input class="pk-name-input" id="pkName2" placeholder="玩家2 名字" value="玩家2" maxlength="8" aria-label="玩家2名字">
         </div>
       </div>
       <div class="pk-settings">
@@ -1694,7 +1078,7 @@ body:not(.app-ready) .page {
       <div style="font-size:13px;color:rgba(255,255,255,0.5);">选择挑战模式 · 击败怪兽</div>
     </div>
     <div class="feature-list" style="padding:20px;max-width:480px;margin:0 auto;">
-      <div class="feature-item" onclick="PageManager.navigate('battle-lobby')" style="cursor:pointer;border-color:rgba(255,215,0,0.3);">
+      <div class="feature-item" onclick="BattleEngine.init()" style="cursor:pointer;border-color:rgba(255,215,0,0.3);">
         <span class="feature-icon" style="font-size:36px;">👾</span>
         <div class="feature-text"><h4>防灾大擂台</h4><p>回合制打怪兽！答题就是攻击！</p></div>
         <span class="feature-status" style="background:linear-gradient(135deg,#ffd700,#ff6b00);color:#000;">🔥 推荐</span>
@@ -1915,7 +1299,7 @@ body:not(.app-ready) .page {
 <!-- ======== 急救模拟器页 ======== -->
   <div id="page-firstaid" class="page page-content">
     <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
-    <div id="firstaid-content" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md) 0"></div>
+    <div id="firstAidContainer" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md) 0"></div>
   </div>
 
 <!-- ======== 音乐页 ======== -->
@@ -2025,7 +1409,7 @@ body:not(.app-ready) .page {
 
 <!-- ======== 限时逃生页 ======== -->
   <div id="page-time-escape" class="page page-content">
-    <button class="btn back-float" onclick="if(TimeEscapeEngine.active){clearInterval(TimeEscapeEngine.timer);TimeEscapeEngine.active=false;}PageManager.navigate('menu')">←</button>
+    <button class="btn back-float" onclick="typeof TimeEscapeEngine!=='undefined'&&TimeEscapeEngine.active&&(clearInterval(TimeEscapeEngine.timer),TimeEscapeEngine.active=!1);PageManager.navigate('menu')">←</button>
     <div class="game-header">
       <div class="mode-label" style="color:var(--cyber-blue);">⏰ 限时逃生</div>
       <div style="display:flex;gap:16px;align-items:center;">
@@ -2119,7 +1503,7 @@ body:not(.app-ready) .page {
 
 <!-- ======== 反应速度页 ======== -->
   <div id="page-reaction" class="page page-content">
-    <button class="btn back-float" onclick="ReactionEngine.active=false;clearTimeout(ReactionEngine.targetTimeout);PageManager.navigate('menu')">←</button>
+    <button class="btn back-float" onclick="typeof ReactionEngine!=='undefined'&&(ReactionEngine.active=!1,clearTimeout(ReactionEngine.targetTimeout));PageManager.navigate('menu')">←</button>
     <div class="game-header">
       <div class="mode-label" style="color:#FF006E;">⚡ 反应速度</div>
       <div id="reactionInfo" style="font-size:16px;color:rgba(255,255,255,0.6);">准备...</div>
@@ -2332,7 +1716,6 @@ body:not(.app-ready) .page {
     </div>
   </div>
 
-
 </div><!-- /#app -->
 
 <!-- ======== 底部导航栏（独立于页面容器） ======== -->
@@ -2405,8 +1788,8 @@ body:not(.app-ready) .page {
 </div>
 
 <!-- ======== 通用弹窗 ======== -->
-<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)Modal.hide()">
-  <div class="modal-box">
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box" style="position:relative">
     <div id="modalContent">
       <div style="font-size:3rem;margin-bottom:var(--space-md)">📢</div>
       <h3 style="margin-bottom:var(--space-sm)" id="modalTitle">提示</h3>
@@ -2419,53 +1802,69 @@ body:not(.app-ready) .page {
 <!-- 防灾小精灵 -->
 <div id="mascotBubble" class="mascot-bubble" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:50;padding:8px 16px;background:rgba(0,212,255,0.15);border:1px solid rgba(0,212,255,0.2);border-radius:20px;color:#fff;font-size:0.85rem;backdrop-filter:blur(8px);pointer-events:none;transition:opacity 0.3s">你好！我是防灾小精灵！</div>
 
+<!-- bgm.js removed: bgm-enhanced.js provides compatibility layer -->
 
 
-<script src="juice.js?v=56" defer></script>
-<script src="visual-fx.js?v=56" defer></script>
-<script src="bgm.js?v=56" defer></script>
-<script src="cards.js?v=56" defer></script>
-<script src="scenarios.js?v=56" defer></script>
-<script src="kit_data.js?v=56" defer></script>
-<script src="js/core/utils.js?v=56" defer></script>
-<script src="js/core/game-core.js?v=56" defer></script>
-<script src="game-engines.js?v=56" defer></script>
-<script src="game.js?v=56" defer></script>
-<script src="v10-interactions.js?v=56" defer></script>
+<!-- ===== 核心基础架构（优化模块） ===== -->
+<script src="js/core/optimized/ErrorBoundary.js?v=69" defer></script>
+<script src="js/core/optimized/DOMCache.js?v=69" defer></script>
+<script src="js/core/optimized/EventDelegate.js?v=69" defer></script>
 
-<script src="encyclopedia_extra.js?v=56" defer></script>
-<script src="encyclopedia_final.js?v=56" defer></script>
-<script src="bg-premium.js?v=56" defer></script>
-<script src="ui-polish.js?v=56" defer></script>
-<script src="tilt3d.js?v=56" defer></script>
-<script src="ai-tutor-llm-v55.js?v=56" defer></script>
-<script src="ai-tutor-v55.js?v=56" defer></script>
-<script src="ai-float-v55.js?v=56" defer></script>
-<script src="certification.js?v=56" defer></script>
-<script src="disaster-sim.js?v=56" defer></script>
-<script src="real-cases.js?v=56" defer></script>
-<script src="sfx.js?v=56" defer></script>
-<script src="bgm-enhanced.js?v=56" defer></script>
-<script src="audio-integration.js?v=56" defer></script>
-<script src="accessibility.js?v=56" defer></script>
-<script src="performance.js?v=56" defer></script>
-<script src="wrong-book.js?v=56" defer></script>
-<script src="report.js?v=56" defer></script>
-<script src="voice.js?v=56" defer></script>
-<script src="guide-enhance.js?v=56" defer></script>
-<script src="cert-enhance.js?v=56" defer></script>
-<script src="disaster-particles.js?v=56" defer></script>
-<script src="menu-enhance.js?v=56" defer></script>
-<script src="share.js?v=56" defer></script>
-<script src="i18n.js?v=56" defer></script>
-<script src="bg-themes.js?v=56" defer></script>
-<script src="liquid-glass.js?v=56" defer></script>
+<!-- ===== 核心脚本：按依赖顺序加载 ===== -->
+<script src="js/core/utils.js?v=69" defer></script>
+<script src="js/core/utils-enhanced.js?v=69" defer></script>
+<script src="js/core/game-core.js?v=69" defer></script>
+<script src="cards.js?v=69" defer></script>
+<script src="scenarios.js?v=69" defer></script>
+<script src="kit_data.js?v=69" defer></script>
+<script src="game-engines.js?v=69" defer></script>
+<script src="js/core/performance-patch.js?v=69" defer></script>
+<script src="game.js?v=69" defer></script>
 
-<!-- 补丁脚本：修复缺失的方法 -->
+<!-- ===== 加载与交互脚本 ===== -->
+<script src="loading.js?v=69" defer></script>
+<script src="menu-manager.js?v=69" defer></script>
+
+<!-- ===== 视觉特效脚本 ===== -->
+<script src="juice.js?v=69" defer></script>
+<script src="visual-fx.js?v=69" defer></script>
+<script src="v10-interactions.js?v=69" defer></script>
+<script src="menu-enhance.js?v=69" defer></script>
+
+<!-- ===== 功能模块脚本 ===== -->
+<script src="share.js?v=69" defer></script>
+<script src="i18n.js?v=69" defer></script>
+<script src="bg-themes.js?v=69" defer></script>
+<script src="liquid-glass.js?v=69" defer></script>
+<script src="optimizer-mobile.js?v=69" defer></script>
+
+<!-- ===== 内容/功能模块脚本（v64 修复：恢复被误删的脚本加载）===== -->
+<script src="encyclopedia_extra.js?v=69" defer></script>
+<script src="encyclopedia_final.js?v=69" defer></script>
+<script src="bg-premium.js?v=69" defer></script>
+<script src="ui-polish.js?v=69" defer></script>
+<script src="tilt3d.js?v=69" defer></script>
+<script src="sfx.js?v=69" defer></script>
+<script src="bgm-enhanced.js?v=69" defer></script>
+<script src="audio-integration.js?v=69" defer></script>
+<script src="ai-tutor-llm-v55.js?v=69" defer></script>
+<script src="ai-tutor-v55.js?v=69" defer></script>
+<script src="ai-float-v55.js?v=69" defer></script>
+<script src="certification.js?v=69" defer></script>
+<script src="cert-enhance.js?v=69" defer></script>
+<script src="disaster-sim.js?v=69" defer></script>
+<script src="disaster-particles.js?v=69" defer></script>
+<script src="real-cases.js?v=69" defer></script>
+<script src="wrong-book.js?v=69" defer></script>
+<script src="voice.js?v=69" defer></script>
+<script src="guide-enhance.js?v=69" defer></script>
+<script src="accessibility.js?v=69" defer></script>
+<script src="performance.js?v=69" defer></script>
+
+<!-- ===== 补丁脚本：修复已知问题 ===== -->
 <script>
 (function() {
   function patch() {
-    // 修复 KitEngine 缺失方法
     if (typeof KitEngine !== 'undefined') {
       if (!KitEngine.quit) {
         KitEngine.quit = function() {
@@ -2480,6 +1879,58 @@ body:not(.app-ready) .page {
         };
       }
     }
+    if (typeof GameState !== 'undefined' && GameState.save) {
+      var _origSave = GameState.save.bind(GameState);
+      var _saveTimer = null;
+      GameState.save = function() {
+        clearTimeout(_saveTimer);
+        _saveTimer = setTimeout(_origSave, 300);
+      };
+    }
+    if (typeof VisualFX !== 'undefined' && VisualFX.startBattleParticles) {
+      var _origStart = VisualFX.startBattleParticles.bind(VisualFX);
+      VisualFX.startBattleParticles = function() {
+        this._vfxResizeHandler = null;
+        return _origStart.apply(this, arguments);
+      };
+    }
+    if (typeof AudioManager !== 'undefined' && AudioManager._getCtx) {
+      var _origGetCtx = AudioManager._getCtx.bind(AudioManager);
+      AudioManager._getCtx = function() {
+        var ctx = _origGetCtx.apply(this, arguments);
+        if (ctx && ctx.state === 'suspended') {
+          try { ctx.resume(); } catch(e) {}
+        }
+        return ctx;
+      };
+    }
+    window._escapeHtml = function(s) {
+      if (!s || typeof s !== 'string') return '';
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;');
+    };
+    if (typeof PKEngine !== 'undefined' && PKEngine.endGame) {
+      var _origEndGame = PKEngine.endGame.bind(PKEngine);
+      PKEngine.endGame = function() {
+        var p1 = _escapeHtml(this.p1Name || '玩家1');
+        var p2 = _escapeHtml(this.p2Name || '玩家2');
+        var resultEl = document.getElementById('pkResultPlayers');
+        if (resultEl) {
+          resultEl.innerHTML = '<div class="stat-label">' + p1 + '</div><div class="stat-label">' + p2 + '</div>';
+        }
+        return _origEndGame.apply(this, arguments);
+      };
+    }
+    if (typeof AITutor !== 'undefined' && AITutor._showBubble) {
+      var _origShowBubble = AITutor._showBubble.bind(AITutor);
+      AITutor._showBubble = function(text) {
+        var safeText = _escapeHtml(text).replace(/\n/g, '<br>');
+        return _origShowBubble.call(this, safeText);
+      };
+    }
+    document.documentElement.style.scrollBehavior = 'smooth';
+    var style = document.createElement('style');
+    style.textContent = '.btn, .mode-btn, .tool-btn, .quiz-opt { transition: transform 0.15s ease, box-shadow 0.15s ease; } .btn:active, .mode-btn:active, .tool-btn:active, .quiz-opt:active { transform: scale(0.96); }';
+    document.head.appendChild(style);
   }
   if (document.readyState === 'loading') {
     window.addEventListener('load', patch);
@@ -2489,17 +1940,16 @@ body:not(.app-ready) .page {
 })();
 </script>
 
-<!-- ===== Service Worker 注册（离线可用） ===== -->
+<!-- ===== Service Worker 注册 ===== -->
 <script>
 (function() {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
       navigator.serviceWorker.register('sw-v55.js')
-        .then(function(registration) {
-          console.log('[SW] 注册成功:', registration.scope);
-          // 监听更新
-          registration.addEventListener('updatefound', function() {
-            var newWorker = registration.installing;
+        .then(function(reg) {
+          console.log('[SW] 注册成功:', reg.scope);
+          reg.addEventListener('updatefound', function() {
+            var newWorker = reg.installing;
             newWorker.addEventListener('statechange', function() {
               if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
                 console.log('[SW] 新版本可用，刷新页面后生效');
@@ -2515,9 +1965,12 @@ body:not(.app-ready) .page {
 })();
 </script>
 
-<!-- ===== 加载动画 + AudioContext 解锁 ===== -->
+<!-- ===== 加载进度 + AudioContext 解锁 ===== -->
 <script>
 (function() {
+  // 如果 LoadingScreen 已加载（loading.js），让它主导加载流程
+  if (typeof LoadingScreen !== 'undefined' && LoadingScreen.init) return;
+
   var tips = [
     '// 地震时先躲避再撤离，不要贪恋财物',
     '// 火灾逃生要弯腰捂鼻，沿墙壁摸索前进',
@@ -2531,91 +1984,12 @@ body:not(.app-ready) .page {
     '// 燃气泄漏禁止开灯和打电话'
   ];
 
-  var bar = document.getElementById('loadBar');
-  var pct = document.getElementById('loadPct');
-  var tip = document.getElementById('loadTip');
+  var bar = document.getElementById('loadingBar');
+  var pct = document.getElementById('loadingPercent');
+  var tip = document.getElementById('loadingTip');
   var screen = document.getElementById('loadingScreen');
-  var canvas = document.getElementById('lsCanvas');
-  var ctx = canvas.getContext('2d');
 
-  // Canvas 粒子系统
-  var W, H, particles = [], lines = [];
-  function resize() {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  // 创建粒子
-  for (var i = 0; i < 60; i++) {
-    particles.push({
-      x: Math.random() * (W||400), y: Math.random() * (H||700),
-      vx: (Math.random()-0.5)*0.4, vy: (Math.random()-0.5)*0.4,
-      r: Math.random()*1.5+0.5,
-      a: Math.random()*0.3+0.1,
-      color: ['#00d4ff','#9b59b6','#ff6b35','#00d4ff'][Math.floor(Math.random()*4)]
-    });
-  }
-  // 随机连线
-  for (var j = 0; j < 15; j++) {
-    lines.push({
-      x1: Math.random()*(W||400), y1: Math.random()*(H||700),
-      x2: Math.random()*(W||400), y2: Math.random()*(H||700),
-      a: Math.random()*0.08+0.02,
-      life: Math.random()*200+100
-    });
-  }
-
-  var frame = 0;
-  function drawParticles() {
-    ctx.clearRect(0, 0, W, H);
-    // 粒子
-    particles.forEach(function(p) {
-      p.x += p.vx; p.y += p.vy;
-      if(p.x<0) p.x=W; if(p.x>W) p.x=0;
-      if(p.y<0) p.y=H; if(p.y>H) p.y=0;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-      ctx.fillStyle = p.color.replace(')', ','+p.a+')').replace('rgb','rgba');
-      ctx.globalAlpha = p.a;
-      ctx.fill();
-    });
-    // 连线
-    lines.forEach(function(l) {
-      l.life--;
-      if(l.life<=0){
-        l.x1=Math.random()*W; l.y1=Math.random()*H;
-        l.x2=Math.random()*W; l.y2=Math.random()*H;
-        l.life=Math.random()*200+100;
-      }
-      ctx.beginPath();
-      ctx.moveTo(l.x1, l.y1); ctx.lineTo(l.x2, l.y2);
-      ctx.strokeStyle = 'rgba(0,212,255,'+l.a+')';
-      ctx.globalAlpha = 1;
-      ctx.lineWidth = 0.5;
-      ctx.stroke();
-    });
-    // 中央六边形脉冲
-    var pulse = Math.sin(frame*0.03)*0.3+0.7;
-    ctx.beginPath();
-    var cx = W/2, cy = H/2, hr = 60*pulse;
-    for(var k=0; k<6; k++){
-      var angle = Math.PI/3*k - Math.PI/6;
-      var px = cx + hr*Math.cos(angle);
-      var py = cy + hr*Math.sin(angle);
-      k===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
-    }
-    ctx.closePath();
-    ctx.strokeStyle = 'rgba(0,212,255,0.08)';
-    ctx.globalAlpha = 1;
-    ctx.lineWidth = 1;
-    ctx.stroke();
-
-    frame++;
-    requestAnimationFrame(drawParticles);
-  }
-  drawParticles();
+  if (!bar || !pct || !tip || !screen) return;
 
   // 安全提示轮播
   var tipIdx = 0;
@@ -2627,7 +2001,7 @@ body:not(.app-ready) .page {
       tip.style.opacity = '1';
     }, 400);
   }
-  setInterval(rotateTip, 3500);
+  var tipInterval = setInterval(rotateTip, 3500);
   tip.textContent = tips[0];
 
   // 加载进度 — 基于真实资源加载
@@ -2635,17 +2009,14 @@ body:not(.app-ready) .page {
   var total = resources.length || 1;
   var loaded = 0;
   var progress = 0;
-  var bar = document.getElementById('loadBar');
-  var pct = document.getElementById('loadPct');
-  var screen = document.getElementById('loadingScreen');
 
   function updateProgress() {
     var target = Math.min(100, Math.round((loaded / total) * 100));
     var animate = function() {
       if (progress < target) {
         progress += Math.max(1, Math.ceil((target - progress) / 3));
-        bar.style.width = progress + '%';
-        pct.textContent = progress + '%';
+        if (bar) bar.style.width = progress + '%';
+        if (pct) pct.textContent = progress + '%';
         requestAnimationFrame(animate);
       } else if (target === 100 && !screen.classList.contains('hidden')) {
         setTimeout(function(){
@@ -2655,6 +2026,7 @@ body:not(.app-ready) .page {
           if (typeof LiquidGlass !== 'undefined') {
             LiquidGlass.createParticles(20);
           }
+          if (tipInterval) clearInterval(tipInterval);
         }, 400);
         setTimeout(function(){ screen.style.display = 'none'; screen.remove(); }, 1200);
       }
@@ -2674,20 +2046,36 @@ body:not(.app-ready) .page {
   });
   updateProgress();
 
+  // 保底：无论加载屏由哪条路径隐藏，都必须给 body 加 app-ready，
+  // 否则 critical.css 的 body:not(.app-ready) .page{display:none!important} 会永久隐藏所有页面。
+  function forceAppReady() {
+    if (!document.body.classList.contains('app-ready')) {
+      document.body.classList.add('app-ready');
+    }
+    if (screen) {
+      screen.classList.add('hidden');
+      screen.style.pointerEvents = 'none';
+    }
+    if (tipInterval) { clearInterval(tipInterval); tipInterval = null; }
+  }
+
   window.addEventListener('load', function() {
     loaded = total;
     updateProgress();
+    forceAppReady();
   });
 
-  // 备用：最长 4 秒强制完成
+  // 备用：最长 4 秒强制完成（解耦 screen-hidden 判断，无条件兜底 app-ready）
   setTimeout(function() {
-    if (!screen.classList.contains('hidden')) {
-      loaded = total;
-      updateProgress();
-    }
+    loaded = total;
+    updateProgress();
+    forceAppReady();
   }, 4000);
 
-  // 页面可见性优化：隐藏时暂停音频和 Canvas 动画
+  // 二次兜底：DOM 解析完即检查，避免全缓存命中时 load 事件迟迟不触发
+  setTimeout(forceAppReady, 1500);
+
+  // 页面可见性优化
   document.addEventListener('visibilitychange', function() {
     if (document.hidden) {
       if (typeof BGMEngineV2 !== 'undefined') BGMEngineV2.pause();
@@ -2695,7 +2083,11 @@ body:not(.app-ready) .page {
       if (typeof BGMEngineV2 !== 'undefined') BGMEngineV2.resume();
     }
   });
+
+  // AudioContext 解锁
   function unlockAudio() {
+    if (unlockAudio._done) return;
+    unlockAudio._done = true;
     try {
       if (typeof BGMEngine !== 'undefined') BGMEngine.init();
       if (typeof AudioManager !== 'undefined') {
@@ -2703,15 +2095,12 @@ body:not(.app-ready) .page {
         if (ctx2 && ctx2.state === 'suspended') ctx2.resume();
       }
     } catch(e) {}
-    document.removeEventListener('click', unlockAudio);
-    document.removeEventListener('touchstart', unlockAudio);
-    document.removeEventListener('keydown', unlockAudio);
   }
-  document.addEventListener('click', unlockAudio);
-  document.addEventListener('touchstart', unlockAudio);
-  document.addEventListener('keydown', unlockAudio);
+  document.addEventListener('click', unlockAudio, { once: true });
+  document.addEventListener('touchstart', unlockAudio, { once: true });
+  document.addEventListener('keydown', unlockAudio, { once: true });
 })();
 </script>
-<script src="optimizer-mobile.js?v=56" defer></script>
+
 </body>
 </html>
