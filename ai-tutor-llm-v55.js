@@ -493,99 +493,99 @@ const AITutorBrain = {
   getStatus() { return { ready: this.isReady(), knowledgeCount: this._knowledgeBase.length, chats: this._userProfile.totalChats }; }
 };
 
-// ===== DeepSeek API 集成 =====
+// ===== DeepSeek API 集成（代理模式）=====
 const DeepSeekAPI = {
-  _apiKey: localStorage.getItem('deepseek_api_key') || 'sk-4cdcfcde0e1343789c07266c23efd371',
-  _baseUrl: 'https://api.deepseek.com/v1',
-  _model: 'deepseek-chat',
-  _systemPrompt: `你是"应急小达人"游戏的AI防灾导师，一位专业的防灾教育专家。
-
-你的职责：
-1. 用通俗易懂的语言回答防灾减灾问题
-2. 结合真实案例解释防灾原理
-3. 给出可操作的应急建议（步骤清晰）
-4. 针对中小学生用户，语气亲切、鼓励为主
-5. 回答控制在200字以内，重点突出
-
-知识范围：地震、洪水、台风、火灾、雷电、暴雪、泥石流、干旱、山火、火山、海啸、沙尘暴等12种自然灾害的预防、应对、逃生、急救知识。
-
-禁止：
-- 不要回答与防灾无关的问题
-- 不要使用过于专业的术语（除非附带解释）
-- 不要给出不确定的建议
-
-每次回答最后，可以引导用户继续提问或去游戏中练习。`,
+  _proxyUrl: localStorage.getItem('deepseek_proxy_url') || 'https://yingji-ai-proxy.hamburgerjimmy.workers.dev',
+  // 默认使用 token-plan 套餐的快速款；可用 localStorage 'aitutor_model' 覆盖
+  // 套餐可选: qwen3.6-flash(快) / qwen3.6-plus / qwen3.7-plus / deepseek-v4-flash / glm-5.1 / kimi-k2.6
+  _model: localStorage.getItem('aitutor_model') || 'qwen3.6-flash',
+  setModel(m){ if(m){ this._model = m; try{ localStorage.setItem('aitutor_model', m); }catch(e){} } },
+  getModel(){ return this._model; },
+  _systemPrompt: `...`,
+  
+  // ===== 安全控制：防止重复调用导致高额费用 =====
+  _requestLock: false,
+  _callCount: 0,
+  _maxCallsPerSession: 20,
+  _lastCallTime: 0,
+  _minInterval: 2000,
+  _callLog: [],
 
   isReady() {
-    return this._apiKey.length > 10;
+    return this._proxyUrl && this._proxyUrl.length > 3;
   },
 
-  setApiKey(key) {
-    this._apiKey = key.trim();
-    localStorage.setItem('deepseek_api_key', this._apiKey);
+  setProxyUrl(url) {
+    this._proxyUrl = url.trim();
+    localStorage.setItem('deepseek_proxy_url', this._proxyUrl);
   },
 
+  getProxyUrl() {
+    return this._proxyUrl;
+  },
+
+  // 兼容旧 UI（ai-tutor-v55.js 的密钥设置对话框）：映射到代理地址配置
   getApiKey() {
-    return this._apiKey;
+    return this._proxyUrl;
+  },
+
+  setApiKey(url) {
+    this.setProxyUrl(url);
   },
 
   async chat(userMessage, history = []) {
-    if (!this.isReady()) {
-      return { error: '请先设置 DeepSeek API Key' };
+    if (this._requestLock) {
+      console.warn('DeepSeek: 请求锁已激活，跳过重复调用');
+      return { error: '正在处理中，请稍候...' };
     }
+    if (this._callCount >= this._maxCallsPerSession) {
+      console.warn('DeepSeek: 单会话调用次数已达上限 ' + this._maxCallsPerSession);
+      return { error: '本会话 AI 调用次数已达上限，请刷新页面后再试。' };
+    }
+    const now = Date.now();
+    if (now - this._lastCallTime < this._minInterval) {
+      console.warn('DeepSeek: 调用太频繁');
+      return { error: '请求太频繁，请稍后再试。' };
+    }
+    const lastQuestion = this._callLog.length > 0 ? this._callLog[this._callLog.length - 1].question : null;
+    if (lastQuestion === userMessage && now - this._lastCallTime < 10000) {
+      console.warn('DeepSeek: 重复问题，跳过');
+      return { error: '正在处理相同的问题，请稍候...' };
+    }
+    this._requestLock = true;
+    this._callCount++;
+    this._lastCallTime = now;
+    this._callLog.push({ question: userMessage, time: now, count: this._callCount });
+    console.log('DeepSeek API 调用 #' + this._callCount + ':', userMessage.substring(0, 30));
 
-    const messages = [
-      { role: 'system', content: this._systemPrompt },
-      ...history.slice(-6), // 保留最近6轮对话
-      { role: 'user', content: userMessage }
-    ];
-
+    if (!this.isReady()) {
+      this._requestLock = false;
+      return { error: '代理地址未配置' };
+    }
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 15000);
-      const response = await fetch(`${this._baseUrl}/chat/completions`, {
+      // 评委体验级：2.5秒云端无响应即静默回退本地，避免长时间转圈
+      const timeoutId = setTimeout(() => controller.abort(), 2500);
+      const response = await fetch(this._proxyUrl, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this._apiKey}`
-        },
-        body: JSON.stringify({
-          model: this._model,
-          messages: messages,
-          temperature: 0.7,
-          max_tokens: 500,
-          stream: false
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userMessage, history: history.slice(-6), model: this._model }),
         signal: controller.signal
       });
       clearTimeout(timeoutId);
-
+      this._requestLock = false;
       if (!response.ok) {
         const error = await response.json().catch(() => ({}));
-        if (response.status === 401) {
-          return { error: 'API Key 无效，请检查是否正确' };
-        }
-        if (response.status === 429) {
-          return { error: '请求太频繁，请稍后再试' };
-        }
-        return { error: error.error?.message || `API 错误 (${response.status})` };
+        return { error: error.error || '代理错误 (' + response.status + ')' };
       }
-
       const data = await response.json();
-      const reply = data.choices?.[0]?.message?.content;
-      
-      if (!reply) {
-        return { error: 'API 返回为空' };
-      }
-
-      return { answer: reply };
+      if (data.answer) return { answer: data.answer };
+      return { error: data.error || '返回异常' };
     } catch (e) {
-      clearTimeout(timeoutId);
-      if (e.name === 'AbortError') {
-        return { error: '请求超时，请检查网络连接' };
-      }
-      console.error('DeepSeek API error:', e);
-      return { error: '网络错误，请检查网络连接' };
+      this._requestLock = false;
+      if (e.name === 'AbortError') return { error: '请求超时' };
+      console.error('DeepSeek proxy error:', e);
+      return { error: '网络错误' };
     }
   }
 };
@@ -593,28 +593,126 @@ const DeepSeekAPI = {
 // 保持兼容
 window.DeepSeekAPI = DeepSeekAPI;
 
-// 重写 AITutorBrain 的 generateReply，增加 DeepSeek 调用
+// ===== Ollama 本地 API 集成（qwen3.5:9b）=====
+const OllamaAPI = {
+  _url: 'http://localhost:11434/api/chat',
+  _model: 'qwen3.5:9b',
+  _isAvailable: null, // null=未检测, true=可用, false=不可用
+  
+  // 检测是否可用（仅在非 HTTPS 或本地环境）
+  async detect() {
+    if (location.protocol === 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+      this._isAvailable = false;
+      return false;
+    }
+    try {
+      const r = await fetch('http://localhost:11434/api/tags', { method: 'GET', signal: AbortSignal.timeout(1000) });
+      if (r.ok) {
+        this._isAvailable = true;
+        return true;
+      }
+    } catch (e) {}
+    this._isAvailable = false;
+    return false;
+  },
+  
+  isReady() {
+    return this._isAvailable === true;
+  },
+  
+  async chat(userMessage, history = []) {
+    const messages = [];
+    messages.push({ role: 'system', content: '你是一个专业的防灾教育专家，擅长用中文回答各类防灾减灾问题。回答要简洁、实用、有重点。' });
+    history.slice(-6).forEach(h => {
+      if (h.user) messages.push({ role: 'user', content: h.user });
+      if (h.bot) messages.push({ role: 'assistant', content: h.bot });
+    });
+    messages.push({ role: 'user', content: userMessage });
+    
+    const response = await fetch(this._url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: this._model, messages: messages, stream: false, options: { temperature: 0.7 } })
+    });
+    
+    if (!response.ok) throw new Error('Ollama HTTP ' + response.status);
+    const data = await response.json();
+    return { answer: data.message?.content || '' };
+  }
+};
+
+// 页面加载时异步检测 Ollama
+setTimeout(() => OllamaAPI.detect(), 500);
+window.OllamaAPI = OllamaAPI;
+
+// 重写 AITutorBrain 的 generateReply，增加 Ollama 本地 + DeepSeek 云端双通道
 const _originalGenerateReply = AITutorBrain.generateReply.bind(AITutorBrain);
 AITutorBrain.generateReply = async function(userMessage, history = []) {
-  // 如果 DeepSeek API 可用，优先使用
-  if (DeepSeekAPI.isReady()) {
+  // 1. 优先尝试 Ollama 本地 AI（qwen3.5:9b）
+  if (OllamaAPI._isAvailable !== false) {
     try {
-      // 显示 "AI 思考中..."
-      const result = await DeepSeekAPI.chat(userMessage, history);
+      const result = await OllamaAPI.chat(userMessage, history);
       if (result.answer) {
-        // 缓存到本地知识库
         this._cacheToKnowledge(userMessage, result.answer);
         return result.answer;
       }
-      // API 失败，回退到本地引擎
+    } catch (e) {
+      console.log('Ollama 不可用:', e.message);
+      OllamaAPI._isAvailable = false; // 标记为不可用，当前页面不再尝试
+    }
+  }
+  
+  // 2. 尝试 DeepSeek 云端 API
+  if (DeepSeekAPI.isReady()) {
+    try {
+      const result = await DeepSeekAPI.chat(userMessage, history);
+      if (result.answer) {
+        this._cacheToKnowledge(userMessage, result.answer);
+        return result.answer;
+      }
       console.log('DeepSeek fallback:', result.error);
     } catch (e) {
       console.error('DeepSeek error:', e);
     }
   }
   
-  // 回退到本地规则引擎
+  // 3. 回退到本地规则引擎
   return _originalGenerateReply(userMessage, history);
+};
+
+// ===== B方案：暴露纯本地 / 纯云端两个入口，供 ai-float 实现"本地先秒回+云端后台补充" =====
+// 纯本地回复：直接走规则引擎，零网络，2ms 级返回。永不抛错。
+AITutorBrain.replyLocal = async function(userMessage, history = []) {
+  try {
+    return await _originalGenerateReply(userMessage, history);
+  } catch (e) {
+    console.error('replyLocal error:', e);
+    return this._fallback ? this._fallback() : '我在这儿，请再说一遍你的问题～';
+  }
+};
+// 纯云端回复：调 Ollama 本地 或 DeepSeek 代理。成功返回字符串答案，失败/超时/不可用返回 null（绝不抛错）。
+AITutorBrain.replyCloud = async function(userMessage, history = []) {
+  try {
+    // 先尝试 Ollama 本地 AI
+    if (OllamaAPI._isAvailable !== false) {
+      const result = await OllamaAPI.chat(userMessage, history);
+      if (result && result.answer) {
+        this._cacheToKnowledge(userMessage, result.answer);
+        return result.answer;
+      }
+    }
+    // 再尝试 DeepSeek 代理
+    if (!DeepSeekAPI.isReady()) return null;
+    const result = await DeepSeekAPI.chat(userMessage, history);
+    if (result && result.answer) {
+      this._cacheToKnowledge(userMessage, result.answer);
+      return result.answer;
+    }
+    return null;
+  } catch (e) {
+    console.error('replyCloud error:', e);
+    return null;
+  }
 };
 
 // 缓存问答到本地知识库
@@ -629,6 +727,11 @@ AITutorBrain._cacheToKnowledge = function(question, answer) {
 };
 
 console.log('🧠 DeepSeek API 集成已加载');
+
+// ===== 全局导出（供 ai-tutor-v55.js / ai-float-v55.js 使用）=====
+window.AITutorBrain = AITutorBrain;
+window.AITutorLLM = AITutorBrain;       // 兼容旧引用
+window.BailianAPI = DeepSeekAPI;        // 兼容旧引用
 
 // 初始化AI导师大脑
 if (typeof AITutorBrain !== 'undefined') {
