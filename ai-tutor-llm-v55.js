@@ -617,8 +617,14 @@ const OllamaAPI = {
   },
   
   async chat(userMessage, history = []) {
+    // 身份类问题直接返回自我介绍，不走模型（避免模型理解偏差）
+    const identityKeywords = /^(你是谁|你是什么|你能干什么|你能做什么|介绍一下自己|自我介绍一下|你叫什么|你是干什么的)/i;
+    if (identityKeywords.test(userMessage.trim())) {
+      return { answer: '🤖 你好！我是 **AI 防灾导师**，应急小达人的智能助手！\n\n📚 我已经学习了 **369 道防灾题目** 和 **34 个真实灾害场景**，可以帮你：\n• 解答地震、火灾、洪涝、台风等防灾问题\n• 分析你的学习数据，推荐薄弱环节\n• 提供实用的应急避险建议\n\n💬 有什么防灾问题，随时问我！' };
+    }
+    
     const messages = [];
-    messages.push({ role: 'system', content: '你是一个专业的防灾教育专家，擅长用中文回答各类防灾减灾问题。回答要简洁、实用、有重点。' });
+    messages.push({ role: 'system', content: '你是"AI防灾导师"，应急小达人的智能助手。你学习了369道防灾题目和34个真实灾害场景。回答防灾问题要简洁、实用、有重点。如果用户问你是谁，请介绍自己是AI防灾导师。' });
     history.slice(-6).forEach(h => {
       if (h.user) messages.push({ role: 'user', content: h.user });
       if (h.bot) messages.push({ role: 'assistant', content: h.bot });
