@@ -7982,7 +7982,11 @@ body {
 }
 
 
-/* ===== v71 紧急修复：日历/小游戏网格 + 文字对比度 ===== */
+/* ===== v72 修复：页面标题强制高对比度 ===== */
+h2, .game-header h2, .settings-title, .preview-title, [class*="title"] {
+  color: rgba(255,255,255,0.95) !important;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+}
 .calendar-grid {
   display: grid !important;
   grid-template-columns: repeat(7, 1fr) !important;

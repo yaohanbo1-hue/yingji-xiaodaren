@@ -118,6 +118,8 @@ body #page-menu .menu-stats { padding: 14px 20px !important; margin: 10px 16px 2
 
 /* ===== 子页面通用样式 ===== */
 .page-content { padding: 70px 12px calc(88px + env(safe-area-inset-bottom, 0px)) !important; overflow-y: auto !important; height: 100vh !important; }
+/* v72: 额外的底部安全间距，确保内容不被工具栏截断 */
+.page-content::after { content: ''; display: block; height: 60px; }
 .back-float { top: 14px !important; left: 14px !important; padding: 12px 18px !important; font-size: 16px !important; border-radius: 14px !important; font-weight: 600 !important; background: rgba(255,255,255,0.1) !important; border: 1px solid rgba(255,255,255,0.12) !important; backdrop-filter: blur(12px) !important; }
 .preview-header { padding: 28px 0 18px !important; margin-bottom: 14px !important; }
 .preview-icon { font-size: 48px !important; margin-bottom: 8px !important; }
