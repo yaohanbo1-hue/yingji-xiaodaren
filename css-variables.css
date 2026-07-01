@@ -1,0 +1,291 @@
+/**
+ * ===========================================================================
+ * 应急小达人 — 统一 CSS 变量系统
+ * CSS Variables v1.0
+ * ===========================================================================
+ *
+ * 使用说明：
+ * 1. 在 <head> 中第一个引入，确保所有后续 CSS 可以引用这些变量
+ * 2. 与 critical.css 一同内联或优先加载
+ * 3. 各模块样式应优先使用这些变量，避免硬编码颜色/尺寸
+ *
+ * 变量命名规范：
+ * --color-{role}      → 颜色变量
+ * --space-{size}      → 间距变量
+ * --radius-{size}     → 圆角变量
+ * --shadow-{role}     → 阴影变量
+ * --font-{role}       → 字体变量
+ * --z-{layer}         → 层级变量
+ * --transition-{type} → 过渡变量
+ * --glass-{property}  → 玻璃效果变量
+ * --gradient-{name}   → 渐变变量
+ * ===========================================================================
+ */
+
+/* ===== 根变量 ===== */
+:root {
+  /* ---------- 品牌色 ---------- */
+  --color-primary: #00d4ff;
+  --color-primary-rgb: 0, 212, 255;
+  --color-primary-hover: #33ddff;
+  --color-primary-dim: rgba(0, 212, 255, 0.12);
+  --color-primary-glow: rgba(0, 212, 255, 0.2);
+  --color-primary-glow-strong: rgba(0, 212, 255, 0.4);
+
+  --color-secondary: #a855f7;
+  --color-secondary-rgb: 168, 85, 247;
+  --color-secondary-dim: rgba(168, 85, 247, 0.15);
+
+  --color-accent-blue: #5BA4CF;
+  --color-accent-blue-hover: #6BB8E0;
+  --color-accent-blue-dim: rgba(91, 164, 207, 0.12);
+  --color-accent-blue-glow: rgba(91, 164, 207, 0.2);
+
+  --color-accent-pink: #D47B9C;
+  --color-accent-green: #6BC47A;
+  --color-accent-gold: #C9A84C;
+  --color-accent-gold-dim: rgba(201, 168, 76, 0.15);
+  --color-accent-red: #ff1744;
+  --color-accent-orange: #ff9800;
+
+  /* ---------- 状态色 ---------- */
+  --color-success: #00e676;
+  --color-success-bg: rgba(0, 230, 118, 0.15);
+  --color-error: #ff1744;
+  --color-error-bg: rgba(255, 23, 68, 0.15);
+  --color-warning: #ff9800;
+  --color-warning-bg: rgba(255, 152, 0, 0.15);
+  --color-info: #3b82f6;
+  --color-info-bg: rgba(59, 130, 246, 0.15);
+
+  /* ---------- 文本色 ---------- */
+  --text-primary: #E8EAED;
+  --text-secondary: #9AA0AB;
+  --text-dim: #5F6570;
+  --text-inverse: #0F1117;
+  --text-white: #ffffff;
+  --text-white-soft: rgba(255, 255, 255, 0.85);
+  --text-white-muted: rgba(255, 255, 255, 0.65);
+  --text-white-dim: rgba(255, 255, 255, 0.55);
+  --text-white-ghost: rgba(255, 255, 255, 0.5);
+
+  /* ---------- 背景色 ---------- */
+  --bg-deep: #0F1117;
+  --bg-deep-alt: #141620;
+  --bg-card: rgba(25, 27, 35, 0.8);
+  --bg-card-solid: #191B23;
+  --bg-surface: rgba(255, 255, 255, 0.04);
+  --bg-surface-hover: rgba(255, 255, 255, 0.06);
+  --bg-surface-active: rgba(255, 255, 255, 0.07);
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+
+  /* ---------- 边框色 ---------- */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-light: rgba(255, 255, 255, 0.1);
+  --border-medium: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --border-primary: rgba(0, 212, 255, 0.15);
+  --border-primary-medium: rgba(0, 212, 255, 0.2);
+  --border-primary-strong: rgba(0, 212, 255, 0.5);
+
+  /* ---------- 玻璃效果 ---------- */
+  --glass-blur: 20px;
+  --glass-blur-strong: 32px;
+  --glass-saturate: 1.6;
+  --glass-saturate-strong: 2.4;
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-bg-strong: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-border-subtle: rgba(255, 255, 255, 0.08);
+  --glass-highlight: rgba(255, 255, 255, 0.15);
+  --glass-shadow: rgba(0, 0, 0, 0.3);
+  --glass-shadow-strong: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.03);
+
+  /* ---------- 间距系统 ---------- */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 20px;
+  --space-2xl: 24px;
+  --space-3xl: 32px;
+  --space-4xl: 48px;
+
+  /* ---------- 圆角系统 ---------- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 18px;
+  --radius-2xl: 20px;
+  --radius-3xl: 24px;
+  --radius-4xl: 28px;
+  --radius-5xl: 36px;
+  --radius-pill: 50%;
+  --radius-full: 9999px;
+
+  /* ---------- 阴影系统 ---------- */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 12px 40px rgba(0, 0, 0, 0.3);
+  --shadow-2xl: 0 16px 56px rgba(0, 0, 0, 0.35);
+  --shadow-3xl: 0 20px 64px rgba(0, 0, 0, 0.4);
+  --shadow-toolbar: 0 -6px 30px rgba(0, 0, 0, 0.5), 0 -2px 0 rgba(0, 212, 255, 0.1);
+  --shadow-glow-primary: 0 0 20px rgba(0, 212, 255, 0.15);
+  --shadow-glow-blue: 0 0 40px rgba(91, 164, 207, 0.2);
+  --shadow-glow-purple: 0 0 60px rgba(139, 92, 246, 0.3);
+
+  /* ---------- 字体系统 ---------- */
+  --font-sans: 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', sans-serif;
+  --font-display: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+
+  --font-size-xs: 11px;
+  --font-size-sm: 12px;
+  --font-size-md: 14px;
+  --font-size-lg: 15px;
+  --font-size-xl: 16px;
+  --font-size-2xl: 18px;
+  --font-size-3xl: 22px;
+  --font-size-4xl: 24px;
+  --font-size-5xl: 28px;
+  --font-size-6xl: 32px;
+  --font-size-7xl: 48px;
+  --font-size-8xl: 64px;
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 900;
+
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.6;
+  --line-height-loose: 1.8;
+
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.5px;
+  --letter-spacing-wider: 1px;
+  --letter-spacing-widest: 2px;
+  --letter-spacing-display: 4px;
+
+  /* ---------- Z-Index 层级 ---------- */
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 500;
+  --z-modal: 1000;
+  --z-overlay: 2000;
+  --z-toolbar: 10000;
+  --z-loading: 9999;
+  --z-toast: 10001;
+  --z-fab: 9998;
+  --z-skeleton: 99999;
+
+  /* ---------- 过渡动画 ---------- */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slower: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-page: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                     transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                     visibility 0.45s ease;
+
+  /* ---------- 渐变 ---------- */
+  --gradient-page: linear-gradient(180deg, #0F1117 0%, #141620 50%, #0F1117 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0.06) 100%);
+  --gradient-title: linear-gradient(180deg, #fff 0%, #e8eaed 50%, #5BA4CF 100%);
+  --gradient-fab: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  --gradient-toolbar: linear-gradient(to bottom, rgba(12,12,35,0.94), rgba(12,12,35,0.98));
+
+  /* ---------- 布局 ---------- */
+  --max-width-content: 900px;
+  --max-width-card: 400px;
+  --toolbar-height: 76px;
+  --toolbar-height-safe: calc(76px + env(safe-area-inset-bottom, 0px));
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
+
+  /* ---------- 3D 透视 ---------- */
+  --perspective: 1000px;
+  --perspective-origin: 50% 40%;
+}
+
+/* ===== 高对比度模式变量覆盖 ===== */
+.high-contrast {
+  --text-primary: #ffffff;
+  --text-secondary: #e0e0e0;
+  --bg-deep: #000000;
+  --bg-card: #1a1a1a;
+  --border-subtle: #ffffff;
+  --border-light: #ffffff;
+  --border-medium: #ffffff;
+  --color-primary: #ffff00;
+  --color-accent-blue: #ffff00;
+}
+
+/* ===== 低性能模式变量覆盖 ===== */
+.low-perf-mode {
+  --glass-blur: 8px;
+  --glass-saturate: 1.2;
+  --transition-page: none;
+  --shadow-glow-primary: none;
+  --shadow-glow-blue: none;
+}
+
+/* ===== 减少动画模式变量覆盖 ===== */
+.reduced-motion {
+  --transition-fast: 0.01ms;
+  --transition-normal: 0.01ms;
+  --transition-slow: 0.01ms;
+  --transition-spring: 0.01ms;
+  --transition-page: none;
+}
+
+/* ============================================================================
+ * 兼容性变量映射（旧命名 → 新命名）
+ * ============================================================================
+ * 目的：确保现有代码中的旧变量名仍然可用，实现平滑迁移。
+ * 以下变量映射 all-styles-v55.css 中的旧命名到本系统的命名规范。
+ * 这些变量提供向后兼容，新代码应优先使用新命名（如 --color-primary）。
+ * 独立的 :root 块确保可以引用主 :root 中的变量而不产生循环。
+ * ============================================================================ */
+
+:root {
+  /* 品牌色兼容 */
+  --cyber-blue: var(--color-accent-blue, #5BA4CF);
+  --cyber-blue-hover: var(--color-accent-blue-hover, #6BB8E0);
+  --cyber-blue-dim: var(--color-accent-blue-dim, rgba(91, 164, 207, 0.12));
+  --cyber-blue-glow: var(--color-accent-blue-glow, rgba(91, 164, 207, 0.2));
+  --neon-pink: var(--color-accent-pink, #D47B9C);
+  --neon-green: var(--color-accent-green, #6BC47A);
+  --gold: var(--color-accent-gold, #C9A84C);
+  --gold-dim: var(--color-accent-gold-dim, rgba(201, 168, 76, 0.15));
+
+  /* 强调色兼容 */
+  --accent-color: var(--color-primary, #00d4ff);
+  --accent-cyan: var(--color-primary, #00d4ff);
+  --accent-purple: var(--color-secondary, #a855f7);
+  --accent-green: var(--color-success, #00e676);
+  --accent-red: var(--color-accent-red, #ff1744);
+  --accent-orange: var(--color-accent-orange, #ff9800);
+
+  /* 背景色兼容 */
+  --bg-primary: var(--bg-deep, #0F1117);
+  --bg-secondary: var(--bg-deep-alt, #141620);
+
+  /* 边框兼容 */
+  --border-color: var(--border-light, rgba(255, 255, 255, 0.1));
+
+  /* 玻璃效果兼容（已在主 :root 中定义，无需重复映射） */
+  /* --glass-shadow: var(--glass-shadow, rgba(0, 0, 0, 0.3)); */
+  /* --glass-highlight: var(--glass-highlight, rgba(255, 255, 255, 0.15)); */
+}
+
+
