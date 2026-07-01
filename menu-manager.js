@@ -18,8 +18,8 @@ const MenuManager = {
   _currentCategory: null,
   
   init() {
-    // 默认展开学习中心
-    this._expandSection('learn');
+    // 默认显示分类选择状态（不展开任何模块）
+    this.collapseAll();
     console.log('📂 菜单管理器已加载');
   },
   
@@ -101,17 +101,17 @@ const MenuManager = {
     var categoryBtns = document.querySelectorAll('.menu-cat-btn');
     var backBtn = document.getElementById('backToCategories');
     
-    // 展开所有分区（回到总览）
+    // 隐藏所有分区（回到分类选择状态，只显示按钮）
     sections.forEach(function(section) {
-      section.style.display = '';
-      section.classList.remove('collapsed');
-      section.classList.add('expanded');
+      section.style.display = 'none';
+      section.classList.add('collapsed');
+      section.classList.remove('expanded');
       var grid = section.querySelector('.menu-grid');
       if (grid) {
-        grid.style.display = '';
-        grid.style.maxHeight = 'none';
-        grid.style.opacity = '1';
-        grid.style.overflow = 'visible';
+        grid.style.display = 'none';
+        grid.style.maxHeight = '0';
+        grid.style.opacity = '0';
+        grid.style.overflow = 'hidden';
       }
     });
     
