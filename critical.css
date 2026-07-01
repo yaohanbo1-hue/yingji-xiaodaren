@@ -63,7 +63,7 @@ body:not(.app-ready) #menuToolbar, body:not(.app-ready) .menu-toolbar { display:
   display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important;
   gap: 4px !important; padding: 8px 3px !important; flex: 1 !important; max-width: 100px !important; min-height: 60px !important;
   border: none !important; border-radius: 16px !important; background: transparent !important;
-  color: rgba(255,255,255,0.55) !important; cursor: pointer; position: relative !important;
+  color: rgba(255,255,255,0.75) !important; cursor: pointer; position: relative !important;
   transition: transform 0.3s cubic-bezier(0.23,1,0.32,1), background-color 0.3s cubic-bezier(0.23,1,0.32,1), color 0.3s cubic-bezier(0.23,1,0.32,1), box-shadow 0.3s cubic-bezier(0.23,1,0.32,1) !important;
 }
 .menu-toolbar .tool-btn .icon { font-size: 28px !important; line-height: 1 !important; transition: transform 0.3s ease, filter 0.3s ease !important; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4)) !important; }
@@ -76,14 +76,14 @@ body:not(.app-ready) #menuToolbar, body:not(.app-ready) .menu-toolbar { display:
 .menu-toolbar .tool-btn.active::after { width: 28px !important; }
 
 /* ===== 页面内容底部渐变过渡 ===== */
-.page::after { content: ''; position: fixed; bottom: 75px; left: 0; right: 0; height: 50px; background: linear-gradient(to top, rgba(10,10,30,0.7), transparent); pointer-events: none; z-index: 1; }
-.page { padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important; }
+/* 已移除：渐变遮挡内容阅读 */
+.page { padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)) !important; }
 
 /* ===== 主菜单 Logo 关键样式 ===== */
 .menu-logo { padding: 48px 0 24px !important; margin-bottom: 20px !important; margin-top: auto !important; text-align: center !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; position: relative !important; }
 .menu-logo-title { font-size: 64px !important; margin: 0 !important; letter-spacing: 4px !important; font-weight: 900 !important; font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif !important; text-shadow: 0 2px 8px rgba(0,0,0,0.4) !important; background: linear-gradient(180deg, #fff 0%, #e8eaed 50%, #5BA4CF 100%) !important; color: #5BA4CF !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; background-clip: text !important; position: relative !important; }
 .menu-logo-title::before { content: ''; position: absolute; inset: -8px -20px; background: radial-gradient(ellipse, rgba(91,164,207,0.08) 0%, transparent 70%) !important; z-index: -1; pointer-events: none; }
-.menu-logo-sub { font-size: 16px !important; margin: 6px 0 8px !important; opacity: 0.9 !important; letter-spacing: 2px !important; font-weight: 600 !important; color: #9AA0AB !important; text-shadow: none !important; }
+.menu-logo-sub { font-size: 16px !important; margin: 6px 0 8px !important; opacity: 1 !important; letter-spacing: 2px !important; font-weight: 600 !important; color: rgba(255,255,255,0.8) !important; text-shadow: none !important; }
 .version-tag { font-size: 14px !important; padding: 6px 18px !important; margin-top: 8px !important; border-radius: 24px !important; font-weight: 700 !important; letter-spacing: 1px !important; background: rgba(255,255,255,0.06) !important; border: 1px solid rgba(255,255,255,0.1) !important; color: #C9A84C !important; box-shadow: none !important; }
 .menu-title-decor { display: flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important; margin: 8px 0 !important; }
 .title-deco-icon { font-size: 28px !important; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)) !important; }
@@ -122,14 +122,14 @@ body #page-menu .menu-stats { padding: 14px 20px !important; margin: 10px 16px 2
 .preview-header { padding: 28px 0 18px !important; margin-bottom: 14px !important; }
 .preview-icon { font-size: 48px !important; margin-bottom: 8px !important; }
 .preview-title { font-size: 28px !important; margin-bottom: 8px !important; font-weight: 800 !important; letter-spacing: 0.5px !important; }
-.preview-desc { font-size: 14px !important; max-width: 340px !important; margin: 8px auto !important; color: rgba(255,255,255,0.65) !important; line-height: 1.5 !important; }
+.preview-desc { font-size: 14px !important; max-width: 340px !important; margin: 8px auto !important; color: rgba(255,255,255,0.8) !important; line-height: 1.5 !important; }
 .preview-container { padding: 0 16px 48px !important; }
 
 /* ===== 设置页面 ===== */
 .settings-header { padding: 28px 0 18px !important; margin-bottom: 14px !important; }
 .settings-header-icon { font-size: 48px !important; margin-bottom: 8px !important; }
 .settings-title { font-size: 28px !important; margin-bottom: 6px !important; font-weight: 800 !important; letter-spacing: 0.5px !important; }
-.settings-subtitle { font-size: 14px !important; color: rgba(255,255,255,0.65) !important; line-height: 1.5 !important; }
+.settings-subtitle { font-size: 14px !important; color: rgba(255,255,255,0.8) !important; line-height: 1.5 !important; }
 .settings-container { padding: 0 16px 48px !important; }
 .settings-section { margin-bottom: 32px !important; }
 .settings-section-title { font-size: 16px !important; padding: 12px 0 !important; margin-bottom: 12px !important; color: rgba(255,255,255,0.75) !important; font-weight: 700 !important; letter-spacing: 0.5px !important; }
@@ -137,13 +137,13 @@ body #page-menu .menu-stats { padding: 14px 20px !important; margin: 10px 16px 2
 .settings-card:hover { background: rgba(255,255,255,0.07) !important; border-color: rgba(255,255,255,0.14) !important; }
 .settings-card-icon { font-size: 28px !important; width: 48px !important; height: 48px !important; border-radius: 14px !important; }
 .settings-card-name { font-size: 16px !important; font-weight: 700 !important; }
-.settings-card-desc { font-size: 13px !important; color: rgba(255,255,255,0.6) !important; line-height: 1.4 !important; }
+.settings-card-desc { font-size: 13px !important; color: rgba(255,255,255,0.7) !important; line-height: 1.4 !important; }
 .settings-card-value { font-size: 15px !important; color: rgba(255,255,255,0.75) !important; font-weight: 600 !important; }
 
 /* ===== 游戏头部 ===== */
 .game-header { padding: 16px 22px !important; margin-bottom: 14px !important; border-radius: 18px !important; }
 .game-header-title { font-size: 24px !important; font-weight: 800 !important; letter-spacing: 0.5px !important; }
-.game-header-sub { font-size: 14px !important; color: rgba(255,255,255,0.65) !important; font-weight: 500 !important; }
+.game-header-sub { font-size: 14px !important; color: rgba(255,255,255,0.75) !important; font-weight: 500 !important; }
 
 /* ===== 滚动条优化 ===== */
 ::-webkit-scrollbar { width: 8px !important; }
@@ -158,7 +158,7 @@ body #page-menu .menu-stats { padding: 14px 20px !important; margin: 10px 16px 2
 /* ===== 结果页 ===== */
 .result-box { padding: 32px 24px !important; border-radius: 24px !important; margin-bottom: 20px !important; box-shadow: 0 12px 40px rgba(0,0,0,0.3) !important; }
 .result-title { font-size: 28px !important; margin-bottom: 10px !important; font-weight: 800 !important; }
-.result-desc { font-size: 15px !important; color: rgba(255,255,255,0.65) !important; margin-bottom: 20px !important; line-height: 1.5 !important; }
+.result-desc { font-size: 15px !important; color: rgba(255,255,255,0.8) !important; margin-bottom: 20px !important; line-height: 1.5 !important; }
 
 /* ===== 卡片网格 ===== */
 .codex-grid, .achievement-list, .shop-list, .leaderboard-content, .character-content { padding: 0 16px 48px !important; gap: 16px !important; }

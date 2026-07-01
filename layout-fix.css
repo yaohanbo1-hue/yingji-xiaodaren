@@ -190,3 +190,147 @@
     grid-template-columns: repeat(2, 1fr) !important;
   }
 }
+
+
+/* ===== 日历网格修复（v71） ===== */
+.calendar-grid {
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr) !important;
+  gap: 8px !important;
+  padding: 16px !important;
+  max-width: 600px !important;
+  margin: 0 auto !important;
+}
+.calendar-week {
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr) !important;
+  gap: 4px !important;
+  margin-bottom: 8px !important;
+}
+.calendar-day {
+  aspect-ratio: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 8px !important;
+  background: rgba(255,255,255,0.03) !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  color: rgba(255,255,255,0.8) !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+.calendar-day:hover {
+  background: rgba(255,255,255,0.08) !important;
+  border-color: rgba(0,212,255,0.3) !important;
+}
+.calendar-day.today {
+  background: rgba(0,212,255,0.15) !important;
+  border-color: rgba(0,212,255,0.5) !important;
+  color: #00D4FF !important;
+  font-weight: 700 !important;
+}
+.calendar-day.checked {
+  background: rgba(34,197,94,0.15) !important;
+  border-color: rgba(34,197,94,0.5) !important;
+  color: #22C55E !important;
+}
+.calendar-day.has-event {
+  position: relative !important;
+}
+.calendar-day.has-event::after {
+  content: '' !important;
+  position: absolute !important;
+  bottom: 4px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 4px !important;
+  height: 4px !important;
+  border-radius: 50% !important;
+  background: #00D4FF !important;
+}
+
+/* ===== 小游戏/模式卡片网格修复（v71） ===== */
+.minigame-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+  gap: 16px !important;
+  padding: 16px !important;
+  max-width: 900px !important;
+  margin: 0 auto !important;
+}
+.minigame-card {
+  padding: 20px !important;
+  border-radius: 16px !important;
+  background: rgba(255,255,255,0.05) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+.minigame-card:hover {
+  background: rgba(255,255,255,0.08) !important;
+  border-color: rgba(0,212,255,0.3) !important;
+  transform: translateY(-4px) !important;
+}
+.minigame-icon {
+  font-size: 48px !important;
+  margin-bottom: 12px !important;
+}
+.minigame-info h4 {
+  color: rgba(255,255,255,0.9) !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  margin-bottom: 8px !important;
+}
+.minigame-info p {
+  color: rgba(255,255,255,0.6) !important;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+}
+
+/* ===== 空状态提示（v71） ===== */
+.empty-state,
+.leaderboard-empty,
+.wrong-book-empty {
+  text-align: center !important;
+  padding: 48px 20px !important;
+  color: rgba(255,255,255,0.5) !important;
+}
+.empty-state .empty-icon,
+.leaderboard-empty .empty-icon,
+.wrong-book-empty .empty-icon {
+  font-size: 48px !important;
+  margin-bottom: 16px !important;
+  opacity: 0.6 !important;
+}
+.empty-state .empty-title,
+.leaderboard-empty .empty-title,
+.wrong-book-empty .empty-title {
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  color: rgba(255,255,255,0.7) !important;
+  margin-bottom: 8px !important;
+}
+.empty-state .empty-desc,
+.leaderboard-empty .empty-desc,
+.wrong-book-empty .empty-desc {
+  font-size: 14px !important;
+  color: rgba(255,255,255,0.4) !important;
+  line-height: 1.6 !important;
+}
+
+/* ===== 文字对比度修复（v71） ===== */
+.menu-card-desc,
+.mode-card-desc {
+  color: rgba(255,255,255,0.7) !important;
+}
+.ai-float-input::placeholder {
+  color: rgba(255,255,255,0.55) !important;
+}
+.settings-card-desc {
+  color: rgba(148,163,184,0.85) !important;
+}

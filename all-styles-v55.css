@@ -6504,7 +6504,10 @@ button:active {
 
 /* ===== 通用页面容器优化 ===== */
 .page-content {
-  padding: 20px 16px 100px !important;
+  padding-top: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)) !important;
   max-width: 800px !important;
   margin: 0 auto !important;
 }
@@ -6523,7 +6526,10 @@ button:active {
 
 /* ===== 设置页 — 卡片式布局 ===== */
 #page-settings {
-  padding: 20px 16px 100px !important;
+  padding-top: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)) !important;
   max-width: 600px !important;
   margin: 0 auto !important;
 }
@@ -6614,7 +6620,10 @@ button:active {
 
 /* ===== 成就页 — 网格卡片布局 ===== */
 #page-achievements {
-  padding: 20px 16px 100px !important;
+  padding-top: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)) !important;
   max-width: 900px !important;
   margin: 0 auto !important;
 }
@@ -6695,7 +6704,10 @@ button:active {
 
 /* ===== 角色页 — 网格卡片布局 ===== */
 #page-character {
-  padding: 20px 16px 100px !important;
+  padding-top: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)) !important;
   max-width: 900px !important;
   margin: 0 auto !important;
 }
@@ -6762,7 +6774,10 @@ button:active {
 
 /* ===== 统计页 — 数据卡片布局 ===== */
 #page-stats {
-  padding: 20px 16px 100px !important;
+  padding-top: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)) !important;
   max-width: 800px !important;
   margin: 0 auto !important;
 }
@@ -6822,7 +6837,10 @@ button:active {
 
 /* ===== 商城页优化 ===== */
 #page-shop {
-  padding: 20px 16px 100px !important;
+  padding-top: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)) !important;
   max-width: 800px !important;
   margin: 0 auto !important;
 }
@@ -6858,21 +6876,30 @@ button:active {
 
 /* ===== 百科页优化 ===== */
 #page-encyclopedia {
-  padding: 20px 16px 100px !important;
+  padding-top: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)) !important;
   max-width: 800px !important;
   margin: 0 auto !important;
 }
 
 /* ===== 日历页优化 ===== */
 #page-calendar {
-  padding: 20px 16px 100px !important;
+  padding-top: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)) !important;
   max-width: 600px !important;
   margin: 0 auto !important;
 }
 
 /* ===== 排行榜优化 ===== */
 #page-leaderboard {
-  padding: 20px 16px 100px !important;
+  padding-top: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)) !important;
   max-width: 600px !important;
   margin: 0 auto !important;
 }
@@ -7947,3 +7974,95 @@ body {
     border-color: inherit !important;
   }
 }
+
+
+/* ===== v71 紧急修复：日历/小游戏网格 + 文字对比度 ===== */
+.calendar-grid {
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr) !important;
+  gap: 8px !important;
+  padding: 16px !important;
+  max-width: 600px !important;
+  margin: 0 auto !important;
+}
+.calendar-weekdays {
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr) !important;
+  gap: 4px !important;
+  margin-bottom: 8px !important;
+  text-align: center !important;
+  color: rgba(255,255,255,0.5) !important;
+  font-size: 13px !important;
+}
+.calendar-day {
+  aspect-ratio: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 8px !important;
+  background: rgba(255,255,255,0.03) !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  color: rgba(255,255,255,0.8) !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+.calendar-day:hover {
+  background: rgba(255,255,255,0.08) !important;
+  border-color: rgba(0,212,255,0.3) !important;
+}
+.calendar-day.empty {
+  background: transparent !important;
+  border-color: transparent !important;
+  cursor: default !important;
+}
+.calendar-day.today {
+  background: rgba(0,212,255,0.15) !important;
+  border-color: rgba(0,212,255,0.5) !important;
+  color: #00D4FF !important;
+  font-weight: 700 !important;
+}
+.calendar-day.checked {
+  background: rgba(34,197,94,0.15) !important;
+  border-color: rgba(34,197,94,0.5) !important;
+  color: #22C55E !important;
+}
+
+.minigame-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+  gap: 16px !important;
+  padding: 16px !important;
+  max-width: 900px !important;
+  margin: 0 auto !important;
+}
+.minigame-card {
+  padding: 20px !important;
+  border-radius: 16px !important;
+  background: rgba(255,255,255,0.05) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+}
+
+/* 文字对比度 */
+.menu-card-desc,
+.mode-card-desc {
+  color: rgba(255,255,255,0.7) !important;
+}
+.ai-float-input::placeholder {
+  color: rgba(255,255,255,0.55) !important;
+}
+.settings-card-desc {
+  color: rgba(148,163,184,0.85) !important;
+}
+
+/* 空状态 */
+.empty-state,
+.leaderboard-empty,
+.wrong-book-empty {
+  text-align: center !important;
+  padding: 48px 20px !important;
+  color: rgba(255,255,255,0.5) !important;
+}
+

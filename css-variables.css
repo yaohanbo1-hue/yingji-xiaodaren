@@ -204,7 +204,7 @@
 
   /* ---------- 布局 ---------- */
   --max-width-content: 900px;
-  --max-width-card: 100px;
+  --max-width-card: 400px;
   --toolbar-height: 76px;
   --toolbar-height-safe: calc(76px + env(safe-area-inset-bottom, 0px));
   --safe-area-top: env(safe-area-inset-top, 0px);

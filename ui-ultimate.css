@@ -6,7 +6,10 @@
 
 /* ===== 通用页面容器优化 ===== */
 .page-content {
-  padding: 20px 16px 100px !important;
+  padding-top: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)) !important;
   max-width: 800px !important;
   margin: 0 auto !important;
 }
@@ -25,7 +28,10 @@
 
 /* ===== 设置页 — 卡片式布局 ===== */
 #page-settings {
-  padding: 20px 16px 100px !important;
+  padding-top: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)) !important;
   max-width: 600px !important;
   margin: 0 auto !important;
 }
@@ -116,7 +122,10 @@
 
 /* ===== 成就页 — 网格卡片布局 ===== */
 #page-achievements {
-  padding: 20px 16px 100px !important;
+  padding-top: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)) !important;
   max-width: 900px !important;
   margin: 0 auto !important;
 }
@@ -197,7 +206,10 @@
 
 /* ===== 角色页 — 网格卡片布局 ===== */
 #page-character {
-  padding: 20px 16px 100px !important;
+  padding-top: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)) !important;
   max-width: 900px !important;
   margin: 0 auto !important;
 }
@@ -264,7 +276,10 @@
 
 /* ===== 统计页 — 数据卡片布局 ===== */
 #page-stats {
-  padding: 20px 16px 100px !important;
+  padding-top: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)) !important;
   max-width: 800px !important;
   margin: 0 auto !important;
 }
@@ -324,7 +339,10 @@
 
 /* ===== 商城页优化 ===== */
 #page-shop {
-  padding: 20px 16px 100px !important;
+  padding-top: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)) !important;
   max-width: 800px !important;
   margin: 0 auto !important;
 }
@@ -360,21 +378,30 @@
 
 /* ===== 百科页优化 ===== */
 #page-encyclopedia {
-  padding: 20px 16px 100px !important;
+  padding-top: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)) !important;
   max-width: 800px !important;
   margin: 0 auto !important;
 }
 
 /* ===== 日历页优化 ===== */
 #page-calendar {
-  padding: 20px 16px 100px !important;
+  padding-top: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)) !important;
   max-width: 600px !important;
   margin: 0 auto !important;
 }
 
 /* ===== 排行榜优化 ===== */
 #page-leaderboard {
-  padding: 20px 16px 100px !important;
+  padding-top: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)) !important;
   max-width: 600px !important;
   margin: 0 auto !important;
 }
