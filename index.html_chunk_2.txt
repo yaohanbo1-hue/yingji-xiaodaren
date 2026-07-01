@@ -1,0 +1,37 @@
+ed = total;
+    updateProgress();
+    forceAppReady();
+  }, 4000);
+
+  // 二次兜底：DOM 解析完即检查，避免全缓存命中时 load 事件迟迟不触发
+  setTimeout(forceAppReady, 1500);
+
+  // 页面可见性优化
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+      if (typeof BGMEngineV2 !== 'undefined') BGMEngineV2.pause();
+    } else {
+      if (typeof BGMEngineV2 !== 'undefined') BGMEngineV2.resume();
+    }
+  });
+
+  // AudioContext 解锁
+  function unlockAudio() {
+    if (unlockAudio._done) return;
+    unlockAudio._done = true;
+    try {
+      if (typeof BGMEngine !== 'undefined') BGMEngine.init();
+      if (typeof AudioManager !== 'undefined') {
+        var ctx2 = AudioManager._getCtx();
+        if (ctx2 && ctx2.state === 'suspended') ctx2.resume();
+      }
+    } catch(e) {}
+  }
+  document.addEventListener('click', unlockAudio, { once: true });
+  document.addEventListener('touchstart', unlockAudio, { once: true });
+  document.addEventListener('keydown', unlockAudio, { once: true });
+})();
+</script>
+
+</body>
+</html>

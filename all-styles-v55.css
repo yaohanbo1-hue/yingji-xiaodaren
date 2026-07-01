@@ -3039,7 +3039,8 @@ body {
   transform: scale(0.98) !important;
 }
 
-/* 去掉按钮上的独立颜色发光 */
+/* 保留 mode-btn 内联样式 — v72 修复 */
+/*
 .mode-btn[style*="border-color"],
 .mode-btn[style*="box-shadow"],
 .mode-btn[style*="animation"] {
@@ -3047,6 +3048,7 @@ body {
   box-shadow: none !important;
   animation: none !important;
 }
+*/
 
 .mode-icon {
   font-size: 20px !important;
@@ -6504,9 +6506,9 @@ button:active {
 
 /* ===== 通用页面容器优化 ===== */
 .page-content {
-  padding-top: 20px;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-top: 20px !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
   padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)) !important;
   max-width: 800px !important;
   margin: 0 auto !important;
@@ -6580,10 +6582,14 @@ button:active {
   transform: translateY(-1px) !important;
 }
 
-/* 设置项描述 */
+/* 设置项描述 — v72 修复：保留副标题和弹窗说明 */
 #page-settings h4 + p,
-#page-settings p {
+#page-settings .settings-card-desc {
   display: none !important;
+}
+#page-settings .settings-subtitle,
+#page-settings #themeModal p {
+  display: block !important;
 }/* 设置项右侧按钮/状态 */
 #page-settings .btn,
 #page-settings button,

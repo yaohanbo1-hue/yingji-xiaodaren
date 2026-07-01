@@ -1,0 +1,1 @@
+{"action":"evaluate","args":{"code":"var el=document.querySelector('.calendar-grid');var s=el?getComputedStyle(el):null;JSON.stringify({exists:!!el,display:s?s.display:'no-el',gridTemplateColumns:s?s.gridTemplateColumns:'no-el',gap:s?s.gap:'no-el'})"},"session":"v71-check"}
