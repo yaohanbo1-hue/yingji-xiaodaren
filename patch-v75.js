@@ -10,7 +10,7 @@ if(typeof victoryEffect!=='function'){window.victoryEffect=function(){};}
 if(typeof escapeHtml!=='function'&&typeof _escapeHtml==='function'){window.escapeHtml=_escapeHtml;}
 
 // 1. SettingsEngine 补全（使用 var 确保全局词法绑定）
-if(typeof SettingsEngine==='undefined'){var SettingsEngine={
+if(typeof SettingsEngine==='undefined'){window.SettingsEngine={
   toggleSFX(){var s=GameState._data.settings;s.sound=!s.sound;GameState.save();Modal.show('🔊 音效设置',s.sound?'✅ 音效已开启':'🔇 音效已关闭');},
   toggleVoice(){var s=GameState._data.settings;s.voice=!s.voice;GameState.save();Modal.show('🎙️ 语音设置',s.voice?'✅ 语音已开启':'🔇 语音已关闭');},
   exportData(){try{var data=JSON.stringify(GameState._data,null,2);var blob=new Blob([data],{type:'application/json'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='防灾存档_'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(url);Modal.show('📤 导出成功','数据已保存到下载文件夹');}catch(e){Modal.show('❌ 导出失败',e.message);}},
@@ -32,28 +32,28 @@ if(typeof QuizEngine!=='undefined'&&!QuizEngine.startSpeed){QuizEngine.startSpee
 if(typeof CardSynthesisEngine!=='undefined'&&!CardSynthesisEngine.render){CardSynthesisEngine.render=function(){var items=this.getSynthesizable();if(0===items.length)return'<div style="padding:20px;text-align:center;color:rgba(255,255,255,0.5)">暂无可合成的卡牌<br/>需要 3 张同类型同稀有度</div>';var html='<div style="padding:16px"><h3>🧪 卡牌合成</h3>',labels={common:'普通',rare:'稀有',epic:'史诗'},self=this;items.forEach(function(item){var nextIdx=self.RARITY_ORDER.indexOf(item.rarity)+1,next=self.RARITY_ORDER[nextIdx]||'legendary';html+='<div class="daily-task-item" onclick="CardSynthesisEngine.synthesize(\''+item.key+'\')" style="cursor:pointer"><span>'+item.count+' × '+labels[item.rarity]+' '+item.type+'</span><span style="color:#ffd700">→ 1 × '+labels[next]+'</span></div>'});html+='</div>';return html;};}
 
 // 6. ReportEngine 补全
-if(typeof ReportEngine==='undefined'){var ReportEngine={showReport(){Modal.show('📊 学习报告','<div style="text-align:center"><p>📊 功能开发中</p><p>请先完成更多游戏来生成报告</p></div>','📊');},showDetailReport(){Modal.show('📊 详细报告','<div style="text-align:center"><p>📊 功能开发中</p></div>','📊');}};}
+if(typeof ReportEngine==='undefined'){window.ReportEngine={showReport(){Modal.show('📊 学习报告','<div style="text-align:center"><p>📊 功能开发中</p><p>请先完成更多游戏来生成报告</p></div>','📊');},showDetailReport(){Modal.show('📊 详细报告','<div style="text-align:center"><p>📊 功能开发中</p></div>','📊');}};}
 
 // 7. AmbientParticles 补全
-if(typeof AmbientParticles==='undefined'){var AmbientParticles={init(){}};}
+if(typeof AmbientParticles==='undefined'){window.AmbientParticles={init(){}};}
 
 // 8. BGMEngine 补全
-if(typeof BGMEngine==='undefined'){var BGMEngine={play(){},stop(){},playBattleBgm(){},playVictoryBgm(){},playMenuBgm(){},playScenarioBgm(){},setVolume(){},initMuteButton(){}};}
+if(typeof BGMEngine==='undefined'){window.BGMEngine={play(){},stop(){},playBattleBgm(){},playVictoryBgm(){},playMenuBgm(){},playScenarioBgm(){},setVolume(){},initMuteButton(){}};}
 
 // 9. TransitionEngine 补全
-if(typeof TransitionEngine==='undefined'){var TransitionEngine={flash(duration){var el=document.createElement('div');el.style.cssText='position:fixed;inset:0;z-index:99999;background:rgba(255,255,255,0.6);pointer-events:none;opacity:0;transition:opacity '+(duration/2)+'ms ease';document.body.appendChild(el);requestAnimationFrame(function(){el.style.opacity='1';setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},duration/2);},duration/2);});}};}
+if(typeof TransitionEngine==='undefined'){window.TransitionEngine={flash(duration){var el=document.createElement('div');el.style.cssText='position:fixed;inset:0;z-index:99999;background:rgba(255,255,255,0.6);pointer-events:none;opacity:0;transition:opacity '+(duration/2)+'ms ease';document.body.appendChild(el);requestAnimationFrame(function(){el.style.opacity='1';setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove();},duration/2);},duration/2);});}};}
 
 // 10. VisualFX 补全
-if(typeof VisualFX==='undefined'){var VisualFX={startBattleParticles(){},stopBattleParticles(){},bossEntrance(icon,name){},comboFlameText(n){},checkinFireworks(){},playerHitFlash(){},ultimateFlash(color,text){},diagonalTransition(fn){fn();}};}
+if(typeof VisualFX==='undefined'){window.VisualFX={startBattleParticles(){},stopBattleParticles(){},bossEntrance(icon,name){},comboFlameText(n){},checkinFireworks(){},playerHitFlash(){},ultimateFlash(color,text){},diagonalTransition(fn){fn();}};}
 
 // 11. V10Toast 补全
-if(typeof V10Toast==='undefined'){var V10Toast={success(msg){Modal.show('✅',msg);},error(msg){Modal.show('❌',msg);},warning(msg){Modal.show('⚠️',msg);}};}
+if(typeof V10Toast==='undefined'){window.V10Toast={success(msg){Modal.show('✅',msg);},error(msg){Modal.show('❌',msg);},warning(msg){Modal.show('⚠️',msg);}};}
 
 // 12. GuideEnhancer 补全
-if(typeof GuideEnhancer==='undefined'){var GuideEnhancer={forceRestart(){if(typeof GuideEngine!=='undefined'){GuideEngine.init();}else{Modal.show('📖 新手引导','引导功能正在准备中');}}};}
+if(typeof GuideEnhancer==='undefined'){window.GuideEnhancer={forceRestart(){if(typeof GuideEngine!=='undefined'){GuideEngine.init();}else{Modal.show('📖 新手引导','引导功能正在准备中');}}};}
 
 // 13. LevelEngine 补全（使用 var 确保全局词法绑定）
-if(typeof LevelEngine==='undefined'){var LevelEngine={
+if(typeof LevelEngine==='undefined'){window.LevelEngine={
   LEVELS:[
     {level:1,name:'防灾新手',icon:'🌱',xp:0},{level:2,name:'防灾学徒',icon:'🌿',xp:150},
     {level:3,name:'防灾学员',icon:'🍃',xp:400},{level:4,name:'防灾助手',icon:'🌲',xp:800},
@@ -66,7 +66,7 @@ if(typeof LevelEngine==='undefined'){var LevelEngine={
 };}
 
 // 14. AudioManager 补全（使用 var 确保全局词法绑定）
-if(typeof AudioManager==='undefined'){var AudioManager={
+if(typeof AudioManager==='undefined'){window.AudioManager={
   _sounds:{},play(name,combo){},stop(){},_getCtx(){return null;}
 };}
 
