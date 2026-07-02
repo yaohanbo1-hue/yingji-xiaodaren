@@ -622,6 +622,10 @@
       });
 
       // 覆盖 PageManager 导航，添加丝滑过渡
+      if (typeof window.PageManager === 'undefined') {
+        console.warn('LiquidGlass: PageManager not found, smooth transitions disabled');
+        return;
+      }
       const originalNavigate = window.PageManager?.navigate;
       if (originalNavigate) {
         window.PageManager.navigate = function(pageId) {
