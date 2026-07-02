@@ -16,7 +16,7 @@ if(typeof SettingsEngine==='undefined'){window.SettingsEngine={
   exportData(){try{var data=JSON.stringify(GameState._data,null,2);var blob=new Blob([data],{type:'application/json'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='防灾存档_'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(url);Modal.show('📤 导出成功','数据已保存到下载文件夹');}catch(e){Modal.show('❌ 导出失败',e.message);}},
   importData(){var input=document.createElement('input');input.type='file';input.accept='.json';input.onchange=function(e){var file=e.target.files[0];if(!file)return;var reader=new FileReader();reader.onload=function(ev){try{var data=JSON.parse(ev.target.result);if(data&&data.coins!==undefined){GameState._data=Object.assign(GameState._data,data);GameState.save();Modal.show('📥 导入成功','数据已恢复，页面即将刷新');setTimeout(function(){location.reload();},1000);}else{Modal.show('❌ 无效文件','请选择有效的存档文件');}}catch(err){Modal.show('❌ 解析失败',err.message);}};reader.readAsText(file);};input.click();},
   showAbout(){var stats=GameState._data.stats||{};Modal.show('ℹ️ 关于','<div style="text-align:center"><div style="font-size:3rem;margin-bottom:8px">🛡️</div><h3>应急小达人</h3><p>v1.3.2 — 防灾教育互动游戏</p><p>Made with ❤️</p></div>','🎉');},
-  render(){var volSlider=document.getElementById('bgmVolumeSlider');if(volSlider&&GameState._data.settings){volSlider.value=GameState._data.settings.volume||50;}}
+  render(){var volSlider=document.getElementById('bgmVolumeSlider');if(volSlider&&GameState._data.settings){volSlider.value=GameState._data.settings.bgmVolume||50;}}
 };}
 
 // 2. TutorialEngine.reset() 补全
