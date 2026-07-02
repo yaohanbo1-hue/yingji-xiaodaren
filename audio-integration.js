@@ -21,6 +21,7 @@
   
   function hookPageManager() {
     if (typeof PageManager === 'undefined') return;
+    if (typeof PageManager.navigate !== 'function') return;
     
     // 保存原始 navigate
     originalNavigate = PageManager.navigate.bind(PageManager);
@@ -104,24 +105,43 @@
     if (typeof SFXEngine === 'undefined') return;
     
     // 模态框打开/关闭
-    var modalObserver = new MutationObserver(function(mutations) {
+    var modalAttrObserver = null;
+    
+    function observeModalOverlay(overlay) {
+      if (modalAttrObserver) {
+        modalAttrObserver.disconnect();
+        modalAttrObserver = null;
+      }
+      modalAttrObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(m) {
+          if (m.attributeName !== 'class') return;
+          SFXEngine.init();
+          if (overlay.classList.contains('active')) {
+            SFXEngine.modalOpen();
+          } else {
+            SFXEngine.modalClose();
+          }
+        });
+      });
+      modalAttrObserver.observe(overlay, { attributes: true, attributeFilter: ['class'] });
+    }
+    
+    var bodyObserver = new MutationObserver(function(mutations) {
       mutations.forEach(function(m) {
-        if (m.attributeName !== 'class') return;
-        var overlay = document.getElementById('modalOverlay');
-        if (!overlay) return;
-        
-        SFXEngine.init();
-        if (overlay.classList.contains('active')) {
-          SFXEngine.modalOpen();
-        } else {
-          SFXEngine.modalClose();
-        }
+        if (m.type !== 'childList') return;
+        m.addedNodes.forEach(function(node) {
+          if (node.nodeType === 1 && node.id === 'modalOverlay') {
+            observeModalOverlay(node);
+          }
+        });
       });
     });
+    bodyObserver.observe(document.body, { childList: true, subtree: true });
     
-    var overlay = document.getElementById('modalOverlay');
-    if (overlay) {
-      modalObserver.observe(overlay, { attributes: true, attributeFilter: ['class'] });
+    // 如果已存在，直接观察
+    var existingOverlay = document.getElementById('modalOverlay');
+    if (existingOverlay) {
+      observeModalOverlay(existingOverlay);
     }
     
     // 按钮 hover 音效（仅桌面端）
@@ -159,6 +179,8 @@
   }
   
   // ===== 5. 胜利/失败音效 =====
+  var _gameEndSoundPlayed = false;
+  
   function hookGameEnd() {
     // 监听模态框中的胜利/失败提示
     var observer = new MutationObserver(function(mutations) {
@@ -166,7 +188,12 @@
         if (m.type !== 'childList') return;
         
         var title = document.getElementById('modalTitle');
-        if (!title) return;
+        if (!title) {
+          _gameEndSoundPlayed = false;
+          return;
+        }
+        
+        if (_gameEndSoundPlayed) return;
         
         var text = title.textContent.toLowerCase();
         if (typeof SFXEngine === 'undefined') return;
@@ -174,13 +201,17 @@
         if (text.indexOf('胜利') >= 0 || text.indexOf('恭喜') >= 0 || 
             text.indexOf('通关') >= 0 || text.indexOf('🎉') >= 0) {
           SFXEngine.victory();
+          _gameEndSoundPlayed = true;
         } else if (text.indexOf('失败') >= 0 || text.indexOf('💀') >= 0 ||
                    text.indexOf('救援失败') >= 0) {
           SFXEngine.gameOver();
+          _gameEndSoundPlayed = true;
         } else if (text.indexOf('升级') >= 0 || text.indexOf('🎊') >= 0) {
           SFXEngine.levelUp();
+          _gameEndSoundPlayed = true;
         } else if (text.indexOf('解锁') >= 0 || text.indexOf('🔓') >= 0) {
           SFXEngine.unlock();
+          _gameEndSoundPlayed = true;
         }
       });
     });
@@ -202,11 +233,17 @@
   }
   
   var _initialized = false;
+  var _initRetries = 0;
+  var MAX_INIT_RETRIES = 50;
   
   // ===== 初始化 =====
   function init() {
     // 等待游戏引擎加载
     if (typeof PageManager === 'undefined') {
+      if (_initRetries++ >= MAX_INIT_RETRIES) {
+        console.warn('SFX/BGM Integration: PageManager not found after 50 retries, aborting');
+        return;
+      }
       setTimeout(init, 100);
       return;
     }
