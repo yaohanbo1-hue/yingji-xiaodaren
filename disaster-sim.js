@@ -93,7 +93,6 @@ const DisasterSimEngine = {
     this._ctx = this._canvas.getContext('2d');
     this.resize();
     
-    let resizeTimer;
     const resizeHandler = () => {
       clearTimeout(this._resizeTimer);
       this._resizeTimer = setTimeout(() => this.resize(), 100);
