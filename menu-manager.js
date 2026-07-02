@@ -39,20 +39,20 @@ const MenuManager = {
     var backBtn = document.getElementById('backToCategories');
     var menuLogo = document.querySelector('.menu-logo');
     var menuStats = document.querySelector('.menu-stats');
+    var menuCategoryBtns = document.querySelector('.menu-category-btns');
     
-    // 展开分类时：隐藏标题、按钮、底部统计，让分类内容全屏展示
+    // 展开分类时：隐藏标题、按钮容器、底部统计，让分类内容全屏展示
     if (menuLogo) {
       menuLogo.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
       menuLogo.style.opacity = '0';
       menuLogo.style.transform = 'translateY(-20px)';
       setTimeout(function() { menuLogo.style.display = 'none'; }, 300);
     }
-    categoryBtns.forEach(function(btn) {
-      btn.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-      btn.style.opacity = '0';
-      btn.style.transform = 'scale(0.9)';
-      setTimeout(function() { btn.style.display = 'none'; }, 300);
-    });
+    if (menuCategoryBtns) {
+      menuCategoryBtns.style.transition = 'opacity 0.3s ease';
+      menuCategoryBtns.style.opacity = '0';
+      setTimeout(function() { menuCategoryBtns.style.display = 'none'; }, 300);
+    }
     if (menuStats) {
       menuStats.style.transition = 'opacity 0.3s ease';
       menuStats.style.opacity = '0';
@@ -91,7 +91,7 @@ const MenuManager = {
       }
     });
     
-    // 高亮分类按钮
+    // 高亮分类按钮（只改 class，不改 style，因为容器已隐藏）
     categoryBtns.forEach(function(btn) {
       var isLearnBtn = btn.classList.contains('learn-btn');
       var isBattleBtn = btn.classList.contains('battle-btn');
@@ -100,12 +100,8 @@ const MenuManager = {
       
       if (isActive) {
         btn.classList.add('active');
-        btn.style.transform = 'scale(1.05)';
-        btn.style.boxShadow = '0 0 30px rgba(59, 130, 246, 0.3)';
       } else {
         btn.classList.remove('active');
-        btn.style.transform = '';
-        btn.style.boxShadow = '';
       }
     });
     
@@ -123,8 +119,9 @@ const MenuManager = {
     var backBtn = document.getElementById('backToCategories');
     var menuLogo = document.querySelector('.menu-logo');
     var menuStats = document.querySelector('.menu-stats');
+    var menuCategoryBtns = document.querySelector('.menu-category-btns');
     
-    // 恢复显示标题、按钮、底部统计（返回主菜单状态）
+    // 恢复显示标题、按钮容器、底部统计（返回主菜单状态）
     if (menuLogo) {
       menuLogo.style.display = '';
       setTimeout(function() {
@@ -132,13 +129,12 @@ const MenuManager = {
         menuLogo.style.transform = 'translateY(0)';
       }, 10);
     }
-    categoryBtns.forEach(function(btn) {
-      btn.style.display = '';
+    if (menuCategoryBtns) {
+      menuCategoryBtns.style.display = '';
       setTimeout(function() {
-        btn.style.opacity = '1';
-        btn.style.transform = 'scale(1)';
+        menuCategoryBtns.style.opacity = '1';
       }, 10);
-    });
+    }
     if (menuStats) {
       menuStats.style.display = '';
       setTimeout(function() { menuStats.style.opacity = '1'; }, 10);
