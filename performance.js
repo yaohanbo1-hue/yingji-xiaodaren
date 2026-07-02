@@ -162,12 +162,13 @@
       
       var self = this;
       var originalRAF = window.requestAnimationFrame;
-      var lastTime = 0;
+      var lastTimeMap = new Map();
       
       window.requestAnimationFrame = function(callback) {
         return originalRAF(function(timestamp) {
+          var lastTime = lastTimeMap.get(callback) || 0;
           if (timestamp - lastTime >= self._frameInterval) {
-            lastTime = timestamp;
+            lastTimeMap.set(callback, timestamp);
             callback(timestamp);
           } else {
             // 递归调用直到达到目标帧率

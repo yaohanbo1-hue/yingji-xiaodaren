@@ -146,6 +146,7 @@ const SFXEngine = {
   
   // 页面切换 — 轻快的 whoosh
   whoosh() {
+    if (!this._ctx || !this._enabled) return;
     const noise = this._ctx.createOscillator();
     const gain = this._ctx.createGain();
     const filter = this._ctx.createBiquadFilter();
