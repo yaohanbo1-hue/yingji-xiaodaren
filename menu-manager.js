@@ -37,6 +37,27 @@ const MenuManager = {
     var sections = document.querySelectorAll('.menu-section');
     var categoryBtns = document.querySelectorAll('.menu-cat-btn');
     var backBtn = document.getElementById('backToCategories');
+    var menuLogo = document.querySelector('.menu-logo');
+    var menuStats = document.querySelector('.menu-stats');
+    
+    // 展开分类时：隐藏标题、按钮、底部统计，让分类内容全屏展示
+    if (menuLogo) {
+      menuLogo.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+      menuLogo.style.opacity = '0';
+      menuLogo.style.transform = 'translateY(-20px)';
+      setTimeout(function() { menuLogo.style.display = 'none'; }, 300);
+    }
+    categoryBtns.forEach(function(btn) {
+      btn.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+      btn.style.opacity = '0';
+      btn.style.transform = 'scale(0.9)';
+      setTimeout(function() { btn.style.display = 'none'; }, 300);
+    });
+    if (menuStats) {
+      menuStats.style.transition = 'opacity 0.3s ease';
+      menuStats.style.opacity = '0';
+      setTimeout(function() { menuStats.style.display = 'none'; }, 300);
+    }
     
     sections.forEach(function(section) {
       var grid = section.querySelector('.menu-grid');
@@ -100,6 +121,28 @@ const MenuManager = {
     var sections = document.querySelectorAll('.menu-section');
     var categoryBtns = document.querySelectorAll('.menu-cat-btn');
     var backBtn = document.getElementById('backToCategories');
+    var menuLogo = document.querySelector('.menu-logo');
+    var menuStats = document.querySelector('.menu-stats');
+    
+    // 恢复显示标题、按钮、底部统计（返回主菜单状态）
+    if (menuLogo) {
+      menuLogo.style.display = '';
+      setTimeout(function() {
+        menuLogo.style.opacity = '1';
+        menuLogo.style.transform = 'translateY(0)';
+      }, 10);
+    }
+    categoryBtns.forEach(function(btn) {
+      btn.style.display = '';
+      setTimeout(function() {
+        btn.style.opacity = '1';
+        btn.style.transform = 'scale(1)';
+      }, 10);
+    });
+    if (menuStats) {
+      menuStats.style.display = '';
+      setTimeout(function() { menuStats.style.opacity = '1'; }, 10);
+    }
     
     // 隐藏所有分区（回到分类选择状态，只显示按钮）
     sections.forEach(function(section) {
