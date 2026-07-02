@@ -42,4 +42,48 @@ if(typeof VisualFX==='undefined'){window.VisualFX={startBattleParticles(){},stop
 if(typeof V10Toast==='undefined'){window.V10Toast={success(msg){Modal.show('✅',msg);},error(msg){Modal.show('❌',msg);},warning(msg){Modal.show('⚠️',msg);}};}
 
 // GuideEnhancer 补全
-if(typeof GuideEnhancer==='undefined'){window.GuideEnhancer={forceRestart(){if(typeof GuideEngine!=='undefined'){GuideEngine.init();}else{Modal.show('📖 新手引导','引导功能正在准备中');}}};}
+if(typeof GuideEnhancer==='undefined'){window.GuideEnhancer={forceRestart(){if(typeof GuideEngine!=='undefined'){GuideEngine.init();}else{Modal.show('📖 新手引导','引导功能正在准备中');}}};
+}
+
+// ===== v76 新增补丁：修复多代理发现的严重问题 =====
+
+// 1. LevelEngine 补全（被 StatsEngine 和 CharacterEngine 调用）
+if(typeof LevelEngine==='undefined'){window.LevelEngine={
+  LEVELS:[
+    {level:1,name:'防灾新手',icon:'🌱',xp:0},{level:2,name:'防灾学徒',icon:'🌿',xp:150},
+    {level:3,name:'防灾学员',icon:'🍃',xp:400},{level:4,name:'防灾助手',icon:'🌲',xp:800},
+    {level:5,name:'防灾专员',icon:'🌳',xp:1400},{level:6,name:'防灾专家',icon:'🌴',xp:2200},
+    {level:7,name:'防灾达人',icon:'⭐',xp:3200},{level:8,name:'防灾大师',icon:'🌟',xp:4500},
+    {level:9,name:'防灾宗师',icon:'💫',xp:6000},{level:10,name:'防灾之神',icon:'👑',xp:8000}
+  ],
+  getLevel(){var xp=GameState._data.xp||0,level=1,name='防灾新手',icon='🌱';for(var i=0;i<this.LEVELS.length;i++)if(xp>=this.LEVELS[i].xp){level=this.LEVELS[i].level;name=this.LEVELS[i].name;icon=this.LEVELS[i].icon;}return{level:level,name:name,icon:icon,xp:xp};},
+  getNextLevel(){var xp=GameState._data.xp||0;for(var i=0;i<this.LEVELS.length;i++)if(xp<this.LEVELS[i].xp)return{level:this.LEVELS[i].level,xp:this.LEVELS[i].xp-xp};return{level:10,xp:0};}
+};}
+
+// 2. AudioManager 补全（被全局40+处调用）
+if(typeof AudioManager==='undefined'){window.AudioManager={
+  _sounds:{},play(name,combo){},stop(){},_getCtx(){return null;}
+};}
+
+// 3. BGMEngine.playScenarioBgm 补全
+if(typeof BGMEngine!=='undefined'&&!BGMEngine.playScenarioBgm){BGMEngine.playScenarioBgm=function(){};}
+
+// 4. StatsEngine._getCategoryStats 补全
+if(typeof StatsEngine!=='undefined'&&!StatsEngine._getCategoryStats){StatsEngine._getCategoryStats=function(){var s=GameState._data.stats||{};return{earthquake:s.earthquakeCorrect||0,flood:s.floodCorrect||0,fire:s.fireCorrect||0,typhoon:s.typhoonCorrect||0,lightning:s.lightningCorrect||0,blizzard:s.blizzardCorrect||0,landslide:s.landslideCorrect||0,drought:s.droughtCorrect||0,volcano:s.volcanoCorrect||0};};}
+
+// 5. StudyEngine.quit 补全
+if(typeof StudyEngine!=='undefined'&&!StudyEngine.quit){StudyEngine.quit=function(){this.active=false;PageManager.navigate('free');};}
+
+// 6. GameState.get 补全
+if(typeof GameState!=='undefined'&&!GameState.get){GameState.get=function(key){return(this._data||{})[key];};}
+
+// 7. DailyTaskEngine 任务自动完成修复
+if(typeof DailyTaskEngine!=='undefined'&&DailyTaskEngine.TASK_TEMPLATES){
+  DailyTaskEngine.TASK_TEMPLATES.forEach(function(t){if(t.id==='open1box'){t.check=function(s){return(s.blindboxOpened||0)>=1;};}if(t.id==='boss1'){t.check=function(s){return(s.bossDefeated||0)>=1;};}});
+}
+
+// 8. ComboEngine._fireMilestone typeof 保护
+if(typeof ComboEngine!=='undefined'&&ComboEngine._fireMilestone){
+  var _origFireMilestone=ComboEngine._fireMilestone;
+  ComboEngine._fireMilestone=function(ms){typeof showSpectacleText==='function'&&showSpectacleText(ms.text,this.combo+' 连击！');typeof showConfetti==='function'&&showConfetti();typeof screenShake==='function'&&screenShake(200);};
+}
