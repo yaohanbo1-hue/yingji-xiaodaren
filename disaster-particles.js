@@ -324,11 +324,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (typeof DisasterSimEngine !== 'undefined') {
       clearInterval(checkInterval);
       
-      // 保存原有动画方法
-      const originalAnimate = DisasterSimEngine.animate;
+      // 保存原有动画方法（_animate 是提取后的对象方法）
+      const originalAnimate = DisasterSimEngine._animate;
       
       // 增强动画循环
-      DisasterSimEngine.animate = function() {
+      DisasterSimEngine._animate = function() {
         // 调用原有动画
         if (originalAnimate) {
           originalAnimate.call(this);

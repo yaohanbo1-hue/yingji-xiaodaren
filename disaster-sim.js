@@ -95,14 +95,14 @@ const DisasterSimEngine = {
     
     let resizeTimer;
     const resizeHandler = () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => this.resize(), 100);
+      clearTimeout(this._resizeTimer);
+      this._resizeTimer = setTimeout(() => this.resize(), 100);
     };
     window.addEventListener('resize', resizeHandler);
     
     // 保存清理引用
     this._resizeHandler = resizeHandler;
-    this._resizeTimer = resizeTimer;
+    this._resizeTimer = null;
     
     this.renderUI();
     this.startAnimation();
@@ -263,30 +263,30 @@ const DisasterSimEngine = {
     }
     this._visHandler = () => {
       if (!document.hidden && !this._animFrame) {
-        this._animFrame = requestAnimationFrame(animate);
+        this._animFrame = requestAnimationFrame(() => this._animate());
       }
     };
     document.addEventListener('visibilitychange', this._visHandler);
     
-    const animate = () => {
-      if (document.hidden) { this._animFrame = null; return; }
-      this._scenePhase += 0.005;
-      
-      switch (this._currentDisaster) {
-        case 'earthquake': this._drawEarthquake(); break;
-        case 'flood': this._drawFlood(); break;
-        case 'wildfire': this._drawWildfire(); break;
-        case 'typhoon': this._drawTyphoon(); break;
-        case 'volcano': this._drawVolcano(); break;
-      }
-      
-      // 更新阶段文字
-      this._updatePhaseText();
-      
-      this._animFrame = requestAnimationFrame(animate);
-    };
+    this._animFrame = requestAnimationFrame(() => this._animate());
+  },
+  
+  _animate() {
+    if (document.hidden) { this._animFrame = null; return; }
+    this._scenePhase += 0.005;
     
-    this._animFrame = requestAnimationFrame(animate);
+    switch (this._currentDisaster) {
+      case 'earthquake': this._drawEarthquake(); break;
+      case 'flood': this._drawFlood(); break;
+      case 'wildfire': this._drawWildfire(); break;
+      case 'typhoon': this._drawTyphoon(); break;
+      case 'volcano': this._drawVolcano(); break;
+    }
+    
+    // 更新阶段文字
+    this._updatePhaseText();
+    
+    this._animFrame = requestAnimationFrame(() => this._animate());
   },
   
   _updatePhaseText() {
