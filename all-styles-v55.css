@@ -6881,6 +6881,11 @@ button:active {
 }
 
 /* ===== 百科页优化 ===== */
+/* 商城商品文字颜色 — v73 修复 */
+#page-shop .shop-name { color: rgba(255,255,255,0.9) !important; }
+#page-shop .shop-desc { color: rgba(255,255,255,0.6) !important; }
+#page-shop .shop-price { color: #FFD700 !important; }
+#page-shop .shop-icon { font-size: 2rem !important; margin-bottom: 8px !important; }
 #page-encyclopedia {
   padding-top: 20px;
   padding-left: 16px;

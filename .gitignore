@@ -44,3 +44,7 @@ package-lock.json
 # Smoke/debug harness (underscore-prefixed)
 _*.js
 ppt_yingji/
+check/
+check_swarm/
+reports/
+*.log

@@ -1,0 +1,1 @@
+{"action": "evaluate", "args": {"code": "(() => { window.scrollBy(0, 400); return 'scrolled'; })()"}, "session": "yjxdr-ui-check"}

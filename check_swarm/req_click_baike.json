@@ -1,0 +1,1 @@
+{"action": "evaluate", "args": {"code": "(() => { const btns = Array.from(document.querySelectorAll(\"button\")); const idx = btns.findIndex(b => b.textContent.includes(\"\u767e\u79d1\")); if (idx >= 0) { btns[idx].click(); return \"clicked-\u767e\u79d1 at index \" + idx; } return \"not found\"; })()"}, "session": "yjxdr-ui-check"}
