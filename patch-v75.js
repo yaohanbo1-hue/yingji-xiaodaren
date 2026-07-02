@@ -9,7 +9,10 @@ if(typeof SettingsEngine==='undefined'){window.SettingsEngine={
   importData(){var input=document.createElement('input');input.type='file';input.accept='.json';input.onchange=function(e){var file=e.target.files[0];if(!file)return;var reader=new FileReader();reader.onload=function(ev){try{var data=JSON.parse(ev.target.result);if(data&&data.coins!==undefined){GameState._data=Object.assign(GameState._data,data);GameState.save();Modal.show('📥 导入成功','数据已恢复，页面即将刷新');setTimeout(function(){location.reload();},1000);}else{Modal.show('❌ 无效文件','请选择有效的存档文件');}}catch(err){Modal.show('❌ 解析失败',err.message);}};reader.readAsText(file);};input.click();},
   showAbout(){var stats=GameState._data.stats||{};Modal.show('ℹ️ 关于','<div style="text-align:center"><div style="font-size:3rem;margin-bottom:8px">🛡️</div><h3>应急小达人</h3><p>v1.3.2 — 防灾教育互动游戏</p><p>Made with ❤️</p></div>','🎉');},
   render(){var volSlider=document.getElementById('volumeSlider');if(volSlider&&GameState._data.settings){volSlider.value=GameState._data.settings.volume||50;}}
-};}
+};};
+
+// TutorialEngine.reset() 补全
+if(typeof TutorialEngine!=='undefined'&&!TutorialEngine.reset){TutorialEngine.reset=function(){localStorage.removeItem('tutorialDone');Modal.show('🎓 引导已重置','下次进入游戏将重新显示新手引导');};}
 
 // GameState.reset() 补全
 if(typeof GameState!=='undefined'&&!GameState.reset){GameState.reset=function(){if(confirm('确定要重置所有数据吗？此操作不可恢复！')){localStorage.removeItem('disaster_game_save');location.reload();}};}

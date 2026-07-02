@@ -297,11 +297,11 @@
           <span class="mode-desc">每天写日记得奖励</span>
         </div> -->
         <!-- 隐藏：功能开发中 -->
-        <!-- <div class="mode-btn" onclick="UniversalSystemViewer.synthesis()" style="border-color:rgba(0,150,255,0.3);">
+        <div class="mode-btn" onclick="PageManager.navigate('workshop')" style="border-color:rgba(0,150,255,0.3);">
           <span class="mode-icon">🧩</span>
           <span class="mode-name">卡牌工坊</span>
           <span class="mode-desc">合成强化碎片套装</span>
-        </div> -->
+        </div>
         <div class="mode-btn" onclick="PageManager.navigate('encyclopedia')">
           <span class="mode-icon">🌍</span>
           <span class="mode-name">百科</span>
@@ -1024,7 +1024,7 @@
       </div>
       <p style="color:var(--text-secondary);font-size:0.8rem;margin-top:var(--space-md)">点击抽取盲盒</p>
     </div>
-    <div class="badge">🪙 金币：0 · 📦 已抽：0</div>
+    <div id="gacha-content" class="preview-container"></div>
   </div>
 
 <!-- ======== 学习页（闪卡模式） ======== -->
@@ -1660,18 +1660,7 @@
       <div class="mode-label" style="color:#a78bfa;">🐉 防灾宠物</div>
       <div style="font-size:12px;color:rgba(255,255,255,0.4);">养宠物学防灾</div>
     </div>
-    <div style="text-align:center;padding:40px 20px;">
-      <div style="font-size:80px;margin-bottom:20px;">🐉</div>
-      <h3 style="color:rgba(255,255,255,0.9);margin-bottom:10px;">防灾宠物</h3>
-      <p style="color:rgba(255,255,255,0.5);margin-bottom:30px;font-size:14px;line-height:1.8;">
-        养一只防灾宠物，陪伴你学习防灾知识！<br>
-        宠物会随你成长而进化，解锁更多技能。<br>
-        <span style="color:rgba(255,255,255,0.3);">（功能开发中，敬请期待）</span>
-      </p>
-      <button class="wb-btn wb-btn-primary" onclick="PageManager.navigate('menu')" style="font-size:14px;padding:12px 28px;">
-        ← 返回主菜单
-      </button>
-    </div>
+    <div id="pet-content"></div>
   </div>
 
   <!-- ======== 日记页 ======== -->
@@ -1681,18 +1670,7 @@
       <div class="mode-label" style="color:#60a5fa;">📓 防灾日记</div>
       <div style="font-size:12px;color:rgba(255,255,255,0.4);">记录学习心得</div>
     </div>
-    <div style="text-align:center;padding:40px 20px;">
-      <div style="font-size:80px;margin-bottom:20px;">📓</div>
-      <h3 style="color:rgba(255,255,255,0.9);margin-bottom:10px;">防灾日记</h3>
-      <p style="color:rgba(255,255,255,0.5);margin-bottom:30px;font-size:14px;line-height:1.8;">
-        每天记录你的防灾学习心得，<br>
-        回顾成长历程，分享防灾故事。<br>
-        <span style="color:rgba(255,255,255,0.3);">（功能开发中，敬请期待）</span>
-      </p>
-      <button class="wb-btn wb-btn-primary" onclick="PageManager.navigate('menu')" style="font-size:14px;padding:12px 28px;">
-        ← 返回主菜单
-      </button>
-    </div>
+    <div id="diary-content"></div>
   </div>
 
   <!-- ======== 卡牌工坊页 ======== -->
@@ -1714,6 +1692,7 @@
         ← 返回主菜单
       </button>
     </div>
+    <div id="workshop-content"></div>
   </div>
 
 </div><!-- /#app -->
