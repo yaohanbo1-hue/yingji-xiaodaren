@@ -43,20 +43,13 @@ const MenuManager = {
     
     // 展开分类时：隐藏标题、按钮容器、底部统计，让分类内容全屏展示
     if (menuLogo) {
-      menuLogo.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-      menuLogo.style.opacity = '0';
-      menuLogo.style.transform = 'translateY(-20px)';
-      setTimeout(function() { menuLogo.style.display = 'none'; }, 300);
+      menuLogo.style.display = 'none';
     }
     if (menuCategoryBtns) {
-      menuCategoryBtns.style.transition = 'opacity 0.3s ease';
-      menuCategoryBtns.style.opacity = '0';
-      setTimeout(function() { menuCategoryBtns.style.display = 'none'; }, 300);
+      menuCategoryBtns.style.display = 'none';
     }
     if (menuStats) {
-      menuStats.style.transition = 'opacity 0.3s ease';
-      menuStats.style.opacity = '0';
-      setTimeout(function() { menuStats.style.display = 'none'; }, 300);
+      menuStats.style.display = 'none';
     }
     
     sections.forEach(function(section) {
@@ -124,20 +117,12 @@ const MenuManager = {
     // 恢复显示标题、按钮容器、底部统计（返回主菜单状态）
     if (menuLogo) {
       menuLogo.style.display = '';
-      setTimeout(function() {
-        menuLogo.style.opacity = '1';
-        menuLogo.style.transform = 'translateY(0)';
-      }, 10);
     }
     if (menuCategoryBtns) {
       menuCategoryBtns.style.display = '';
-      setTimeout(function() {
-        menuCategoryBtns.style.opacity = '1';
-      }, 10);
     }
     if (menuStats) {
       menuStats.style.display = '';
-      setTimeout(function() { menuStats.style.opacity = '1'; }, 10);
     }
     
     // 隐藏所有分区（回到分类选择状态，只显示按钮）
