@@ -89,7 +89,10 @@ const DisasterSimEngine = {
     
     this._canvas = document.getElementById('simCanvas');
     if (!this._canvas) return;
-    
+    if (!this._canvas.getContext) {
+      console.warn('[Canvas] not supported, disaster sim degraded');
+      return;
+    }
     this._ctx = this._canvas.getContext('2d');
     this.resize();
     

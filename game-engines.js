@@ -1030,4 +1030,24 @@ const allEngines = [Modal,PageManager,AudioManager,ThemeEngine,JuiceEngine,I18nE
   }
 })();
 
+// ===== ErrorBoundary: 包装关键引擎方法 =====
+(function() {
+  if (typeof ErrorBoundary === 'undefined') {
+    console.warn('[ErrorBoundary] not loaded, skipping wrapMethods');
+    return;
+  }
+  // 关键引擎方法包装，捕获运行时错误避免阻断整个游戏
+  try {
+    ErrorBoundary.wrapMethods(GameState, 'GameState', ['init','save','load','reset','addCoins','spendCoins','addExp','addCard']);
+    ErrorBoundary.wrapMethods(Modal, 'Modal', ['show','hide','init']);
+    ErrorBoundary.wrapMethods(PageManager, 'PageManager', ['navigate','_cleanupEngines','_refreshPage']);
+    ErrorBoundary.wrapMethods(AudioManager, 'AudioManager', ['play','stop']);
+    ErrorBoundary.wrapMethods(QuizEngine, 'QuizEngine', ['start','answer','next','init']);
+    ErrorBoundary.wrapMethods(BattleEngine, 'BattleEngine', ['init','spawnBoss','attack','updateUI']);
+    console.log('[ErrorBoundary] wrapMethods applied to key engines');
+  } catch (e) {
+    console.error('[ErrorBoundary] wrapMethods failed:', e);
+  }
+})();
+
 

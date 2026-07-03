@@ -92,6 +92,19 @@
 }
 </script>
 
+<!-- 全局错误边界 — 第一道防线（不依赖外部脚本） -->
+<script>
+(function() {
+  'use strict';
+  window.addEventListener('error', function(e) {
+    console.error('[Global Error]', e.message, e.filename, e.lineno);
+  });
+  window.addEventListener('unhandledrejection', function(e) {
+    console.error('[Unhandled Promise]', e.reason);
+  });
+})();
+</script>
+
 </head>
 <body style="background-color: #0F1117 !important; min-height: 100vh;">
 <div class="cyber-grid"></div>

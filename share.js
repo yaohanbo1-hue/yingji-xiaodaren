@@ -31,6 +31,10 @@ const ShareEngine = {
   
   // 生成成绩海报
   generatePoster(template) {
+    if (!document.createElement('canvas').getContext) {
+      console.warn('[Canvas] not supported');
+      return null;
+    }
     const canvas = document.createElement('canvas');
     canvas.width = 750;
     canvas.height = 1334; // 手机屏幕比例
@@ -118,7 +122,10 @@ const ShareEngine = {
   _renderPosterToModal(template) {
     const canvas = document.getElementById('sharePosterCanvas');
     if (!canvas) return;
-    
+    if (!canvas.getContext) {
+      console.warn('[Canvas] not supported in modal');
+      return;
+    }
     const ctx = canvas.getContext('2d');
     const data = this._getUserData();
     
