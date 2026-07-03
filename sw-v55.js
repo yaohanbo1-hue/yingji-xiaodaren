@@ -123,7 +123,7 @@ self.addEventListener('fetch', function(event) {
   const cacheRequest = request;
 
   event.respondWith(
-    caches.match(cacheRequest).then(function(cachedResponse) {
+    caches.match(cacheRequest, { ignoreSearch: true }).then(function(cachedResponse) {
       var networkFetch = fetch(request).then(function(networkResponse) {
         if (networkResponse && networkResponse.ok) {
           var responseClone = networkResponse.clone();
@@ -145,7 +145,7 @@ self.addEventListener('fetch', function(event) {
   // 无缓存时等待网络
       return networkFetch.catch(function() {
         if (request.mode === 'navigate') {
-          return caches.match('./index.html');
+          return caches.match('./index.html', { ignoreSearch: true });
         }
         // 非导航资源加载失败时返回空响应，避免页面崩溃
         return new Response('', { status: 200, headers: { 'Content-Type': 'text/plain' } });
