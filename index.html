@@ -36,7 +36,7 @@
 <link rel="manifest" href="manifest.json">
 
 <title>应急小达人 — 防灾教育互动游戏 v1.3.3</title>
-<meta name="version" content="v1.3.3">
+<meta name="data-version" content="v1.3.3">
 
 <!-- 预连接第三方域名 -->
 <link rel="dns-prefetch" href="https://github.com">
@@ -257,29 +257,29 @@
     <div class="menu-section">
       <h2 class="menu-section-title learn-title" onclick="MenuManager.toggleCategory('learn')">📚 学习中心<span class="collapse-arrow">▼</span></h2>
       <div class="menu-grid learn-grid">
-        <div class="mode-btn" onclick="BlindBoxEngine.open('daily')" style="border-color: rgba(255,215,0,0.4); box-shadow: 0 0 25px rgba(255,215,0,0.15); animation: pulse-glow 2s infinite;">
+        <div class="mode-btn" onclick="BlindBoxEngine.open('daily')" style="border-color: rgba(255,215,0,0.4); box-shadow: 0 0 25px rgba(255,215,0,0.15); animation: pulse-glow 2s infinite;" role="button" tabindex="0" aria-label="每日盲盒">
           <span class="mode-badge" style="background:linear-gradient(135deg,#ffd700,#ff6b00);color:#000;font-size:11px;">🎁 免费</span>
           <span class="mode-icon">🎁</span>
           <span class="mode-name">开盲盒</span>
           <span class="mode-desc" id="blindboxDesc">每日免费！稀有卡牌等你拿</span>
         </div>
-        <div class="mode-btn" onclick="CheckinEngine.checkin()" style="border-color: rgba(0,212,255,0.3);">
+        <div class="mode-btn" onclick="CheckinEngine.checkin()" style="border-color: rgba(0,212,255,0.3);" role="button" tabindex="0" aria-label="每日签到">
           <span class="mode-icon">📅</span>
           <span class="mode-name">每日签到</span>
           <span class="mode-desc" id="checkinDesc">连续签到得大奖</span>
         </div>
-        <div class="mode-btn" onclick="StudyEngine.start()">
+        <div class="mode-btn" onclick="StudyEngine.start()" role="button" tabindex="0" aria-label="开始学习">
           <span class="mode-badge" style="background:linear-gradient(135deg,#2196F3,#1976D2);color:#fff;">📚</span>
           <span class="mode-icon">📚</span>
           <span class="mode-name">学习模式</span>
           <span class="mode-desc">系统学习防灾知识</span>
         </div>
-<div class="mode-btn" onclick="PageManager.navigate('firstaid');setTimeout(function(){FirstAidEngine.render()},100)" style="border-color:rgba(255,82,82,0.3);">
+<div class="mode-btn" onclick="PageManager.navigate('firstaid');setTimeout(function(){FirstAidEngine.render()},100)" style="border-color:rgba(255,82,82,0.3);" role="button" tabindex="0" aria-label="急救训练">
           <span class="mode-icon">🩺</span>
           <span class="mode-name">急救模拟</span>
           <span class="mode-desc">8个场景学急救</span>
         </div>
-        <div class="mode-btn" onclick="PageManager.navigate('museum')" style="border-color:rgba(155,89,182,0.3);">
+        <div class="mode-btn" onclick="PageManager.navigate('museum')" style="border-color:rgba(155,89,182,0.3);" role="button" tabindex="0" aria-label="防灾馆">
           <span class="mode-icon">🏛️</span>
           <span class="mode-name">防灾馆</span>
           <span class="mode-desc">4个展区学知识</span>
@@ -297,34 +297,34 @@
           <span class="mode-desc">每天写日记得奖励</span>
         </div> -->
         <!-- 隐藏：功能开发中 -->
-        <div class="mode-btn" onclick="PageManager.navigate('workshop')" style="border-color:rgba(0,150,255,0.3);">
+        <div class="mode-btn" onclick="PageManager.navigate('workshop')" style="border-color:rgba(0,150,255,0.3);" role="button" tabindex="0" aria-label="卡牌工坊">
           <span class="mode-icon">🧩</span>
           <span class="mode-name">卡牌工坊</span>
           <span class="mode-desc">合成强化碎片套装</span>
         </div>
-        <div class="mode-btn" onclick="PageManager.navigate('encyclopedia')">
+        <div class="mode-btn" onclick="PageManager.navigate('encyclopedia')" role="button" tabindex="0" aria-label="百科">
           <span class="mode-icon">🌍</span>
           <span class="mode-name">百科</span>
           <span class="mode-desc">35+防灾百科文章</span>
         </div>
-        <div class="mode-btn" onclick="GuideEngine.init()" style="border-color:rgba(255,215,0,0.3);">
+        <div class="mode-btn" onclick="GuideEngine.init()" style="border-color:rgba(255,215,0,0.3);" role="button" tabindex="0" aria-label="新手引导">
           <span class="mode-icon">🎓</span>
           <span class="mode-name">新手引导</span>
           <span class="mode-desc">6步学会基本操作</span>
         </div>
-        <div class="mode-btn" onclick="PageManager.navigate('ai-tutor')" style="border-color:rgba(96,165,250,0.4); box-shadow: 0 0 20px rgba(96,165,250,0.1);">
+        <div class="mode-btn" onclick="PageManager.navigate('ai-tutor')" style="border-color:rgba(96,165,250,0.4); box-shadow: 0 0 20px rgba(96,165,250,0.1);" role="button" tabindex="0" aria-label="AI 导师">
           <span class="mode-badge" style="background:linear-gradient(135deg,#60A5FA,#A78BFA);color:#fff;">🤖 新</span>
           <span class="mode-icon">🤖</span>
           <span class="mode-name">AI 导师</span>
           <span class="mode-desc">智能分析薄弱项，推荐练习</span>
         </div>
-        <div class="mode-btn" onclick="PageManager.navigate('certification')" style="border-color:rgba(245,158,11,0.4); box-shadow: 0 0 20px rgba(245,158,11,0.1);">
+        <div class="mode-btn" onclick="PageManager.navigate('certification')" style="border-color:rgba(245,158,11,0.4); box-shadow: 0 0 20px rgba(245,158,11,0.1);" role="button" tabindex="0" aria-label="能力认证">
           <span class="mode-badge" style="background:linear-gradient(135deg,#F59E0B,#EF4444);color:#fff;">🏅 新</span>
           <span class="mode-icon">🏅</span>
           <span class="mode-name">能力认证</span>
           <span class="mode-desc">5 级认证体系，可打印证书</span>
         </div>
-        <div class="mode-btn" onclick="PageManager.navigate('disaster-sim')" style="border-color:rgba(239,68,68,0.4); box-shadow: 0 0 20px rgba(239,68,68,0.1);">
+        <div class="mode-btn" onclick="PageManager.navigate('disaster-sim')" style="border-color:rgba(239,68,68,0.4); box-shadow: 0 0 20px rgba(239,68,68,0.1);" role="button" tabindex="0" aria-label="灾害模拟">
           <span class="mode-badge" style="background:linear-gradient(135deg,#EF4444,#F59E0B);color:#fff;">🎬 新</span>
           <span class="mode-icon">🎬</span>
           <span class="mode-name">灾害模拟</span>
@@ -2087,7 +2087,7 @@
 <script>
 (function() {
   function updateVersionDisplay() {
-    var meta = document.querySelector('meta[name="version"]');
+    var meta = document.querySelector('meta[name="data-version"]');
     var version = meta ? meta.content : 'v1.3.3';
     var badge = document.getElementById('version-badge');
     if (badge) badge.textContent = '✨ ' + version + ' Premium';
