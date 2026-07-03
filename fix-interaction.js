@@ -156,7 +156,7 @@
   }
 
   // ======================================================
-  // 7. 增强 PageManager._cleanupEngines: 清理更多引擎
+  // 7. 增强 PageManager._cleanupEngines: 清理更多引擎 + 全局定时器清理
   // ======================================================
   if (typeof PageManager !== 'undefined') {
     const _origCleanup = PageManager._cleanupEngines;
@@ -164,23 +164,37 @@
       // 调用原始清理
       if (_origCleanup) _origCleanup.call(this);
 
-      // 新增清理
+      // 清理已知引擎（每个引擎必须有 cleanup 方法）
       const engines = [
         { name: 'StoryAdventureEngine', obj: StoryAdventureEngine },
         { name: 'MemoryCardEngine', obj: MemoryCardEngine },
         { name: 'MascotEngine', obj: MascotEngine },
         { name: 'DisasterQuizGame', obj: DisasterQuizGame },
         { name: 'ReactionEngine', obj: ReactionEngine },
-        { name: 'MemoryGameV2', obj: MemoryGameV2 }
+        { name: 'MemoryGameV2', obj: MemoryGameV2 },
+        { name: 'CoinRainEngine', obj: typeof CoinRainEngine !== 'undefined' ? CoinRainEngine : null },
+        { name: 'SurvivalEngine', obj: typeof SurvivalEngine !== 'undefined' ? SurvivalEngine : null },
+        { name: 'BossRushEngine', obj: typeof BossRushEngine !== 'undefined' ? BossRushEngine : null },
+        { name: 'TimedChallengeEngine', obj: typeof TimedChallengeEngine !== 'undefined' ? TimedChallengeEngine : null },
+        { name: 'TimeEscapeEngine', obj: typeof TimeEscapeEngine !== 'undefined' ? TimeEscapeEngine : null },
+        { name: 'KnowledgeRaceEngine', obj: typeof KnowledgeRaceEngine !== 'undefined' ? KnowledgeRaceEngine : null },
+        { name: 'PrecisionEngine', obj: typeof PrecisionEngine !== 'undefined' ? PrecisionEngine : null }
       ];
 
       engines.forEach(function(engine) {
-        if (typeof engine.obj !== 'undefined' && engine.obj.cleanup) {
-          try {
-            engine.obj.cleanup();
-          } catch (e) {
-            console.warn('[Fix] Cleanup error for', engine.name, e);
-          }
+        if (engine.obj && typeof engine.obj.cleanup === 'function') {
+          try { engine.obj.cleanup(); }
+          catch (e) { console.warn('[Fix] Cleanup error for', engine.name, e); }
+        }
+      });
+
+      // 强制清除引擎的 active 状态（避免残留状态卡住界面）
+      [SurvivalEngine, BossRushEngine, TimedChallengeEngine, TimeEscapeEngine,
+       PrecisionEngine, KnowledgeRaceEngine, DisasterQuizGame, ReactionEngine,
+       MemoryCardEngine, MemoryGameV2
+      ].forEach(function(eng) {
+        if (typeof eng !== 'undefined' && eng) {
+          eng.active = false;
         }
       });
 

@@ -17,17 +17,19 @@
   'use strict';
   
   // ===== 1. 页面切换时自动切换 BGM =====
+  var originalNavigate = null;
   
   function hookPageManager() {
     if (typeof PageManager === 'undefined') return;
+    if (typeof PageManager.navigate !== 'function') return;
     
-    // 保存原始 navigate（使用闭包保存）
-    var _originalNavigate = PageManager.navigate.bind(PageManager);
+    // 保存原始 navigate
+    originalNavigate = PageManager.navigate.bind(PageManager);
     
     // 包装 navigate
     PageManager.navigate = function(pageId) {
       // 调用原始导航
-      _originalNavigate(pageId);
+      originalNavigate(pageId);
       
       // 播放页面切换音效
       if (typeof SFXEngine !== 'undefined') {
@@ -81,34 +83,74 @@
     });
   }
   
+  // ===== 2.5 按钮点击音效增强（全面覆盖） =====
+  function hookButtonClicks() {
+    document.addEventListener('click', function(e) {
+      var btn = e.target.closest('.mode-btn, .tool-btn, .menu-cat-btn, .btn, .btn-primary, .btn-secondary, .back-float, .settings-card, .placeholder-btn, .shop-item, .character-card, .achievement-item, .codex-card');
+      if (!btn) return;
+      
+      if (typeof SFXEngine === 'undefined') return;
+      SFXEngine.init();
+      SFXEngine.click();
+      
+      // 添加涟漪效果
+      if (!btn.classList.contains('btn-ripple')) {
+        btn.classList.add('btn-ripple');
+      }
+    });
+  }
+  
   // ===== 3. UI 交互音效 =====
   function hookUIInteractions() {
     if (typeof SFXEngine === 'undefined') return;
     
     // 模态框打开/关闭
-    var modalObserver = new MutationObserver(function(mutations) {
-      mutations.forEach(function(m) {
-        if (m.attributeName !== 'class') return;
-        var overlay = document.getElementById('modalOverlay');
-        if (!overlay) return;
-        
-        SFXEngine.init();
-        if (overlay.classList.contains('active')) {
-          SFXEngine.modalOpen();
-        } else {
-          SFXEngine.modalClose();
-        }
-      });
-    });
+    var modalAttrObserver = null;
     
-    var overlay = document.getElementById('modalOverlay');
-    if (overlay) {
-      modalObserver.observe(overlay, { attributes: true, attributeFilter: ['class'] });
+    function observeModalOverlay(overlay) {
+      if (modalAttrObserver) {
+        modalAttrObserver.disconnect();
+        modalAttrObserver = null;
+      }
+      modalAttrObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(m) {
+          if (m.attributeName !== 'class') return;
+          SFXEngine.init();
+          if (overlay.classList.contains('active')) {
+            SFXEngine.modalOpen();
+          } else {
+            SFXEngine.modalClose();
+          }
+        });
+      });
+      modalAttrObserver.observe(overlay, { attributes: true, attributeFilter: ['class'] });
     }
     
-    // 按钮 hover 音效（仅桌面端）
+    var bodyObserver = new MutationObserver(function(mutations) {
+      mutations.forEach(function(m) {
+        if (m.type !== 'childList') return;
+        m.addedNodes.forEach(function(node) {
+          if (node.nodeType === 1 && node.id === 'modalOverlay') {
+            observeModalOverlay(node);
+          }
+        });
+      });
+    });
+    bodyObserver.observe(document.body, { childList: true, subtree: true });
+    
+    // 如果已存在，直接观察
+    var existingOverlay = document.getElementById('modalOverlay');
+    if (existingOverlay) {
+      observeModalOverlay(existingOverlay);
+    }
+    
+    // 按钮 hover 音效（仅桌面端，带节流）
     if (!('ontouchstart' in window)) {
+      var _lastHoverTime = 0;
       document.addEventListener('mouseover', function(e) {
+        var now = Date.now();
+        if (now - _lastHoverTime < 100) return; // 节流：100ms内只触发一次
+        _lastHoverTime = now;
         var btn = e.target.closest('.mode-btn, .menu-cat-btn, .tool-btn');
         if (btn && typeof SFXEngine !== 'undefined') {
           SFXEngine.hover();
@@ -131,7 +173,7 @@
       if (streakEl) {
         var match = streakEl.textContent.match(/(\d+)/);
         if (match) {
-          var combo = parseInt(match[1]);
+          var combo = parseInt(match[1], 10);
           if (combo >= 3) {
             SFXEngine.combo(combo);
           }
@@ -141,6 +183,8 @@
   }
   
   // ===== 5. 胜利/失败音效 =====
+  var _gameEndSoundPlayed = false;
+  
   function hookGameEnd() {
     // 监听模态框中的胜利/失败提示
     var observer = new MutationObserver(function(mutations) {
@@ -148,7 +192,12 @@
         if (m.type !== 'childList') return;
         
         var title = document.getElementById('modalTitle');
-        if (!title) return;
+        if (!title) {
+          _gameEndSoundPlayed = false;
+          return;
+        }
+        
+        if (_gameEndSoundPlayed) return;
         
         var text = title.textContent.toLowerCase();
         if (typeof SFXEngine === 'undefined') return;
@@ -156,13 +205,17 @@
         if (text.indexOf('胜利') >= 0 || text.indexOf('恭喜') >= 0 || 
             text.indexOf('通关') >= 0 || text.indexOf('🎉') >= 0) {
           SFXEngine.victory();
+          _gameEndSoundPlayed = true;
         } else if (text.indexOf('失败') >= 0 || text.indexOf('💀') >= 0 ||
                    text.indexOf('救援失败') >= 0) {
           SFXEngine.gameOver();
+          _gameEndSoundPlayed = true;
         } else if (text.indexOf('升级') >= 0 || text.indexOf('🎊') >= 0) {
           SFXEngine.levelUp();
+          _gameEndSoundPlayed = true;
         } else if (text.indexOf('解锁') >= 0 || text.indexOf('🔓') >= 0) {
           SFXEngine.unlock();
+          _gameEndSoundPlayed = true;
         }
       });
     });
@@ -183,16 +236,27 @@
     });
   }
   
+  var _initialized = false;
+  var _initRetries = 0;
+  var MAX_INIT_RETRIES = 50;
+  
   // ===== 初始化 =====
   function init() {
     // 等待游戏引擎加载
     if (typeof PageManager === 'undefined') {
+      if (_initRetries++ >= MAX_INIT_RETRIES) {
+        console.warn('SFX/BGM Integration: PageManager not found after 50 retries, aborting');
+        return;
+      }
       setTimeout(init, 100);
       return;
     }
+    if (_initialized) return;
+    _initialized = true;
     
-    // hookPageManager(); // 禁用：包装 navigate 会破坏原始页面切换逻辑
+    hookPageManager();
     hookQuizEngine();
+    hookButtonClicks();
     hookUIInteractions();
     hookComboSystem();
     hookGameEnd();
