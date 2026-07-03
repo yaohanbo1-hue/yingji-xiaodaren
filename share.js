@@ -173,7 +173,7 @@ const ShareEngine = {
       if (typeof CertificationEngine !== 'undefined' && CertificationEngine._data) {
         stats.currentLevel = CertificationEngine._data.currentLevel || 0;
         if (CertificationEngine._levels && stats.currentLevel >= 0) {
-          stats.levelName = CertificationEngine._levels[stats.currentLevel]?.name || '防灾新手';
+          stats.levelName = (CertificationEngine._levels[stats.currentLevel] && CertificationEngine._levels[stats.currentLevel].name) || '防灾新手';
         }
         stats.masteredDisasters = CertificationEngine._data.masteredModules || 0;
       }

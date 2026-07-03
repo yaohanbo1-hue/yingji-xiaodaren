@@ -583,7 +583,7 @@ const AITutorEngine = {
     this._askingLock = true;
     
     const input = document.getElementById('terminalInput');
-    const text = input?.value.trim();
+    const text = (input && input.value).trim();
     if (!text) { this._askingLock = false; return; }
     
     this._typeMessage('user', text);
@@ -834,8 +834,8 @@ const AITutorEngine = {
       return;
     }
     
-    const recommendedCards = ALL_CARDS?.filter(c => recs.includes(c.id));
-    if (recommendedCards?.length > 0 && typeof StudyEngine !== 'undefined') {
+    const recommendedCards = (ALL_CARDS && ALL_CARDS.filter(c => recs.includes(c.id)));
+    if ((recommendedCards && recommendedCards.length) > 0 && typeof StudyEngine !== 'undefined') {
       this._typeMessage('ai', `已为你准备 ${recommendedCards.length} 道针对性练习题！开始练习吧 💪`);
       StudyEngine.customCards = recommendedCards;
       PageManager.navigate('study');
@@ -857,7 +857,7 @@ const AITutorEngine = {
     
     const report = `# 应急小达人 - 学习报告\n## 生成时间：${new Date().toLocaleString('zh-CN')}\n\n### 📊 总体数据\n- 已答题数：${totalAnswered} 道\n- 正确数量：${correctCount} 道\n- 正确率：${accuracy}%\n- 已掌握 (≥80%)：${mastered} 个模块\n- 学习中 (1-79%)：${learning} 个模块\n- 未学习：${unlearned} 个模块\n\n### 🎯 各模块掌握度\n${Object.entries(mastery).map(([d, s]) => `- ${meta.names[d] || d}：${s}% ${s === 0 ? '(未学习)' : s < 50 ? '⚠️ 薄弱' : s < 80 ? '📈 学习中' : '✅ 已掌握'}`).join('\n')}\n\n### 💡 学习建议\n${weakPoints.length > 0 ? `薄弱项需要加强：${weakPoints.map(([d, s]) => `${meta.names[d]}(${s}%)`).join('、')}。建议通过"开盲盒"或"学习模式"针对性练习。` : '所有模块掌握良好，继续保持！挑战更高难度题目吧。'}`;
     
-    if (navigator.clipboard?.writeText) {
+    if ((navigator.clipboard && navigator.clipboard.writeText)) {
       navigator.clipboard.writeText(report).then(() => {
         this._typeMessage('ai', '学习报告已复制到剪贴板！你可以粘贴到文本文件中保存 📋');
       }).catch(() => this._fallbackCopy(report));

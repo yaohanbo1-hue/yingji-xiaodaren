@@ -99,7 +99,7 @@ const ErrorBoundary = (function() {
       time: new Date().toISOString(),
       context,
       message: err.message,
-      stack: err.stack?.split('\n').slice(0, 3).join('\n')
+      stack: (err.stack && err.stack.split('\n')).slice(0, 3).join('\n')
     };
     _errorLog.push(entry);
     if (_errorLog.length > MAX_LOG_SIZE) _errorLog.shift();

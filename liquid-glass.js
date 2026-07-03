@@ -525,7 +525,7 @@
         mutations.forEach(m => {
           m.addedNodes.forEach(node => {
             if (node.nodeType === 1) {
-              const newTitles = node.querySelectorAll?.('.menu-logo-title, .preview-title, .game-header .mode-label') || [];
+              const newTitles = (node.querySelectorAll && node.querySelectorAll('.menu-logo-title, .preview-title, .game-header .mode-label')) || [];
               newTitles.forEach(el => el.classList.add('liquid-glow-text'));
             }
           });
@@ -626,7 +626,7 @@
         console.warn('LiquidGlass: PageManager not found, smooth transitions disabled');
         return;
       }
-      const originalNavigate = window.PageManager?.navigate;
+      const originalNavigate = (window.PageManager && window.PageManager.navigate);
       if (originalNavigate) {
         window.PageManager.navigate = function(pageId) {
           const currentPage = document.querySelector('.page.active');

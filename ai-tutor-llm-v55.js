@@ -67,7 +67,7 @@ const AITutorBrain = {
         question: card.zh.q,
         options: card.zh.opts,
         correctIdx: card.zh.ans,
-        correctAnswer: card.zh.opts?.[card.zh.ans],
+        correctAnswer: (card.zh.opts && card.zh.opts[card.zh.ans]),
         explanation: card.zh.exp,
         tips: card.zh.tips || [],
         scenario: card.zh.scenario,
@@ -88,7 +88,7 @@ const AITutorBrain = {
           desc: s.desc,
           tip: s.tip,
           choices: s.choices,
-          correctChoice: s.choices?.find(c => c.correct),
+          correctChoice: (s.choices && s.choices.find(c => c.correct)),
           priority: 2
         });
       });
@@ -253,7 +253,7 @@ const AITutorBrain = {
 
   _formatCardReply(item) {
     const meta = this._disasterMeta[item.disaster];
-    let r = `${meta?.icon || ''} **${item.title || item.question}**\n\n`;
+    let r = `${(meta && meta.icon) || ''} **${item.title || item.question}**\n\n`;
     r += `${item.explanation || '这是重要的防灾知识点！'}\n\n`;
     if (item.correctAnswer) {
       r += `✅ **正确答案是：${item.correctAnswer}**\n\n`;
@@ -273,7 +273,7 @@ const AITutorBrain = {
 
   _formatScenarioReply(item) {
     const meta = this._disasterMeta[item.disaster];
-    let r = `🎯 **${item.title}** ${meta?.icon || ''}\n\n`;
+    let r = `🎯 **${item.title}** ${(meta && meta.icon) || ''}\n\n`;
     r += `${item.desc || item.setting || '这是一个真实灾害场景'}\n\n`;
     if (item.tip) {
       r += `💡 **核心原则：${item.tip}**\n\n`;
@@ -311,7 +311,7 @@ const AITutorBrain = {
     if (weak.length > 0) {
       const topWeak = weak[0];
       const meta = this._disasterMeta[topWeak.disaster];
-      return `根据你的答题数据，我分析出你的薄弱项：\n\n⚠️ **${meta?.icon || ''} ${meta?.name || topWeak.disaster}** — 正确率 ${topWeak.pct}%\n\n**推荐练习：**\n• 去「开盲盒」抽 ${meta?.name || ''} 相关卡牌\n• 进入「闯关模式」体验 ${meta?.name || ''} 场景\n• 问我"${meta?.name || ''} 怎么应对"，我帮你梳理知识点\n\n要不要现在就开始练习？🎯`;
+      return `根据你的答题数据，我分析出你的薄弱项：\n\n⚠️ **${(meta && meta.icon) || ''} ${(meta && meta.name) || topWeak.disaster}** — 正确率 ${topWeak.pct}%\n\n**推荐练习：**\n• 去「开盲盒」抽 ${(meta && meta.name) || ''} 相关卡牌\n• 进入「闯关模式」体验 ${(meta && meta.name) || ''} 场景\n• 问我"${(meta && meta.name) || ''} 怎么应对"，我帮你梳理知识点\n\n要不要现在就开始练习？🎯`;
     }
 
     return '你的答题表现不错！\n\n**进阶挑战推荐：**\n\n🎯 试试「限时挑战」模式，锻炼反应速度\n🏰 挑战「火山喷发」场景（最难关卡）\n📖 去「百科全书」看冷知识拓展\n\n想挑战哪个？💪';
@@ -356,7 +356,7 @@ const AITutorBrain = {
       const meta = this._disasterMeta[d];
       const dpct = Math.round((s.correct / s.total) * 100);
       const bar = '█'.repeat(Math.round(dpct / 10)) + '░'.repeat(10 - Math.round(dpct / 10));
-      reply += `${meta?.icon || ''} ${meta?.name || d} ${bar} ${dpct}%\n`;
+      reply += `${(meta && meta.icon) || ''} ${meta?.name || d} ${bar} ${dpct}%\n`;
     });
 
     reply += '\n💡 输入"推荐"或"薄弱项"，我可以帮你制定专属练习计划！';
@@ -451,7 +451,7 @@ const AITutorBrain = {
 
       // 意图加权
       if (intent === 'scenario' && item.type === 'scenario') score += 10;
-      if (intent === 'howto' && item.tips?.length > 0) score += 6;
+      if (intent === 'howto' && (item.tips && item.tips.length > 0)) score += 6;
 
       // 优先度
       score += (item.priority || 1) * 0.5;
@@ -644,7 +644,7 @@ const OllamaAPI = {
     
     if (!response.ok) throw new Error('Ollama HTTP ' + response.status);
     const data = await response.json();
-    return { answer: data.message?.content || '' };
+    return { answer: (data.message && data.message.content) || '' };
   }
 };
 

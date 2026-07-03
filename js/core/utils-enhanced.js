@@ -336,7 +336,7 @@ function getCardQuestion(card) {
   if (!card) return '';
   const lang = getCurrentLang();
   if (lang === 'zh' && card.zh && card.zh.q) return card.zh.q;
-  return card.question || card.zh?.q || '';
+  return card.question || (card.zh && card.zh.q) || '';
 }
 
 /**
@@ -348,7 +348,7 @@ function getCardOptions(card) {
   if (!card) return [];
   const lang = getCurrentLang();
   if (lang === 'zh' && card.zh && Array.isArray(card.zh.opts)) return card.zh.opts;
-  return card.options || card.zh?.opts || [];
+  return card.options || (card.zh && card.zh.opts) || [];
 }
 
 /**
