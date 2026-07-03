@@ -247,7 +247,7 @@ button:focus-visible,
   }
   
   .tool-btn {
-    font-size: 9px !important;
+    font-size: 10px !important;
     min-width: 40px !important;
   }
   
@@ -327,6 +327,7 @@ button:focus-visible,
   bottom: 150px !important;
   right: 20px !important;
   width: 380px !important;
+  max-width: calc(100vw - 24px) !important;
   max-height: 520px !important;
   z-index: 9997 !important;
   background: rgba(15, 23, 42, 0.95) !important; /* fallback for no backdrop-filter */
@@ -4186,7 +4187,7 @@ html {
 /* 提示气泡 */
 .guide-tooltip {
   position: fixed;
-  z-index: 100000;
+  z-index: 9990;
   max-width: 320px;
   min-width: 260px;
   max-height: 80vh;
