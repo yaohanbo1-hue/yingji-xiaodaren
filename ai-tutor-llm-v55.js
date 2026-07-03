@@ -602,7 +602,10 @@ const OllamaAPI = {
   // 检测是否可用
   async detect() {
     try {
-      const r = await fetch('https://thumbzilla-sku-tasks-phrase.trycloudflare.com/api/tags', { method: 'GET', signal: AbortSignal.timeout(2000) });
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 2000);
+      const r = await fetch('https://thumbzilla-sku-tasks-phrase.trycloudflare.com/api/tags', { method: 'GET', signal: controller.signal });
+      clearTimeout(timeoutId);
       if (r.ok) {
         this._isAvailable = true;
         return true;
