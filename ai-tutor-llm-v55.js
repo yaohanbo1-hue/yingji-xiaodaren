@@ -497,8 +497,8 @@ const AITutorBrain = {
 const DeepSeekAPI = {
   _proxyUrl: (function(){try{return localStorage.getItem('deepseek_proxy_url');}catch(e){console.error('[DeepSeekAPI] Error reading proxy URL:',e);return null;}})() || 'https://api.yingji-ai.top',
   // 默认使用 token-plan 套餐的快速款；可用 localStorage 'aitutor_model' 覆盖
-  // 套餐可选: qwen3.6-flash(快) / qwen3.6-plus / qwen3.7-plus / deepseek-v4-flash / glm-5.1 / kimi-k2.6
-  _model: (function(){try{return localStorage.getItem('aitutor_model');}catch(e){console.error('[DeepSeekAPI] Error reading model:',e);return null;}})() || 'deepseek-v4-flash',
+  // 套餐可选: qwen3.6-flash(快) / qwen3.6-plus / qwen3.7-plus / deepseek-v4-flash / deepseek-v4-pro / glm-5.1 / kimi-k2.6
+  _model: (function(){try{return localStorage.getItem('aitutor_model');}catch(e){console.error('[DeepSeekAPI] Error reading model:',e);return null;}})() || 'deepseek-v4-pro',
   setModel(m){ if(m){ this._model = m; try{ localStorage.setItem('aitutor_model', m); }catch(e){console.warn("[DeepSeekAPI]",e)} } },
   getModel(){ return this._model; },
   _systemPrompt: `...`,

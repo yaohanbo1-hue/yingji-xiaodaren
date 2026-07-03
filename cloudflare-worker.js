@@ -16,13 +16,14 @@ export default {
     // CORS — 允许应急小达人前端访问
     const allowedOrigins = [
       'https://yaohanbo1-hue.github.io',
+      'https://www.yingji-ai.top',
       'http://localhost:8000',
       'http://localhost:3000',
       'http://127.0.0.1:8000',
       'http://127.0.0.1:5500'
     ];
     const origin = request.headers.get('Origin') || '';
-    const corsOrigin = allowedOrigins.includes(origin) ? origin : 'https://yaohanbo1-hue.github.io';
+    const corsOrigin = allowedOrigins.includes(origin) ? origin : 'https://www.yingji-ai.top';
 
     const corsHeaders = {
       'Access-Control-Allow-Origin': corsOrigin,
@@ -59,6 +60,7 @@ export default {
     // 模型名映射（兼容前端传入的别名 → DeepSeek 官方模型名）
     const modelMap = {
       'deepseek-v4-flash': 'deepseek-chat',
+      'deepseek-v4-pro': 'deepseek-chat',
       'deepseek-chat': 'deepseek-chat',
       'deepseek-reasoner': 'deepseek-reasoner',
     };
