@@ -23,7 +23,7 @@ export default {
       'http://127.0.0.1:5500'
     ];
     const origin = request.headers.get('Origin') || '';
-    const corsOrigin = allowedOrigins.includes(origin) ? origin : 'https://www.yingji-ai.top';
+    const corsOrigin = allowedOrigins.includes(origin) ? origin : 'https://yaohanbo1-hue.github.io';
 
     const corsHeaders = {
       'Access-Control-Allow-Origin': corsOrigin,
