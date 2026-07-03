@@ -58,8 +58,8 @@ if(typeof LevelEngine==='undefined'){window.LevelEngine={
     {level:7,name:'防灾达人',icon:'⭐',xp:3200},{level:8,name:'防灾大师',icon:'🌟',xp:4500},
     {level:9,name:'防灾宗师',icon:'💫',xp:6000},{level:10,name:'防灾之神',icon:'👑',xp:8000}
   ],
-  getLevel(){var xp=GameState._data.xp||0,level=1,name='防灾新手',icon='🌱';for(var i=0;i<this.LEVELS.length;i++)if(xp>=this.LEVELS[i].xp){level=this.LEVELS[i].level;name=this.LEVELS[i].name;icon=this.LEVELS[i].icon;}return{level:level,name:name,icon:icon,xp:xp};},
-  getNextLevel(){var xp=GameState._data.xp||0;for(var i=0;i<this.LEVELS.length;i++)if(xp<this.LEVELS[i].xp)return{level:this.LEVELS[i].level,xp:this.LEVELS[i].xp-xp};return{level:10,xp:0};},
+  getLevel(){var xp=GameState._data.exp||0,level=1,name='防灾新手',icon='🌱';for(var i=0;i<this.LEVELS.length;i++)if(xp>=this.LEVELS[i].xp){level=this.LEVELS[i].level;name=this.LEVELS[i].name;icon=this.LEVELS[i].icon;}return{level:level,name:name,icon:icon,xp:xp};},
+  getNextLevel(){var xp=GameState._data.exp||0;for(var i=0;i<this.LEVELS.length;i++)if(xp<this.LEVELS[i].xp)return{level:this.LEVELS[i].level,xp:this.LEVELS[i].xp-xp};return{level:10,xp:0};},
   addXP(amount){GameState._data.exp=(GameState._data.exp||0)+amount;const needed=100*(GameState._data.level||1);while(GameState._data.exp>=needed){GameState._data.exp-=needed;GameState._data.level=(GameState._data.level||1)+1;if(typeof V10Toast!=='undefined'){V10Toast.show('🎉 升级了！Lv.'+GameState._data.level,'success');}}GameState.save();}
 };}
 
