@@ -499,7 +499,7 @@ const DeepSeekAPI = {
   // 默认使用 token-plan 套餐的快速款；可用 localStorage 'aitutor_model' 覆盖
   // 套餐可选: qwen3.6-flash(快) / qwen3.6-plus / qwen3.7-plus / deepseek-v4-flash / glm-5.1 / kimi-k2.6
   _model: (function(){try{return localStorage.getItem('aitutor_model');}catch(e){console.error('[DeepSeekAPI] Error reading model:',e);return null;}})() || 'deepseek-v4-flash',
-  setModel(m){ if(m){ this._model = m; try{ localStorage.setItem('aitutor_model', m); }catch(e){} } },
+  setModel(m){ if(m){ this._model = m; try{ localStorage.setItem('aitutor_model', m); }catch(e){console.warn("[DeepSeekAPI]",e)} } },
   getModel(){ return this._model; },
   _systemPrompt: `...`,
   
@@ -579,7 +579,6 @@ const DeepSeekAPI = {
     this._callCount++;
     this._lastCallTime = now;
     this._callLog.push({ question: userMessage, time: now, count: this._callCount });
-    console.log('DeepSeek API 调用 #' + this._callCount + ':', userMessage.substring(0, 30));
 
     if (!await this.isReady()) {
       this._requestLock = false;
