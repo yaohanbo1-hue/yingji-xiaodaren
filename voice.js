@@ -30,9 +30,16 @@ const VoiceEngine = {
     this._synth = window.speechSynthesis;
     
     // 从 localStorage 读取设置
-    this._enabled = localStorage.getItem('disaster_hq_voice_enabled') === 'true';
-    this._rate = parseFloat(localStorage.getItem('disaster_hq_voice_rate')) || 1.0;
-    this._pitch = parseFloat(localStorage.getItem('disaster_hq_voice_pitch')) || 1.0;
+    try {
+      this._enabled = localStorage.getItem('disaster_hq_voice_enabled') === 'true';
+      this._rate = parseFloat(localStorage.getItem('disaster_hq_voice_rate')) || 1.0;
+      this._pitch = parseFloat(localStorage.getItem('disaster_hq_voice_pitch')) || 1.0;
+    } catch(e) {
+      console.error('[VoiceEngine] Error reading localStorage:', e);
+      this._enabled = false;
+      this._rate = 1.0;
+      this._pitch = 1.0;
+    }
     
     // 加载中文语音
     this._loadVoice();
@@ -161,12 +168,17 @@ const VoiceEngine = {
   hookQuizSystem() {
     var self = this;
     
+    // 移除旧监听器（防止重复调用导致堆积）
+    if (this._quizHookHandler) {
+      document.removeEventListener('click', this._quizHookHandler);
+    }
+    
     // 监听答题结果
-    document.addEventListener('click', function(e) {
+    this._quizHookHandler = function(e) {
       var opt = e.target.closest('.quiz-opt, .choice-btn');
       if (!opt) return;
       
-      setTimeout(function() {
+      var timerId = setTimeout(function() {
         var isCorrect = opt.classList.contains('correct');
         self.speakResult(isCorrect);
         
@@ -180,7 +192,8 @@ const VoiceEngine = {
           }
         }
       }, 300);
-    });
+    };
+    document.addEventListener('click', this._quizHookHandler);
   }
 };
 
