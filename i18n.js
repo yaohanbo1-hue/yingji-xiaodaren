@@ -316,12 +316,19 @@ var I18nEngine = {
   // 初始化
   init() {
     // 从 localStorage 读取语言偏好
-    const saved = localStorage.getItem('disasterHQ_language');
+    // 优先从 GameState 同步（修复数据流一致性）
+    var gsLang = null;
+    try {
+      if (typeof GameState !== 'undefined' && GameState._data && GameState._data.language) {
+        gsLang = GameState._data.language;
+      }
+    } catch(e) {}
+    const saved = gsLang || localStorage.getItem('disasterHQ_language');
     if (saved && (saved === 'zh' || saved === 'en')) {
       this._currentLang = saved;
     } else {
       // 检测浏览器语言
-      const browserLang = navigator.language || navigator.userLanguage;
+      const browserLang = navigator.language || navigator.userLanguage || 'zh';
       this._currentLang = browserLang.startsWith('zh') ? 'zh' : 'en';
     }
     
@@ -344,6 +351,13 @@ var I18nEngine = {
     try {
       localStorage.setItem('disasterHQ_language', lang);
     } catch(e) { console.error('Storage error:', e); }
+    // 同步到 GameState（修复数据流一致性）
+    try {
+      if (typeof GameState !== 'undefined' && GameState._data) {
+        GameState._data.language = lang;
+        GameState.save();
+      }
+    } catch(e) { console.error('GameState sync error:', e); }
     this.apply();
   },
   
