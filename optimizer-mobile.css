@@ -10,6 +10,17 @@
 *::after {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* 恢复输入框和可编辑元素的文本选择 */
+input,
+textarea,
+select,
+[contenteditable="true"] {
+  user-select: auto;
+  -webkit-user-select: auto;
 }
 
 /* 恢复可滚动区域的正常触摸行为 */
