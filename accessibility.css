@@ -25,7 +25,34 @@ button:focus-visible,
 .menu-cat-btn:focus-visible,
 .tool-btn:focus-visible,
 .quiz-opt:focus-visible,
-.choice-btn:focus-visible {
+.choice-btn:focus-visible,
+.feature-item:focus-visible,
+.sim-selector-btn:focus-visible,
+.settings-card:focus-visible,
+.back-float:focus-visible,
+.codex-filter-btn:focus-visible,
+.study-nav-btn:focus-visible,
+.quiz-next-btn:focus-visible,
+.quiz-menu-btn:focus-visible {
+  outline: 3px solid #3b82f6 !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3) !important;
+}
+
+/* 弹窗内焦点样式增强 */
+.modal-overlay:focus-visible,
+#themeModal:focus-visible {
+  outline: none !important;
+}
+
+.modal-overlay .btn:focus-visible,
+#themeModal button:focus-visible {
+  outline: 3px solid #60a5fa !important;
+  box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.4) !important;
+}
+
+/* 可交互 div 的键盘焦点增强 */
+[role="button"]:focus-visible {
   outline: 3px solid #3b82f6 !important;
   outline-offset: 2px !important;
   box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3) !important;
@@ -222,7 +249,50 @@ button:focus-visible,
   }
 }
 
-/* ===== 8. 响应式优化 ===== */
+/* ===== 9. 对比度增强（兜底） ===== */
+/* 提升低透明度文字的对比度 */
+.preview-desc,
+.settings-card-desc,
+.mode-desc {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* feature-item 中的文字 */
+.feature-text p,
+.feature-status {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* sim-selector 中的文字 */
+.sim-selector-case {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+/* 弹窗中的描述文字 */
+#modalDesc {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* 高对比度模式下进一步提升 */
+.high-contrast .preview-desc,
+.high-contrast .settings-card-desc,
+.high-contrast .mode-desc,
+.high-contrast .feature-text p,
+.high-contrast .feature-status,
+.high-contrast .sim-selector-case,
+.high-contrast #modalDesc {
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+/* 禁用 outline:none（防止某些第三方样式覆盖） */
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 3px solid #3b82f6 !important;
+}
 @media (max-width: 768px) {
   .menu-category-btns {
     flex-direction: column;

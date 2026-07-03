@@ -530,3 +530,189 @@ window.addEventListener('beforeunload', function() {
     return result;
   };
 })();
+
+
+// 28. 性能/内存修复：为所有引擎补全 cleanup() 方法，增强 PageManager._cleanupEngines
+(function() {
+  // 先确保各引擎有 cleanup 方法
+  if (typeof MemoryCardEngine !== 'undefined' && !MemoryCardEngine.cleanup) {
+    MemoryCardEngine.cleanup = function() {
+      this.timer && (clearInterval(this.timer), this.timer = null);
+      this.active = !1;
+    };
+  }
+  if (typeof QuizEngine !== 'undefined' && !QuizEngine.cleanup) {
+    QuizEngine.cleanup = function() {
+      this.timerInterval && (clearInterval(this.timerInterval), this.timerInterval = null);
+      this.active = !1;
+    };
+  }
+  if (typeof BossRushEngine !== 'undefined' && !BossRushEngine.cleanup) {
+    BossRushEngine.cleanup = function() {
+      this._active = !1;
+    };
+  }
+  if (typeof PKEngine !== 'undefined' && !PKEngine.cleanup) {
+    PKEngine.cleanup = function() {
+      this.timerInterval && (clearInterval(this.timerInterval), this.timerInterval = null);
+      this.active = !1;
+    };
+  }
+  if (typeof ReactionGameV2 !== 'undefined' && !ReactionGameV2.cleanup) {
+    ReactionGameV2.cleanup = function() {
+      this._timer && (clearInterval(this._timer), this._timer = null);
+      this._active = !1;
+    };
+  }
+  if (typeof SurvivalEngine !== 'undefined' && !SurvivalEngine.cleanup) {
+    SurvivalEngine.cleanup = function() {
+      this._active = !1;
+    };
+  }
+  if (typeof PrecisionEngine !== 'undefined' && !PrecisionEngine.cleanup) {
+    PrecisionEngine.cleanup = function() {
+      this.active = !1;
+    };
+  }
+  if (typeof ScenarioEngine !== 'undefined' && !ScenarioEngine.cleanup) {
+    ScenarioEngine.cleanup = function() {
+      this.active = !1;
+      this.storyShown = !1;
+    };
+  }
+  if (typeof StoryEngine !== 'undefined' && !StoryEngine.cleanup) {
+    StoryEngine.cleanup = function() {
+      this._active = !1;
+    };
+  }
+  if (typeof StoryAdventureEngine !== 'undefined' && !StoryAdventureEngine.cleanup) {
+    StoryAdventureEngine.cleanup = function() {
+      this.active = !1;
+    };
+  }
+  if (typeof StoryChallengeEngine !== 'undefined' && !StoryChallengeEngine.cleanup) {
+    StoryChallengeEngine.cleanup = function() {
+      this._active = !1;
+    };
+  }
+  if (typeof StudyEngine !== 'undefined' && !StudyEngine.cleanup) {
+    StudyEngine.cleanup = function() {
+      this.active = !1;
+    };
+  }
+  if (typeof SupplyDropGame !== 'undefined' && !SupplyDropGame.cleanup) {
+    SupplyDropGame.cleanup = function() {
+      this._active = !1;
+    };
+  }
+  if (typeof BattleEngine !== 'undefined' && !BattleEngine.cleanup) {
+    BattleEngine.cleanup = function() {
+      this.currentBoss = null;
+      this.isBattleOver = !0;
+      this.isBossPhase = !1;
+    };
+  }
+  if (typeof FirstAidEngine !== 'undefined' && !FirstAidEngine.cleanup) {
+    FirstAidEngine.cleanup = function() {
+      this._active = !1;
+    };
+  }
+  if (typeof MiniGameEngine !== 'undefined' && !MiniGameEngine.cleanup) {
+    MiniGameEngine.cleanup = function() {
+      this.currentGame = null;
+    };
+  }
+  if (typeof GuideEngine !== 'undefined' && !GuideEngine.cleanup) {
+    GuideEngine.cleanup = function() {
+      this.active = !1;
+    };
+  }
+  if (typeof TutorialEngine !== 'undefined' && !TutorialEngine.cleanup) {
+    TutorialEngine.cleanup = function() {
+      this.active = !1;
+      this.overlay && (this.overlay.remove(), this.overlay = null);
+      this.spotlight && (this.spotlight.remove(), this.spotlight = null);
+    };
+  }
+  if (typeof DailyChallengeEngine !== 'undefined' && !DailyChallengeEngine.cleanup) {
+    DailyChallengeEngine.cleanup = function() {
+      this._active = !1;
+    };
+  }
+  if (typeof MemoryGameV2 !== 'undefined' && !MemoryGameV2.cleanup) {
+    MemoryGameV2.cleanup = function() {
+      this._active = !1;
+      this._flipped = [];
+    };
+  }
+
+  // 增强 PageManager._cleanupEngines，补充所有缺失的引擎清理
+  if (typeof PageManager !== 'undefined' && PageManager._cleanupEngines) {
+    var _origCleanup = PageManager._cleanupEngines;
+    PageManager._cleanupEngines = function() {
+      _origCleanup.call(this);
+      "undefined" != typeof QuizEngine && QuizEngine.cleanup && QuizEngine.cleanup();
+      "undefined" != typeof BossRushEngine && BossRushEngine.cleanup && BossRushEngine.cleanup();
+      "undefined" != typeof PKEngine && PKEngine.cleanup && PKEngine.cleanup();
+      "undefined" != typeof ReactionGameV2 && ReactionGameV2.cleanup && ReactionGameV2.cleanup();
+      "undefined" != typeof SurvivalEngine && SurvivalEngine.cleanup && SurvivalEngine.cleanup();
+      "undefined" != typeof PrecisionEngine && PrecisionEngine.cleanup && PrecisionEngine.cleanup();
+      "undefined" != typeof ScenarioEngine && ScenarioEngine.cleanup && ScenarioEngine.cleanup();
+      "undefined" != typeof StoryEngine && StoryEngine.cleanup && StoryEngine.cleanup();
+      "undefined" != typeof StoryAdventureEngine && StoryAdventureEngine.cleanup && StoryAdventureEngine.cleanup();
+      "undefined" != typeof StoryChallengeEngine && StoryChallengeEngine.cleanup && StoryChallengeEngine.cleanup();
+      "undefined" != typeof StudyEngine && StudyEngine.cleanup && StudyEngine.cleanup();
+      "undefined" != typeof SupplyDropGame && SupplyDropGame.cleanup && SupplyDropGame.cleanup();
+      "undefined" != typeof BattleEngine && BattleEngine.cleanup && BattleEngine.cleanup();
+      "undefined" != typeof FirstAidEngine && FirstAidEngine.cleanup && FirstAidEngine.cleanup();
+      "undefined" != typeof MiniGameEngine && MiniGameEngine.cleanup && MiniGameEngine.cleanup();
+      "undefined" != typeof GuideEngine && GuideEngine.cleanup && GuideEngine.cleanup();
+      "undefined" != typeof TutorialEngine && TutorialEngine.cleanup && TutorialEngine.cleanup();
+      "undefined" != typeof DailyChallengeEngine && DailyChallengeEngine.cleanup && DailyChallengeEngine.cleanup();
+      "undefined" != typeof MemoryGameV2 && MemoryGameV2.cleanup && MemoryGameV2.cleanup();
+    };
+  }
+})();
+
+// 29. 页面隐藏时暂停 requestAnimationFrame / 定时器，减少后台资源消耗
+(function() {
+  if (typeof document !== 'undefined' && document.visibilityState !== undefined) {
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        // 页面切换到后台时，暂停 BGM（如果支持）
+        if (typeof BGMEngine !== 'undefined' && BGMEngine.pause) {
+          try { BGMEngine.pause(); } catch (_) {}
+        }
+      } else {
+        // 页面恢复前台时，恢复 BGM
+        if (typeof BGMEngine !== 'undefined' && BGMEngine.resume) {
+          try { BGMEngine.resume(); } catch (_) {}
+        }
+      }
+    });
+  }
+})();
+
+// 30. 全局清理动态 DOM 粒子/浮动元素（防止内存泄漏）
+window.addEventListener('beforeunload', function() {
+  // 清理金币雨
+  if (typeof CoinRainEngine !== 'undefined' && CoinRainEngine.clear) {
+    try { CoinRainEngine.clear(); } catch (_) {}
+  }
+  // 清理所有粒子 burst
+  document.querySelectorAll('.particle-burst, .combo-popup, .coin-float-text').forEach(function(el) {
+    try { el.remove(); } catch (_) {}
+  });
+  // 清理所有教程覆盖层
+  document.querySelectorAll('#tutorialOverlay, .tutorial-overlay, .tutorial-spotlight').forEach(function(el) {
+    try { el.remove(); } catch (_) {}
+  });
+  // 清理证书覆盖层
+  document.querySelectorAll('#certificateOverlay, .cert-overlay').forEach(function(el) {
+    try { el.remove(); } catch (_) {}
+  });
+  // 清理卡片掉落覆盖层
+  document.querySelectorAll('.card-drop-overlay').forEach(function(el) {
+    try { el.remove(); } catch (_) {}
+  });
+});

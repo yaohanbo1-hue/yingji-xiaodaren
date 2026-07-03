@@ -118,6 +118,9 @@
   }
   
   // ===== 2. 键盘导航 =====
+  var _lastFocusedBeforeModal = null;
+  var _focusTrapElements = [];
+  
   function setupKeyboardNav() {
     document.addEventListener('keydown', function(e) {
       // Escape 关闭模态框 / 返回菜单
@@ -128,6 +131,13 @@
           return;
         }
         
+        var themeModal = document.getElementById('themeModal');
+        if (themeModal && themeModal.style.display === 'flex') {
+          themeModal.style.display = 'none';
+          restoreModalFocus();
+          return;
+        }
+        
         var activePage = document.querySelector('.page.active');
         if (activePage && activePage.id !== 'page-menu') {
           if (typeof PageManager !== 'undefined') PageManager.navigate('menu');
@@ -135,15 +145,42 @@
         }
       }
       
-      // Enter 触发当前聚焦元素
-      if (e.key === 'Enter') {
+      // Tab 焦点捕获（弹窗内循环）
+      if (e.key === 'Tab') {
+        var activeModal = document.querySelector('.modal-overlay.active, #themeModal[style*="flex"]');
+        if (activeModal) {
+          var focusable = getFocusableElements(activeModal);
+          if (focusable.length === 0) return;
+          var first = focusable[0];
+          var last = focusable[focusable.length - 1];
+          if (e.shiftKey) {
+            if (document.activeElement === first) {
+              e.preventDefault();
+              last.focus();
+            }
+          } else {
+            if (document.activeElement === last) {
+              e.preventDefault();
+              first.focus();
+            }
+          }
+        }
+      }
+      
+      // Enter 或 Space 触发当前聚焦元素
+      if (e.key === 'Enter' || e.key === ' ') {
         var focused = document.activeElement;
         if (focused && (focused.classList.contains('mode-btn') || 
                         focused.classList.contains('menu-cat-btn') ||
                         focused.classList.contains('tool-btn') ||
                         focused.classList.contains('quiz-opt') ||
                         focused.classList.contains('choice-btn') ||
+                        focused.classList.contains('feature-item') ||
+                        focused.classList.contains('sim-selector-btn') ||
+                        focused.classList.contains('settings-card') ||
+                        focused.classList.contains('codex-filter-btn') ||
                         focused.hasAttribute('onclick'))) {
+          if (e.key === ' ') e.preventDefault();
           focused.click();
         }
       }
@@ -151,7 +188,7 @@
       // 方向键在选项中导航
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
         var options = Array.from(document.querySelectorAll(
-          '.page.active .quiz-opt, .page.active .choice-btn'
+          '.page.active .quiz-opt, .page.active .choice-btn, .page.active .codex-filter-btn'
         ));
         if (options.length === 0) return;
         
@@ -166,6 +203,56 @@
         options[next].focus();
       }
     });
+  }
+  
+  // 获取容器内所有可聚焦元素
+  function getFocusableElements(container) {
+    return Array.from(container.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    )).filter(function(el) {
+      return el.offsetParent !== null && !el.disabled;
+    });
+  }
+  
+  // 保存焦点并移到弹窗
+  window.trapModalFocus = function(modal) {
+    _lastFocusedBeforeModal = document.activeElement;
+    var focusable = getFocusableElements(modal);
+    if (focusable.length > 0) {
+      setTimeout(function() { focusable[0].focus(); }, 50);
+    }
+  };
+  
+  // 恢复焦点
+  window.restoreModalFocus = function() {
+    if (_lastFocusedBeforeModal) {
+      setTimeout(function() { _lastFocusedBeforeModal.focus(); }, 50);
+      _lastFocusedBeforeModal = null;
+    }
+  };
+  
+  // 拦截 Modal.show 以捕获焦点
+  function patchModalFocus() {
+    if (typeof Modal !== 'undefined' && Modal.show) {
+      var origShow = Modal.show;
+      Modal.show = function(title, desc, icon) {
+        var result = origShow.apply(this, arguments);
+        var modal = document.getElementById('modalOverlay');
+        if (modal) trapModalFocus(modal);
+        return result;
+      };
+    }
+    // 拦截 themeModal 打开
+    var themeTrigger = document.querySelector('.settings-card[onclick*="themeModal"]');
+    if (themeTrigger) {
+      var origClick = themeTrigger.onclick;
+      themeTrigger.addEventListener('click', function() {
+        setTimeout(function() {
+          var modal = document.getElementById('themeModal');
+          if (modal && modal.style.display === 'flex') trapModalFocus(modal);
+        }, 100);
+      });
+    }
   }
   
   // ===== 3. 触摸优化 =====
@@ -251,11 +338,13 @@
     setupHighContrast();
     setupReducedMotion();
     setupLiveRegion();
+    patchModalFocus();
     
     // 延迟重新注入（等动态内容加载完）
     setTimeout(injectAriaLabels, 2000);
+    setTimeout(patchModalFocus, 2500);
     
-    console.log('♿ Accessibility & Mobile v1.2.0 loaded');
+    console.log('♿ Accessibility & Mobile v1.3.0 loaded');
   }
   
   if (document.readyState === 'loading') {

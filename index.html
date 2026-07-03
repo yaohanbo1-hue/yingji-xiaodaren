@@ -238,7 +238,7 @@
 
     <!-- 📚 学习区 -->
     <div class="menu-section">
-      <h2 class="menu-section-title learn-title" onclick="MenuManager.toggleCategory('learn')">📚 学习中心<span class="collapse-arrow">▼</span></h2>
+      <h2 aria-label="菜单分类" tabindex="0" role="button" class="menu-section-title learn-title" onclick="MenuManager.toggleCategory('learn')">📚 学习中心<span class="collapse-arrow">▼</span></h2>
       <div class="menu-grid learn-grid">
         <div class="mode-btn" onclick="BlindBoxEngine.open('daily')" style="border-color: rgba(255,215,0,0.4); box-shadow: 0 0 25px rgba(255,215,0,0.15); animation: pulse-glow 2s infinite;" role="button" tabindex="0" aria-label="每日盲盒">
           <span class="mode-badge" style="background:linear-gradient(135deg,#ffd700,#ff6b00);color:#000;font-size:11px;">🎁 免费</span>
@@ -337,7 +337,7 @@
 
     <!-- ⚔️ 闯关区 -->
     <div class="menu-section">
-      <h2 class="menu-section-title battle-title" onclick="MenuManager.toggleCategory('battle')">⚔️ 闯关挑战<span class="collapse-arrow">▼</span></h2>
+      <h2 aria-label="菜单分类" tabindex="0" role="button" class="menu-section-title battle-title" onclick="MenuManager.toggleCategory('battle')">⚔️ 闯关挑战<span class="collapse-arrow">▼</span></h2>
       <div class="menu-grid battle-grid">
         <div class="mode-btn" onclick="PageManager.navigate('battle-lobby')" style="border-color: rgba(255,215,0,0.3); box-shadow: 0 0 20px rgba(255,215,0,0.1), inset 0 1px 0 rgba(255,215,0,0.15);" role="button" tabindex="0" aria-label="防灾大擂台">
           <span class="mode-badge mode-badge-hot">🔥 推荐</span>
@@ -473,7 +473,7 @@
 
   <!-- ======== 闯关模式预览 ======== -->
   <div id="page-campaign" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
     <div class="preview-header">
       <span class="preview-icon">🏰</span>
       <h2 class="preview-title">闯关模式</h2>
@@ -514,10 +514,10 @@
       </div>
     </div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:var(--space-sm);width:100%;max-width:360px">
-      <button class="btn btn-primary btn-lg" style="flex:1;min-width:140px" onclick="ScenarioEngine.start()">
+      <button type="button" class="btn btn-primary btn-lg" style="flex:1;min-width:140px" onclick="ScenarioEngine.start()">
         🎬 情景模拟
       </button>
-      <button class="btn btn-gold btn-lg" style="flex:1;min-width:140px" onclick="KitEngine.start('earthquake')">
+      <button type="button" class="btn btn-gold btn-lg" style="flex:1;min-width:140px" onclick="KitEngine.start('earthquake')">
         🎒 整理应急包
       </button>
     </div>
@@ -525,7 +525,7 @@
 
   <!-- ======== 自由模式预览 ======== -->
   <div id="page-free" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
     <div class="preview-header">
       <span class="preview-icon">🎯</span>
       <h2 class="preview-title">自由模式</h2>
@@ -554,14 +554,14 @@
         <span class="feature-status feature-ready">🆓 自由</span>
       </div>
     </div>
-    <button class="btn btn-gold btn-lg" style="margin-top:var(--space-sm);width:100%;max-width:360px" onclick="StudyEngine.start()">
+    <button type="button" class="btn btn-gold btn-lg" style="margin-top:var(--space-sm);width:100%;max-width:360px" onclick="StudyEngine.start()">
       🎲 随机练习
     </button>
   </div>
 
   <!-- ======== 速答挑战预览 ======== -->
   <div id="page-speed" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
     <div class="preview-header">
       <span class="preview-icon">⚡</span>
       <h2 class="preview-title">速答挑战</h2>
@@ -584,14 +584,14 @@
         <span class="feature-status feature-soon">📅 即将上线</span>
       </div>
     </div>
-    <button class="btn btn-gold btn-lg" style="margin-top:var(--space-sm);width:100%;max-width:360px" onclick="QuizEngine.startSpeed(10)">
+    <button type="button" class="btn btn-gold btn-lg" style="margin-top:var(--space-sm);width:100%;max-width:360px" onclick="QuizEngine.startSpeed(10)">
       ⚡ 开始挑战
     </button>
   </div>
 
   <!-- ======== 双人PK页 ======== -->
   <div id="page-pk" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="preview-header" id="pkHeader">
       <span class="preview-icon">👥</span>
       <h2 class="preview-title">双人PK</h2>
@@ -628,7 +628,7 @@
           </select>
         </div>
       </div>
-      <button class="btn btn-primary btn-lg" onclick="PKEngine.start()">⚔️ 开始PK！</button>
+      <button type="button" class="btn btn-primary btn-lg" onclick="PKEngine.start()">⚔️ 开始PK！</button>
     </div>
     <!-- 答题页 -->
     <div id="pkGame" style="display:none;width:100%;max-width:500px">
@@ -650,7 +650,7 @@
         <div class="pk-options" id="pkOptions"></div>
         <div class="pk-feedback hidden" id="pkFeedback" ></div>
       </div>
-      <button class="quiz-next-btn hidden" id="pkNextBtn" onclick="PKEngine.nextQuestion()" >下一题 →</button>
+      <button type="button" class="quiz-next-btn hidden" id="pkNextBtn" onclick="PKEngine.nextQuestion()" >下一题 →</button>
     </div>
     <!-- 结果页 -->
     <div id="pkResult" style="display:none;width:100%;max-width:500px">
@@ -658,15 +658,15 @@
       <div class="pk-result-players" id="pkResultPlayers"></div>
       <div class="pk-result-detail" id="pkResultDetail"></div>
       <div style="display:flex;gap:8px;justify-content:center;margin-top:var(--space-md)">
-        <button class="btn btn-primary" onclick="PKEngine.start()">🔄 再来一局</button>
-        <button class="btn" onclick="PageManager.navigate('menu')">🏠 返回</button>
+        <button type="button" class="btn btn-primary" onclick="PKEngine.start()">🔄 再来一局</button>
+        <button type="button" class="btn" onclick="PageManager.navigate('menu')">🏠 返回</button>
       </div>
     </div>
   </div>
 
   <!-- ======== 图鉴页 ======== -->
   <div id="page-codex" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
     <div class="preview-header">
       <span class="preview-icon">📚</span>
       <h2 class="preview-title">灾害图鉴</h2>
@@ -682,17 +682,17 @@
     </div>
     <!-- 灾害过滤 -->
     <div class="codex-filters" style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:var(--space-sm);justify-content:center">
-      <button class="codex-filter-btn active" data-disaster="all" onclick="CodexEngine.filter('all')">🌟 全部</button>
-      <button class="codex-filter-btn" data-disaster="earthquake" onclick="CodexEngine.filter('earthquake')">🌍 地震</button>
-      <button class="codex-filter-btn" data-disaster="flood" onclick="CodexEngine.filter('flood')">🌊 洪水</button>
-      <button class="codex-filter-btn" data-disaster="typhoon" onclick="CodexEngine.filter('typhoon')">🌪️ 台风</button>
-      <button class="codex-filter-btn" data-disaster="fire" onclick="CodexEngine.filter('fire')">🔥 火灾</button>
-      <button class="codex-filter-btn" data-disaster="lightning" onclick="CodexEngine.filter('lightning')">⚡ 雷电</button>
-      <button class="codex-filter-btn" data-disaster="blizzard" onclick="CodexEngine.filter('blizzard')">❄️ 暴雪</button>
-      <button class="codex-filter-btn" data-disaster="landslide" onclick="CodexEngine.filter('landslide')">⛰️ 滑坡</button>
-      <button class="codex-filter-btn" data-disaster="drought" onclick="CodexEngine.filter('drought')">☀️ 干旱</button>
-      <button class="codex-filter-btn" data-disaster="wildfire" onclick="CodexEngine.filter('wildfire')">🌲 山火</button>
-      <button class="codex-filter-btn" data-disaster="volcano" onclick="CodexEngine.filter('volcano')">🌋 火山</button>
+      <button aria-label="筛选筛选" type="button" class="codex-filter-btn active" data-disaster="all" onclick="CodexEngine.filter('all')">🌟 全部</button>
+      <button aria-label="筛选筛选" type="button" class="codex-filter-btn" data-disaster="earthquake" onclick="CodexEngine.filter('earthquake')">🌍 地震</button>
+      <button aria-label="筛选筛选" type="button" class="codex-filter-btn" data-disaster="flood" onclick="CodexEngine.filter('flood')">🌊 洪水</button>
+      <button aria-label="筛选筛选" type="button" class="codex-filter-btn" data-disaster="typhoon" onclick="CodexEngine.filter('typhoon')">🌪️ 台风</button>
+      <button aria-label="筛选筛选" type="button" class="codex-filter-btn" data-disaster="fire" onclick="CodexEngine.filter('fire')">🔥 火灾</button>
+      <button aria-label="筛选筛选" type="button" class="codex-filter-btn" data-disaster="lightning" onclick="CodexEngine.filter('lightning')">⚡ 雷电</button>
+      <button aria-label="筛选筛选" type="button" class="codex-filter-btn" data-disaster="blizzard" onclick="CodexEngine.filter('blizzard')">❄️ 暴雪</button>
+      <button aria-label="筛选筛选" type="button" class="codex-filter-btn" data-disaster="landslide" onclick="CodexEngine.filter('landslide')">⛰️ 滑坡</button>
+      <button aria-label="筛选筛选" type="button" class="codex-filter-btn" data-disaster="drought" onclick="CodexEngine.filter('drought')">☀️ 干旱</button>
+      <button aria-label="筛选筛选" type="button" class="codex-filter-btn" data-disaster="wildfire" onclick="CodexEngine.filter('wildfire')">🌲 山火</button>
+      <button aria-label="筛选筛选" type="button" class="codex-filter-btn" data-disaster="volcano" onclick="CodexEngine.filter('volcano')">🌋 火山</button>
     </div>
     <!-- 卡片网格 -->
     <div class="codex-grid" id="codexGrid">
@@ -702,7 +702,7 @@
 
   <!-- ======== 成就页 ======== -->
   <div id="page-achievements" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
     <div class="preview-header">
       <span class="preview-icon">🏆</span>
       <h2 class="preview-title">成就殿堂</h2>
@@ -715,7 +715,7 @@
 
   <!-- ======== 统计页 ======== -->
   <div id="page-stats" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
     <div class="preview-header">
       <span class="preview-icon">📊</span>
       <h2 class="preview-title">学习统计</h2>
@@ -728,7 +728,7 @@
 
   <!-- ======== 商城页 ======== -->
   <div id="page-shop" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
     <div class="preview-header">
       <span class="preview-icon">🛒</span>
       <h2 class="preview-title">盲盒商城</h2>
@@ -742,7 +742,7 @@
 
   <!-- ======== 排行榜页 ======== -->
   <div id="page-leaderboard" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
     <div class="preview-header">
       <span class="preview-icon">🏅</span>
       <h2 class="preview-title">排行榜</h2>
@@ -755,7 +755,7 @@
 
   <!-- ======== 角色选择页 ======== -->
   <div id="page-character" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
     <div class="preview-header">
       <span class="preview-icon">👤</span>
       <h2 class="preview-title">选择角色</h2>
@@ -768,7 +768,7 @@
 
   <!-- ======== 灾害百科页 ======== -->
   <div id="page-encyclopedia" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
     <div class="preview-header">
       <span class="preview-icon">🌍</span>
       <h2 class="preview-title">灾害百科全书</h2>
@@ -783,7 +783,7 @@
 
   <!-- ======== 灾害日历页 ======== -->
   <div id="page-calendar" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
     <div class="preview-header">
       <span class="preview-icon">📅</span>
       <h2 class="preview-title">防灾日历</h2>
@@ -796,7 +796,7 @@
 
   <!-- ======== 小游戏页 ======== -->
   <div id="page-minigame" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
     <div class="preview-header">
       <span class="preview-icon">🎮</span>
       <h2 class="preview-title">防灾小游戏</h2>
@@ -809,7 +809,7 @@
 
   <!-- ======== 设置页 ======== -->
   <div id="page-settings" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
     <div class="settings-header">
       <div class="settings-header-icon">⚙️</div>
       <h2 class="settings-title">设置</h2>
@@ -821,7 +821,7 @@
         <div class="settings-section-title">
           <span class="settings-section-icon">🎨</span>外观
         </div>
-        <div class="settings-card" onclick="document.getElementById('themeModal').style.display='flex'">
+        <div tabindex="0" role="button" class="settings-card" onclick="document.getElementById('themeModal').style.display='flex'">
           <div class="settings-card-left">
             <div class="settings-card-icon" style="background:linear-gradient(135deg,#3B82F6,#A855F7)">🎨</div>
             <div class="settings-card-info">
@@ -892,7 +892,7 @@
         <div class="settings-section-title">
           <span class="settings-section-icon">📚</span>学习
         </div>
-        <div class="settings-card" onclick="TutorialEngine.reset()">
+        <div tabindex="0" role="button" class="settings-card" onclick="TutorialEngine.reset()">
           <div class="settings-card-left">
             <div class="settings-card-icon" style="background:linear-gradient(135deg,#F59E0B,#D97706)">🎓</div>
             <div class="settings-card-info">
@@ -923,7 +923,7 @@
         <div class="settings-section-title">
           <span class="settings-section-icon">💾</span>数据
         </div>
-        <div class="settings-card" onclick="SettingsEngine.exportData()">
+        <div tabindex="0" role="button" class="settings-card" onclick="SettingsEngine.exportData()">
           <div class="settings-card-left">
             <div class="settings-card-icon" style="background:linear-gradient(135deg,#10B981,#34D399)">📤</div>
             <div class="settings-card-info">
@@ -935,7 +935,7 @@
             <span class="settings-chevron">›</span>
           </div>
         </div>
-        <div class="settings-card" onclick="SettingsEngine.importData()">
+        <div tabindex="0" role="button" class="settings-card" onclick="SettingsEngine.importData()">
           <div class="settings-card-left">
             <div class="settings-card-icon" style="background:linear-gradient(135deg,#3B82F6,#60A5FA)">📥</div>
             <div class="settings-card-info">
@@ -965,7 +965,7 @@
         <div class="settings-section-title">
           <span class="settings-section-icon">ℹ️</span>关于
         </div>
-        <div class="settings-card" onclick="SettingsEngine.showAbout()">
+        <div tabindex="0" role="button" class="settings-card" onclick="SettingsEngine.showAbout()">
           <div class="settings-card-left">
             <div class="settings-card-icon" style="background:linear-gradient(135deg,#6366F1,#8B5CF6)">ℹ️</div>
             <div class="settings-card-info">
@@ -995,7 +995,7 @@
 
   <!-- ======== 抽卡页（占位） ======== -->
   <div id="page-gacha" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
     <div class="preview-header">
       <span class="preview-icon">🎁</span>
       <h2 class="preview-title">抽盲盒</h2>
@@ -1012,7 +1012,7 @@
 
 <!-- ======== 学习页（闪卡模式） ======== -->
   <div id="page-study" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('free')" data-nav="free">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('free')" data-nav="free">←</button>
     <div id="studyArea" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:var(--space-md);padding:var(--space-md)">
       <div class="quiz-header" id="studyHeader">
         <span class="quiz-progress-text" id="studyProgressTxt">📖 学习中 1/10</span>
@@ -1046,47 +1046,47 @@
       </div>
       <!-- 导航按钮 -->
       <div class="study-nav">
-        <button class="study-nav-btn" id="studyPrevBtn" onclick="StudyEngine.prev()">◀ 上一张</button>
-        <button class="study-nav-btn study-nav-primary" id="studyNextBtn" onclick="StudyEngine.next()">下一张 ▶</button>
+        <button type="button" class="study-nav-btn" id="studyPrevBtn" onclick="StudyEngine.prev()">◀ 上一张</button>
+        <button type="button" class="study-nav-btn study-nav-primary" id="studyNextBtn" onclick="StudyEngine.next()">下一张 ▶</button>
       </div>
-      <button class="quiz-menu-btn" onclick="StudyEngine.quit()" style="margin-top:var(--space-sm)">🏠 返回自由模式</button>
+      <button type="button" class="quiz-menu-btn" onclick="StudyEngine.quit()" style="margin-top:var(--space-sm)">🏠 返回自由模式</button>
     </div>
   </div>
 
   <!-- ======== 闯关挑战大厅 ======== -->
   <div id="page-battle-lobby" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="game-header">
       <div class="mode-label" style="color:#FFD700;font-size:18px;font-weight:800;text-shadow:0 0 12px rgba(255,215,0,0.4);">⚔️ 闯关挑战</div>
       <div style="font-size:13px;color:rgba(255,255,255,0.5);">选择挑战模式 · 击败怪兽</div>
     </div>
     <div class="feature-list" style="padding:20px;max-width:480px;margin:0 auto;">
-      <div class="feature-item" onclick="BattleEngine.init()" style="cursor:pointer;border-color:rgba(255,215,0,0.3);">
+      <div tabindex="0" role="button" class="feature-item" onclick="BattleEngine.init()" style="cursor:pointer;border-color:rgba(255,215,0,0.3);">
         <span class="feature-icon" style="font-size:36px;">👾</span>
         <div class="feature-text"><h4>防灾大擂台</h4><p>回合制打怪兽！答题就是攻击！</p></div>
         <span class="feature-status" style="background:linear-gradient(135deg,#ffd700,#ff6b00);color:#000;">🔥 推荐</span>
       </div>
-      <div class="feature-item" onclick="PageManager.navigate('free')" style="cursor:pointer;">
+      <div tabindex="0" role="button" class="feature-item" onclick="PageManager.navigate('free')" style="cursor:pointer;">
         <span class="feature-icon" style="font-size:36px;">🎯</span>
         <div class="feature-text"><h4>自由模式</h4><p>自选灾害类型，无限练习</p></div>
         <span class="feature-status feature-ready">🆓 自由</span>
       </div>
-      <div class="feature-item" onclick="PageManager.navigate('speed')" style="cursor:pointer;">
+      <div tabindex="0" role="button" class="feature-item" onclick="PageManager.navigate('speed')" style="cursor:pointer;">
         <span class="feature-icon" style="font-size:36px;">⚡</span>
         <div class="feature-text"><h4>速答挑战</h4><p>10题限时竞答，挑战手速</p></div>
         <span class="feature-status feature-ready">🆓 自由</span>
       </div>
-      <div class="feature-item" onclick="PageManager.navigate('pk')" style="cursor:pointer;">
+      <div tabindex="0" role="button" class="feature-item" onclick="PageManager.navigate('pk')" style="cursor:pointer;">
         <span class="feature-icon" style="font-size:36px;">👥</span>
         <div class="feature-text"><h4>双人PK</h4><p>邀请好友，同台竞技</p></div>
         <span class="feature-status" style="background:linear-gradient(135deg,#a78bfa,#7c3aed);color:#fff;">👥 对战</span>
       </div>
-      <div class="feature-item" onclick="PageManager.navigate('survival')" style="cursor:pointer;">
+      <div tabindex="0" role="button" class="feature-item" onclick="PageManager.navigate('survival')" style="cursor:pointer;">
         <span class="feature-icon" style="font-size:36px;">♾️</span>
         <div class="feature-text"><h4>生存挑战</h4><p>无限答题，看你能撑多久</p></div>
         <span class="feature-status" style="background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;">💀 极限</span>
       </div>
-      <div class="feature-item" onclick="PageManager.navigate('bossrush')" style="cursor:pointer;">
+      <div tabindex="0" role="button" class="feature-item" onclick="PageManager.navigate('bossrush')" style="cursor:pointer;">
         <span class="feature-icon" style="font-size:36px;">💀</span>
         <div class="feature-text"><h4>Boss Rush</h4><p>连续击败Boss，挑战极限</p></div>
         <span class="feature-status" style="background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;">💀 极限</span>
@@ -1096,7 +1096,7 @@
 
   <!-- ======== 防灾大擂台 (Battle Arena) ======== -->
   <div id="page-battle" class="page page-content" style="overflow-y:auto">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')">← 返回</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">← 返回</button>
     
     <!-- 战斗 HUD -->
     <div class="battle-hud">
@@ -1114,7 +1114,7 @@
           <div id="energyBar" class="energy-bar-fill"></div>
         </div>
         <div class="hud-label">能量</div>
-        <button id="battleUltBtn" class="btn btn-ultimate hidden" onclick="BattleEngine.ultimateAttack()" >
+        <button type="button" id="battleUltBtn" class="btn btn-ultimate hidden" onclick="BattleEngine.ultimateAttack()" >
           <span class="ult-icon">🔥</span>
           <span class="ult-text">释放必杀技！</span>
         </button>
@@ -1172,7 +1172,7 @@
           <div id="battleQuizExpScenario" class="exp-scenario"></div>
         </div>
       </div>
-      <button id="battleQuizNextBtn" class="btn btn-primary hidden" onclick="QuizEngine.next()" >下一题 →</button>
+      <button type="button" id="battleQuizNextBtn" class="btn btn-primary hidden" onclick="QuizEngine.next()" >下一题 →</button>
       
       <div id="battleQuizResult" class="result-box hidden" ></div>
     </div>
@@ -1180,7 +1180,7 @@
 
 <!-- ======== 答题页 ======== -->
   <div id="page-quiz" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
   
     <!--  生存模式：HP 血条 -->
     <div class="survival-hud hidden" id="survivalHud" >
@@ -1220,7 +1220,7 @@
           <div id="quizExpScenario" class="exp-scenario"></div>
         </div>
       </div>
-      <button class="quiz-next-btn hidden" id="quizNextBtn" onclick="QuizEngine.next()" >下一题 →</button>
+      <button type="button" class="quiz-next-btn hidden" id="quizNextBtn" onclick="QuizEngine.next()" >下一题 →</button>
     </div>
     <!-- 结果区 -->
     <div class="quiz-result hidden" id="quizResult" ></div>
@@ -1228,7 +1228,7 @@
 
 <!-- ======== 情景模拟页 ======== -->
   <div id="page-scenario" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="scenario-header">
       <span class="quiz-progress-text" id="scenarioProgress">情景 1/25</span>
       <span class="quiz-score-text" id="scenarioScore">🏆 0 分</span>
@@ -1247,14 +1247,14 @@
         <div class="scenario-desc" id="scenarioDesc">情景描述...</div>
         <div class="scenario-options" id="scenarioOptions"></div>
         <div class="scenario-feedback hidden" id="scenarioFeedback" ></div>
-        <button class="quiz-next-btn hidden" id="scenarioNextBtn" onclick="ScenarioEngine.next()" >下一幕 →</button>
+        <button type="button" class="quiz-next-btn hidden" id="scenarioNextBtn" onclick="ScenarioEngine.next()" >下一幕 →</button>
       </div>
     </div>
   </div>
 
 <!-- ======== 应急包整理页 ======== -->
   <div id="page-kit" class="page page-content">
-    <button class="btn back-float" onclick="if(KitEngine.active){KitEngine.quit()}else{PageManager.navigate('campaign')}">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="if(KitEngine.active){KitEngine.quit()}else{PageManager.navigate('campaign')}">←</button>
     <div class="kit-header">
       <span class="kit-title" id="kitTitle">🌍 地震应急包</span>
       <span class="kit-stats">
@@ -1271,7 +1271,7 @@
         <div class="kit-pack-hint">⬇️ 点击物品放入应急包</div>
       </div>
       <!-- 确认按钮 -->
-      <button class="btn btn-primary btn-lg" id="kitConfirmBtn" style="display:block;margin-top:var(--space-sm)" onclick="KitEngine.confirm()">
+      <button type="button" class="btn btn-primary btn-lg" id="kitConfirmBtn" style="display:block;margin-top:var(--space-sm)" onclick="KitEngine.confirm()">
         ✅ 打包完毕！
       </button>
       <!-- 结果 -->
@@ -1281,37 +1281,37 @@
 
 <!-- ======== 急救模拟器页 ======== -->
   <div id="page-firstaid" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
     <div id="firstAidContainer" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md) 0"></div>
   </div>
 
 <!-- ======== 音乐页 ======== -->
   <div id="page-music" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
     <div id="music-content" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md) 0"></div>
   </div>
 
 <!-- ======== 彩蛋页 ======== -->
   <div id="page-eggs" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
     <div id="eggs-content" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md) 0"></div>
   </div>
 
 <!-- ======== 基地页 ======== -->
   <div id="page-base" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
     <div id="base-content" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md) 0"></div>
   </div>
 
 <!-- ======== 博物馆页 ======== -->
   <div id="page-museum" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')" data-nav="menu">←</button>
     <div id="museum-content" style="width:100%;max-width:500px;margin:0 auto;padding:var(--space-md) 0"></div>
   </div>
 
 <!-- ======== 每日挑战页 ======== -->
   <div id="page-daily" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="preview-header">
       <span class="preview-icon">📅</span>
       <h2 class="preview-title">每日挑战</h2>
@@ -1322,7 +1322,7 @@
 
 <!-- ======== 生存模式页 ======== -->
   <div id="page-survival" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="preview-header">
       <span class="preview-icon">♾️</span>
       <h2 class="preview-title">生存模式</h2>
@@ -1334,7 +1334,7 @@
 
 <!-- ======== Boss Rush页 ======== -->
   <div id="page-bossrush" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="preview-header">
       <span class="preview-icon">💀</span>
       <h2 class="preview-title">Boss Rush</h2>
@@ -1346,7 +1346,7 @@
 
 <!-- ======== 限时挑战页 ======== -->
   <div id="page-timed" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="preview-header">
       <span class="preview-icon">⏱️</span>
       <h2 class="preview-title">限时挑战</h2>
@@ -1359,7 +1359,7 @@
 
 <!-- ======== 故事模式页 ======== -->
   <div id="page-story" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="preview-header">
       <span class="preview-icon">📖</span>
       <h2 class="preview-title">故事模式</h2>
@@ -1370,7 +1370,7 @@
 
 <!-- ======== 闪电问答页 ======== -->
   <div id="page-disasterquiz" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="preview-header">
       <span class="preview-icon">⚡</span>
       <h2 class="preview-title">闪电问答</h2>
@@ -1381,7 +1381,7 @@
 
 <!-- ======== 精准投放页 ======== -->
   <div id="page-supplydrop" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="preview-header">
       <span class="preview-icon">🎯</span>
       <h2 class="preview-title">精准投放</h2>
@@ -1392,7 +1392,7 @@
 
 <!-- ======== 限时逃生页 ======== -->
   <div id="page-time-escape" class="page page-content">
-    <button class="btn back-float" onclick="typeof TimeEscapeEngine!=='undefined'&&TimeEscapeEngine.active&&(clearInterval(TimeEscapeEngine.timer),TimeEscapeEngine.active=!1);PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="typeof TimeEscapeEngine!=='undefined'&&TimeEscapeEngine.active&&(clearInterval(TimeEscapeEngine.timer),TimeEscapeEngine.active=!1);PageManager.navigate('menu')">←</button>
     <div class="game-header">
       <div class="mode-label" style="color:var(--cyber-blue);">⏰ 限时逃生</div>
       <div style="display:flex;gap:16px;align-items:center;">
@@ -1412,7 +1412,7 @@
 
 <!-- ======== 精准打击页 ======== -->
   <div id="page-precision" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="game-header">
       <div class="mode-label" style="color:var(--neon-green);">🎯 精准打击</div>
       <div style="display:flex;gap:16px;align-items:center;">
@@ -1432,7 +1432,7 @@
 
 <!-- ======== 防灾大冒险页 ======== -->
   <div id="page-story-adventure" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="game-header">
       <div class="mode-label" style="color:var(--neon-purple);">📖 防灾大冒险</div>
       <div id="storyAdvChapter" style="font-size:14px;color:rgba(255,255,255,0.5);">第1章</div>
@@ -1450,7 +1450,7 @@
 
 <!-- ======== 新手引导页 ======== -->
   <div id="page-guide" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="game-header">
       <div class="mode-label" style="color:var(--neon-gold);">🎓 新手引导</div>
       <div id="guideStep" style="font-size:14px;color:rgba(255,255,255,0.5);">8步引导</div>
@@ -1464,15 +1464,15 @@
         <div id="guideIcon" style="font-size:64px;text-align:center;margin:20px 0;">📦</div>
       </div>
       <div style="display:flex;gap:12px;justify-content:center;">
-        <button class="btn btn-secondary" onclick="PageManager.navigate('menu')">返回菜单</button>
-        <button class="btn btn-primary" onclick="GuideEnhancer.forceRestart()">开始引导</button>
+        <button type="button" class="btn btn-secondary" onclick="PageManager.navigate('menu')">返回菜单</button>
+        <button type="button" class="btn btn-primary" onclick="GuideEnhancer.forceRestart()">开始引导</button>
       </div>
     </div>
   </div>
 
 <!-- ======== 记忆翻牌页 ======== -->
   <div id="page-memory-card" class="page page-content">
-    <button class="btn back-float" onclick="MemoryCardEngine.active=false;PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="MemoryCardEngine.active=false;PageManager.navigate('menu')">←</button>
     <div class="game-header">
       <div class="mode-label" style="color:#00D4FF;">🧠 记忆翻牌</div>
       <div style="display:flex;gap:16px;align-items:center;">
@@ -1486,7 +1486,7 @@
 
 <!-- ======== 反应速度页 ======== -->
   <div id="page-reaction" class="page page-content">
-    <button class="btn back-float" onclick="typeof ReactionEngine!=='undefined'&&(ReactionEngine.active=!1,clearTimeout(ReactionEngine.targetTimeout));PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="typeof ReactionEngine!=='undefined'&&(ReactionEngine.active=!1,clearTimeout(ReactionEngine.targetTimeout));PageManager.navigate('menu')">←</button>
     <div class="game-header">
       <div class="mode-label" style="color:#FF006E;">⚡ 反应速度</div>
       <div id="reactionInfo" style="font-size:16px;color:rgba(255,255,255,0.6);">准备...</div>
@@ -1501,7 +1501,7 @@
 
 <!-- ======== 知识竞速页 ======== -->
   <div id="page-knowledge-race" class="page page-content">
-    <button class="btn back-float" onclick="KnowledgeRaceEngine.active=false;clearInterval(KnowledgeRaceEngine.timer);PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="KnowledgeRaceEngine.active=false;clearInterval(KnowledgeRaceEngine.timer);PageManager.navigate('menu')">←</button>
     <div class="game-header">
       <div class="mode-label" style="color:#FFD700;">🏁 知识竞速</div>
       <div style="display:flex;gap:16px;align-items:center;">
@@ -1521,7 +1521,7 @@
 
 <!-- ======== AI 智能防灾导师页 ======== -->
   <div id="page-ai-tutor" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="game-header">
       <div class="mode-label" style="color:#60A5FA;">🤖 AI 防灾导师</div>
       <div style="font-size:12px;color:rgba(255,255,255,0.4);">智能分析 · 个性推荐</div>
@@ -1531,7 +1531,7 @@
 
 <!-- ======== 能力认证页 ======== -->
   <div id="page-certification" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="game-header">
       <div class="mode-label" style="color:#F59E0B;">🏅 能力认证</div>
       <div style="font-size:12px;color:rgba(255,255,255,0.4);">等级 · 证书 · 成就</div>
@@ -1541,7 +1541,7 @@
 
 <!-- ======== 灾害情景沉浸模拟页 ======== -->
   <div id="page-disaster-sim" class="page page-content">
-    <button class="btn back-float" onclick="if(DisasterSimEngine._animFrame)cancelAnimationFrame(DisasterSimEngine._animFrame);PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="if(DisasterSimEngine._animFrame)cancelAnimationFrame(DisasterSimEngine._animFrame);PageManager.navigate('menu')">←</button>
     <div class="game-header">
       <div class="mode-label" style="color:#EF4444;">🎬 灾害情景模拟</div>
       <div style="font-size:12px;color:rgba(255,255,255,0.4);">沉浸式体验 · 真实决策</div>
@@ -1549,27 +1549,27 @@
     <div id="simContent" style="position:relative;z-index:1;">
       <!-- 灾害选择器 -->
       <div class="sim-selector" id="simSelector">
-        <div class="sim-selector-btn" onclick="DisasterSimEngine.init('earthquake')">
+        <div tabindex="0" role="button" class="sim-selector-btn" onclick="DisasterSimEngine.init('earthquake')">
           <div class="sim-selector-icon">🌍</div>
           <div class="sim-selector-name">地震</div>
           <div class="sim-selector-case">2008 汶川地震</div>
         </div>
-        <div class="sim-selector-btn" onclick="DisasterSimEngine.init('flood')">
+        <div tabindex="0" role="button" class="sim-selector-btn" onclick="DisasterSimEngine.init('flood')">
           <div class="sim-selector-icon">🌊</div>
           <div class="sim-selector-name">洪水</div>
           <div class="sim-selector-case">2021 河南暴雨</div>
         </div>
-        <div class="sim-selector-btn" onclick="DisasterSimEngine.init('wildfire')">
+        <div tabindex="0" role="button" class="sim-selector-btn" onclick="DisasterSimEngine.init('wildfire')">
           <div class="sim-selector-icon">🔥</div>
           <div class="sim-selector-name">山火</div>
           <div class="sim-selector-case">2019 澳洲山火</div>
         </div>
-        <div class="sim-selector-btn" onclick="DisasterSimEngine.init('typhoon')">
+        <div tabindex="0" role="button" class="sim-selector-btn" onclick="DisasterSimEngine.init('typhoon')">
           <div class="sim-selector-icon">🌀</div>
           <div class="sim-selector-name">台风</div>
           <div class="sim-selector-case">2023 杜苏芮</div>
         </div>
-        <div class="sim-selector-btn" onclick="DisasterSimEngine.init('volcano')">
+        <div tabindex="0" role="button" class="sim-selector-btn" onclick="DisasterSimEngine.init('volcano')">
           <div class="sim-selector-icon">🌋</div>
           <div class="sim-selector-name">火山爆发</div>
           <div class="sim-selector-case">2010 冰岛火山</div>
@@ -1590,7 +1590,7 @@
 
 <!-- ======== 真实案例还原模式页 ======== -->
   <div id="page-real-cases" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="game-header">
       <div class="mode-label" style="color:#F59E0B;">📖 真实案例还原</div>
       <div style="font-size:12px;color:rgba(255,255,255,0.4);">历史事件 · 情景重现 · 知识总结</div>
@@ -1601,7 +1601,7 @@
 
   <!-- ======== 错题本页 ======== -->
   <div id="page-wrong-book" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="game-header">
       <div class="mode-label" style="color:#f87171;">📕 错题本</div>
       <div style="font-size:12px;color:rgba(255,255,255,0.4);">查漏补缺 · 专项复习</div>
@@ -1611,7 +1611,7 @@
 
   <!-- ======== 学习报告页 ======== -->
   <div id="page-report" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="game-header">
       <div class="mode-label" style="color:#34d399;font-size:18px;font-weight:800;text-shadow:0 0 12px rgba(52,211,153,0.4);">📊 学习报告</div>
       <div style="font-size:13px;color:rgba(255,255,255,0.5);">数据可视化 · 一键导出</div>
@@ -1620,7 +1620,7 @@
       <div style="font-size:72px;margin-bottom:20px;text-shadow:0 0 30px rgba(52,211,153,0.3);">📊</div>
       <h3 style="color:rgba(255,255,255,0.95);margin-bottom:10px;font-size:20px;font-weight:700;">生成学习报告</h3>
       <p style="color:rgba(255,255,255,0.55);margin-bottom:30px;font-size:14px;">包含学习时长、答题统计、薄弱项分析等</p>
-      <button class="wb-btn wb-btn-primary" onclick="PageManager.navigate('report-detail');ReportEngine.showDetailReport()" style="font-size:16px;padding:14px 32px;">
+      <button type="button" class="wb-btn wb-btn-primary" onclick="PageManager.navigate('report-detail');ReportEngine.showDetailReport()" style="font-size:16px;padding:14px 32px;">
         ✨ 生成报告
       </button>
     </div>
@@ -1628,7 +1628,7 @@
 
   <!-- ======== 学习报告详情页 ======== -->
   <div id="page-report-detail" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('report')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('report')">←</button>
     <div class="game-header">
       <div class="mode-label" style="color:#34d399;font-size:18px;font-weight:800;text-shadow:0 0 12px rgba(52,211,153,0.4);">📊 学习报告</div>
       <div style="font-size:13px;color:rgba(255,255,255,0.5);">数据可视化 · 一键导出</div>
@@ -1638,7 +1638,7 @@
 
   <!-- ======== 宠物页 ======== -->
   <div id="page-pet" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="game-header">
       <div class="mode-label" style="color:#a78bfa;">🐉 防灾宠物</div>
       <div style="font-size:12px;color:rgba(255,255,255,0.4);">养宠物学防灾</div>
@@ -1648,7 +1648,7 @@
 
   <!-- ======== 日记页 ======== -->
   <div id="page-diary" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="game-header">
       <div class="mode-label" style="color:#60a5fa;">📓 防灾日记</div>
       <div style="font-size:12px;color:rgba(255,255,255,0.4);">记录学习心得</div>
@@ -1658,7 +1658,7 @@
 
   <!-- ======== 卡牌工坊页 ======== -->
   <div id="page-workshop" class="page page-content">
-    <button class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
+    <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="game-header">
       <div class="mode-label" style="color:#fbbf24;">🧩 卡牌工坊</div>
       <div style="font-size:12px;color:rgba(255,255,255,0.4);">合成强化碎片套装</div>
@@ -1671,7 +1671,7 @@
         升级你的防灾装备，提升战斗力。<br>
         <span style="color:rgba(255,255,255,0.3);">（功能开发中，敬请期待）</span>
       </p>
-      <button class="wb-btn wb-btn-primary" onclick="PageManager.navigate('menu')" style="font-size:14px;padding:12px 28px;">
+      <button type="button" class="wb-btn wb-btn-primary" onclick="PageManager.navigate('menu')" style="font-size:14px;padding:12px 28px;">
         ← 返回主菜单
       </button>
     </div>
@@ -1682,37 +1682,37 @@
 
 <!-- ======== 底部导航栏（独立于页面容器） ======== -->
 <div class="menu-toolbar" id="menuToolbar">
-  <button class="tool-btn" onclick="PageManager.navigate('codex')" data-nav="codex">
+  <button type="button" class="tool-btn" onclick="PageManager.navigate('codex')" data-nav="codex">
     <span class="icon">📚</span>图鉴
   </button>
-  <button class="tool-btn" onclick="PageManager.navigate('achievements')" data-nav="achievements">
+  <button type="button" class="tool-btn" onclick="PageManager.navigate('achievements')" data-nav="achievements">
     <span class="icon">🏆</span>成就
   </button>
-  <button class="tool-btn" onclick="PageManager.navigate('stats')" data-nav="stats">
+  <button type="button" class="tool-btn" onclick="PageManager.navigate('stats')" data-nav="stats">
     <span class="icon">📊</span>统计
   </button>
-  <button class="tool-btn" onclick="PageManager.navigate('leaderboard')" data-nav="leaderboard">
+  <button type="button" class="tool-btn" onclick="PageManager.navigate('leaderboard')" data-nav="leaderboard">
     <span class="icon">🏅</span>排行
   </button>
-  <button class="tool-btn" onclick="PageManager.navigate('character')" data-nav="character">
+  <button type="button" class="tool-btn" onclick="PageManager.navigate('character')" data-nav="character">
     <span class="icon">👤</span>角色
   </button>
-  <button class="tool-btn" onclick="PageManager.navigate('calendar')" data-nav="calendar">
+  <button type="button" class="tool-btn" onclick="PageManager.navigate('calendar')" data-nav="calendar">
     <span class="icon">📅</span>日历
   </button>
-  <button class="tool-btn" onclick="PageManager.navigate('minigame')" data-nav="minigame">
+  <button type="button" class="tool-btn" onclick="PageManager.navigate('minigame')" data-nav="minigame">
     <span class="icon">🎮</span>游戏
   </button>
-  <button class="tool-btn" onclick="PageManager.navigate('shop')" data-nav="shop">
+  <button type="button" class="tool-btn" onclick="PageManager.navigate('shop')" data-nav="shop">
     <span class="icon">🛒</span>商城
   </button>
-  <button class="tool-btn" onclick="PageManager.navigate('settings')" data-nav="settings">
+  <button type="button" class="tool-btn" onclick="PageManager.navigate('settings')" data-nav="settings">
     <span class="icon">⚙️</span>设置
   </button>
 </div>
 
 <!-- ======== 主题选择弹窗 ======== -->
-<div id="themeModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(8px)" onclick="if(event.target===this)this.style.display='none'">
+<div id="themeModal" role="dialog" aria-modal="true" aria-label="选择主题" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(8px)" onclick="if(event.target===this)this.style.display='none'">
   <div style="background:rgba(15,15,35,0.97);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:28px;max-width:440px;width:90%;max-height:80vh;overflow-y:auto">
     <div style="text-align:center;margin-bottom:20px">
       <div style="font-size:36px;margin-bottom:8px">🎨</div>
@@ -1720,43 +1720,43 @@
       <p style="font-size:13px;color:var(--text-dim);margin-top:4px">改变游戏整体背景氛围</p>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-      <button onclick="BGTheme.switch('deep-space')" style="padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,0.1);background:linear-gradient(135deg, #0F172A, #1A1F2E);color:#fff;cursor:pointer;font-size:13px;text-align:left;display:flex;align-items:center;gap:8px">
+      <button type="button" onclick="BGTheme.switch('deep-space')" style="padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,0.1);background:linear-gradient(135deg, #0F172A, #1A1F2E);color:#fff;cursor:pointer;font-size:13px;text-align:left;display:flex;align-items:center;gap:8px">
         <span style="font-size:20px">🌌</span>
         <div><div style="font-weight:600">深空指挥官</div><div style="font-size:11px;opacity:0.6">蓝紫冷色调</div></div>
       </button>
-      <button onclick="BGTheme.switch('starry-night')" style="padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,0.1);background:linear-gradient(135deg, #020617, #0F172A);color:#fff;cursor:pointer;font-size:13px;text-align:left;display:flex;align-items:center;gap:8px">
+      <button type="button" onclick="BGTheme.switch('starry-night')" style="padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,0.1);background:linear-gradient(135deg, #020617, #0F172A);color:#fff;cursor:pointer;font-size:13px;text-align:left;display:flex;align-items:center;gap:8px">
         <span style="font-size:20px">⭐</span>
         <div><div style="font-weight:600">星空极夜</div><div style="font-size:11px;opacity:0.6">闪烁星星 + 流星</div></div>
       </button>
-      <button onclick="BGTheme.switch('aurora-flow')" style="padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,0.1);background:linear-gradient(135deg, #0B1A1A, #0A1F2E);color:#fff;cursor:pointer;font-size:13px;text-align:left;display:flex;align-items:center;gap:8px">
+      <button type="button" onclick="BGTheme.switch('aurora-flow')" style="padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,0.1);background:linear-gradient(135deg, #0B1A1A, #0A1F2E);color:#fff;cursor:pointer;font-size:13px;text-align:left;display:flex;align-items:center;gap:8px">
         <span style="font-size:20px">🌈</span>
         <div><div style="font-weight:600">极光流动</div><div style="font-size:11px;opacity:0.6">绿紫青渐变</div></div>
       </button>
-      <button onclick="BGTheme.switch('dawn-light')" style="padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,0.1);background:linear-gradient(135deg, #FFF7ED, #BFDBFE);color:#1E293B;cursor:pointer;font-size:13px;text-align:left;display:flex;align-items:center;gap:8px">
+      <button type="button" onclick="BGTheme.switch('dawn-light')" style="padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,0.1);background:linear-gradient(135deg, #FFF7ED, #BFDBFE);color:#1E293B;cursor:pointer;font-size:13px;text-align:left;display:flex;align-items:center;gap:8px">
         <span style="font-size:20px">🌅</span>
         <div><div style="font-weight:600">自然晨曦</div><div style="font-size:11px;opacity:0.6">暖色调日出</div></div>
       </button>
-      <button onclick="BGTheme.switch('digital-matrix')" style="padding:14px;border-radius:14px;border:1px solid rgba(0,230,118,0.2);background:linear-gradient(135deg, #000, #001a00);color:#00E676;cursor:pointer;font-size:13px;text-align:left;display:flex;align-items:center;gap:8px">
+      <button type="button" onclick="BGTheme.switch('digital-matrix')" style="padding:14px;border-radius:14px;border:1px solid rgba(0,230,118,0.2);background:linear-gradient(135deg, #000, #001a00);color:#00E676;cursor:pointer;font-size:13px;text-align:left;display:flex;align-items:center;gap:8px">
         <span style="font-size:20px">💻</span>
         <div><div style="font-weight:600">数字矩阵</div><div style="font-size:11px;opacity:0.6">绿色数据流</div></div>
       </button>
-      <button onclick="BGTheme.switch('warm-light')" style="padding:14px;border-radius:14px;border:1px solid rgba(251,146,60,0.2);background:linear-gradient(135deg, #FFF8F0, #FDBA74);color:#3E2723;cursor:pointer;font-size:13px;text-align:left;display:flex;align-items:center;gap:8px">
+      <button type="button" onclick="BGTheme.switch('warm-light')" style="padding:14px;border-radius:14px;border:1px solid rgba(251,146,60,0.2);background:linear-gradient(135deg, #FFF8F0, #FDBA74);color:#3E2723;cursor:pointer;font-size:13px;text-align:left;display:flex;align-items:center;gap:8px">
         <span style="font-size:20px">☀️</span>
         <div><div style="font-weight:600">温馨暖光</div><div style="font-size:11px;opacity:0.6">护眼暖白米色</div></div>
       </button>
     </div>
-    <button onclick="document.getElementById('themeModal').style.display='none'" style="width:100%;margin-top:16px;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--text-secondary);font-weight:700;cursor:pointer;font-size:14px">关闭</button>
+    <button type="button" onclick="document.getElementById('themeModal').style.display='none'" style="width:100%;margin-top:16px;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--text-secondary);font-weight:700;cursor:pointer;font-size:14px">关闭</button>
   </div>
 </div>
 
 <!-- ======== 通用弹窗 ======== -->
-<div class="modal-overlay" id="modalOverlay">
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <div class="modal-box" style="position:relative">
     <div id="modalContent">
       <div style="font-size:3rem;margin-bottom:var(--space-md)">📢</div>
       <h3 style="margin-bottom:var(--space-sm)" id="modalTitle">提示</h3>
       <p style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:var(--space-lg)" id="modalDesc">功能开发中...</p>
-      <button class="btn btn-primary" onclick="Modal.hide()">知道了 👍</button>
+      <button type="button" class="btn btn-primary" onclick="Modal.hide()">知道了 👍</button>
     </div>
   </div>
 </div>
