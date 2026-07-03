@@ -4,8 +4,8 @@
  */
 
 export default async function handler(req, res) {
-  // 设置 CORS 头，允许所有来源访问
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  // 设置 CORS 头，只允许应急小达人游戏前端访问
+  res.setHeader('Access-Control-Allow-Origin', 'https://yaohanbo1-hue.github.io');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 

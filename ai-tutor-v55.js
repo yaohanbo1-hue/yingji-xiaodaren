@@ -778,11 +778,11 @@ const AITutorEngine = {
         当前状态：${isDefault ? '<span style="color:#00e676;">✅ 内置 Key 可用</span>' : (currentKey ? '<span style="color:#00e676;">✅ 已设置</span>' : '<span style="color:#FF4D00;">⚠️ 未设置</span>')}
       </p>
       <p style="color:#8899aa;font-size:12px;margin:0 0 12px;">
-        当前 Key：${maskedKey}
+        当前 Key：${escapeHtml(maskedKey)}
       </p>
       <input type="text" id="newApiKeyInput" placeholder="输入新的 API Key（可选）" 
         style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,212,255,0.2);border-radius:8px;color:#fff;font-size:14px;margin-bottom:12px;box-sizing:border-box;"
-        value="${isDefault ? '' : currentKey}">
+        value="${isDefault ? '' : escapeHtml(currentKey)}">
       <div style="display:flex;gap:8px;justify-content:flex-end;">
         <button onclick="var d=document.getElementById('apiKeyDialog');d&&d.remove()" 
           style="padding:8px 16px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:8px;color:#fff;cursor:pointer;font-size:14px;">取消</button>

@@ -5,9 +5,9 @@
 
 export default {
   async fetch(request, env, ctx) {
-    // 设置 CORS 头
+    // 设置 CORS 头，只允许应急小达人游戏前端访问
     const corsHeaders = {
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': 'https://yaohanbo1-hue.github.io',
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
     };
