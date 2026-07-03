@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /cache-clear.html
+Sitemap: https://yaohanbo1-hue.github.io/yingji-xiaodaren/sitemap.xml
