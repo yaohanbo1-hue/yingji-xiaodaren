@@ -57,51 +57,7 @@
 
 <!-- 非关键 CSS — 异步加载，不阻塞渲染 -->
 <link rel="stylesheet" href="all-styles-v55.css?v=86">
-<link rel="stylesheet" href="v5-glass-3d.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="v5-glass-3d.css?v=86"></noscript>
-<link rel="stylesheet" href="clean-ui.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="clean-ui.css?v=86"></noscript>
-<link rel="stylesheet" href="bg-premium.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="bg-premium.css?v=86"></noscript>
-<link rel="stylesheet" href="bg-themes.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="bg-themes.css?v=86"></noscript>
-<link rel="stylesheet" href="menu-premium.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="menu-premium.css?v=86"></noscript>
-<link rel="stylesheet" href="fx-effects.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="fx-effects.css?v=86"></noscript>
-<link rel="stylesheet" href="ai-tutor.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="ai-tutor.css?v=86"></noscript>
-<link rel="stylesheet" href="certification.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="certification.css?v=86"></noscript>
-<link rel="stylesheet" href="disaster-sim.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="disaster-sim.css?v=86"></noscript>
-<link rel="stylesheet" href="real-cases.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="real-cases.css?v=86"></noscript>
-<link rel="stylesheet" href="fix-click.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="fix-click.css?v=86"></noscript>
-<link rel="stylesheet" href="transitions.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="transitions.css?v=86"></noscript>
-<link rel="stylesheet" href="accessibility.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="accessibility.css?v=86"></noscript>
-<link rel="stylesheet" href="wrong-book.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="wrong-book.css?v=86"></noscript>
-<link rel="stylesheet" href="loading.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="loading.css?v=86"></noscript>
-<link rel="stylesheet" href="guide-enhance.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="guide-enhance.css?v=86"></noscript>
-<link rel="stylesheet" href="cert-enhance.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="cert-enhance.css?v=86"></noscript>
-<link rel="stylesheet" href="menu-enhance.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="menu-enhance.css?v=86"></noscript>
-<link rel="stylesheet" href="share.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="share.css?v=86"></noscript>
-<link rel="stylesheet" href="i18n.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="i18n.css?v=86"></noscript>
-<link rel="stylesheet" href="layout-fix.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="layout-fix.css?v=86"></noscript>
-<link rel="stylesheet" href="ai-float.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="ai-float.css?v=86"></noscript>
-<!-- ui-ultimate.css 已合并到 all-styles-v55.css，避免重复加载 -->
+
 <!-- settings.css 保留独立加载 -->
 <link rel="stylesheet" href="settings.css?v=86" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="settings.css?v=86"></noscript>
@@ -330,20 +286,20 @@
           <span class="mode-name">灾害模拟</span>
           <span class="mode-desc">沉浸式体验真实灾害场景</span>
         </div>
-        <div class="mode-btn" onclick="PageManager.navigate('real-cases')" style="border-color:rgba(245,158,11,0.4); box-shadow: 0 0 20px rgba(245,158,11,0.1);">
+        <div class="mode-btn" onclick="PageManager.navigate('real-cases')" style="border-color:rgba(245,158,11,0.4); box-shadow: 0 0 20px rgba(245,158,11,0.1);" role="button" tabindex="0" aria-label="真实案例">
           <span class="mode-badge" style="background:linear-gradient(135deg,#F59E0B,#EF4444);color:#fff;">📖 新</span>
           <span class="mode-icon">📖</span>
           <span class="mode-name">真实案例</span>
           <span class="mode-desc">历史灾害事件还原与知识总结</span>
         </div>
-        <div class="mode-btn" onclick="PageManager.navigate('wrong-book');WrongBookEngine.renderPage()" style="border-color:rgba(248,113,113,0.4); box-shadow: 0 0 20px rgba(248,113,113,0.1);">
+        <div class="mode-btn" onclick="PageManager.navigate('wrong-book');WrongBookEngine.renderPage()" style="border-color:rgba(248,113,113,0.4); box-shadow: 0 0 20px rgba(248,113,113,0.1);" role="button" tabindex="0" aria-label="错题本">
           <span class="mode-badge" style="background:linear-gradient(135deg,#f87171,#ef4444);color:#fff;">📕 新</span>
           <span class="mode-icon">📕</span>
           <span class="mode-name">错题本</span>
           <span class="mode-desc">自动收集错题 · 专项复习</span>
           <span id="wrongBookBadge" style="display:none;"></span>
         </div>
-        <div class="mode-btn" onclick="PageManager.navigate('report');setTimeout(function(){if(typeof ReportEngine!=='undefined')ReportEngine.showReport()},300)" style="border-color:rgba(52,211,153,0.4); box-shadow: 0 0 20px rgba(52,211,153,0.1);">
+        <div class="mode-btn" onclick="PageManager.navigate('report');setTimeout(function(){if(typeof ReportEngine!=='undefined')ReportEngine.showReport()},300)" style="border-color:rgba(52,211,153,0.4); box-shadow: 0 0 20px rgba(52,211,153,0.1);" role="button" tabindex="0" aria-label="学习报告">
           <span class="mode-badge" style="background:linear-gradient(135deg,#34d399,#059669);color:#fff;">📊 新</span>
           <span class="mode-icon">📊</span>
           <span class="mode-name">学习报告</span>
@@ -356,65 +312,65 @@
     <div class="menu-section">
       <h2 class="menu-section-title battle-title" onclick="MenuManager.toggleCategory('battle')">⚔️ 闯关挑战<span class="collapse-arrow">▼</span></h2>
       <div class="menu-grid battle-grid">
-        <div class="mode-btn" onclick="PageManager.navigate('battle-lobby')" style="border-color: rgba(255,215,0,0.3); box-shadow: 0 0 20px rgba(255,215,0,0.1), inset 0 1px 0 rgba(255,215,0,0.15);">
+        <div class="mode-btn" onclick="PageManager.navigate('battle-lobby')" style="border-color: rgba(255,215,0,0.3); box-shadow: 0 0 20px rgba(255,215,0,0.1), inset 0 1px 0 rgba(255,215,0,0.15);" role="button" tabindex="0" aria-label="防灾大擂台">
           <span class="mode-badge mode-badge-hot">🔥 推荐</span>
           <span class="mode-icon">👾</span>
           <span class="mode-name">防灾大擂台</span>
           <span class="mode-desc">回合制打怪兽！答题就是攻击！</span>
         </div>
-        <div class="mode-btn" onclick="PageManager.navigate('free')">
+        <div class="mode-btn" onclick="PageManager.navigate('free')" role="button" tabindex="0" aria-label="自由模式">
           <span class="mode-icon">🎯</span>
           <span class="mode-name">自由模式</span>
           <span class="mode-desc">自选灾害类型，无限练习</span>
         </div>
-        <div class="mode-btn" onclick="PageManager.navigate('speed')">
+        <div class="mode-btn" onclick="PageManager.navigate('speed')" role="button" tabindex="0" aria-label="速答挑战">
           <span class="mode-icon">⚡</span>
           <span class="mode-name">速答挑战</span>
           <span class="mode-desc">10题限时竞答，挑战手速</span>
         </div>
-        <div class="mode-btn" onclick="PageManager.navigate('pk')">
+        <div class="mode-btn" onclick="PageManager.navigate('pk')" role="button" tabindex="0" aria-label="双人PK">
           <span class="mode-badge mode-badge-new">👥 新</span>
           <span class="mode-icon">👥</span>
           <span class="mode-name">双人PK</span>
           <span class="mode-desc">朋友对战，看谁更懂防灾</span>
         </div>
-        <div class="mode-btn daily-challenge-btn" onclick="PageManager.navigate('daily')">
+        <div class="mode-btn daily-challenge-btn" onclick="PageManager.navigate('daily')" role="button" tabindex="0" aria-label="每日挑战">
           <span class="mode-badge mode-badge-new" style="background:linear-gradient(135deg,#ffd700,#ff9100);color:#000;">📅 每日</span>
           <span class="mode-icon">📅</span>
           <span class="mode-name">每日挑战</span>
           <span class="mode-desc">每天10题，连续打卡得奖励</span>
         </div>
-        <div class="mode-btn" onclick="SurvivalEngine.init()" style="border-color:rgba(255,107,53,0.3);">
+        <div class="mode-btn" onclick="SurvivalEngine.init()" style="border-color:rgba(255,107,53,0.3);" role="button" tabindex="0" aria-label="生存模式">
           <span class="mode-badge" style="background:linear-gradient(135deg,#FF6B35,#FF9100);color:#fff;">♾️ 新</span>
           <span class="mode-icon">♾️</span>
           <span class="mode-name">生存模式</span>
           <span class="mode-desc">无限答题，答错3次结束</span>
         </div>
-        <div class="mode-btn" onclick="BossRushEngine.init()" style="border-color:rgba(244,67,54,0.3);">
+        <div class="mode-btn" onclick="BossRushEngine.init()" style="border-color:rgba(244,67,54,0.3);" role="button" tabindex="0" aria-label="Boss Rush">
           <span class="mode-badge" style="background:linear-gradient(135deg,#F44336,#D32F2F);color:#fff;">💀 新</span>
           <span class="mode-icon">💀</span>
           <span class="mode-name">Boss Rush</span>
           <span class="mode-desc">连续挑战5个Boss！</span>
         </div>
-        <div class="mode-btn" onclick="TimedChallengeEngine.init()" style="border-color:rgba(0,212,255,0.3);">
+        <div class="mode-btn" onclick="TimedChallengeEngine.init()" style="border-color:rgba(0,212,255,0.3);" role="button" tabindex="0" aria-label="限时挑战">
           <span class="mode-badge" style="background:linear-gradient(135deg,#00D4FF,#7C4DFF);color:#fff;">⏱️ 新</span>
           <span class="mode-icon">⏱️</span>
           <span class="mode-name">限时挑战</span>
           <span class="mode-desc">30秒内答对尽可能多</span>
         </div>
-        <div class="mode-btn" onclick="StoryEngine.init()" style="border-color:rgba(155,89,182,0.3);">
+        <div class="mode-btn" onclick="StoryEngine.init()" style="border-color:rgba(155,89,182,0.3);" role="button" tabindex="0" aria-label="故事模式">
           <span class="mode-badge" style="background:linear-gradient(135deg,#9B59B6,#7C4DFF);color:#fff;">📖 新</span>
           <span class="mode-icon">📖</span>
           <span class="mode-name">故事模式</span>
           <span class="mode-desc">守护城市，做出正确选择</span>
         </div>
-        <div class="mode-btn" onclick="DisasterQuizGame.init()" style="border-color:rgba(255,152,0,0.3);">
+        <div class="mode-btn" onclick="DisasterQuizGame.init()" style="border-color:rgba(255,152,0,0.3);" role="button" tabindex="0" aria-label="闪电问答">
           <span class="mode-badge" style="background:linear-gradient(135deg,#FF9800,#FF5722);color:#fff;">⚡ 新</span>
           <span class="mode-icon">⚡</span>
           <span class="mode-name">闪电问答</span>
           <span class="mode-desc">5秒内选出正确答案</span>
         </div>
-        <div class="mode-btn" onclick="SupplyDropGame.init()" style="border-color:rgba(76,175,80,0.3);">
+        <div class="mode-btn" onclick="SupplyDropGame.init()" style="border-color:rgba(76,175,80,0.3);" role="button" tabindex="0" aria-label="精准投放">
           <span class="mode-badge" style="background:linear-gradient(135deg,#4CAF50,#8BC34A);color:#fff;">🎯 新</span>
           <span class="mode-icon">🎯</span>
           <span class="mode-name">精准投放</span>
@@ -427,52 +383,52 @@
           <span class="mode-name">扭蛋机</span>
           <span class="mode-desc">投币扭蛋，惊喜不断</span>
         </div> -->
-        <div class="mode-btn" onclick="PageManager.navigate('music')" style="border-color:rgba(233,30,99,0.3);">
+        <div class="mode-btn" onclick="PageManager.navigate('music')" style="border-color:rgba(233,30,99,0.3);" role="button" tabindex="0" aria-label="音乐">
           <span class="mode-icon">🎵</span>
           <span class="mode-name">音乐</span>
           <span class="mode-desc">10首防灾音乐</span>
         </div>
-        <div class="mode-btn" onclick="PageManager.navigate('eggs')" style="border-color:rgba(255,255,255,0.2);">
+        <div class="mode-btn" onclick="PageManager.navigate('eggs')" style="border-color:rgba(255,255,255,0.2);" role="button" tabindex="0" aria-label="彩蛋">
           <span class="mode-icon">🥚</span>
           <span class="mode-name">彩蛋</span>
           <span class="mode-desc">15个隐藏彩蛋</span>
         </div>
-        <div class="mode-btn" onclick="PageManager.navigate('base')" style="border-color:rgba(255,255,255,0.15);">
+        <div class="mode-btn" onclick="PageManager.navigate('base')" style="border-color:rgba(255,255,255,0.15);" role="button" tabindex="0" aria-label="基地">
           <span class="mode-icon">🏠</span>
           <span class="mode-name">基地</span>
           <span class="mode-desc">布置基地+换装</span>
         </div>
-        <div class="mode-btn" onclick="typeof TimeEscapeEngine!=='undefined'&&TimeEscapeEngine.init()" style="border-color:rgba(255,0,110,0.4);">
+        <div class="mode-btn" onclick="typeof TimeEscapeEngine!=='undefined'&&TimeEscapeEngine.init()" style="border-color:rgba(255,0,110,0.4);" role="button" tabindex="0" aria-label="限时逃生">
           <span class="mode-badge" style="background:linear-gradient(135deg,#FF006E,#FF6B35);color:#fff;">🔥 新</span>
           <span class="mode-icon">⏰</span>
           <span class="mode-name">限时逃生</span>
           <span class="mode-desc">60秒内答完20题！</span>
         </div>
-        <div class="mode-btn" onclick="PrecisionEngine.init()" style="border-color:rgba(0,230,118,0.4);">
+        <div class="mode-btn" onclick="PrecisionEngine.init()" style="border-color:rgba(0,230,118,0.4);" role="button" tabindex="0" aria-label="精准打击">
           <span class="mode-badge" style="background:linear-gradient(135deg,#00E676,#00D4FF);color:#fff;">🎯 新</span>
           <span class="mode-icon">🎯</span>
           <span class="mode-name">精准打击</span>
           <span class="mode-desc">10题精准答题挑战</span>
         </div>
-        <div class="mode-btn" onclick="StoryAdventureEngine.init()" style="border-color:rgba(171,71,188,0.4);">
+        <div class="mode-btn" onclick="StoryAdventureEngine.init()" style="border-color:rgba(171,71,188,0.4);" role="button" tabindex="0" aria-label="防灾大冒险">
           <span class="mode-badge" style="background:linear-gradient(135deg,#AB47BC,#FF006E);color:#fff;">📖 新</span>
           <span class="mode-icon">📖</span>
           <span class="mode-name">防灾大冒险</span>
           <span class="mode-desc">5章剧情，成为英雄！</span>
         </div>
-        <div class="mode-btn" onclick="MemoryCardEngine.init()" style="border-color:rgba(0,212,255,0.4);">
+        <div class="mode-btn" onclick="MemoryCardEngine.init()" style="border-color:rgba(0,212,255,0.4);" role="button" tabindex="0" aria-label="记忆翻牌">
           <span class="mode-badge" style="background:linear-gradient(135deg,#00D4FF,#AB47BC);color:#fff;">🧠 新</span>
           <span class="mode-icon">🧠</span>
           <span class="mode-name">记忆翻牌</span>
           <span class="mode-desc">翻牌配对，考验记忆力</span>
         </div>
-        <div class="mode-btn" onclick="typeof ReactionEngine!=='undefined'&&ReactionEngine.init()" style="border-color:rgba(255,0,110,0.4);">
+        <div class="mode-btn" onclick="typeof ReactionEngine!=='undefined'&&ReactionEngine.init()" style="border-color:rgba(255,0,110,0.4);" role="button" tabindex="0" aria-label="反应速度">
           <span class="mode-badge" style="background:linear-gradient(135deg,#FF006E,#FFD700);color:#fff;">⚡ 新</span>
           <span class="mode-icon">⚡</span>
           <span class="mode-name">反应速度</span>
           <span class="mode-desc">测试你的反应神经</span>
         </div>
-        <div class="mode-btn" onclick="KnowledgeRaceEngine.init()" style="border-color:rgba(255,215,0,0.4);">
+        <div class="mode-btn" onclick="KnowledgeRaceEngine.init()" style="border-color:rgba(255,215,0,0.4);" role="button" tabindex="0" aria-label="知识竞速">
           <span class="mode-badge" style="background:linear-gradient(135deg,#FFD700,#FF6B35);color:#fff;">🏁 新</span>
           <span class="mode-icon">🏁</span>
           <span class="mode-name">知识竞速</span>
