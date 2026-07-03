@@ -513,27 +513,8 @@ const DeepSeekAPI = {
 
   async isReady() {
     if (!this._proxyUrl || this._proxyUrl.length <= 3) return false;
-    if (this._isReadyCache !== null) return this._isReadyCache;
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 1500);
-      const r = await fetch(this._proxyUrl, { method: 'HEAD', signal: controller.signal });
-      clearTimeout(timeoutId);
-      this._isReadyCache = r.ok || (r.status >= 200 && r.status < 400);
-      return this._isReadyCache;
-    } catch (e) {
-      try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 1500);
-        const r = await fetch(this._proxyUrl + '?_probe=1', { method: 'GET', signal: controller.signal });
-        clearTimeout(timeoutId);
-        this._isReadyCache = r.ok;
-        return this._isReadyCache;
-      } catch (e2) {
-        this._isReadyCache = false;
-        return false;
-      }
-    }
+    // 直接信任配置的代理URL，不做HEAD探测（跨域HEAD会被CORS拦截）
+    return true;
   },
 
   resetReadyCache() { this._isReadyCache = null; },
@@ -622,18 +603,17 @@ AITutorBrain.generateReply = async function(userMessage, history = []) {
   if (await DeepSeekAPI.isReady()) {
     try {
       const result = await DeepSeekAPI.chat(userMessage, history);
-      if (result.answer) {
+      if (result && result.answer) {
         this._cacheToKnowledge(userMessage, result.answer);
         return result.answer;
       }
-      console.log('DeepSeek fallback:', result.error);
     } catch (e) {
-      console.error('DeepSeek error:', e);
+      console.error('[DeepSeek] error:', e.message);
     }
   }
   
-  // 2. 回退到本地规则引擎
-  return _originalGenerateReply(userMessage, history);
+  // 2. DeepSeek 不可用 — 返回提示而非本地规则引擎
+  return '⚠️ DeepSeek AI 暂时不可用，请检查网络连接或稍后再试。\n\n你可以先去「学习模式」复习防灾知识，或直接在「答题模式」练习题目。';
 };
 
 // ===== B方案：暴露纯本地 / 纯云端两个入口，供 ai-float 实现"本地先秒回+云端后台补充" =====

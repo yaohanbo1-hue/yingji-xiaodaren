@@ -7990,3 +7990,18 @@ body {
   100% { opacity: 0.8; transform: scale(1); }
 }
 
+/* ========== 补丁：iOS 动量滚动 + 小字号修复 ========== */
+.page-content, .codex-grid, .achievement-list, .shop-list,
+.wrong-book-list, .leaderboard-content, .settings-container,
+.encyclopedia-content, .preview-container, .modal-box,
+.ai-float-body, .ai-float-panel {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 移动端小字号自动放大 */
+@media (max-width: 480px) {
+  body { -webkit-text-size-adjust: 100%; }
+  .mode-desc, .feature-text p, .quiz-opt-text {
+    font-size: 12px !important;
+  }
+}
