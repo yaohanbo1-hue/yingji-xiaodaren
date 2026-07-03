@@ -1,520 +1,196 @@
 /**
- * ===========================================================================
- * 应急小达人 v1.2.0 — 学习报告导出引擎
- * ===========================================================================
- * 
- * 功能：
- * 1. 生成学习数据报告（Canvas 渲染）
- * 2. 支持导出为 PNG 图片
- * 3. 支持直接打印
- * 4. 包含：学习时长、答题统计、薄弱项、进步曲线
- * 
- * @version 1.2.0
- * ===========================================================================
+ * ============================================================================
+ * report.js — 学习报告引擎
+ * ============================================================================
+ * 生成学习报告：包含学习时长、答题统计、薄弱项分析等
+ * 支持一键导出为 PNG 图片
+ * ============================================================================
  */
 
-const SafeStorage = {
-  set(key, value) {
-    try { localStorage.setItem(key, JSON.stringify(value)); } catch(e) { console.error('Storage error:', e); }
-  },
-  get(key, defaultVal) {
-    try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : defaultVal; } catch(e) { return defaultVal; }
-  },
-  getString(key, defaultVal) {
-    try { return localStorage.getItem(key) || defaultVal; } catch(e) { return defaultVal; }
-  }
-};
-
 const ReportEngine = {
+  _data: null,
   
-  // 收集学习数据
-  _collectData() {
-    var data = {
-      date: new Date().toLocaleDateString('zh-CN'),
-      studentName: SafeStorage.getString('disaster_hq_name', '防灾小学员'),
-      totalTime: this._getPlayTime(),
-      totalQuizzes: this._getQuizCount(),
-      correctRate: this._getCorrectRate(),
-      categoryStats: this._getCategoryStats(),
-      weakAreas: this._getWeakAreas(),
-      achievements: this._getAchievements(),
-      wrongBookStats: this._getWrongBookStats(),
-      level: this._getLevel(),
-      streak: this._getStreak()
-    };
-    return data;
-  },
-  
-  _getPlayTime() {
-    var time = SafeStorage.getString('disaster_hq_playtime', null) ||
-               SafeStorage.getString('disaster_hq_totalTime', null) ||
-               SafeStorage.getString('play_time', null);
-    // 尝试从 GameState 获取
-    if (!time && typeof GameState !== 'undefined' && GameState._data) {
-      time = GameState._data.playTime || GameState._data.totalTime || null;
-    }
-    // 尝试从 disasterGachaState 获取
-    if (!time) {
-      var gacha = SafeStorage.get('disasterGachaState', null);
-      if (gacha && gacha.playTime) time = String(gacha.playTime);
-    }
-    var minutes = parseInt(time || '0') || 0;
-    if (minutes < 60) return minutes + ' 分钟';
-    var hours = Math.floor(minutes / 60);
-    var mins = minutes % 60;
-    return hours + ' 小时 ' + mins + ' 分钟';
-  },
-  
-  _getQuizCount() {
-    var count = SafeStorage.getString('disaster_hq_quizcount', null) ||
-                SafeStorage.getString('disaster_hq_totalQuizzes', null) ||
-                SafeStorage.getString('quiz_count', null);
-    // 尝试从 AI 导师数据获取
-    if (!count) {
-      var aiData = SafeStorage.get('aiTutorData', null);
-      if (aiData && aiData.quizHistory) count = String(aiData.quizHistory.length);
-    }
-    // 尝试从 GameState 获取
-    if (!count && typeof GameState !== 'undefined' && GameState._data) {
-      count = GameState._data.totalQuizzes || GameState._data.quizCount || null;
-    }
-    // 尝试从 disasterGachaState 获取
-    if (!count) {
-      var gacha = SafeStorage.get('disasterGachaState', null);
-      if (gacha && gacha.totalQuizzes) count = String(gacha.totalQuizzes);
-    }
-    return parseInt(count || '0') || 0;
-  },
-  
-  _getCorrectRate() {
-    var correct = parseInt(SafeStorage.getString('disaster_hq_correct', '0') || 
-                  SafeStorage.getString('correct_count', '0'));
-    var total = parseInt(SafeStorage.getString('disaster_hq_total', '0') || 
-                SafeStorage.getString('total_count', '0'));
-    // 尝试从 AI 导师数据计算
-    if (total === 0) {
-      var aiData = SafeStorage.get('aiTutorData', null);
-      if (aiData && aiData.quizHistory) {
-        total = aiData.quizHistory.length;
-        correct = aiData.quizHistory.filter(function(h) { return h.correct; }).length;
-      }
-    }
-    // 尝试从 GameState 获取
-    if (total === 0 && typeof GameState !== 'undefined' && GameState._data) {
-      total = GameState._data.totalQuizzes || GameState._data.quizCount || 0;
-      correct = GameState._data.correctCount || 0;
-    }
-    if (total === 0) return 0;
-    return Math.round(correct / total * 100);
-  },
-  
-  _getCategoryStats() {
-    var categories = {
-      earthquake: { name: '地震', icon: '🌍', correct: 0, total: 0 },
-      flood: { name: '洪水', icon: '🌊', correct: 0, total: 0 },
-      fire: { name: '火灾', icon: '🔥', correct: 0, total: 0 },
-      typhoon: { name: '台风', icon: '🌀', correct: 0, total: 0 },
-      tsunami: { name: '海啸', icon: '🌊', correct: 0, total: 0 },
-      landslide: { name: '滑坡', icon: '⛰️', correct: 0, total: 0 },
-      tornado: { name: '龙卷风', icon: '🌪️', correct: 0, total: 0 },
-      drought: { name: '干旱', icon: '☀️', correct: 0, total: 0 },
-      lightning: { name: '雷电', icon: '⚡', correct: 0, total: 0 },
-      avalanche: { name: '雪崩', icon: '❄️', correct: 0, total: 0 },
-      volcano: { name: '火山', icon: '🌋', correct: 0, total: 0 },
-      hail: { name: '冰雹', icon: '🧊', correct: 0, total: 0 }
-    };
+  /**
+   * 显示学习报告首页
+   */
+  showReport: function() {
+    var el = document.getElementById('reportDetailContent');
+    if (!el) return;
     
-    // 尝试从已有数据中获取
-    try {
-      var stats = SafeStorage.get('disaster_hq_category_stats', null);
-      if (stats) {
-        Object.keys(stats).forEach(function(key) {
-          if (categories[key]) {
-            categories[key] = Object.assign(categories[key], stats[key]);
-          }
-        });
-      }
-    } catch (e) { console.error(e); }
+    var stats = GameState && GameState._data ? GameState._data.stats || {} : {};
+    var totalCorrect = stats.correct || 0;
+    var totalWrong = stats.wrong || 0;
+    var totalAnswered = totalCorrect + totalWrong;
+    var accuracy = totalAnswered > 0 ? Math.round((totalCorrect / totalAnswered) * 100) : 0;
+    var streak = stats.maxStreak || 0;
+    var level = GameState._data ? GameState._data.level || 1 : 1;
+    var exp = GameState._data ? GameState._data.exp || 0 : 0;
+    var gamesPlayed = stats.gamesPlayed || 0;
+    var cardsCollected = GameState._data ? (GameState._data.cards || []).length : 0;
     
-    // 尝试从 AI 导师数据获取
-    try {
-      var aiData = SafeStorage.get('aiTutorData', null);
-      if (aiData && aiData.mastery) {
-        Object.keys(aiData.mastery).forEach(function(key) {
-          if (categories[key]) {
-            categories[key].correct = Math.round(aiData.mastery[key]);
-            categories[key].total = 100;
-          }
-        });
-      }
-    } catch (e) { console.error(e); }
-    
-    return categories;
-  },
-  
-  _getWeakAreas() {
-    if (typeof WrongBookEngine !== 'undefined') {
-      var weakest = WrongBookEngine.getWeakestTopics(3);
-      return weakest.map(function(item) {
-        return {
-          question: item.question.substring(0, 50),
-          wrongCount: item.wrongCount,
-          category: item.category
-        };
-      });
-    }
-    return [];
-  },
-  
-  _getAchievements() {
-    var achievements = [];
-    try {
-      var data = SafeStorage.get('disaster_hq_achievements', null) ||
-                 SafeStorage.get('achievements', null);
-      if (data) {
-        achievements = Array.isArray(data) ? data : [];
-      }
-    } catch (e) { console.error(e); }
-    return achievements.slice(0, 5); // 最多显示5个
-  },
-  
-  _getWrongBookStats() {
-    if (typeof WrongBookEngine !== 'undefined') {
-      return WrongBookEngine.getStats();
-    }
-    return { total: 0, mastered: 0, unmastered: 0, masteryRate: 0 };
-  },
-  
-  _getLevel() {
-    // 优先从 CertificationEngine 获取
-    if (typeof CertificationEngine !== 'undefined' && CertificationEngine._data) {
-      var level = CertificationEngine._data.currentLevel;
-      if (level !== undefined && level !== -1) return level + 1;
-    }
-    var level = SafeStorage.getString('disaster_hq_level', null) ||
-                SafeStorage.getString('player_level', '1');
-    return parseInt(level) || 1;
-  },
-  
-  _getStreak() {
-    // 优先从 CalendarEngine 获取
-    if (typeof CalendarEngine !== 'undefined' && CalendarEngine._checkins) {
-      return CalendarEngine._streak || 0;
-    }
-    var streak = SafeStorage.getString('disaster_hq_streak', null) ||
-                 SafeStorage.getString('login_streak', '0');
-    return parseInt(streak) || 0;
-  },
-  
-  // 生成报告 Canvas
-  generateReport() {
-    var data = this._collectData();
-    var canvas = document.createElement('canvas');
-    var ctx = canvas.getContext('2d');
-    
-    canvas.width = 800;
-    canvas.height = 1100;
-    
-    // 背景渐变
-    var bgGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-    bgGrad.addColorStop(0, '#0F172A');
-    bgGrad.addColorStop(0.5, '#111827');
-    bgGrad.addColorStop(1, '#0F172A');
-    ctx.fillStyle = bgGrad;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    // 顶部装饰线
-    var topGrad = ctx.createLinearGradient(0, 0, canvas.width, 0);
-    topGrad.addColorStop(0, 'rgba(59,130,246,0.8)');
-    topGrad.addColorStop(0.5, 'rgba(167,139,250,0.8)');
-    topGrad.addColorStop(1, 'rgba(251,146,60,0.8)');
-    ctx.fillStyle = topGrad;
-    ctx.fillRect(0, 0, canvas.width, 4);
-    
-    // 标题区
-    ctx.fillStyle = 'rgba(255,255,255,0.95)';
-    ctx.font = 'bold 32px "Microsoft YaHei", sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('🌪️ 应急小达人', canvas.width / 2, 60);
-    
-    ctx.fillStyle = 'rgba(255,255,255,0.6)';
-    ctx.font = '16px "Microsoft YaHei", sans-serif';
-    ctx.fillText('学 习 报 告', canvas.width / 2, 95);
-    
-    // 日期和姓名
-    ctx.fillStyle = 'rgba(255,255,255,0.5)';
-    ctx.font = '14px "Microsoft YaHei", sans-serif';
-    ctx.fillText('学员: ' + data.studentName + '  |  生成日期: ' + data.date, canvas.width / 2, 125);
-    
-    // 分隔线
-    ctx.strokeStyle = 'rgba(255,255,255,0.1)';
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(50, 145);
-    ctx.lineTo(canvas.width - 50, 145);
-    ctx.stroke();
-    
-    // 核心数据卡片
-    var cardY = 170;
-    var cardH = 100;
-    var cardW = 160;
-    var gap = 20;
-    var startX = (canvas.width - (cardW * 4 + gap * 3)) / 2;
-    
-    var cards = [
-      { label: '学习等级', value: 'Lv.' + data.level, color: '#60a5fa', icon: '⭐' },
-      { label: '学习时长', value: data.totalTime, color: '#34d399', icon: '⏱️' },
-      { label: '答题总数', value: data.totalQuizzes.toString(), color: '#a78bfa', icon: '📝' },
-      { label: '正确率', value: data.correctRate + '%', color: '#fbbf24', icon: '🎯' }
-    ];
-    
-    cards.forEach(function(card, i) {
-      var x = startX + i * (cardW + gap);
-      
-      // 卡片背景
-      ctx.fillStyle = 'rgba(255,255,255,0.05)';
-      ctx.strokeStyle = 'rgba(255,255,255,0.1)';
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.roundRect(x, cardY, cardW, cardH, 12);
-      ctx.fill();
-      ctx.stroke();
-      
-      // 图标
-      ctx.font = '24px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(card.icon, x + cardW / 2, cardY + 35);
-      
-      // 数值
-      ctx.fillStyle = card.color;
-      ctx.font = 'bold 22px "Microsoft YaHei", sans-serif';
-      ctx.fillText(card.value, x + cardW / 2, cardY + 65);
-      
-      // 标签
-      ctx.fillStyle = 'rgba(255,255,255,0.5)';
-      ctx.font = '12px "Microsoft YaHei", sans-serif';
-      ctx.fillText(card.label, x + cardW / 2, cardY + 88);
-    });
-    
-    // 第二行：连续签到 + 错题掌握率
-    var row2Y = cardY + cardH + 20;
-    var row2Cards = [
-      { label: '连续签到', value: data.streak + ' 天', color: '#f472b6', icon: '🔥' },
-      { label: '错题掌握率', value: data.wrongBookStats.masteryRate + '%', color: '#2dd4bf', icon: '📕' }
-    ];
-    
-    var row2StartX = (canvas.width - (200 * 2 + gap)) / 2;
-    row2Cards.forEach(function(card, i) {
-      var x = row2StartX + i * (200 + gap);
-      
-      ctx.fillStyle = 'rgba(255,255,255,0.05)';
-      ctx.strokeStyle = 'rgba(255,255,255,0.1)';
-      ctx.beginPath();
-      ctx.roundRect(x, row2Y, 200, 80, 12);
-      ctx.fill();
-      ctx.stroke();
-      
-      ctx.font = '20px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(card.icon, x + 40, row2Y + 48);
-      
-      ctx.fillStyle = card.color;
-      ctx.font = 'bold 20px "Microsoft YaHei", sans-serif';
-      ctx.fillText(card.value, x + 120, row2Y + 42);
-      
-      ctx.fillStyle = 'rgba(255,255,255,0.5)';
-      ctx.font = '12px "Microsoft YaHei", sans-serif';
-      ctx.fillText(card.label, x + 120, row2Y + 62);
-    });
-    
-    // 分类掌握情况
-    var catY = row2Y + 110;
-    ctx.fillStyle = 'rgba(255,255,255,0.9)';
-    ctx.font = 'bold 18px "Microsoft YaHei", sans-serif';
-    ctx.textAlign = 'left';
-    ctx.fillText('📊 分类掌握情况', 60, catY);
-    
-    catY += 20;
-    var catKeys = Object.keys(data.categoryStats);
-    var barX = 100;
-    var barMaxW = 500;
-    var barH = 22;
-    var barGap = 8;
-    
-    catKeys.forEach(function(key, i) {
-      var cat = data.categoryStats[key];
-      var y = catY + i * (barH + barGap);
-      
-      // 分类名
-      ctx.fillStyle = 'rgba(255,255,255,0.7)';
-      ctx.font = '13px "Microsoft YaHei", sans-serif';
-      ctx.textAlign = 'right';
-      ctx.fillText(cat.icon + ' ' + cat.name, barX - 10, y + 16);
-      
-      // 进度条背景
-      ctx.fillStyle = 'rgba(255,255,255,0.08)';
-      ctx.beginPath();
-      ctx.roundRect(barX, y, barMaxW, barH, 4);
-      ctx.fill();
-      
-      // 进度条
-      var rate = cat.total > 0 ? cat.correct / cat.total : 0;
-      if (rate > 0) {
-        var grad = ctx.createLinearGradient(barX, 0, barX + barMaxW * rate, 0);
-        grad.addColorStop(0, 'rgba(59,130,246,0.8)');
-        grad.addColorStop(1, 'rgba(139,92,246,0.8)');
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.roundRect(barX, y, barMaxW * rate, barH, 4);
-        ctx.fill();
-      }
-      
-      // 百分比
-      ctx.fillStyle = 'rgba(255,255,255,0.6)';
-      ctx.font = '11px "Microsoft YaHei", sans-serif';
-      ctx.textAlign = 'left';
-      ctx.fillText(Math.round(rate * 100) + '%', barX + barMaxW + 10, y + 16);
-    });
-    
-    // 薄弱项
-    if (data.weakAreas.length > 0) {
-      var weakY = catY + catKeys.length * (barH + barGap) + 30;
-      ctx.fillStyle = 'rgba(255,255,255,0.9)';
-      ctx.font = 'bold 18px "Microsoft YaHei", sans-serif';
-      ctx.textAlign = 'left';
-      ctx.fillText('⚠️ 需要加强的知识点', 60, weakY);
-      
-      weakY += 15;
-      data.weakAreas.forEach(function(area, i) {
-        weakY += 25;
-        ctx.fillStyle = 'rgba(239,68,68,0.8)';
-        ctx.font = '13px "Microsoft YaHei", sans-serif';
-        ctx.fillText('❌ ' + area.question + '... (错' + area.wrongCount + '次)', 80, weakY);
-      });
-    }
-    
-    // 底部信息
-    ctx.fillStyle = 'rgba(255,255,255,0.3)';
-    ctx.font = '12px "Microsoft YaHei", sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('应急小达人 v1.2.0 | 全国青少年安全与应急科普创新大赛', canvas.width / 2, canvas.height - 40);
-    ctx.fillText('本报告由系统自动生成，数据来源于本地学习记录', canvas.width / 2, canvas.height - 20);
-    
-    return canvas;
-  },
-  
-  // 显示报告弹窗
-  showReport() {
-    var canvas = this.generateReport();
-    
-    // 创建弹窗
-    var overlay = document.createElement('div');
-    overlay.id = 'reportOverlay';
-    overlay.style.cssText = 'position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,0.8);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;animation:fadeIn 0.3s ease;';
-    
-    var container = document.createElement('div');
-    container.style.cssText = 'background:rgba(15,23,42,0.95);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:30px;max-width:90vw;max-height:90vh;overflow:auto;box-shadow:0 25px 50px rgba(0,0,0,0.5);';
-    
-    var title = document.createElement('h2');
-    title.style.cssText = 'color:rgba(255,255,255,0.9);font-size:20px;margin-bottom:20px;text-align:center;';
-    title.textContent = '📊 学习报告预览';
-    container.appendChild(title);
-    
-    canvas.style.cssText = 'max-width:100%;height:auto;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.3);';
-    container.appendChild(canvas);
-    
-    var btnRow = document.createElement('div');
-    btnRow.style.cssText = 'display:flex;gap:12px;justify-content:center;margin-top:20px;';
-    
-    var downloadBtn = document.createElement('button');
-    downloadBtn.style.cssText = 'padding:12px 24px;border-radius:10px;border:none;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:white;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;';
-    downloadBtn.textContent = '💾 保存图片';
-    downloadBtn.onclick = function() {
-      var link = document.createElement('a');
-      link.download = '防灾学习报告_' + new Date().toISOString().slice(0,10) + '.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    };
-    
-    var printBtn = document.createElement('button');
-    printBtn.style.cssText = 'padding:12px 24px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.9);font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;';
-    printBtn.textContent = '🖨️ 打印报告';
-printBtn.onclick = function() {
-      var win = window.open('', '_blank');
-      if (!win) {
-        Modal.show('⚠️ 打印失败', '浏览器拦截了弹窗，请允许弹窗后重试。', '❌');
-        return;
-      }
-      win.document.write('<html><head><title>学习报告</title><style>body{margin:0;background:#0F172A;display:flex;justify-content:center;}img{max-width:100%;}</style></head><body><img src="' + canvas.toDataURL() + '" onload="window.print()"></body></html>');
-      win.document.close();
-      overlay.remove();
-    };
-    
-    var closeBtn = document.createElement('button');
-    closeBtn.style.cssText = 'padding:12px 24px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.9);font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;';
-    closeBtn.textContent = '✕ 关闭';
-    closeBtn.onclick = function() { overlay.remove(); };
-    
-    btnRow.appendChild(downloadBtn);
-    btnRow.appendChild(printBtn);
-    btnRow.appendChild(closeBtn);
-    container.appendChild(btnRow);
-    
-    overlay.appendChild(container);
-    overlay.addEventListener('click', function(e) {
-      if (e.target === overlay) overlay.remove();
-    });
-    
-    document.body.appendChild(overlay);
+    el.innerHTML = '<div style="text-align:center;padding:20px">' +
+      '<div style="font-size:80px;margin-bottom:16px;text-shadow:0 0 30px rgba(52,211,153,0.3);">📊</div>' +
+      '<h3 style="color:rgba(255,255,255,0.95);margin-bottom:8px;font-size:22px;">学习报告概览</h3>' +
+      '<p style="color:rgba(255,255,255,0.4);font-size:13px;margin-bottom:24px;">坚持学习，每一点进步都值得记录</p>' +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:360px;margin:0 auto;">' +
+        ReportEngine._statCard('📊', '答题总数', totalAnswered) +
+        ReportEngine._statCard('🎯', '正确率', accuracy + '%') +
+        ReportEngine._statCard('🔥', '最高连击', streak + 'x') +
+        ReportEngine._statCard('📚', '学习次数', gamesPlayed) +
+        ReportEngine._statCard('🃏', '收集卡牌', cardsCollected) +
+        ReportEngine._statCard('⭐', '等级', 'Lv.' + level) +
+      '</div>' +
+      '<button type="button" class="wb-btn wb-btn-primary" onclick="ReportEngine.showDetailReport()" style="margin-top:24px;padding:12px 28px;font-size:15px;">📋 查看详细报告</button>' +
+      '<button type="button" class="wb-btn" onclick="ReportEngine.exportReport()" style="margin-top:12px;margin-left:8px;padding:12px 28px;font-size:15px;">📥 导出报告</button>' +
+    '</div>';
   },
 
-  // 在报告详情页显示报告
-  showDetailReport() {
-    var canvas = this.generateReport();
-    var container = document.getElementById('reportDetailContent');
-    if (!container) return;
-    
-    canvas.style.cssText = 'max-width:100%;height:auto;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.3);margin-bottom:20px;';
-    container.innerHTML = '';
-    container.appendChild(canvas);
-    
-    var btnRow = document.createElement('div');
-    btnRow.style.cssText = 'display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap;';
-    
-    var downloadBtn = document.createElement('button');
-    downloadBtn.style.cssText = 'padding:12px 24px;border-radius:10px;border:none;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:white;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;';
-    downloadBtn.textContent = '💾 保存图片';
-    downloadBtn.onclick = function() {
-      var link = document.createElement('a');
-      link.download = '防灾学习报告_' + new Date().toISOString().slice(0,10) + '.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    };
-    
-    var printBtn = document.createElement('button');
-    printBtn.style.cssText = 'padding:12px 24px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.9);font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;';
-    printBtn.textContent = '🖨️ 打印报告';
-    printBtn.onclick = function() {
-      var win = window.open('', '_blank');
-      if (!win) {
-        Modal.show('⚠️ 打印失败', '浏览器拦截了弹窗，请允许弹窗后重试。', '❌');
-        return;
+  _statCard: function(icon, label, value) {
+    return '<div style="background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.15);border-radius:12px;padding:14px 10px;text-align:center;">' +
+      '<div style="font-size:24px;margin-bottom:4px;">' + icon + '</div>' +
+      '<div style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:2px;">' + label + '</div>' +
+      '<div style="font-size:20px;font-weight:700;color:rgba(52,211,153,0.95);">' + value + '</div>' +
+    '</div>';
+  },
+
+  /**
+   * 显示详细报告
+   */
+  showDetailReport: function() {
+    var el = document.getElementById('reportDetailContent');
+    if (!el) return;
+
+    el.innerHTML = '<div style="text-align:center;padding:20px"><div style="font-size:48px;margin-bottom:16px;">📋</div><div style="color:rgba(255,255,255,0.6);">报告加载中...</div></div>';
+
+    // 异步生成详细报告
+    setTimeout(function() {
+      try {
+        var html = ReportEngine._buildDetailReport();
+        if (el) el.innerHTML = html;
+      } catch(e) {
+        if (el) el.innerHTML = '<div style="text-align:center;padding:40px;color:rgba(255,255,255,0.5);">⚠️ 报告生成失败，请稍后再试</div>';
       }
-      win.document.write('<html><head><title>学习报告</title><style>body{margin:0;background:#0F172A;display:flex;justify-content:center;}img{max-width:100%;}</style></head><body><img src="' + canvas.toDataURL() + '" onload="window.print()"></body></html>');
-      win.document.close();
-    };
-    
-    var backBtn = document.createElement('button');
-    backBtn.style.cssText = 'padding:12px 24px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.9);font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;';
-    backBtn.textContent = '← 返回';
-    backBtn.onclick = function() { if(typeof PageManager!=='undefined') PageManager.navigate('report'); };
-    
-    btnRow.appendChild(downloadBtn);
-    btnRow.appendChild(printBtn);
-    btnRow.appendChild(backBtn);
-    container.appendChild(btnRow);
+    }, 100);
+  },
+
+  /**
+   * 生成详细报告 HTML
+   */
+  _buildDetailReport: function() {
+    var stats = GameState && GameState._data ? GameState._data.stats || {} : {};
+    var totalCorrect = stats.correct || 0;
+    var totalWrong = stats.wrong || 0;
+    var totalAnswered = totalCorrect + totalWrong;
+    var accuracy = totalAnswered > 0 ? Math.round((totalCorrect / totalAnswered) * 100) : 0;
+    var streak = stats.maxStreak || 0;
+    var gamesPlayed = stats.gamesPlayed || 0;
+    var level = GameState._data ? GameState._data.level || 1 : 1;
+    var exp = GameState._data ? GameState._data.exp || 0 : 0;
+    var coins = GameState._data ? GameState._data.coins || 0 : 0;
+    var cardsCollected = GameState._data ? (GameState._data.cards || []).length : 0;
+
+    // 灾害类型正确率
+    var typeStats = '';
+    var disasterIcons = {earthquake:'🌍',flood:'🌊',fire:'🔥',typhoon:'🌀',tsunami:'🌊',landslide:'⛰️',tornado:'🌪️',drought:'☀️',lightning:'⚡',avalanche:'❄️',volcano:'🌋',hail:'🧊',wildfire:'🌲',blizzard:'❄️'};
+    var typeData = stats.byType || {};
+    for (var type in disasterIcons) {
+      var t = typeData[type] || {correct:0,wrong:0};
+      var tc = t.correct || 0;
+      var tw = t.wrong || 0;
+      var ta = tc + tw;
+      var pct = ta > 0 ? Math.round(tc / ta * 100) : 0;
+      if (ta > 0) {
+        typeStats += '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);">' +
+          '<span>' + (disasterIcons[type] || '🌍') + '</span>' +
+          '<span style="flex:1;font-size:13px;color:rgba(255,255,255,0.7);text-align:left;">' + type + '</span>' +
+          '<span style="font-size:12px;color:rgba(255,255,255,0.5);">' + ta + '题</span>' +
+          '<div style="width:60px;height:6px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;">' +
+          '<div style="height:100%;width:' + pct + '%;background:' + (pct >= 80 ? '#34d399' : pct >= 50 ? '#fbbf24' : '#f87171') + ';border-radius:3px;"></div></div>' +
+          '<span style="font-size:12px;width:36px;text-align:right;color:' + (pct >= 80 ? '#34d399' : pct >= 50 ? '#fbbf24' : '#f87171') + ';">' + pct + '%</span>' +
+        '</div>';
+      }
+    }
+
+    var html = '<div style="padding:20px;max-width:420px;margin:0 auto;">' +
+      '<div style="text-align:center;margin-bottom:20px;">' +
+        '<div style="font-size:64px;margin-bottom:8px;">📊</div>' +
+        '<h3 style="color:#fff;margin:0;font-size:20px;">详细学习报告</h3>' +
+        '<p style="color:rgba(255,255,255,0.4);font-size:12px;margin:4px 0 0;">' + new Date().toLocaleDateString('zh-CN') + '</p>' +
+      '</div>' +
+
+      // 概览数据
+      '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px;">' +
+        '<div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:12px 8px;text-align:center;"><div style="font-size:11px;color:rgba(255,255,255,0.4);">等级</div><div style="font-size:18px;font-weight:700;color:#60a5fa;">' + level + '</div></div>' +
+        '<div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:12px 8px;text-align:center;"><div style="font-size:11px;color:rgba(255,255,255,0.4);">正确率</div><div style="font-size:18px;font-weight:700;color:#34d399;">' + accuracy + '%</div></div>' +
+        '<div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:12px 8px;text-align:center;"><div style="font-size:11px;color:rgba(255,255,255,0.4);">最高连击</div><div style="font-size:18px;font-weight:700;color:#fbbf24;">' + streak + '</div></div>' +
+        '<div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:12px 8px;text-align:center;"><div style="font-size:11px;color:rgba(255,255,255,0.4);">答题数</div><div style="font-size:18px;font-weight:700;color:#a78bfa;">' + totalAnswered + '</div></div>' +
+        '<div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:12px 8px;text-align:center;"><div style="font-size:11px;color:rgba(255,255,255,0.4);">游戏次数</div><div style="font-size:18px;font-weight:700;color:#f472b6;">' + gamesPlayed + '</div></div>' +
+        '<div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:12px 8px;text-align:center;"><div style="font-size:11px;color:rgba(255,255,255,0.4);">金币</div><div style="font-size:18px;font-weight:700;color:#fbbf24;">' + coins + '</div></div>' +
+      '</div>' +
+
+      // 灾害类型掌握度
+      '<div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:16px;margin-bottom:16px;">' +
+        '<h4 style="color:rgba(255,255,255,0.8);font-size:14px;margin:0 0 12px;">🌍 各灾害类型掌握度</h4>' +
+        (typeStats || '<div style="color:rgba(255,255,255,0.3);font-size:13px;text-align:center;padding:12px;">暂无数据，开始答题吧！</div>') +
+      '</div>' +
+
+      // 学习建议
+      '<div style="background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.15);border-radius:12px;padding:16px;margin-bottom:16px;">' +
+        '<h4 style="color:rgba(255,255,255,0.8);font-size:14px;margin:0 0 8px;">💡 学习建议</h4>' +
+        '<p style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.6;margin:0;">' +
+          (totalAnswered === 0 ? '开始你的第一次防灾学习吧！点击「学习模式」或「开盲盒」开始！' :
+           accuracy >= 90 ? '太棒了！你已经掌握得很好，试试「灾害模拟」和「Boss Rush」挑战更高难度！' :
+           accuracy >= 70 ? '表现不错！在薄弱类型上多练习，争取更高准确率！' :
+           accuracy >= 50 ? '继续加油！多使用「学习模式」打牢基础，再去挑战答题模式。' :
+           '别灰心！从「学习模式」开始，系统学习防灾知识，再尝试答题。') +
+        '</p>' +
+      '</div>' +
+
+      '<div style="display:flex;gap:8px;justify-content:center;">' +
+        '<button type="button" class="wb-btn" onclick="ReportEngine.exportReport()" style="padding:10px 20px;font-size:13px;">📥 导出为图片</button>' +
+        '<button type="button" class="wb-btn wb-btn-secondary" onclick="PageManager.navigate(\'report\')" style="padding:10px 20px;font-size:13px;">← 返回</button>' +
+      '</div>' +
+    '</div>';
+
+    return html;
+  },
+
+  /**
+   * 导出报告为图片
+   */
+  exportReport: function() {
+    var el = document.getElementById('reportDetailContent');
+    if (!el) {
+      Modal.show('❌ 导出失败', '请先生成报告');
+      return;
+    }
+
+    try {
+      // 使用 html2canvas 或 fallback
+      if (typeof html2canvas !== 'undefined') {
+        html2canvas(el, {
+          backgroundColor: '#0f1117',
+          scale: 2,
+          useCORS: true,
+          logging: false
+        }).then(function(canvas) {
+          var link = document.createElement('a');
+          link.download = '学习报告_' + new Date().toISOString().slice(0,10) + '.png';
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+          Modal.show('✅ 导出成功', '报告已保存为 PNG 图片');
+        });
+      } else {
+        // Fallback: print
+        window.print();
+      }
+    } catch(e) {
+      Modal.show('❌ 导出失败', '请使用截图工具保存报告');
+    }
   }
 };
 
-// 挂载到全局
-window.ReportEngine = ReportEngine;
+// 注册
+if (typeof GameRegistry !== 'undefined') {
+  GameRegistry.register('ReportEngine', ReportEngine);
+}

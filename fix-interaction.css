@@ -1,0 +1,175 @@
+/* ==========================================================
+ * 应急小达人 — 交互体验修复 v1.0
+ * 修复项：
+ *   1. 移动端 300ms 点击延迟（touch-action: manipulation）
+ *   2. iOS 弹性滚动回弹异常（-webkit-overflow-scrolling）
+ *   3. 按钮点击态视觉反馈（:active 态）
+ *   4. 禁用态按钮样式
+ *   5. 防止触摸穿透
+ *   6. 安全区域适配增强
+ *   7. 点击防抖（双击误触防护）
+ * ========================================================== */
+
+/* === 1. 全局触摸优化：消除 300ms 延迟 === */
+html, body, button, a, .mode-btn, .menu-cat-btn, .tool-btn,
+.quiz-option, .quiz-opt, .codex-filter-btn, .feature-item,
+.menu-section-title, .back-to-categories, .preview-header,
+.btn, [role="button"], [onclick] {
+  touch-action: manipulation !important;
+}
+
+/* === 2. iOS 流畅滚动 === */
+.page-content, .preview-container, .achievement-list, .codex-grid,
+.shop-list, .leaderboard-content, .settings-container,
+#encyclopediaContent, #calendarContent, #statsContent,
+.quiz-options-group, .codex-filters, .game-content-scroll {
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior: contain !important;
+}
+
+/* === 3. 按钮点击态视觉反馈（触觉响应） === */
+.mode-btn:active, .menu-cat-btn:active, .tool-btn:active,
+.btn:active, .btn-primary:active, .quiz-option:active,
+.quiz-opt:active, .codex-filter-btn:active,
+.feature-item:active, .back-to-categories:active {
+  transform: scale(0.96) !important;
+  transition: transform 0.05s ease !important;
+}
+
+/* 防止元素在点击时出现蓝色高亮 */
+* {
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* === 4. 按钮禁用态 === */
+.btn:disabled, .btn[disabled], .mode-btn.disabled,
+.tool-btn.disabled, .quiz-opt.disabled,
+.option-btn.disabled {
+  opacity: 0.4 !important;
+  pointer-events: none !important;
+  filter: grayscale(0.5) !important;
+}
+
+/* === 5. 防止ios页面溢出（安全区域 + 底部工具栏） === */
+body {
+  overscroll-behavior: none !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+/* === 6. 双击误触防护：所有按钮点击后短暂禁用 === */
+.btn-clicked {
+  pointer-events: none !important;
+  opacity: 0.7 !important;
+}
+
+/* === 7. 修复选项按钮点击穿透 === */
+.quiz-opt, .option-btn {
+  position: relative !important;
+  z-index: 1 !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+.quiz-opt > *, .option-btn > * {
+  pointer-events: none !important;
+}
+
+/* === 8. 修复移动端按钮最小触控区域 === */
+.mode-btn, .menu-cat-btn, .tool-btn,
+.btn, .btn-primary, .codex-filter-btn {
+  min-height: 44px !important;
+}
+
+/* === 9. 防止滚动条溢出内容 === */
+.page-content::-webkit-scrollbar,
+.preview-container::-webkit-scrollbar,
+.codex-grid::-webkit-scrollbar {
+  width: 4px !important;
+}
+
+.page-content::-webkit-scrollbar-thumb,
+.preview-container::-webkit-scrollbar-thumb,
+.codex-grid::-webkit-scrollbar-thumb {
+  background: rgba(0, 212, 255, 0.3) !important;
+  border-radius: 4px !important;
+}
+
+/* === 10. 修复双击/快速点击导致的状态混乱 === */
+.memory-card, .memory-card-inner, .memory-card-front, .memory-card-back {
+  pointer-events: auto !important;
+  -webkit-touch-callout: none !important;
+}
+
+/* === 11. 修复布局溢出 === */
+img, svg, video, canvas {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* === 12. 确保滚动容器有正确高度 === */
+.codex-grid {
+  min-height: 300px !important;
+}
+
+/* === 13. 横竖屏切换时布局保底 === */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  .page-content {
+    padding-top: 50px !important;
+  }
+  .preview-header {
+    padding: 14px 0 10px !important;
+  }
+  .preview-icon {
+    font-size: 32px !important;
+  }
+  .preview-title {
+    font-size: 20px !important;
+  }
+}
+
+/* === 14. 小屏适配（<360px） === */
+@media (max-width: 360px) {
+  body #page-menu .mode-btn {
+    padding: 32px 16px !important;
+    min-height: 160px !important;
+  }
+  body #page-menu .mode-btn .mode-icon {
+    font-size: 48px !important;
+  }
+  body #page-menu .mode-btn .mode-name {
+    font-size: 18px !important;
+  }
+  body #page-menu .menu-cat-btn {
+    padding: 28px 18px !important;
+    min-height: 120px !important;
+  }
+  .menu-logo-title {
+    font-size: 36px !important;
+  }
+  .menu-logo-sub {
+    font-size: 13px !important;
+  }
+  .menu-category-btns {
+    gap: 10px !important;
+  }
+  body #page-menu .menu-section-title {
+    font-size: 16px !important;
+  }
+  .preview-title {
+    font-size: 24px !important;
+  }
+}
+
+/* === 15. 大屏适配（>768px）居中限制 === */
+@media (min-width: 768px) {
+  .page-content {
+    max-width: 600px !important;
+    margin: 0 auto !important;
+  }
+}
+
+/* === 16. 底部安全区域 ===== */
+.menu-toolbar {
+  padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)) !important;
+}
