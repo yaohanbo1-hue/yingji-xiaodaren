@@ -1,0 +1,7 @@
+{
+  "action": "evaluate",
+  "args": {
+    "code": "window.scrollTo(0, document.body.scrollHeight);"
+  },
+  "session": "yingji-v80-verify"
+}

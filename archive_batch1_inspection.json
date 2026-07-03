@@ -1,0 +1,165 @@
+[
+  {
+    "file": "QuizEngine.js",
+    "issues": [
+      {
+        "level": "P2",
+        "msg": "Potential timeout leak: 5 setTimeout vs 0 clearTimeout"
+      },
+      {
+        "level": "P2",
+        "msg": "Suspicious short identifiers (possible undefined): js, o, el, ss, id, e, st, sw"
+      }
+    ]
+  },
+  {
+    "file": "UniversalSystemViewer.js",
+    "issues": [
+      {
+        "level": "P2",
+        "msg": "Suspicious short identifiers (possible undefined): js, h2, y"
+      }
+    ]
+  },
+  {
+    "file": "TimedChallengeEngine.js",
+    "issues": [
+      {
+        "level": "P2",
+        "msg": "Suspicious short identifiers (possible undefined): js, h3, id, el, c, zh, o, i"
+      }
+    ]
+  },
+  {
+    "file": "TutorialEngine.js",
+    "issues": [
+      {
+        "level": "P2",
+        "msg": "Suspicious short identifiers (possible undefined): js, id, n, g, br, px, vh, vw"
+      }
+    ]
+  },
+  {
+    "file": "SupplyDropGame.js",
+    "issues": [
+      {
+        "level": "P2",
+        "msg": "Potential timeout leak: 1 setTimeout vs 0 clearTimeout"
+      },
+      {
+        "level": "P2",
+        "msg": "Suspicious short identifiers (possible undefined): js, el, i, br"
+      }
+    ]
+  },
+  {
+    "file": "SurvivalEngine.js",
+    "issues": [
+      {
+        "level": "P2",
+        "msg": "Potential timeout leak: 1 setTimeout vs 0 clearTimeout"
+      },
+      {
+        "level": "P2",
+        "msg": "Suspicious short identifiers (possible undefined): js, h3, p, id, c, zh, o, i"
+      }
+    ]
+  },
+  {
+    "file": "ThemeEngine.js",
+    "issues": [
+      {
+        "level": "P2",
+        "msg": "Suspicious short identifiers (possible undefined): js, id, bg, t, el, n, p"
+      }
+    ]
+  },
+  {
+    "file": "TimeEscapeEngine.js",
+    "issues": [
+      {
+        "level": "P2",
+        "msg": "Potential timeout leak: 1 setTimeout vs 0 clearTimeout"
+      },
+      {
+        "level": "P2",
+        "msg": "Suspicious short identifiers (possible undefined): js, c, zh, q, en, o, i, A"
+      }
+    ]
+  },
+  {
+    "file": "ScratchEngine.js",
+    "issues": [
+      {
+        "level": "P2",
+        "msg": "Suspicious short identifiers (possible undefined): js, b, t, v, w, r, i, c"
+      }
+    ]
+  },
+  {
+    "file": "SeasonEngine.js",
+    "issues": [
+      {
+        "level": "P2",
+        "msg": "Suspicious short identifiers (possible undefined): js, e"
+      }
+    ]
+  },
+  {
+    "file": "SetBonusEngine.js",
+    "issues": [
+      {
+        "level": "P2",
+        "msg": "Suspicious short identifiers (possible undefined): js, id, c, t, h3, p"
+      }
+    ]
+  },
+  {
+    "file": "ShopEngine.js",
+    "issues": [
+      {
+        "level": "P2",
+        "msg": "Suspicious short identifiers (possible undefined): js, id, bg, i, n, sm"
+      }
+    ]
+  },
+  {
+    "file": "StatsEngine.js",
+    "issues": [
+      {
+        "level": "P2",
+        "msg": "Potential timeout leak: 1 setTimeout vs 0 clearTimeout"
+      },
+      {
+        "level": "P2",
+        "msg": "Suspicious short identifiers (possible undefined): js, el, d, s, xp, n, Lv, XP"
+      }
+    ]
+  },
+  {
+    "file": "StoryAdventureEngine.js",
+    "issues": [
+      {
+        "level": "P2",
+        "msg": "Potential timeout leak: 3 setTimeout vs 0 clearTimeout"
+      },
+      {
+        "level": "P2",
+        "msg": "Suspicious short identifiers (possible undefined): js, c, zh, q, en, o, i, A"
+      }
+    ]
+  },
+  {
+    "file": "StoryChallengeEngine.js",
+    "issues": [
+      {
+        "level": "P2",
+        "msg": "Potential timeout leak: 1 setTimeout vs 0 clearTimeout"
+      },
+      {
+        "level": "P2",
+        "msg": "Suspicious short identifiers (possible undefined): js, c, el, h2, p, lg, h3, id"
+      }
+    ]
+  }
+]

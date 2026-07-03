@@ -1,0 +1,129 @@
+[
+  [
+    "navigate",
+    {
+      "ok": true,
+      "data": {
+        "success": true,
+        "url": "https://yaohanbo1-hue.github.io/yingji-xiaodaren/?v=86",
+        "tabId": 344491189
+      }
+    }
+  ],
+  [
+    "dismiss_dialog",
+    {
+      "ok": true,
+      "data": {
+        "type": "string",
+        "value": "dismissed: 知道了 👍"
+      }
+    }
+  ],
+  [
+    "click_battle",
+    {
+      "ok": true,
+      "data": {
+        "type": "string",
+        "value": "clicked battle btn"
+      }
+    }
+  ],
+  [
+    "click_free",
+    {
+      "ok": true,
+      "data": {
+        "type": "string",
+        "value": "clicked free mode: 🎯\n          自由模式\n          自选"
+      }
+    }
+  ],
+  [
+    "screenshot_disaster",
+    {
+      "ok": true,
+      "data": {
+        "format": "png",
+        "path": "C:\\Users\\hambu\\Documents\\kimi\\workspace\\v86-test-quiz7-disaster.png",
+        "sizeBytes": 1452546,
+        "mimeType": "image/png"
+      }
+    }
+  ],
+  [
+    "click_disaster",
+    {
+      "ok": true,
+      "data": {
+        "type": "string",
+        "value": "clicked earthquake: 🌍\n        \n          地震惊魂 🌍\n"
+      }
+    }
+  ],
+  [
+    "screenshot_quiz",
+    {
+      "ok": true,
+      "data": {
+        "format": "png",
+        "path": "C:\\Users\\hambu\\Documents\\kimi\\workspace\\v86-test-quiz7.png",
+        "sizeBytes": 1457785,
+        "mimeType": "image/png"
+      }
+    }
+  ],
+  [
+    "quiz_check",
+    {
+      "ok": true,
+      "data": {
+        "type": "string",
+        "value": "{\"hasQuestion\":true,\"hasOptions\":true,\"hasTimer\":true,\"optionCount\":8,\"timerCount\":4,\"sampleText\":\"←\\n情景 1/25\\n🏆 0 分\\n🌍\\n灾变降临\\n— 序幕 —\\n这个世界，灾害从未停歇。\\n\\n洪水、地震、台风、火灾……\\n每一次灾难都在考验人类的智慧。\\n而你——防灾指挥部的特训成员，\\n将经历 25 个真实灾害情景，\\n在生死关头做出正确的决策。\\n\\n每一个选择，都可能改变结局。\\n\\n准备好了吗？\\n▶ 开始特训\\n📚\\n图鉴\\n🏆\\n成就\\n📊\\n统计\\n🏅\\n排行\\n👤\\n角色\\n📅\\n日历\\n🎮\\n游戏\\n🛒\\n商城\"}"
+      }
+    }
+  ],
+  [
+    "click_option",
+    {
+      "ok": true,
+      "data": {
+        "type": "string",
+        "value": "clicked option 0 of 8"
+      }
+    }
+  ],
+  [
+    "screenshot_answer",
+    {
+      "ok": true,
+      "data": {
+        "format": "png",
+        "path": "C:\\Users\\hambu\\Documents\\kimi\\workspace\\v86-test-quiz7-answer.png",
+        "sizeBytes": 1618552,
+        "mimeType": "image/png"
+      }
+    }
+  ],
+  [
+    "feedback_check",
+    {
+      "ok": true,
+      "data": {
+        "type": "string",
+        "value": "{\"hasCorrect\":true,\"hasWrong\":false,\"hasScore\":false,\"hasFeedback\":false}"
+      }
+    }
+  ],
+  [
+    "close",
+    {
+      "ok": true,
+      "data": {
+        "success": true,
+        "closed": 1
+      }
+    }
+  ]
+]

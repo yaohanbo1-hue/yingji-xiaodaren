@@ -1,0 +1,107 @@
+[
+  [
+    "navigate",
+    {
+      "ok": true,
+      "data": {
+        "success": true,
+        "url": "https://yaohanbo1-hue.github.io/yingji-xiaodaren/?v=86",
+        "tabId": 344491193
+      }
+    }
+  ],
+  [
+    "dismiss_dialog",
+    {
+      "ok": true,
+      "data": {
+        "type": "string",
+        "value": "dismissed"
+      }
+    }
+  ],
+  [
+    "click_battle",
+    {
+      "ok": true,
+      "data": {
+        "type": "string",
+        "value": "clicked battle"
+      }
+    }
+  ],
+  [
+    "click_battle_mode",
+    {
+      "ok": true,
+      "data": {
+        "type": "string",
+        "value": "clicked 防灾大擂台: 🔥 推荐\n          👾\n          防灾大擂台\n     "
+      }
+    }
+  ],
+  [
+    "screenshot_quiz",
+    {
+      "ok": true,
+      "data": {
+        "format": "png",
+        "path": "C:\\Users\\hambu\\Documents\\kimi\\workspace\\v86-test-quiz8.png",
+        "sizeBytes": 1457687,
+        "mimeType": "image/png"
+      }
+    }
+  ],
+  [
+    "quiz_check",
+    {
+      "ok": true,
+      "data": {
+        "type": "string",
+        "value": "{\"hasQuestion\":true,\"hasOptions\":true,\"hasTimer\":true,\"optionCount\":8,\"timerCount\":4,\"sampleText\":\"←\\n⚔️ 闯关挑战\\n选择挑战模式 · 击败怪兽\\n👾\\n防灾大擂台\\n\\n回合制打怪兽！答题就是攻击！\\n\\n🔥 推荐\\n🎯\\n自由模式\\n\\n自选灾害类型，无限练习\\n\\n🆓 自由\\n⚡\\n速答挑战\\n\\n10题限时竞答，挑战手速\\n\\n🆓 自由\\n👥\\n双人PK\\n\\n邀请好友，同台竞技\\n\\n👥 对战\\n♾️\\n生存挑战\\n\\n无限答题，看你能撑多久\\n\\n💀 极限\\n💀\\nBoss Rush\\n\\n连续击败Boss，挑战极限\\n\\n💀 极限\\n📚\\n图鉴\\n🏆\\n成就\\n📊\\n统计\\n🏅\\n排行\\n👤\\n角色\\n📅\\n日历\\n🎮\\n游戏\\n🛒\\n商城\\n⚙️\\n设置\\n📢\\n提示\\n\\n功能开发中...\\n\\n知道了 👍\\n🤖\\n🔊\"}"
+      }
+    }
+  ],
+  [
+    "click_option",
+    {
+      "ok": true,
+      "data": {
+        "type": "string",
+        "value": "clicked option 0 of 8"
+      }
+    }
+  ],
+  [
+    "screenshot_answer",
+    {
+      "ok": true,
+      "data": {
+        "format": "png",
+        "path": "C:\\Users\\hambu\\Documents\\kimi\\workspace\\v86-test-quiz8-answer.png",
+        "sizeBytes": 1635516,
+        "mimeType": "image/png"
+      }
+    }
+  ],
+  [
+    "feedback_check",
+    {
+      "ok": true,
+      "data": {
+        "type": "string",
+        "value": "{\"hasCorrect\":true,\"hasWrong\":false,\"hasScore\":false,\"hasFeedback\":false}"
+      }
+    }
+  ],
+  [
+    "close",
+    {
+      "ok": true,
+      "data": {
+        "success": true,
+        "closed": 1
+      }
+    }
+  ]
+]

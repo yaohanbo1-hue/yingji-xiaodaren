@@ -1,0 +1,1553 @@
+{
+  "steps": [
+    {
+      "step": "navigate",
+      "result": {
+        "ok": true,
+        "data": {
+          "success": true,
+          "url": "https://yaohanbo1-hue.github.io/yingji-xiaodaren/?v=86",
+          "tabId": 344491140
+        }
+      }
+    },
+    {
+      "step": "snapshot",
+      "result": {
+        "ok": true,
+        "data": {
+          "url": "https://yaohanbo1-hue.github.io/yingji-xiaodaren/?v=86",
+          "title": "应急小达人 — 防灾教育互动游戏 v1.3.2",
+          "tree": [
+            {
+              "role": "Canvas"
+            },
+            {
+              "role": "region",
+              "name": "主菜单",
+              "children": [
+                [
+                  {
+                    "role": "StaticText",
+                    "name": "🚨",
+                    "children": [
+                      {
+                        "role": "InlineTextBox",
+                        "name": "🚨"
+                      }
+                    ]
+                  },
+                  [
+                    {
+                      "role": "StaticText",
+                      "name": "⚡",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "⚡"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "heading",
+                      "name": "应急小达人",
+                      "children": [
+                        {
+                          "role": "StaticText",
+                          "name": "应急小达人",
+                          "children": [
+                            {
+                              "role": "InlineTextBox",
+                              "name": "应急小达人"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "🛡️",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "🛡️"
+                        }
+                      ]
+                    }
+                  ],
+                  {
+                    "role": "StaticText",
+                    "name": "⚠️",
+                    "children": [
+                      {
+                        "role": "InlineTextBox",
+                        "name": "⚠️"
+                      }
+                    ]
+                  }
+                ],
+                {
+                  "role": "paragraph",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "🎁 开盲盒 · 学防灾 · 救世界",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "🎁 开盲盒 · 学防灾 · 救世界"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "StaticText",
+                  "name": "✨ v1.3.2 Premium",
+                  "children": [
+                    {
+                      "role": "InlineTextBox",
+                      "name": "✨ v1.3.2 Premium"
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "📚 学习中心 9 个模块",
+                  "ref": "@e1",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "📚",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "📚"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "学习中心",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "学习中心"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "9 个模块",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "9 个模块"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "⚔️ 闯关挑战 20 个模式",
+                  "ref": "@e2",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "⚔️",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "⚔️"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "闯关挑战",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "闯关挑战"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "20 个模式",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "20 个模式"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "StaticText",
+                  "name": "Lv.1",
+                  "children": [
+                    {
+                      "role": "InlineTextBox",
+                      "name": "Lv.1"
+                    }
+                  ]
+                },
+                {
+                  "role": "StaticText",
+                  "name": " ",
+                  "children": [
+                    {
+                      "role": "InlineTextBox",
+                      "name": " "
+                    }
+                  ]
+                },
+                {
+                  "role": "StaticText",
+                  "name": "💰 72",
+                  "children": [
+                    {
+                      "role": "InlineTextBox",
+                      "name": "💰 72"
+                    }
+                  ]
+                },
+                {
+                  "role": "StaticText",
+                  "name": " ",
+                  "children": [
+                    {
+                      "role": "InlineTextBox",
+                      "name": " "
+                    }
+                  ]
+                },
+                {
+                  "role": "StaticText",
+                  "name": "📦 0/369",
+                  "children": [
+                    {
+                      "role": "InlineTextBox",
+                      "name": "📦 0/369"
+                    }
+                  ]
+                },
+                {
+                  "role": "StaticText",
+                  "name": " ",
+                  "children": [
+                    {
+                      "role": "InlineTextBox",
+                      "name": " "
+                    }
+                  ]
+                },
+                {
+                  "role": "StaticText",
+                  "name": "🏆 0",
+                  "children": [
+                    {
+                      "role": "InlineTextBox",
+                      "name": "🏆 0"
+                    }
+                  ]
+                },
+                {
+                  "role": "progressbar",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "🌱 Lv.1 防灾新手",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "🌱 Lv.1 防灾新手"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "27/150 XP",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "27/150 XP"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "role": "navigation",
+              "name": "底部导航栏",
+              "children": [
+                {
+                  "role": "button",
+                  "name": "📚图鉴",
+                  "ref": "@e3",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "📚"
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "图鉴"
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "🏆成就",
+                  "ref": "@e4",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "🏆"
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "成就"
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "📊统计",
+                  "ref": "@e5",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "📊"
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "统计"
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "🏅排行",
+                  "ref": "@e6",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "🏅"
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "排行"
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "👤角色",
+                  "ref": "@e7",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "👤"
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "角色"
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "📅日历",
+                  "ref": "@e8",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "📅"
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "日历"
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "🎮游戏",
+                  "ref": "@e9",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "🎮"
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "游戏"
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "🛒商城",
+                  "ref": "@e10",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "🛒"
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "商城"
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "⚙️设置",
+                  "ref": "@e11",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "⚙️"
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "设置"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "role": "dialog",
+              "name": "提示框",
+              "children": [
+                {
+                  "role": "StaticText",
+                  "name": "📢"
+                },
+                {
+                  "role": "heading",
+                  "name": "提示",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "提示"
+                    }
+                  ]
+                },
+                {
+                  "role": "paragraph",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "功能开发中..."
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "知道了 👍",
+                  "ref": "@e12",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "知道了 👍"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "role": "button",
+              "name": "🤖",
+              "description": "AI 防灾导师",
+              "ref": "@e13",
+              "children": [
+                {
+                  "role": "StaticText",
+                  "name": "🤖"
+                }
+              ]
+            },
+            {
+              "role": "status"
+            },
+            {
+              "role": "button",
+              "name": "🔊",
+              "description": "切换音效",
+              "ref": "@e14",
+              "children": [
+                {
+                  "role": "StaticText",
+                  "name": "🔊"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "step": "click_mall",
+      "result": {
+        "ok": true,
+        "data": {
+          "success": true,
+          "tag": "BUTTON",
+          "text": "\n    🛒商城\n  "
+        }
+      }
+    },
+    {
+      "step": "post_snapshot",
+      "result": {
+        "ok": true,
+        "data": {
+          "url": "https://yaohanbo1-hue.github.io/yingji-xiaodaren/?v=86",
+          "title": "应急小达人 — 防灾教育互动游戏 v1.3.2",
+          "tree": [
+            {
+              "role": "Canvas"
+            },
+            {
+              "role": "region",
+              "name": "商城",
+              "children": [
+                {
+                  "role": "button",
+                  "name": "返回",
+                  "ref": "@e1",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "←",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "←"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "StaticText",
+                  "name": "🛒",
+                  "children": [
+                    {
+                      "role": "InlineTextBox",
+                      "name": "🛒"
+                    }
+                  ]
+                },
+                {
+                  "role": "heading",
+                  "name": "盲盒商城",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "盲盒商城",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "盲盒商城"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "paragraph",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "用金币购买盲盒、皮肤和头像框！",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "用金币购买盲盒、皮肤和头像框！"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "StaticText",
+                  "name": "💰 72",
+                  "children": [
+                    {
+                      "role": "InlineTextBox",
+                      "name": "💰 72"
+                    }
+                  ]
+                },
+                [
+                  {
+                    "role": "StaticText",
+                    "name": "💎",
+                    "children": [
+                      {
+                        "role": "InlineTextBox",
+                        "name": "💎"
+                      }
+                    ]
+                  },
+                  [
+                    {
+                      "role": "StaticText",
+                      "name": "蓝色光晕边框",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "蓝色光晕边框"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "炫酷的科技感",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "炫酷的科技感"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "💰 100",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "💰 100"
+                        }
+                      ]
+                    }
+                  ],
+                  {
+                    "role": "button",
+                    "name": "购买",
+                    "ref": "@e2",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "购买",
+                        "children": [
+                          {
+                            "role": "InlineTextBox",
+                            "name": "购买"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                [
+                  {
+                    "role": "StaticText",
+                    "name": "👑",
+                    "children": [
+                      {
+                        "role": "InlineTextBox",
+                        "name": "👑"
+                      }
+                    ]
+                  },
+                  [
+                    {
+                      "role": "StaticText",
+                      "name": "黄金尊贵边框",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "黄金尊贵边框"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "闪亮的金色",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "闪亮的金色"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "💰 300",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "💰 300"
+                        }
+                      ]
+                    }
+                  ],
+                  {
+                    "role": "button",
+                    "name": "购买",
+                    "ref": "@e3",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "购买",
+                        "children": [
+                          {
+                            "role": "InlineTextBox",
+                            "name": "购买"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                [
+                  {
+                    "role": "StaticText",
+                    "name": "💖",
+                    "children": [
+                      {
+                        "role": "InlineTextBox",
+                        "name": "💖"
+                      }
+                    ]
+                  },
+                  [
+                    {
+                      "role": "StaticText",
+                      "name": "粉色爱心边框",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "粉色爱心边框"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "可爱的粉色",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "可爱的粉色"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "💰 150",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "💰 150"
+                        }
+                      ]
+                    }
+                  ],
+                  {
+                    "role": "button",
+                    "name": "购买",
+                    "ref": "@e4",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "购买",
+                        "children": [
+                          {
+                            "role": "InlineTextBox",
+                            "name": "购买"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                [
+                  {
+                    "role": "StaticText",
+                    "name": "🌌",
+                    "children": [
+                      {
+                        "role": "InlineTextBox",
+                        "name": "🌌"
+                      }
+                    ]
+                  },
+                  [
+                    {
+                      "role": "StaticText",
+                      "name": "星空背景",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "星空背景"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "浩瀚宇宙",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "浩瀚宇宙"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "💰 200",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "💰 200"
+                        }
+                      ]
+                    }
+                  ],
+                  {
+                    "role": "button",
+                    "name": "购买",
+                    "ref": "@e5",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "购买",
+                        "children": [
+                          {
+                            "role": "InlineTextBox",
+                            "name": "购买"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                [
+                  {
+                    "role": "StaticText",
+                    "name": "🌊",
+                    "children": [
+                      {
+                        "role": "InlineTextBox",
+                        "name": "🌊"
+                      }
+                    ]
+                  },
+                  [
+                    {
+                      "role": "StaticText",
+                      "name": "深海背景",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "深海背景"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "静谧深蓝",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "静谧深蓝"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "💰 200",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "💰 200"
+                        }
+                      ]
+                    }
+                  ],
+                  {
+                    "role": "button",
+                    "name": "购买",
+                    "ref": "@e6",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "购买",
+                        "children": [
+                          {
+                            "role": "InlineTextBox",
+                            "name": "购买"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                [
+                  {
+                    "role": "StaticText",
+                    "name": "🌲",
+                    "children": [
+                      {
+                        "role": "InlineTextBox",
+                        "name": "🌲"
+                      }
+                    ]
+                  },
+                  [
+                    {
+                      "role": "StaticText",
+                      "name": "森林背景",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "森林背景"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "清新绿色",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "清新绿色"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "💰 200",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "💰 200"
+                        }
+                      ]
+                    }
+                  ],
+                  {
+                    "role": "button",
+                    "name": "购买",
+                    "ref": "@e7",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "购买",
+                        "children": [
+                          {
+                            "role": "InlineTextBox",
+                            "name": "购买"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                [
+                  {
+                    "role": "StaticText",
+                    "name": "❤️‍🩹",
+                    "children": [
+                      {
+                        "role": "InlineTextBox",
+                        "name": "❤️‍🩹"
+                      }
+                    ]
+                  },
+                  [
+                    {
+                      "role": "StaticText",
+                      "name": "复活机会",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "复活机会"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "失败时复活一次",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "失败时复活一次"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "💰 50",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "💰 50"
+                        }
+                      ]
+                    }
+                  ],
+                  {
+                    "role": "button",
+                    "name": "购买",
+                    "ref": "@e8",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "购买",
+                        "children": [
+                          {
+                            "role": "InlineTextBox",
+                            "name": "购买"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                [
+                  {
+                    "role": "StaticText",
+                    "name": "💡",
+                    "children": [
+                      {
+                        "role": "InlineTextBox",
+                        "name": "💡"
+                      }
+                    ]
+                  },
+                  [
+                    {
+                      "role": "StaticText",
+                      "name": "提示卡",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "提示卡"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "答错时显示正确提示",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "答错时显示正确提示"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "💰 30",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "💰 30"
+                        }
+                      ]
+                    }
+                  ],
+                  {
+                    "role": "button",
+                    "name": "购买",
+                    "ref": "@e9",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "购买",
+                        "children": [
+                          {
+                            "role": "InlineTextBox",
+                            "name": "购买"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                [
+                  {
+                    "role": "StaticText",
+                    "name": "⚡",
+                    "children": [
+                      {
+                        "role": "InlineTextBox",
+                        "name": "⚡"
+                      }
+                    ]
+                  },
+                  [
+                    {
+                      "role": "StaticText",
+                      "name": "双倍积分卡",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "双倍积分卡"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "下一局积分翻倍",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "下一局积分翻倍"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "💰 100",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "💰 100"
+                        }
+                      ]
+                    }
+                  ],
+                  {
+                    "role": "button",
+                    "name": "购买",
+                    "ref": "@e10",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "购买",
+                        "children": [
+                          {
+                            "role": "InlineTextBox",
+                            "name": "购买"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                [
+                  {
+                    "role": "StaticText",
+                    "name": "🎩",
+                    "children": [
+                      {
+                        "role": "InlineTextBox",
+                        "name": "🎩"
+                      }
+                    ]
+                  },
+                  [
+                    {
+                      "role": "StaticText",
+                      "name": "小精灵帽子",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "小精灵帽子"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "给防灾小精灵戴帽子",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "给防灾小精灵戴帽子"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "💰 500",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "💰 500"
+                        }
+                      ]
+                    }
+                  ],
+                  {
+                    "role": "button",
+                    "name": "购买",
+                    "ref": "@e11",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "购买",
+                        "children": [
+                          {
+                            "role": "InlineTextBox",
+                            "name": "购买"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              ]
+            },
+            {
+              "role": "navigation",
+              "name": "底部导航栏",
+              "children": [
+                {
+                  "role": "button",
+                  "name": "📚图鉴",
+                  "ref": "@e12",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "📚",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "📚"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "图鉴",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "图鉴"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "🏆成就",
+                  "ref": "@e13",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "🏆",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "🏆"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "成就",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "成就"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "📊统计",
+                  "ref": "@e14",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "📊",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "📊"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "统计",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "统计"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "🏅排行",
+                  "ref": "@e15",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "🏅",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "🏅"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "排行",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "排行"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "👤角色",
+                  "ref": "@e16",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "👤",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "👤"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "角色",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "角色"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "📅日历",
+                  "ref": "@e17",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "📅",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "📅"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "日历",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "日历"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "🎮游戏",
+                  "ref": "@e18",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "🎮",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "🎮"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "游戏",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "游戏"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "🛒商城",
+                  "ref": "@e19",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "🛒",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "🛒"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "商城",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "商城"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "⚙️设置",
+                  "ref": "@e20",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "⚙️",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "⚙️"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "设置",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "设置"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "role": "dialog",
+              "name": "提示框",
+              "children": [
+                {
+                  "role": "StaticText",
+                  "name": "📢"
+                },
+                {
+                  "role": "heading",
+                  "name": "提示",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "提示"
+                    }
+                  ]
+                },
+                {
+                  "role": "paragraph",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "功能开发中..."
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "知道了 👍",
+                  "ref": "@e21",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "知道了 👍"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "role": "button",
+              "name": "🤖",
+              "description": "AI 防灾导师",
+              "ref": "@e22",
+              "children": [
+                {
+                  "role": "StaticText",
+                  "name": "🤖"
+                }
+              ]
+            },
+            {
+              "role": "status"
+            },
+            {
+              "role": "button",
+              "name": "🔊",
+              "description": "切换音效",
+              "ref": "@e23",
+              "children": [
+                {
+                  "role": "StaticText",
+                  "name": "🔊"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "step": "screenshot",
+      "result": {
+        "ok": true,
+        "data": {
+          "format": "png",
+          "path": "C:\\Users\\hambu\\Documents\\kimi\\workspace\\v86-test-blindbox-result.png",
+          "sizeBytes": 2051261,
+          "mimeType": "image/png"
+        }
+      }
+    },
+    {
+      "step": "close",
+      "result": {
+        "ok": true,
+        "data": {
+          "success": true,
+          "closed": 1
+        }
+      }
+    }
+  ],
+  "button_refs": [
+    {
+      "name": "🛒商城",
+      "ref": "@e10"
+    }
+  ],
+  "blindbox_found_in_post": true
+}

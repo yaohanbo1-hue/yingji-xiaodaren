@@ -1,0 +1,41 @@
+{
+  "steps": [
+    {
+      "step": "navigate",
+      "ok": true
+    },
+    {
+      "step": "click_battle_evaluate",
+      "ok": true
+    },
+    {
+      "step": "screenshot",
+      "ok": true
+    },
+    {
+      "step": "snapshot_battle",
+      "ok": true
+    },
+    {
+      "step": "close_session",
+      "ok": true
+    }
+  ],
+  "issues": [],
+  "success": true,
+  "battle_ui_elements": {
+    "boss": "Boss",
+    "hp": "生命值",
+    "question": "正确",
+    "options": "A",
+    "timer": "秒"
+  },
+  "battle_ui_check": {
+    "boss": true,
+    "hp": true,
+    "question": true,
+    "options": true,
+    "timer": true,
+    "combo": false
+  }
+}

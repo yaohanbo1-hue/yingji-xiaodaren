@@ -1,0 +1,337 @@
+{
+  "total": 53,
+  "invalid": 2,
+  "style_issues": 2,
+  "details": [
+    {
+      "file": "archive_batch1_inspection.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "CUsershambuDocumentskimiworkspacecheckreq-ss-cal.json",
+      "valid": false,
+      "error": "Line 1, Col 42: Invalid \\escape",
+      "issues": []
+    },
+    {
+      "file": "CUsershambuDocumentskimiworkspacecheckreq-ss-survival.json",
+      "valid": false,
+      "error": "Line 1, Col 42: Invalid \\escape",
+      "issues": []
+    },
+    {
+      "file": "json_check_report.json",
+      "valid": true,
+      "error": null,
+      "issues": [
+        [
+          38,
+          "comment",
+          "Possible comment syntax: \"Possible comment syntax: { \\\"src\\\": \\\"api/*.js\\\", \\\"use\\\": \\\"@vercel/node\\\" }\""
+        ]
+      ]
+    },
+    {
+      "file": "manifest.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "vercel.json",
+      "valid": true,
+      "error": null,
+      "issues": [
+        [
+          4,
+          "comment",
+          "Possible comment syntax: { \"src\": \"api/*.js\", \"use\": \"@vercel/node\" }"
+        ]
+      ]
+    },
+    {
+      "file": "check\\payload-index.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-cal2.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-calendar.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-check-pm.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-eval-cal-style.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-eval-firstaid.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-eval-minigame.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-firstaid.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-local-nav.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-local-status.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-minigame.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-minigame2.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-nav-cal.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-nav-char.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-nav-menu.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-nav-mg.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-nav-settings.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-nav-shop.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-navigate.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-navigate2.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-pm-status.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-r3-ach.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-r3-boss.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-r3-ency.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-r3-leader.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-r3-nav.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-r3-survival.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-reload.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-screenshot.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-settings.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-ss-cal.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-ss-cal2.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-ss-char.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-ss-firstaid.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-ss-minigame.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-ss-minigame2.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-ss-settings.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-ss-survival.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check\\req-survival.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check_swarm\\req_click_baike.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check_swarm\\req_eval.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "check_swarm\\req_scroll.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "reports\\code-analysis.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "reports\\css_inspector_issues.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "reports\\css_inspector_raw.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "reports\\final_analysis.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    },
+    {
+      "file": "reports\\verifier_functional.json",
+      "valid": true,
+      "error": null,
+      "issues": []
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "action": "screenshot",
+  "args": {
+    "format": "png",
+    "path": "C:\\Users\\hambu\\Documents\\kimi\\workspace\\v86-ui-verify.png"
+  },
+  "session": "yingji-v80-verify"
+}

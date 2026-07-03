@@ -1,0 +1,103 @@
+# Inspector Report — Archive Batch 3
+
+**Task:** inspector3-archive-batch3
+**Date:** 2026-07-02
+**Scope:** 15 files in `archive/` directory
+
+---
+
+## 1. Verification Method
+
+1. `node --check` run on each file → all passed (no syntax errors).
+2. Regex-based static analysis for: unguarded global references, undefined variable usage, and minification/formatting issues.
+
+---
+
+## 2. File-by-File Results
+
+### MemoryCardEngine.js
+- **P1:** Uses `PageManager` (1 call), `AudioManager` (6 calls), `Modal` (2 calls), `GameState` (5 calls) without `typeof`/`void` guards. If the dependency script is not loaded first, these will throw `ReferenceError`.
+- **P2:** Minified to a single line (3014 chars). Hard to debug and maintain.
+
+### MemoryGameV2.js
+- **P1:** Uses `PageManager` (1), `AudioManager` (2), `Modal` (1), `GameState` (2) without guards.
+- **P2:** Minified single line (2501 chars).
+
+### MiniGameEngine.js
+- **P1:** Uses `AudioManager` (10 calls), `Modal` (4 calls), and calls global `showConfetti` without `typeof` guard.
+- **P2:** Minified single line (10401 chars).
+
+### KitEngine.js
+- **P1:** Uses `PageManager` (2 calls), calls global `showConfetti`, and uses `KIT_DATA` without `typeof` guard.
+- **P2:** Minified single line (3027 chars).
+
+### KnowledgeRaceEngine.js
+- **P1:** Uses `PageManager` (1), `AudioManager` (7), `Modal` (3), `GameState` (7) without guards. (Note: `void 0!==GameState` guard exists in `_showQuestion`, but other unguarded usages remain.)
+- **P2:** Uses `ALL_CARDS` without explicit `typeof` guard; minified single line (3570 chars).
+
+### LeaderboardEngine.js
+- **P1:** Uses `GameState` (7 calls) without guards. (Note: `void 0!==SeasonEngine` guard exists, but `GameState` is unguarded.)
+- **P2:** Minified single line (2442 chars).
+
+### GachaEngine.js
+- **P1:** Uses `Modal` (2), `GameState` (12) without guards.
+- **P2:** Uses `ALL_CARDS` without explicit `typeof` guard; minified single line.
+
+### GuideEngine.js
+- **P1:** Uses `PageManager` (2), `AudioManager` (4), `Modal` (1), `GameState` (6) without guards. (Note: `typeof victoryEffect` guard exists, but core dependencies are unguarded.)
+- **P2:** Minified single line.
+
+### I18nEngine.js
+- **P1:** Uses `GameState` (5 calls) without guards. (Note: `void 0!==GameState` guard exists in `setLang`/`init`, but `t()` accesses `GameState._data` directly.)
+- **P2:** Minified single line.
+
+### JuiceEngine.js
+- **P2:** Minified single line. No external global dependencies (only `document` API), so no P1 issues.
+
+### CharacterEngine.js
+- **P1:** Uses `AudioManager` (2), `Modal` (8), `GameState` (30), and calls `showFloatingText`, `showConfetti` without `typeof` guards.
+- **P2:** Minified single line (11147 chars).
+
+### CheckinEngine.js
+- **P1:** Uses `Modal` (2), `GameState` (12) without guards.
+- **P2:** Minified single line.
+
+### CodexEngine.js
+- **P1:** Uses `GameState` (2) without guards.
+- **P2:** Uses `ALL_CARDS` without explicit `typeof` guard; minified single line (2499 chars).
+
+### CoinRainEngine.js
+- **P1:** Uses `AudioManager` (1), `GameState` (2), and calls `showFloatingText` without `typeof` guard.
+- **P2:** Minified single line.
+
+### ComboEngine.js
+- **P1:** Uses `AudioManager` (1), `GameState` (5), and calls `showSpectacleText`, `showConfetti`, `screenShake` without `typeof` guards.
+- **P2:** Minified single line (3684 chars).
+
+---
+
+## 3. Summary
+
+| Severity | Count | Description |
+|----------|-------|-------------|
+| **P0** | **0** | Syntax errors — all files passed `node --check` |
+| **P1** | **42** | Unguarded global references (`PageManager`, `AudioManager`, `Modal`, `GameState`, `KIT_DATA`, `ALL_CARDS`, `showConfetti`, `showFloatingText`, `showSpectacleText`, `screenShake`) that will throw `ReferenceError` if the dependency module is not loaded first |
+| **P2** | **27** | All files are minified to a single extremely long line (1100–11100 chars), making debugging and maintenance difficult |
+
+### Key Patterns Found
+- **No `</br>` tags** found in any of these 15 files (unlike `encyclopedia_final.js` which was fixed in another batch).
+- **All files are minified** to a single line after the header comment block.
+- **Common unguarded globals:** `GameState` (most frequent), `AudioManager`, `Modal`, `PageManager`.
+- **Partial guards exist** in some files (e.g., `void 0!==GameState` in `KnowledgeRaceEngine.js`, `I18nEngine.js`; `void 0!==SeasonEngine` in `LeaderboardEngine.js`; `typeof victoryEffect` in `GuideEngine.js`), but they only cover specific call sites, leaving other usages unprotected.
+
+---
+
+## 4. Recommendation
+
+Since these are **archive files** (legacy code), the highest-value fix would be:
+1. **If any archive engine is reactivated:** add `typeof X !== 'undefined'` guards at the entry points of each method that touches external globals.
+2. **If staying archived:** the minified format is acceptable for storage, but consider keeping a prettier-formatted source of truth for future reference.
+
+---
+
+*Report generated by inspector3-archive-batch3*

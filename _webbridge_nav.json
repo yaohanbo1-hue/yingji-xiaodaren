@@ -1,0 +1,9 @@
+{
+  "action": "navigate",
+  "args": {
+    "url": "https://yaohanbo1-hue.github.io/yingji-xiaodaren/?v=86",
+    "newTab": true,
+    "group_title": "应急小达人 v86 UI验证"
+  },
+  "session": "yingji-v80-verify"
+}

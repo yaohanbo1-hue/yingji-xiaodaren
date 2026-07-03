@@ -1,0 +1,107 @@
+[
+  [
+    "navigate",
+    {
+      "ok": true,
+      "data": {
+        "success": true,
+        "url": "https://yaohanbo1-hue.github.io/yingji-xiaodaren/?v=86",
+        "tabId": 344491160
+      }
+    }
+  ],
+  [
+    "click_battle_cat",
+    {
+      "ok": false,
+      "error": {
+        "code": "extension_error",
+        "message": "click: Uncaught"
+      }
+    }
+  ],
+  [
+    "has_dialog",
+    true
+  ],
+  [
+    "dismiss_dialog",
+    {
+      "ok": false,
+      "error": {
+        "code": "extension_error",
+        "message": "click: unknown ref \"@e31\". Run snapshot first to get refs."
+      }
+    }
+  ],
+  [
+    "click_battle_mode",
+    {
+      "ok": true,
+      "data": {
+        "success": true,
+        "tag": "DIV",
+        "text": "\n        ⚔️\n        闯关挑战\n        20 个模式\n      "
+      }
+    }
+  ],
+  [
+    "screenshot_after_battle",
+    {
+      "ok": true,
+      "data": {
+        "format": "png",
+        "path": "C:\\Users\\hambu\\Documents\\kimi\\workspace\\v86-test-quiz3.png",
+        "sizeBytes": 1579314,
+        "mimeType": "image/png"
+      }
+    }
+  ],
+  [
+    "in_quiz_check",
+    {
+      "in_quiz": false,
+      "tree_len": 12448
+    }
+  ],
+  [
+    "click_free_mode",
+    {
+      "ok": true,
+      "data": {
+        "success": true,
+        "tag": "DIV",
+        "text": "\n          🎯\n          自由模式\n          自选灾害类型，无限练习\n        "
+      }
+    }
+  ],
+  [
+    "screenshot_free",
+    {
+      "ok": true,
+      "data": {
+        "format": "png",
+        "path": "C:\\Users\\hambu\\Documents\\kimi\\workspace\\v86-test-quiz3-free.png",
+        "sizeBytes": 1807868,
+        "mimeType": "image/png"
+      }
+    }
+  ],
+  [
+    "in_quiz_check_free",
+    {
+      "in_quiz": false,
+      "tree_len": 5797
+    }
+  ],
+  [
+    "close",
+    {
+      "ok": true,
+      "data": {
+        "success": true,
+        "closed": 1
+      }
+    }
+  ]
+]

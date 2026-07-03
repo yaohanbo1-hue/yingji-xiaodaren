@@ -1,0 +1,1419 @@
+[
+  [
+    "navigate",
+    {
+      "ok": true,
+      "data": {
+        "success": true,
+        "url": "https://yaohanbo1-hue.github.io/yingji-xiaodaren/?v=86",
+        "tabId": 344491152
+      }
+    }
+  ],
+  [
+    "check_dialog",
+    {
+      "has_dialog": true
+    }
+  ],
+  [
+    "dismiss_dialog_css",
+    {
+      "ok": false,
+      "error": {
+        "code": "extension_error",
+        "message": "click: Uncaught"
+      }
+    }
+  ],
+  [
+    "dismiss_dialog_eval",
+    {
+      "ok": false,
+      "error": {
+        "code": "extension_error",
+        "message": "evaluate: SyntaxError: Failed to execute 'querySelector' on 'Document': 'button:has-text(\"知道了\")' is not a valid selector.\n    at <anonymous>:1:24\n    at <anonymous>:1:206"
+      }
+    }
+  ],
+  [
+    "click_battle",
+    {
+      "ok": true,
+      "data": {
+        "success": true,
+        "tag": "DIV",
+        "text": "\n        ⚔️\n        闯关挑战\n        20 个模式\n      "
+      }
+    }
+  ],
+  [
+    "snapshot_after_battle",
+    {
+      "ok": true,
+      "data": {
+        "url": "https://yaohanbo1-hue.github.io/yingji-xiaodaren/?v=86",
+        "title": "应急小达人 — 防灾教育互动游戏 v1.3.2",
+        "tree": [
+          {
+            "role": "Canvas"
+          },
+          {
+            "role": "region",
+            "name": "主菜单",
+            "children": [
+              [
+                {
+                  "role": "StaticText",
+                  "name": "🚨",
+                  "children": [
+                    {
+                      "role": "InlineTextBox",
+                      "name": "🚨"
+                    }
+                  ]
+                },
+                [
+                  {
+                    "role": "StaticText",
+                    "name": "⚡",
+                    "children": [
+                      {
+                        "role": "InlineTextBox",
+                        "name": "⚡"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "heading",
+                    "name": "应急小达人",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "应急小达人",
+                        "children": [
+                          {
+                            "role": "InlineTextBox",
+                            "name": "应急小达人"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "🛡️",
+                    "children": [
+                      {
+                        "role": "InlineTextBox",
+                        "name": "🛡️"
+                      }
+                    ]
+                  }
+                ],
+                {
+                  "role": "StaticText",
+                  "name": "⚠️",
+                  "children": [
+                    {
+                      "role": "InlineTextBox",
+                      "name": "⚠️"
+                    }
+                  ]
+                }
+              ],
+              {
+                "role": "paragraph",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "🎁 开盲盒 · 学防灾 · 救世界",
+                    "children": [
+                      {
+                        "role": "InlineTextBox",
+                        "name": "🎁 开盲盒 · 学防灾 · 救世界"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "role": "StaticText",
+                "name": "✨ v1.3.2 Premium",
+                "children": [
+                  {
+                    "role": "InlineTextBox",
+                    "name": "✨ v1.3.2 Premium"
+                  }
+                ]
+              },
+              {
+                "role": "button",
+                "name": "返回",
+                "ref": "@e1",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "←",
+                    "children": [
+                      {
+                        "role": "InlineTextBox",
+                        "name": "←"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "返回分类",
+                    "children": [
+                      {
+                        "role": "InlineTextBox",
+                        "name": "返回分类"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "role": "heading",
+                "name": "⚔️ 闯关挑战 ▼",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "⚔️ 闯关挑战",
+                    "children": [
+                      {
+                        "role": "InlineTextBox",
+                        "name": "⚔️ 闯关挑战"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "▼",
+                    "children": [
+                      {
+                        "role": "InlineTextBox",
+                        "name": "▼"
+                      }
+                    ]
+                  }
+                ]
+              },
+              [
+                {
+                  "role": "button",
+                  "name": "🔥 推荐 👾 防灾大擂台 回合制打怪兽！答题就是攻击！",
+                  "ref": "@e2",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "🔥 推荐",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "🔥 推荐"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "👾",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "👾"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "防灾大擂台",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "防灾大擂台"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "回合制打怪兽！答题就是攻击！",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "回合制打怪兽！答题就是攻击！"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "🎯 自由模式 自选灾害类型，无限练习",
+                  "ref": "@e3",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "🎯",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "🎯"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "自由模式",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "自由模式"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "自选灾害类型，无限练习",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "自选灾害类型，无限练习"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "⚡ 速答挑战 10题限时竞答，挑战手速",
+                  "ref": "@e4",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "⚡",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "⚡"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "速答挑战",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "速答挑战"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "10题限时竞答，挑战手速",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "10题限时竞答，挑战手速"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "👥 新 👥 双人PK 朋友对战，看谁更懂防灾",
+                  "ref": "@e5",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "👥 新",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "👥 新"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "👥",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "👥"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "双人PK",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "双人PK"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "朋友对战，看谁更懂防灾",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "朋友对战，看谁更懂防灾"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "📅 每日 📅 每日挑战 每天10题，连续打卡得奖励",
+                  "ref": "@e6",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "📅 每日",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "📅 每日"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "📅",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "📅"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "每日挑战",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "每日挑战"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "每天10题，连续打卡得奖励",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "每天10题，连续打卡得奖励"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "♾️ 新 ♾️ 生存模式 无限答题，答错3次结束",
+                  "ref": "@e7",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "♾️ 新",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "♾️ 新"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "♾️",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "♾️"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "生存模式",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "生存模式"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "无限答题，答错3次结束",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "无限答题，答错3次结束"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "💀 新 💀 Boss Rush 连续挑战5个Boss！",
+                  "ref": "@e8",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "💀 新",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "💀 新"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "💀",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "💀"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "Boss Rush",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "Boss Rush"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "连续挑战5个Boss！",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "连续挑战5个Boss！"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "⏱️ 新 ⏱️ 限时挑战 30秒内答对尽可能多",
+                  "ref": "@e9",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "⏱️ 新",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "⏱️ 新"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "⏱️",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "⏱️"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "限时挑战",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "限时挑战"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "30秒内答对尽可能多",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "30秒内答对尽可能多"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "📖 新 📖 故事模式 守护城市，做出正确选择",
+                  "ref": "@e10",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "📖 新",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "📖 新"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "📖",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "📖"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "故事模式",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "故事模式"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "守护城市，做出正确选择",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "守护城市，做出正确选择"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "⚡ 新 ⚡ 闪电问答 5秒内选出正确答案",
+                  "ref": "@e11",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "⚡ 新",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "⚡ 新"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "⚡",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "⚡"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "闪电问答",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "闪电问答"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "5秒内选出正确答案",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "5秒内选出正确答案"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "🎯 新 🎯 精准投放 将物资投放到正确区域",
+                  "ref": "@e12",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "🎯 新",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "🎯 新"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "🎯",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "🎯"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "精准投放",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "精准投放"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "将物资投放到正确区域",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "将物资投放到正确区域"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "🎵 音乐 10首防灾音乐",
+                  "ref": "@e13",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "🎵",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "🎵"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "音乐",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "音乐"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "10首防灾音乐",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "10首防灾音乐"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "🥚 彩蛋 15个隐藏彩蛋",
+                  "ref": "@e14",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "🥚",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "🥚"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "彩蛋",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "彩蛋"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "15个隐藏彩蛋",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "15个隐藏彩蛋"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "🏠 基地 布置基地+换装",
+                  "ref": "@e15",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "🏠",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "🏠"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "基地",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "基地"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "布置基地+换装",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "布置基地+换装"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "🔥 新 ⏰ 限时逃生 60秒内答完20题！",
+                  "ref": "@e16",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "🔥 新",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "🔥 新"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "⏰",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "⏰"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "限时逃生",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "限时逃生"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "60秒内答完20题！",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "60秒内答完20题！"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "🎯 新 🎯 精准打击 10题精准答题挑战",
+                  "ref": "@e17",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "🎯 新",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "🎯 新"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "🎯",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "🎯"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "精准打击",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "精准打击"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "10题精准答题挑战",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "10题精准答题挑战"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "📖 新 📖 防灾大冒险 5章剧情，成为英雄！",
+                  "ref": "@e18",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "📖 新",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "📖 新"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "📖",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "📖"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "防灾大冒险",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "防灾大冒险"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "5章剧情，成为英雄！",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "5章剧情，成为英雄！"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "🧠 新 🧠 记忆翻牌 翻牌配对，考验记忆力",
+                  "ref": "@e19",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "🧠 新",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "🧠 新"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "🧠",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "🧠"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "记忆翻牌",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "记忆翻牌"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "翻牌配对，考验记忆力",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "翻牌配对，考验记忆力"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "⚡ 新 ⚡ 反应速度 测试你的反应神经",
+                  "ref": "@e20",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "⚡ 新",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "⚡ 新"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "⚡",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "⚡"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "反应速度",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "反应速度"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "测试你的反应神经",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "测试你的反应神经"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "role": "button",
+                  "name": "🏁 新 🏁 知识竞速 15题限时+生命值挑战",
+                  "ref": "@e21",
+                  "children": [
+                    {
+                      "role": "StaticText",
+                      "name": "🏁 新",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "🏁 新"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "🏁",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "🏁"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "知识竞速",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "知识竞速"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "StaticText",
+                      "name": "15题限时+生命值挑战",
+                      "children": [
+                        {
+                          "role": "InlineTextBox",
+                          "name": "15题限时+生命值挑战"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            ]
+          },
+          {
+            "role": "navigation",
+            "name": "底部导航栏",
+            "children": [
+              {
+                "role": "button",
+                "name": "📚图鉴",
+                "ref": "@e22",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "📚"
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "图鉴"
+                  }
+                ]
+              },
+              {
+                "role": "button",
+                "name": "🏆成就",
+                "ref": "@e23",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "🏆"
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "成就"
+                  }
+                ]
+              },
+              {
+                "role": "button",
+                "name": "📊统计",
+                "ref": "@e24",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "📊"
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "统计"
+                  }
+                ]
+              },
+              {
+                "role": "button",
+                "name": "🏅排行",
+                "ref": "@e25",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "🏅"
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "排行"
+                  }
+                ]
+              },
+              {
+                "role": "button",
+                "name": "👤角色",
+                "ref": "@e26",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "👤"
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "角色"
+                  }
+                ]
+              },
+              {
+                "role": "button",
+                "name": "📅日历",
+                "ref": "@e27",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "📅"
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "日历"
+                  }
+                ]
+              },
+              {
+                "role": "button",
+                "name": "🎮游戏",
+                "ref": "@e28",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "🎮"
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "游戏"
+                  }
+                ]
+              },
+              {
+                "role": "button",
+                "name": "🛒商城",
+                "ref": "@e29",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "🛒"
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "商城"
+                  }
+                ]
+              },
+              {
+                "role": "button",
+                "name": "⚙️设置",
+                "ref": "@e30",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "⚙️"
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "设置"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "dialog",
+            "name": "提示框",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "📢"
+              },
+              {
+                "role": "heading",
+                "name": "提示",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "提示"
+                  }
+                ]
+              },
+              {
+                "role": "paragraph",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "功能开发中..."
+                  }
+                ]
+              },
+              {
+                "role": "button",
+                "name": "知道了 👍",
+                "ref": "@e31",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "知道了 👍"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "🤖",
+            "description": "AI 防灾导师",
+            "ref": "@e32",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "🤖"
+              }
+            ]
+          },
+          {
+            "role": "status"
+          },
+          {
+            "role": "button",
+            "name": "🔊",
+            "description": "切换音效",
+            "ref": "@e33",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "🔊"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  [
+    "found_e_ref",
+    null
+  ],
+  [
+    "click_battle_css",
+    {
+      "selector": "[data-mode='battle']",
+      "result": {
+        "ok": false,
+        "error": {
+          "code": "extension_error",
+          "message": "click: Uncaught"
+        }
+      }
+    }
+  ],
+  [
+    "click_battle_css",
+    {
+      "selector": ".mode-btn:has-text('防灾大擂台')",
+      "result": {
+        "ok": false,
+        "error": {
+          "code": "extension_error",
+          "message": "click: Uncaught"
+        }
+      }
+    }
+  ],
+  [
+    "click_battle_css",
+    {
+      "selector": ".battle-card",
+      "result": {
+        "ok": false,
+        "error": {
+          "code": "extension_error",
+          "message": "element not found: .battle-card"
+        }
+      }
+    }
+  ],
+  [
+    "click_battle_css",
+    {
+      "selector": "#modeBattle",
+      "result": {
+        "ok": false,
+        "error": {
+          "code": "extension_error",
+          "message": "element not found: #modeBattle"
+        }
+      }
+    }
+  ],
+  [
+    "click_battle_css",
+    {
+      "selector": "div:has(> span:has-text('防灾大擂台'))",
+      "result": {
+        "ok": false,
+        "error": {
+          "code": "extension_error",
+          "message": "click: Uncaught"
+        }
+      }
+    }
+  ],
+  [
+    "screenshot",
+    {
+      "ok": true,
+      "data": {
+        "format": "png",
+        "path": "C:\\Users\\hambu\\Documents\\kimi\\workspace\\v86-test-quiz2.png",
+        "sizeBytes": 1558342,
+        "mimeType": "image/png"
+      }
+    }
+  ],
+  [
+    "quiz_check",
+    {
+      "in_quiz": true,
+      "tree_len": 12448
+    }
+  ],
+  [
+    "screenshot_answer",
+    {
+      "ok": true,
+      "data": {
+        "format": "png",
+        "path": "C:\\Users\\hambu\\Documents\\kimi\\workspace\\v86-test-quiz-answer2.png",
+        "sizeBytes": 1748253,
+        "mimeType": "image/png"
+      }
+    }
+  ],
+  [
+    "close",
+    {
+      "ok": true,
+      "data": {
+        "success": true,
+        "closed": 2
+      }
+    }
+  ]
+]

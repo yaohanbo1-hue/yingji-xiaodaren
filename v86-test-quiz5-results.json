@@ -1,0 +1,123 @@
+[
+  [
+    "navigate",
+    {
+      "ok": true,
+      "data": {
+        "success": true,
+        "url": "https://yaohanbo1-hue.github.io/yingji-xiaodaren/?v=86",
+        "tabId": 344491177
+      }
+    }
+  ],
+  [
+    "snapshot_initial",
+    {
+      "has_dialog": true,
+      "tree_len": 4581
+    }
+  ],
+  [
+    "found_battle_ref",
+    null
+  ],
+  [
+    "snapshot_lobby",
+    {
+      "tree_len": 4581
+    }
+  ],
+  [
+    "found_free_ref",
+    null
+  ],
+  [
+    "screenshot_disaster",
+    {
+      "ok": true,
+      "data": {
+        "format": "png",
+        "path": "C:\\Users\\hambu\\Documents\\kimi\\workspace\\v86-test-quiz5-disaster.png",
+        "sizeBytes": 1856889,
+        "mimeType": "image/png"
+      }
+    }
+  ],
+  [
+    "snapshot_disaster",
+    {
+      "tree_len": 4581
+    }
+  ],
+  [
+    "found_disaster_ref",
+    null
+  ],
+  [
+    "screenshot_quiz",
+    {
+      "ok": true,
+      "data": {
+        "format": "png",
+        "path": "C:\\Users\\hambu\\Documents\\kimi\\workspace\\v86-test-quiz5.png",
+        "sizeBytes": 1910532,
+        "mimeType": "image/png"
+      }
+    }
+  ],
+  [
+    "quiz_check",
+    {
+      "has_question": false,
+      "has_options": true,
+      "has_timer": false,
+      "tree_len": 4581
+    }
+  ],
+  [
+    "found_options",
+    [
+      "@e1",
+      "@e2",
+      "@e3",
+      "@e4",
+      "@e5",
+      "@e6",
+      "@e7",
+      "@e8"
+    ]
+  ],
+  [
+    "click_option",
+    {
+      "ok": true,
+      "data": {
+        "success": true,
+        "tag": "DIV",
+        "text": "\n        📚\n        学习中心\n        9 个模块\n      "
+      }
+    }
+  ],
+  [
+    "screenshot_answer",
+    {
+      "ok": true,
+      "data": {
+        "format": "png",
+        "path": "C:\\Users\\hambu\\Documents\\kimi\\workspace\\v86-test-quiz5-answer.png",
+        "sizeBytes": 1876000,
+        "mimeType": "image/png"
+      }
+    }
+  ],
+  [
+    "close",
+    {
+      "ok": true,
+      "data": {
+        "success": true,
+        "closed": 1
+      }
+    }
+  ]
+]

@@ -1,0 +1,480 @@
+{
+  "ok": true,
+  "data": {
+    "url": "https://yaohanbo1-hue.github.io/yingji-xiaodaren/?v=86",
+    "title": "应急小达人 — 防灾教育互动游戏 v1.3.2",
+    "tree": [
+      {
+        "role": "Canvas"
+      },
+      {
+        "role": "region",
+        "name": "主菜单",
+        "children": [
+          [
+            {
+              "role": "StaticText",
+              "name": "🚨",
+              "children": [
+                {
+                  "role": "InlineTextBox",
+                  "name": "🚨"
+                }
+              ]
+            },
+            [
+              {
+                "role": "StaticText",
+                "name": "⚡",
+                "children": [
+                  {
+                    "role": "InlineTextBox",
+                    "name": "⚡"
+                  }
+                ]
+              },
+              {
+                "role": "heading",
+                "name": "应急小达人",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "应急小达人",
+                    "children": [
+                      {
+                        "role": "InlineTextBox",
+                        "name": "应急小达人"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "role": "StaticText",
+                "name": "🛡️",
+                "children": [
+                  {
+                    "role": "InlineTextBox",
+                    "name": "🛡️"
+                  }
+                ]
+              }
+            ],
+            {
+              "role": "StaticText",
+              "name": "⚠️",
+              "children": [
+                {
+                  "role": "InlineTextBox",
+                  "name": "⚠️"
+                }
+              ]
+            }
+          ],
+          {
+            "role": "paragraph",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "🎁 开盲盒 · 学防灾 · 救世界",
+                "children": [
+                  {
+                    "role": "InlineTextBox",
+                    "name": "🎁 开盲盒 · 学防灾 · 救世界"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "✨ v1.3.2 Premium",
+            "children": [
+              {
+                "role": "InlineTextBox",
+                "name": "✨ v1.3.2 Premium"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "📚 学习中心 9 个模块",
+            "ref": "@e1",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "📚",
+                "children": [
+                  {
+                    "role": "InlineTextBox",
+                    "name": "📚"
+                  }
+                ]
+              },
+              {
+                "role": "StaticText",
+                "name": "学习中心",
+                "children": [
+                  {
+                    "role": "InlineTextBox",
+                    "name": "学习中心"
+                  }
+                ]
+              },
+              {
+                "role": "StaticText",
+                "name": "9 个模块",
+                "children": [
+                  {
+                    "role": "InlineTextBox",
+                    "name": "9 个模块"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "⚔️ 闯关挑战 20 个模式",
+            "ref": "@e2",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "⚔️",
+                "children": [
+                  {
+                    "role": "InlineTextBox",
+                    "name": "⚔️"
+                  }
+                ]
+              },
+              {
+                "role": "StaticText",
+                "name": "闯关挑战",
+                "children": [
+                  {
+                    "role": "InlineTextBox",
+                    "name": "闯关挑战"
+                  }
+                ]
+              },
+              {
+                "role": "StaticText",
+                "name": "20 个模式",
+                "children": [
+                  {
+                    "role": "InlineTextBox",
+                    "name": "20 个模式"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "Lv.1",
+            "children": [
+              {
+                "role": "InlineTextBox",
+                "name": "Lv.1"
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": " ",
+            "children": [
+              {
+                "role": "InlineTextBox",
+                "name": " "
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "💰 72",
+            "children": [
+              {
+                "role": "InlineTextBox",
+                "name": "💰 72"
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": " ",
+            "children": [
+              {
+                "role": "InlineTextBox",
+                "name": " "
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "📦 0/369",
+            "children": [
+              {
+                "role": "InlineTextBox",
+                "name": "📦 0/369"
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": " ",
+            "children": [
+              {
+                "role": "InlineTextBox",
+                "name": " "
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "🏆 0",
+            "children": [
+              {
+                "role": "InlineTextBox",
+                "name": "🏆 0"
+              }
+            ]
+          },
+          {
+            "role": "progressbar",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "🌱 Lv.1 防灾新手",
+                "children": [
+                  {
+                    "role": "InlineTextBox",
+                    "name": "🌱 Lv.1 防灾新手"
+                  }
+                ]
+              },
+              {
+                "role": "StaticText",
+                "name": "27/150 XP",
+                "children": [
+                  {
+                    "role": "InlineTextBox",
+                    "name": "27/150 XP"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "role": "navigation",
+        "name": "底部导航栏",
+        "children": [
+          {
+            "role": "button",
+            "name": "📚图鉴",
+            "ref": "@e3",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "📚"
+              },
+              {
+                "role": "StaticText",
+                "name": "图鉴"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "🏆成就",
+            "ref": "@e4",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "🏆"
+              },
+              {
+                "role": "StaticText",
+                "name": "成就"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "📊统计",
+            "ref": "@e5",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "📊"
+              },
+              {
+                "role": "StaticText",
+                "name": "统计"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "🏅排行",
+            "ref": "@e6",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "🏅"
+              },
+              {
+                "role": "StaticText",
+                "name": "排行"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "👤角色",
+            "ref": "@e7",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "👤"
+              },
+              {
+                "role": "StaticText",
+                "name": "角色"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "📅日历",
+            "ref": "@e8",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "📅"
+              },
+              {
+                "role": "StaticText",
+                "name": "日历"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "🎮游戏",
+            "ref": "@e9",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "🎮"
+              },
+              {
+                "role": "StaticText",
+                "name": "游戏"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "🛒商城",
+            "ref": "@e10",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "🛒"
+              },
+              {
+                "role": "StaticText",
+                "name": "商城"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "⚙️设置",
+            "ref": "@e11",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "⚙️"
+              },
+              {
+                "role": "StaticText",
+                "name": "设置"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "role": "dialog",
+        "name": "提示框",
+        "children": [
+          {
+            "role": "StaticText",
+            "name": "📢"
+          },
+          {
+            "role": "heading",
+            "name": "提示",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "提示"
+              }
+            ]
+          },
+          {
+            "role": "paragraph",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "功能开发中..."
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "知道了 👍",
+            "ref": "@e12",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "知道了 👍"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "🤖",
+        "description": "AI 防灾导师",
+        "ref": "@e13",
+        "children": [
+          {
+            "role": "StaticText",
+            "name": "🤖"
+          }
+        ]
+      },
+      {
+        "role": "status"
+      },
+      {
+        "role": "button",
+        "name": "🔊",
+        "description": "切换音效",
+        "ref": "@e14",
+        "children": [
+          {
+            "role": "StaticText",
+            "name": "🔊"
+          }
+        ]
+      }
+    ]
+  }
+}

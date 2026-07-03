@@ -1,0 +1,7 @@
+{
+  "action": "click",
+  "args": {
+    "selector": "@e1"
+  },
+  "session": "yingji-v80-verify"
+}

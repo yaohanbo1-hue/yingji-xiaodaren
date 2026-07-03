@@ -1,0 +1,129 @@
+[
+  [
+    "navigate",
+    {
+      "ok": true,
+      "data": {
+        "success": true,
+        "url": "https://yaohanbo1-hue.github.io/yingji-xiaodaren/?v=86",
+        "tabId": 344491185
+      }
+    }
+  ],
+  [
+    "dismiss_dialog",
+    {
+      "ok": true,
+      "data": {
+        "type": "string",
+        "value": "dismissed"
+      }
+    }
+  ],
+  [
+    "click_battle",
+    {
+      "ok": true,
+      "data": {
+        "type": "string",
+        "value": "clicked: 🚨\n⚡\n应急小达人\n🛡️\n⚠️\n\n🎁 开盲盒 · 学防"
+      }
+    }
+  ],
+  [
+    "click_free",
+    {
+      "ok": true,
+      "data": {
+        "type": "string",
+        "value": "clicked: \n      ⚔️ 闯关挑战▼\n      \n       "
+      }
+    }
+  ],
+  [
+    "screenshot_disaster",
+    {
+      "ok": true,
+      "data": {
+        "format": "png",
+        "path": "C:\\Users\\hambu\\Documents\\kimi\\workspace\\v86-test-quiz6-disaster.png",
+        "sizeBytes": 1623436,
+        "mimeType": "image/png"
+      }
+    }
+  ],
+  [
+    "click_disaster",
+    {
+      "ok": true,
+      "data": {
+        "type": "string",
+        "value": "clicked: \n  \n    \n      🌪️\n      应急小达人"
+      }
+    }
+  ],
+  [
+    "screenshot_quiz",
+    {
+      "ok": true,
+      "data": {
+        "format": "png",
+        "path": "C:\\Users\\hambu\\Documents\\kimi\\workspace\\v86-test-quiz6.png",
+        "sizeBytes": 1959679,
+        "mimeType": "image/png"
+      }
+    }
+  ],
+  [
+    "quiz_check",
+    {
+      "ok": true,
+      "data": {
+        "type": "string",
+        "value": "{\"hasQuestion\":true,\"hasOptions\":false,\"hasTimer\":true,\"optionCount\":0}"
+      }
+    }
+  ],
+  [
+    "click_option",
+    {
+      "ok": true,
+      "data": {
+        "type": "string",
+        "value": "no options found"
+      }
+    }
+  ],
+  [
+    "screenshot_answer",
+    {
+      "ok": true,
+      "data": {
+        "format": "png",
+        "path": "C:\\Users\\hambu\\Documents\\kimi\\workspace\\v86-test-quiz6-answer.png",
+        "sizeBytes": 2206261,
+        "mimeType": "image/png"
+      }
+    }
+  ],
+  [
+    "feedback_check",
+    {
+      "ok": true,
+      "data": {
+        "type": "string",
+        "value": "{\"hasCorrect\":false,\"hasWrong\":false,\"hasScore\":false,\"hasFeedback\":false}"
+      }
+    }
+  ],
+  [
+    "close",
+    {
+      "ok": true,
+      "data": {
+        "success": true,
+        "closed": 1
+      }
+    }
+  ]
+]
