@@ -15,6 +15,17 @@
  * ===========================================================================
  */
 
+// XSS防护：HTML转义辅助函数
+function escapeHtml(text) {
+  if (!text) return '';
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 const AITutorEngine = {
   _data: null,
   _radarAnimProgress: 0,
@@ -466,12 +477,12 @@ const AITutorEngine = {
   
   // ===== 对话系统 =====
   startConversation() {
-    const engine = window.AITutorBrain || window.AITutorLLM;
+    const engine = window.AITutorLLM;
     if (engine && engine.generateReply) {
       engine.generateReply('你好').then(greeting => {
         this._typeMessage('ai', greeting);
       }).catch(() => {
-        this._typeMessage('ai', '👋 你好！我是你的 AI 防灾导师！\n\n我已经学习了 369 道防灾题目和 34 个真实灾害场景，随时为你解答。');
+        this._typeMessage('ai', '🤖 DeepSeek AI 已就绪，您可以开始提问了！');
       });
     } else {
       this._typeMessage('ai', '👋 你好！我是你的 AI 防灾导师！\n\n我已经学习了 369 道防灾题目和 34 个真实灾害场景，随时为你解答。\n\n你可以直接问我：\n• "地震来了怎么办？"\n• "推荐我练习什么？"\n• "讲个防灾故事"\n• 或者点击下方的快捷按钮');
@@ -496,36 +507,30 @@ const AITutorEngine = {
     msg.appendChild(bubble);
     body.appendChild(msg);
     
-    if (type === 'ai' && text.length > 30) {
-      // 智能打字动画：按词打字，自动解析 HTML 标签
-      let plainText = text.replace(/<[^>]+>/g, ''); // 临时计算长度
+    // XSS安全：先转义HTML
+    const safeText = escapeHtml(text);
+    
+    if (type === 'ai' && safeText.length > 30) {
       const speed = 18;
       let i = 0;
-      let inTag = false;
       let displayText = '';
       
       const typeChar = () => {
-        if (i < text.length) {
-          const char = text[i];
-          if (char === '<') inTag = true;
-          if (inTag) {
-            displayText += char;
-            if (char === '>') inTag = false;
-          } else {
-            displayText += char;
-          }
+        if (i < safeText.length) {
+          const char = safeText[i];
+          displayText += char;
           i++;
           
           // 遇到标点或空格时暂停稍长，模拟自然阅读节奏
           let delay = speed;
-          if (!inTag && /[。！？\n]/.test(char)) delay = speed * 6;
-          else if (!inTag && /[，；：]/.test(char)) delay = speed * 3;
-          else if (!inTag && char === ' ') delay = speed * 1.5;
+          if (/[。！？\n]/.test(char)) delay = speed * 6;
+          else if (/[，；：]/.test(char)) delay = speed * 3;
+          else if (char === ' ') delay = speed * 1.5;
           
           bubble.innerHTML = displayText.replace(/\n/g, '<br>');
           body.scrollTop = body.scrollHeight;
           
-          if (i < text.length) {
+          if (i < safeText.length) {
             setTimeout(typeChar, delay);
           } else {
             if (callback) callback();
@@ -536,7 +541,7 @@ const AITutorEngine = {
       };
       typeChar();
     } else {
-      bubble.innerHTML = text.replace(/\n/g, '<br>');
+      bubble.innerHTML = safeText.replace(/\n/g, '<br>');
       body.scrollTop = body.scrollHeight;
       if (callback) callback();
     }
@@ -570,17 +575,23 @@ const AITutorEngine = {
   },
   
   handleInput() {
+    if(!navigator.onLine){this._typeMessage('ai','⚠️ 网络已断开，请检查网络连接后重试。');this._askingLock=false;return;}
+    if (this._askingLock) {
+      console.warn('AI 请求锁已激活，跳过重复调用');
+      return;
+    }
+    this._askingLock = true;
+    
     const input = document.getElementById('terminalInput');
-    const text = input?.value.trim();
-    if (!text) return;
+    const text = (input && input.value).trim();
+    if (!text) { this._askingLock = false; return; }
     
     this._typeMessage('user', text);
     input.value = '';
     
     this.showTyping();
     
-    // 使用新引擎生成回复
-    const engine = window.AITutorBrain || window.AITutorLLM;
+    const engine = window.AITutorLLM;
     if (engine && engine.generateReply) {
       engine.generateReply(text, this._chatHistory || []).then(response => {
         this.hideTyping();
@@ -589,18 +600,28 @@ const AITutorEngine = {
         this._chatHistory.push({ role: 'user', content: text });
         this._chatHistory.push({ role: 'assistant', content: response });
         if (this._chatHistory.length > 20) this._chatHistory = this._chatHistory.slice(-20);
+        this._askingLock = false;
       }).catch(err => {
         this.hideTyping();
-        console.error('AI回复错误:', err);
+        if(location.hostname==='localhost')console.error('AI回复错误:', err);
         this._typeMessage('ai', '抱歉，AI引擎暂时出错了，请稍后再试。');
+        this._askingLock = false;
       });
     } else {
       this.hideTyping();
-      this._typeMessage('ai', 'AI 引擎正在初始化，请稍后再试...');
+      this._typeMessage('ai', '❌ DeepSeek AI 不可用，请稍后再试。');
+      this._askingLock = false;
     }
   },
   
   quickAsk(type) {
+    if(!navigator.onLine){this._typeMessage('ai','⚠️ 网络已断开，请检查网络连接后重试。');return;}
+    if (this._askingLock) {
+      console.warn('AI 请求锁已激活，跳过重复调用');
+      return;
+    }
+    this._askingLock = true;
+    
     const questions = {
       weakness: '我的薄弱项是什么？',
       recommend: '推荐一些练习题',
@@ -615,7 +636,7 @@ const AITutorEngine = {
     this._typeMessage('user', text);
     this.showTyping();
     
-    const engine = window.AITutorBrain || window.AITutorLLM;
+    const engine = window.AITutorLLM;
     if (engine && engine.generateReply) {
       engine.generateReply(text, this._chatHistory || []).then(response => {
         this.hideTyping();
@@ -624,11 +645,17 @@ const AITutorEngine = {
         this._chatHistory.push({ role: 'user', content: text });
         this._chatHistory.push({ role: 'assistant', content: response });
         if (this._chatHistory.length > 20) this._chatHistory = this._chatHistory.slice(-20);
+        this._askingLock = false;
       }).catch(err => {
         this.hideTyping();
-        console.error('AI回复错误:', err);
+        if(location.hostname==='localhost')console.error('AI回复错误:', err);
         this._typeMessage('ai', '抱歉，AI引擎暂时出错了，请稍后再试。');
+        this._askingLock = false;
       });
+    } else {
+      this.hideTyping();
+      this._typeMessage('ai', '❌ DeepSeek AI 不可用，请稍后再试。');
+      this._askingLock = false;
     }
   },
   
@@ -728,7 +755,7 @@ const AITutorEngine = {
       btn.classList.remove('llm-active');
       btn.innerHTML = '🧠';
       btn.title = '启用 DeepSeek AI';
-      this._typeMessage('ai', '🧠 已切换回本地规则引擎。');
+      this._typeMessage('ai', '❌ DeepSeek AI 未连接，请检查网络或稍后再试。');
     }
   },
   
@@ -743,7 +770,7 @@ const AITutorEngine = {
     
     const currentKey = window.DeepSeekAPI ? window.DeepSeekAPI.getApiKey() : '';
     const maskedKey = currentKey ? currentKey.slice(0, 8) + '****' + currentKey.slice(-4) : '未设置';
-    const isDefault = currentKey === 'sk-4cdcfcde0e1343789c07266c23efd371';
+    const isDefault = currentKey === 'https://yingji-ai-proxy-aqrbvhqfkf.cn-hangzhou.fcapp.run';
     
     dialog.innerHTML = `
       <h3 style="margin:0 0 16px;color:#00d4ff;font-size:18px;">🔑 DeepSeek API 设置</h3>
@@ -751,13 +778,13 @@ const AITutorEngine = {
         当前状态：${isDefault ? '<span style="color:#00e676;">✅ 内置 Key 可用</span>' : (currentKey ? '<span style="color:#00e676;">✅ 已设置</span>' : '<span style="color:#FF4D00;">⚠️ 未设置</span>')}
       </p>
       <p style="color:#8899aa;font-size:12px;margin:0 0 12px;">
-        当前 Key：${maskedKey}
+        当前 Key：${escapeHtml(maskedKey)}
       </p>
       <input type="text" id="newApiKeyInput" placeholder="输入新的 API Key（可选）" 
         style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,212,255,0.2);border-radius:8px;color:#fff;font-size:14px;margin-bottom:12px;box-sizing:border-box;"
-        value="${isDefault ? '' : currentKey}">
+        value="${isDefault ? '' : escapeHtml(currentKey)}">
       <div style="display:flex;gap:8px;justify-content:flex-end;">
-        <button onclick="document.getElementById('apiKeyDialog').remove()" 
+        <button onclick="var d=document.getElementById('apiKeyDialog');d&&d.remove()" 
           style="padding:8px 16px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:8px;color:#fff;cursor:pointer;font-size:14px;">取消</button>
         <button onclick="AITutorEngine.saveApiKey()" 
           style="padding:8px 16px;background:linear-gradient(135deg,#00d4ff,#7c4dff);border:none;border-radius:8px;color:#fff;cursor:pointer;font-size:14px;font-weight:600;">保存</button>
@@ -807,8 +834,8 @@ const AITutorEngine = {
       return;
     }
     
-    const recommendedCards = ALL_CARDS?.filter(c => recs.includes(c.id));
-    if (recommendedCards?.length > 0 && typeof StudyEngine !== 'undefined') {
+    const recommendedCards = (ALL_CARDS && ALL_CARDS.filter(c => recs.includes(c.id)));
+    if ((recommendedCards && recommendedCards.length) > 0 && typeof StudyEngine !== 'undefined') {
       this._typeMessage('ai', `已为你准备 ${recommendedCards.length} 道针对性练习题！开始练习吧 💪`);
       StudyEngine.customCards = recommendedCards;
       PageManager.navigate('study');
@@ -830,7 +857,7 @@ const AITutorEngine = {
     
     const report = `# 应急小达人 - 学习报告\n## 生成时间：${new Date().toLocaleString('zh-CN')}\n\n### 📊 总体数据\n- 已答题数：${totalAnswered} 道\n- 正确数量：${correctCount} 道\n- 正确率：${accuracy}%\n- 已掌握 (≥80%)：${mastered} 个模块\n- 学习中 (1-79%)：${learning} 个模块\n- 未学习：${unlearned} 个模块\n\n### 🎯 各模块掌握度\n${Object.entries(mastery).map(([d, s]) => `- ${meta.names[d] || d}：${s}% ${s === 0 ? '(未学习)' : s < 50 ? '⚠️ 薄弱' : s < 80 ? '📈 学习中' : '✅ 已掌握'}`).join('\n')}\n\n### 💡 学习建议\n${weakPoints.length > 0 ? `薄弱项需要加强：${weakPoints.map(([d, s]) => `${meta.names[d]}(${s}%)`).join('、')}。建议通过"开盲盒"或"学习模式"针对性练习。` : '所有模块掌握良好，继续保持！挑战更高难度题目吧。'}`;
     
-    if (navigator.clipboard?.writeText) {
+    if ((navigator.clipboard && navigator.clipboard.writeText)) {
       navigator.clipboard.writeText(report).then(() => {
         this._typeMessage('ai', '学习报告已复制到剪贴板！你可以粘贴到文本文件中保存 📋');
       }).catch(() => this._fallbackCopy(report));
