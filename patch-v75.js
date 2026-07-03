@@ -23,7 +23,7 @@ if(typeof SettingsEngine==='undefined'){window.SettingsEngine={
 if(typeof TutorialEngine!=='undefined'&&!TutorialEngine.reset){TutorialEngine.reset=function(){localStorage.removeItem('tutorialDone');Modal.show('🎓 引导已重置','下次进入游戏将重新显示新手引导');};}
 
 // 3. GameState.reset() 补全（修复 localStorage key）
-if(typeof GameState!=='undefined'&&!GameState.reset){GameState.reset=function(){if(confirm('确定要重置所有数据吗？此操作不可恢复！')){localStorage.removeItem('disasterGachaState');localStorage.removeItem('tutorialDone');location.reload();}};}
+if(typeof GameState!=='undefined'&&!GameState.reset){GameState.reset=function(){if(confirm('确定要重置所有数据吗？此操作不可恢复！')){var keys=['disasterGachaState','disasterSeason','tutorialDone','bg_theme','aitutor_profile','aitutor_cache','aiTutorData','disaster_hq_voice_enabled','disaster_hq_voice_rate','disaster_hq_voice_pitch','deepseek_proxy_url','aitutor_model'];for(var i=0;i<keys.length;i++){try{localStorage.removeItem(keys[i]);}catch(e){console.error('[GameState.reset] Error removing key:',keys[i],e);}}location.reload();}};}
 
 // 4. QuizEngine.startSpeed() 补全
 if(typeof QuizEngine!=='undefined'&&!QuizEngine.startSpeed){QuizEngine.startSpeed=function(count){this._resetState({cards:ALL_CARDS.filter(function(c){return'equip'!==c.disaster}).slice(0,count||10),totalCards:count||10,showTimer:true,timeLeft:5});this._initUI({showTimer:true});this.active=true;this.timeLimit=5;this.showQuestion();};}
@@ -103,7 +103,7 @@ if(typeof UniversalSystemViewer!=='undefined'&&UniversalSystemViewer.pets){
 
 // 22. GameState.save 防抖修复（在 beforeunload 中强制同步保存）
 window.addEventListener('beforeunload',function(){
-  if(typeof GameState!=='undefined'&&GameState._data){
-    try{localStorage.setItem('disasterGachaState',JSON.stringify(GameState._data));}catch(e){}
+  if(typeof GameState!=='undefined'&&GameState._data&&GameState._data!==null){
+    try{localStorage.setItem('disasterGachaState',JSON.stringify(GameState._data));}catch(e){console.error('[beforeunload] Save error:',e);}
   }
 });

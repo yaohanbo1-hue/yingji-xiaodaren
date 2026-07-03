@@ -30,9 +30,16 @@ const VoiceEngine = {
     this._synth = window.speechSynthesis;
     
     // 从 localStorage 读取设置
-    this._enabled = localStorage.getItem('disaster_hq_voice_enabled') === 'true';
-    this._rate = parseFloat(localStorage.getItem('disaster_hq_voice_rate')) || 1.0;
-    this._pitch = parseFloat(localStorage.getItem('disaster_hq_voice_pitch')) || 1.0;
+    try {
+      this._enabled = localStorage.getItem('disaster_hq_voice_enabled') === 'true';
+      this._rate = parseFloat(localStorage.getItem('disaster_hq_voice_rate')) || 1.0;
+      this._pitch = parseFloat(localStorage.getItem('disaster_hq_voice_pitch')) || 1.0;
+    } catch(e) {
+      console.error('[VoiceEngine] Error reading localStorage:', e);
+      this._enabled = false;
+      this._rate = 1.0;
+      this._pitch = 1.0;
+    }
     
     // 加载中文语音
     this._loadVoice();

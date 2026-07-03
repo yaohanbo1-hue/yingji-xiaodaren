@@ -495,10 +495,10 @@ const AITutorBrain = {
 
 // ===== DeepSeek API 集成（代理模式）=====
 const DeepSeekAPI = {
-  _proxyUrl: localStorage.getItem('deepseek_proxy_url') || 'https://yingji-ai-proxy.hamburgerjimmy.workers.dev',
+  _proxyUrl: (function(){try{return localStorage.getItem('deepseek_proxy_url');}catch(e){console.error('[DeepSeekAPI] Error reading proxy URL:',e);return null;}})() || 'https://yingji-ai-proxy.hamburgerjimmy.workers.dev',
   // 默认使用 token-plan 套餐的快速款；可用 localStorage 'aitutor_model' 覆盖
   // 套餐可选: qwen3.6-flash(快) / qwen3.6-plus / qwen3.7-plus / deepseek-v4-flash / glm-5.1 / kimi-k2.6
-  _model: localStorage.getItem('aitutor_model') || 'qwen3.6-flash',
+  _model: (function(){try{return localStorage.getItem('aitutor_model');}catch(e){console.error('[DeepSeekAPI] Error reading model:',e);return null;}})() || 'qwen3.6-flash',
   setModel(m){ if(m){ this._model = m; try{ localStorage.setItem('aitutor_model', m); }catch(e){} } },
   getModel(){ return this._model; },
   _systemPrompt: `...`,

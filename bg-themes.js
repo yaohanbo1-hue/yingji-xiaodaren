@@ -11,7 +11,8 @@ const BGTheme = {
   _systemThemeListener: null,
 
   init() {
-    const saved = localStorage.getItem('bg_theme');
+    let saved = null;
+    try { saved = localStorage.getItem('bg_theme'); } catch(e) { console.error('[BGTheme] Error reading theme:', e); }
     if (saved && this._themes.includes(saved)) {
       this._current = saved;
     } else {
