@@ -1,1 +1,0 @@
-{"action":"evaluate","args":{"code":"JSON.stringify(Array.from(document.querySelectorAll('button, a[href], [role=button]')).map(el => el.textContent.trim().slice(0,60)))"},"session":"yjxdr-ui-check"}

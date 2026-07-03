@@ -288,4 +288,23 @@
   /* --glass-highlight: var(--glass-highlight, rgba(255, 255, 255, 0.15)); */
 }
 
+/* ===== 系统级减少动画偏好适配 ===== */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0.01ms;
+    --transition-normal: 0.01ms;
+    --transition-slow: 0.01ms;
+    --transition-spring: 0.01ms;
+    --transition-page: none;
+    --glass-blur: 8px;
+    --glass-saturate: 1.2;
+  }
+  .bg-theme-layer,
+  .aurora-band,
+  .matrix-col,
+  .bg-stars {
+    animation: none !important;
+  }
+}
+
 

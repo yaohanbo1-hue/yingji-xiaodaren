@@ -1,1 +1,0 @@
-{"action":"evaluate","args":{"code":"typeof PageManager !== 'undefined' ? 'PageManager exists' : 'PageManager MISSING'"},"session":"round2-check"}

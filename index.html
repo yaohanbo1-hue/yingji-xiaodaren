@@ -69,6 +69,9 @@
 <link rel="stylesheet" href="animation-optimize.css?v=86" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="animation-optimize.css?v=86"></noscript>
 
+<!-- 交互体验修复 — 触摸/滚动/按钮状态 -->
+<link rel="stylesheet" href="fix-interaction.css?v=1">
+
 <!-- 预获取非关键资源（空闲时加载） -->
 <link rel="prefetch" href="juice.js?v=86" as="script">
 <link rel="prefetch" href="visual-fx.js?v=86" as="script">
@@ -1417,7 +1420,7 @@
       <div class="mode-label" style="color:var(--neon-green);">🎯 精准打击</div>
       <div style="display:flex;gap:16px;align-items:center;">
         <div id="precisionScore" style="font-size:16px;color:rgba(255,255,255,0.6);">0/10</div>
-        <div id="precisionAccuracy" style="font-size:16px;color:var(--neon-gold);">100%</div>
+        <div id="precisionAccuracy" style="font-size:16px;color:var(--gold);">100%</div>
       </div>
     </div>
     <div style="position:relative;z-index:1;">
@@ -1434,14 +1437,14 @@
   <div id="page-story-adventure" class="page page-content">
     <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="game-header">
-      <div class="mode-label" style="color:var(--neon-purple);">📖 防灾大冒险</div>
+      <div class="mode-label" style="color:var(--color-secondary);">📖 防灾大冒险</div>
       <div id="storyAdvChapter" style="font-size:14px;color:rgba(255,255,255,0.5);">第1章</div>
     </div>
     <div style="position:relative;z-index:1;">
       <div id="storyAdvProgress" style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:24px;overflow:hidden;">
         <div id="storyAdvProgressFill" style="height:100%;background:linear-gradient(90deg,#AB47BC,#FF006E);width:0%;transition:width 0.3s;border-radius:2px;"></div>
       </div>
-      <div id="storyAdvNarration" style="background:rgba(255,255,255,0.03);border-radius:12px;padding:20px;margin-bottom:24px;border-left:3px solid var(--neon-purple);font-size:14px;line-height:1.8;color:rgba(255,255,255,0.8);min-height:60px;">故事加载中...</div>
+      <div id="storyAdvNarration" style="background:rgba(255,255,255,0.03);border-radius:12px;padding:20px;margin-bottom:24px;border-left:3px solid var(--color-secondary);font-size:14px;line-height:1.8;color:rgba(255,255,255,0.8);min-height:60px;">故事加载中...</div>
       <div id="storyAdvQuestion" class="quiz-q">题目加载中...</div>
       <div id="storyAdvOptions" class="quiz-options"></div>
       <div id="storyAdvExplanation" class="quiz-explanation hidden" ></div>
@@ -1452,14 +1455,14 @@
   <div id="page-guide" class="page page-content">
     <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('menu')">←</button>
     <div class="game-header">
-      <div class="mode-label" style="color:var(--neon-gold);">🎓 新手引导</div>
+      <div class="mode-label" style="color:var(--gold);">🎓 新手引导</div>
       <div id="guideStep" style="font-size:14px;color:rgba(255,255,255,0.5);">8步引导</div>
     </div>
     <div style="position:relative;z-index:1;">
       <div id="guideProgress" style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin-bottom:24px;overflow:hidden;">
         <div id="guideProgressFill" style="height:100%;background:linear-gradient(90deg,#FFD700,#FF6B35);width:0%;transition:width 0.3s;border-radius:2px;"></div>
       </div>
-      <div id="guideContent" style="background:rgba(255,255,255,0.03);border-radius:12px;padding:24px;margin-bottom:24px;border-left:3px solid var(--neon-gold);min-height:120px;">
+      <div id="guideContent" style="background:rgba(255,255,255,0.03);border-radius:12px;padding:24px;margin-bottom:24px;border-left:3px solid var(--gold);min-height:120px;">
         <div id="guideText" style="font-size:16px;line-height:1.8;color:rgba(255,255,255,0.9);">欢迎来到应急小达人！</div>
         <div id="guideIcon" style="font-size:64px;text-align:center;margin:20px 0;">📦</div>
       </div>
@@ -1507,7 +1510,7 @@
       <div style="display:flex;gap:16px;align-items:center;">
         <div id="raceLives" style="font-size:18px;">❤️❤️❤️</div>
         <div id="raceTimer" style="font-size:28px;color:#00D4FF;font-weight:900;">120</div>
-        <div id="raceScore" style="font-size:16px;color:var(--neon-gold);">0分</div>
+        <div id="raceScore" style="font-size:16px;color:var(--gold);">0分</div>
       </div>
     </div>
     <div style="position:relative;z-index:1;">
@@ -2086,6 +2089,9 @@
   }
 })();
 </script>
+
+<!-- ⚡ 交互体验修复 — 触摸/双击防抖/定时器清理/按钮状态 -->
+<script src="fix-interaction.js?v=1"></script>
 
 </body>
 </html>
