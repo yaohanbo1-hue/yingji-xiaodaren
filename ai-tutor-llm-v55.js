@@ -620,36 +620,43 @@ const OllamaAPI = {
   },
   
   async chat(userMessage, history = []) {
-    const messages = [];
-    // qwen3.5:9b 对 system role 理解不好，把角色设定放在第一个 user message 里
-    messages.push({ 
-      role: 'user', 
-      content: '你叫"AI防灾导师"，是应急小达人游戏的智能助手。你学习了369道防灾题目和34个真实灾害场景。当用户问"你是谁/你能干什么/自我介绍"时，你要主动介绍自己：你是AI防灾导师，能解答防灾问题、分析学习数据、推荐薄弱环节。回答所有问题都要简洁、实用、有重点。' 
-    });
-    messages.push({ 
-      role: 'assistant', 
-      content: '好的，我是AI防灾导师，已了解我的角色和能力。' 
-    });
-    history.slice(-6).forEach(h => {
-      if (h.user) messages.push({ role: 'user', content: h.user });
-      if (h.bot) messages.push({ role: 'assistant', content: h.bot });
-    });
-    messages.push({ role: 'user', content: userMessage });
-    
-    const response = await fetch(this._url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: this._model, messages: messages, stream: false, options: { temperature: 0.7 } })
-    });
-    
-    if (!response.ok) throw new Error('Ollama HTTP ' + response.status);
-    const data = await response.json();
-    return { answer: (data.message && data.message.content) || '' };
+    try {
+      const messages = [];
+      // qwen3.5:9b 对 system role 理解不好，把角色设定放在第一个 user message 里
+      messages.push({ 
+        role: 'user', 
+        content: '你叫"AI防灾导师"，是应急小达人游戏的智能助手。你学习了369道防灾题目和34个真实灾害场景。当用户问"你是谁/你能干什么/自我介绍"时，你要主动介绍自己：你是AI防灾导师，能解答防灾问题、分析学习数据、推荐薄弱环节。回答所有问题都要简洁、实用、有重点。' 
+      });
+      messages.push({ 
+        role: 'assistant', 
+        content: '好的，我是AI防灾导师，已了解我的角色和能力。' 
+      });
+      history.slice(-6).forEach(h => {
+        if (h.user) messages.push({ role: 'user', content: h.user });
+        if (h.bot) messages.push({ role: 'assistant', content: h.bot });
+      });
+      messages.push({ role: 'user', content: userMessage });
+      
+      const response = await fetch(this._url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: this._model, messages: messages, stream: false, options: { temperature: 0.7 } })
+      });
+      
+      if (!response.ok) {
+        return { error: `HTTP ${response.status}` };
+      }
+      const data = await response.json();
+      return { answer: (data.message && data.message.content) || '' };
+    } catch (err) {
+      console.error('[OllamaAPI.chat] error:', err);
+      return { error: '网络异常，请检查连接' };
+    }
   }
 };
 
 // 页面加载时异步检测 Ollama
-setTimeout(() => OllamaAPI.detect(), 500);
+setTimeout(() => OllamaAPI.detect().catch(err => console.error('[OllamaAPI.detect] error:', err)), 500);
 window.OllamaAPI = OllamaAPI;
 
 // 重写 AITutorBrain 的 generateReply，增加 Ollama 本地 + DeepSeek 云端双通道
