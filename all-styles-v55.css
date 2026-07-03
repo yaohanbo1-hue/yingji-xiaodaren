@@ -295,7 +295,7 @@ button:focus-visible,
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1)!important;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
   pointer-events: auto !important;
   animation: ai-fab-pulse 3s ease-in-out infinite !important;
 }
@@ -395,7 +395,7 @@ button:focus-visible,
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease!important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease !important;
 }
 
 .ai-float-close:hover {
@@ -418,7 +418,7 @@ button:focus-visible,
   color: rgba(255, 255, 255, 0.5) !important;
   font-size: 11px !important;
   cursor: pointer !important;
-  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease!important;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease !important;
   text-align: center !important;
 }
 
@@ -525,7 +525,7 @@ button:focus-visible,
   color: rgba(255, 255, 255, 0.7) !important;
   font-size: 11px !important;
   cursor: pointer !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease!important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease !important;
 }
 
 .ai-quick-btn:hover {
@@ -581,7 +581,7 @@ button:focus-visible,
   padding: 12px !important;
   margin-bottom: 8px !important;
   cursor: pointer !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease!important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease !important;
 }
 
 .ai-recommend-card:hover {
@@ -616,7 +616,7 @@ button:focus-visible,
   color: rgba(255, 255, 255, 0.9) !important;
   font-size: 13px !important;
   outline: none !important;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease!important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
 .ai-float-input:focus {
@@ -638,7 +638,7 @@ button:focus-visible,
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease!important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease !important;
 }
 
 .ai-float-send:hover {
@@ -2933,7 +2933,7 @@ body {
   border-radius: 12px !important;
   padding: 12px 16px !important;
   box-shadow: none !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease!important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease !important;
 }
 
 .menu-cat-btn:hover {
@@ -2990,7 +2990,7 @@ body {
   border-radius: 36px !important;
   padding: 48px 24px !important;
   box-shadow: none !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease!important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease !important;
   position: relative;
   overflow: hidden;
   min-height: 220px !important;
@@ -4435,7 +4435,7 @@ html {
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
   border-radius: 12px !important;
   cursor: pointer !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease!important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease !important;
   min-height: 140px !important;
 }
 
@@ -4461,7 +4461,7 @@ html {
   display: flex !important;
   align-items: center !important;
   gap: 12px !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease!important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease !important;
 }
 
 .achievement-card:hover {
@@ -4510,7 +4510,7 @@ html {
   padding: 20px !important;
   text-align: center !important;
   cursor: pointer !important;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease!important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease !important;
 }
 
 .character-card:hover {
@@ -4533,7 +4533,7 @@ html {
   align-items: center !important;
   justify-content: space-between !important;
   cursor: pointer !important;
-  transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease!important;
+  transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease !important;
 }
 
 #page-settings .feature-item:hover {
@@ -4581,7 +4581,7 @@ html {
   font-size: 14px !important;
   font-weight: 600 !important;
   cursor: pointer !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease!important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease !important;
 }
 
 .placeholder-btn:hover {
@@ -4953,7 +4953,7 @@ html {
   box-shadow: 
     0 4px 12px rgba(0,0,0,0.2),
     inset 0 1px 0 rgba(255,255,255,0.05) !important;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1)!important;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -5045,7 +5045,7 @@ html {
   border-radius: 36px !important;
   padding: 48px 24px !important;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1)!important;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
   position: relative;
   overflow: hidden;
   min-height: 220px !important;
@@ -6572,7 +6572,7 @@ button:active {
   font-size: 15px !important;
   font-weight: 600 !important;
   cursor: pointer !important;
-  transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease!important;
+  transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease !important;
 }
 
 #page-settings h4:hover {
@@ -6602,7 +6602,7 @@ button:active {
   font-size: 12px !important;
   font-weight: 500 !important;
   cursor: pointer !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease!important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease !important;
 }
 
 #page-settings .btn:hover,
@@ -6659,7 +6659,7 @@ button:active {
   display: flex !important;
   align-items: center !important;
   gap: 12px !important;
-  transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease!important;
+  transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease !important;
 }
 
 #page-achievements .achievement-item:hover,
@@ -6737,7 +6737,7 @@ button:active {
   padding: 20px !important;
   text-align: center !important;
   cursor: pointer !important;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease!important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease !important;
 }
 
 #page-character .character-card:hover,
@@ -6817,7 +6817,7 @@ button:active {
   border-radius: 14px !important;
   padding: 16px !important;
   text-align: center !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease!important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease !important;
 }
 
 #page-stats .stat-card:hover,
@@ -6869,7 +6869,7 @@ button:active {
   border-radius: 14px !important;
   padding: 16px !important;
   text-align: center !important;
-  transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease!important;
+  transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease !important;
 }
 
 #page-shop .shop-item:hover,
@@ -6977,7 +6977,7 @@ button:active {
   align-items: center !important;
   justify-content: center !important;
   cursor: pointer !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease!important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease !important;
   padding: 0 !important;
   min-width: auto !important;
 }
