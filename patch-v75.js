@@ -339,3 +339,194 @@ window.addEventListener('beforeunload', function() {
     try { el.remove(); } catch (_) {}
   });
 });
+
+/* ===== v75-patch 表单验证修复（form-validation-check） ===== */
+
+// 23. PKEngine 输入验证增强：trim、长度限制、数值校验
+(function() {
+  if (typeof PKEngine === 'undefined' || !PKEngine.start) return;
+  var _origPkStart = PKEngine.start.bind(PKEngine);
+  PKEngine.start = function() {
+    var n1 = document.getElementById('pkName1');
+    var n2 = document.getElementById('pkName2');
+    if (n1) { n1.value = (n1.value || '').trim().slice(0, 8) || '玩家1'; }
+    if (n2) { n2.value = (n2.value || '').trim().slice(0, 8) || '玩家2'; }
+    var tq = document.getElementById('pkTotalQ');
+    if (tq) {
+      var v = parseInt(tq.value, 10);
+      if (isNaN(v) || v < 6) v = 6;
+      if (v > 14) v = 14;
+      tq.value = v;
+    }
+    var tl = document.getElementById('pkTimeLimit');
+    if (tl) {
+      var v = parseInt(tl.value, 10);
+      if (isNaN(v) || v < 8) v = 8;
+      if (v > 15) v = 15;
+      tl.value = v;
+    }
+    return _origPkStart.apply(this, arguments);
+  };
+})();
+
+// 24. LeaderboardEngine XSS 修复：输入过滤 + 渲染转义
+(function() {
+  if (typeof LeaderboardEngine === 'undefined') return;
+  var _h = function(s) {
+    return s ? String(s).replace(/[&<>"']/g, function(c) {
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#x27;'}[c];
+    }) : '';
+  };
+  var _origAddScore = LeaderboardEngine.addScore.bind(LeaderboardEngine);
+  LeaderboardEngine.addScore = function(name, score, combo, accuracy) {
+    var safeName = _h((name || '').trim()).slice(0, 20) || '匿名玩家';
+    return _origAddScore.call(this, safeName, score, combo, accuracy);
+  };
+  LeaderboardEngine.render = function() {
+    var el = document.getElementById('leaderboardContent');
+    if (!el) return;
+    var board = this._getBoard();
+    if (board.length === 0) {
+      el.innerHTML = '<div class="empty-state" style="text-align:center;padding:40px 20px;"><div style="font-size:3rem;margin-bottom:16px;">🏆</div><div style="font-size:1.1rem;color:rgba(255,255,255,0.7);margin-bottom:8px;">暂无排行数据</div><div style="font-size:0.85rem;color:rgba(255,255,255,0.4);">快去答题上榜吧！</div></div>';
+      return;
+    }
+    var html = '';
+    if (typeof SeasonEngine !== 'undefined') {
+      SeasonEngine.init();
+      var si = SeasonEngine.getSeasonInfo();
+      html += '<div style="text-align:center;padding:14px;margin-bottom:12px;background:linear-gradient(135deg,rgba(0,212,255,0.08),rgba(255,215,0,0.08));border-radius:14px;border:1px solid rgba(0,212,255,0.15);"><div style="font-size:0.75rem;color:rgba(255,255,255,0.4);">第 ' + si.season + ' 赛季</div><div style="font-size:1.4rem;font-weight:800;margin:4px 0;">🏅 ' + si.rank + '</div><div style="font-size:0.8rem;color:rgba(255,255,255,0.5);">赛季积分: ' + si.points + '</div></div>';
+    }
+    html += '<div style="display:flex;flex-direction:column;gap:8px;">';
+    board.forEach(function(entry, i) {
+      html += '<div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(255,255,255,0.03);border-radius:12px;border:1px solid ' + (i === 0 ? '#ffd700' : i === 1 ? '#c0c0c0' : i === 2 ? '#cd7f32' : 'rgba(255,255,255,0.1)') + '"><div style="font-size:1.5rem;font-weight:800;color:' + (i === 0 ? '#ffd700' : i === 1 ? '#c0c0c0' : i === 2 ? '#cd7f32' : 'var(--text-secondary)') + ';width:32px;text-align:center;">' + (i + 1) + '</div><div style="flex:1"><div style="font-size:1rem;font-weight:700;color:rgba(255,255,255,0.9);">' + _h(entry.name) + '</div><div style="font-size:0.75rem;color:var(--text-tertiary);">' + _h(entry.date) + '</div></div><div style="text-align:right;"><div style="font-size:1.2rem;font-weight:800;color:var(--cyber-blue);">' + entry.score + '分</div><div style="font-size:0.75rem;color:var(--text-secondary);">🔥' + entry.combo + 'x 🎯' + entry.accuracy + '%</div></div></div>';
+    });
+    html += '</div>';
+    el.innerHTML = html;
+  };
+})();
+
+// 25. ai-tutor API Key 输入安全增强：password 类型 + 格式验证
+(function() {
+  if (typeof AITutorEngine === 'undefined' || !AITutorEngine.showApiKeyDialog) return;
+  var _origShowApiKey = AITutorEngine.showApiKeyDialog.bind(AITutorEngine);
+  AITutorEngine.showApiKeyDialog = function() {
+    _origShowApiKey.apply(this, arguments);
+    setTimeout(function() {
+      var input = document.getElementById('newApiKeyInput');
+      if (input) {
+        input.type = 'password';
+        input.maxLength = 500;
+        input.autocomplete = 'off';
+      }
+    }, 0);
+  };
+  if (AITutorEngine.saveApiKey) {
+    var _origSaveApiKey = AITutorEngine.saveApiKey.bind(AITutorEngine);
+    AITutorEngine.saveApiKey = function() {
+      var input = document.getElementById('newApiKeyInput');
+      if (!input) return _origSaveApiKey.apply(this, arguments);
+      var key = (input.value || '').trim();
+      if (!key) {
+        var d = document.getElementById('apiKeyDialog');
+        d && d.remove();
+        return;
+      }
+      if (key.length > 500) {
+        Modal.show('❌ 输入过长', 'API Key / 代理地址不能超过 500 字符');
+        return;
+      }
+      if (key.indexOf('<') !== -1 || key.indexOf('>') !== -1) {
+        Modal.show('❌ 格式错误', '不能包含 < 或 > 字符');
+        return;
+      }
+      if (key.indexOf('http') === 0) {
+        try { new URL(key); } catch (e) {
+          Modal.show('❌ 格式错误', '请输入有效的 URL 地址');
+          return;
+        }
+      }
+      return _origSaveApiKey.apply(this, arguments);
+    };
+  }
+})();
+
+// 26. DiaryEngine XSS 修复：保存过滤 + 渲染转义
+(function() {
+  if (typeof DiaryEngine === 'undefined') return;
+  var _h = function(s) {
+    return s ? String(s).replace(/[&<>"']/g, function(c) {
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#x27;'}[c];
+    }) : '';
+  };
+  if (DiaryEngine.saveEntry) {
+    var _origDiarySave = DiaryEngine.saveEntry.bind(DiaryEngine);
+    DiaryEngine.saveEntry = function(text) {
+      if (!text) return false;
+      var trimmed = String(text).trim();
+      if (trimmed.length < 3) {
+        Modal.show('❌ 内容太短', '至少写 3 个字吧！');
+        return false;
+      }
+      if (trimmed.length > 500) {
+        Modal.show('❌ 内容太长', '日记不能超过 500 字！');
+        return false;
+      }
+      return _origDiarySave.call(this, trimmed);
+    };
+  }
+  DiaryEngine.render = function() {
+    var entries = this.getEntries(), streak = this.getStreak(), prompt = this.getRandomPrompt();
+    var html = '<div style="padding:16px"><h3>📓 防灾日记</h3>';
+    html += '<div style="text-align:center;margin:12px 0;padding:12px;background:rgba(0,212,255,0.05);border-radius:12px;border:1px solid rgba(0,212,255,0.15);"><div style="font-size:2rem;margin-bottom:4px">' + prompt.icon + '</div><div style="font-size:1rem;font-weight:700;color:rgba(255,255,255,0.9);">' + prompt.topic + '</div><div style="font-size:0.75rem;color:var(--text-dim);margin-top:4px">💡 提示：' + _h(prompt.tips[0]) + '</div></div>';
+    html += '<div style="margin-bottom:12px"><textarea id="diaryInput" placeholder="写下今天的防灾日记..." style="width:100%;padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#fff;font-size:14px;resize:vertical;min-height:80px;box-sizing:border-box;" maxlength="500"></textarea><div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px"><span style="font-size:0.75rem;color:var(--text-dim)">✍️ 已连续打卡 ' + streak + ' 天</span><button class="btn btn-primary" onclick="DiaryEngine.submitFromInput()">📝 保存日记</button></div></div>';
+    if (entries.length === 0) {
+      html += '<div style="text-align:center;padding:20px;color:var(--text-dim)">还没有日记，写第一篇吧！</div>';
+    } else {
+      html += '<div style="display:flex;flex-direction:column;gap:8px;">';
+      entries.forEach(function(entry) {
+        html += '<div style="padding:8px;background:rgba(255,255,255,0.03);border-radius:8px;margin-bottom:8px"><div style="font-size:0.75rem;color:var(--text-dim);margin-bottom:4px">' + _h(entry.date) + '</div><div style="font-size:0.95rem;color:rgba(255,255,255,0.9);line-height:1.6">' + _h(entry.text) + '</div></div>';
+      });
+      html += '</div>';
+    }
+    html += '</div>';
+    var el = document.getElementById('diary-content');
+    if (el) el.innerHTML = html;
+    return html;
+  };
+  if (!DiaryEngine.submitFromInput) {
+    DiaryEngine.submitFromInput = function() {
+      var input = document.getElementById('diaryInput');
+      if (input) this.saveEntry(input.value);
+    };
+  }
+})();
+
+// 27. Certificate playerName 可编辑输入验证
+(function() {
+  if (typeof Certificate === 'undefined' || !Certificate.show) return;
+  var _h = function(s) {
+    return s ? String(s).replace(/[&<>"']/g, function(c) {
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#x27;'}[c];
+    }) : '';
+  };
+  var _origShow = Certificate.show.bind(Certificate);
+  Certificate.show = function(score, accuracy) {
+    var result = _origShow.apply(this, arguments);
+    setTimeout(function() {
+      var playerEl = document.querySelector('.cert-player');
+      if (playerEl) {
+        playerEl.addEventListener('blur', function(e) {
+          var raw = (e.target.innerText || e.target.textContent || '').trim();
+          var safe = raw.slice(0, 16).replace(/[<>]/g, '');
+          e.target.textContent = safe || '防灾指挥官';
+          GameState._data.playerName = safe || '防灾指挥官';
+          GameState.save();
+        });
+        playerEl.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') { e.preventDefault(); e.target.blur(); }
+        });
+      }
+    }, 100);
+    return result;
+  };
+})();
