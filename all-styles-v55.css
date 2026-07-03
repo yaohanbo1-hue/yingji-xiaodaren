@@ -256,6 +256,13 @@ button:focus-visible,
   }
 }
 
+@media (max-width: 360px) {
+  .mode-btn { font-size: 12px; padding: 8px; }
+  .menu-cat-btn { font-size: 14px; }
+  .bottom-nav { height: 56px; }
+  .bottom-nav .nav-icon { font-size: 20px; }
+}
+
 @media (max-width: 480px) {
   .page {
     padding-left: 12px !important;
@@ -297,7 +304,7 @@ button:focus-visible,
   justify-content: center !important;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
   pointer-events: auto !important;
-  animation: ai-fab-pulse 3s ease-in-out infinite !important;
+  animation: ai-fab-pulse 3s ease-in-out 3 !important;
 }
 
 .ai-fab:hover {
@@ -318,7 +325,7 @@ button:focus-visible,
   background: #ef4444 !important;
   border-radius: 50% !important;
   border: 2px solid #0f172a !important;
-  animation: ai-fab-badge-pulse 2s ease-in-out infinite !important;
+  animation: ai-fab-badge-pulse 2s ease-in-out 3 !important;
 }
 
 /* ===== 浮动面板 ===== */
@@ -750,7 +757,7 @@ button:focus-visible,
   border-radius: 50%;
   background: #10B981;
   border: 2px solid rgba(15, 23, 42, 0.8);
-  animation: pulse-ring 2s ease-in-out infinite;
+  animation: pulse-ring 2s ease-in-out 3;
 }
 
 .ai-title-group h3 {
@@ -784,7 +791,7 @@ button:focus-visible,
   height: 6px;
   border-radius: 50%;
   background: #10B981;
-  animation: dotPulse 1.5s ease-in-out infinite;
+  animation: dotPulse 1.5s ease-in-out 3;
 }
 
 /* ===== 统计网格 ===== */
@@ -1369,7 +1376,7 @@ button:focus-visible,
   height: 6px;
   border-radius: 50%;
   background: rgba(96, 165, 250, 0.5);
-  animation: typingBounce 1.4s ease-in-out infinite;
+  animation: typingBounce 1.4s ease-in-out 3;
 }
 
 .ai-typing-dot:nth-child(2) { animation-delay: 0.2s; }
@@ -1426,7 +1433,7 @@ button:focus-visible,
   align-items: center;
   justify-content: center;
   font-size: 14px;
-  animation: pulse-ring 2s ease-in-out infinite;
+  animation: pulse-ring 2s ease-in-out 3;
 }
 
 .ai-llm-loading-text {
@@ -1498,7 +1505,7 @@ button:focus-visible,
 }
 
 .ai-llm-toggle-btn.llm-loading {
-  animation: pulse-ring 1.5s ease-in-out infinite;
+  animation: pulse-ring 1.5s ease-in-out 3;
   pointer-events: none;
   opacity: 0.7;
 }
@@ -1635,7 +1642,7 @@ html, body {
       #1A1F2E 80%,    /* 暖灰蓝 */
       #0F172A 100%    /* 深蓝灰 */
     ) !important;
-  animation: bgShift 40s ease-in-out infinite !important;
+  animation: bgShift 40s ease-in-out 3 !important;
 }
 
 /* ===== 2. 动态光球（CSS blur，比 Canvas 柔和 10 倍） ===== */
@@ -1654,7 +1661,7 @@ html, body {
   background: radial-gradient(circle, rgba(59, 130, 246, 0.18) 0%, rgba(99, 102, 241, 0.05) 40%, transparent 70%);
   top: -15%;
   left: 25%;
-  animation: orbFloat1 30s ease-in-out infinite;
+  animation: orbFloat1 30s ease-in-out 3;
 }
 
 .bg-orb-2 {
@@ -1663,7 +1670,7 @@ html, body {
   background: radial-gradient(circle, rgba(251, 146, 60, 0.09) 0%, rgba(245, 158, 11, 0.03) 40%, transparent 70%);
   bottom: -10%;
   right: -5%;
-  animation: orbFloat2 40s ease-in-out infinite;
+  animation: orbFloat2 40s ease-in-out 3;
 }
 
 .bg-orb-3 {
@@ -1672,7 +1679,7 @@ html, body {
   background: radial-gradient(circle, rgba(167, 139, 250, 0.10) 0%, rgba(139, 92, 246, 0.03) 40%, transparent 70%);
   top: 35%;
   left: -10%;
-  animation: orbFloat3 35s ease-in-out infinite;
+  animation: orbFloat3 35s ease-in-out 3;
 }
 
 .bg-orb-4 {
@@ -1681,7 +1688,7 @@ html, body {
   background: radial-gradient(circle, rgba(56, 189, 248, 0.07) 0%, rgba(14, 165, 233, 0.02) 40%, transparent 70%);
   bottom: 20%;
   left: 30%;
-  animation: orbFloat4 25s ease-in-out infinite;
+  animation: orbFloat4 25s ease-in-out 3;
 }
 
 /* ===== 3. 微妙几何网格 ===== */
@@ -1732,7 +1739,7 @@ html, body {
   box-shadow: 
     0 0 15px rgba(59, 130, 246, 0.3),
     0 1px 3px rgba(56, 189, 248, 0.2);
-  animation: topBarPulse 8s ease-in-out infinite;
+  animation: topBarPulse 8s ease-in-out 3;
 }
 
 /* ===== 6. 暗角（Vignette）—— 聚焦中心 ===== */
@@ -1782,7 +1789,7 @@ html, body {
   background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 55%);
   pointer-events: none;
   z-index: -1;
-  animation: menuSpotlight 12s ease-in-out infinite;
+  animation: menuSpotlight 12s ease-in-out 3;
 }
 
 /* ===== 9. 隐藏旧元素 ===== */
@@ -1907,7 +1914,7 @@ body.theme-starry-night .bg-stars {
     radial-gradient(2px 2px at 460px 950px, rgba(255,255,255,0.8), transparent),
     radial-gradient(1px 1px at 600px 980px, rgba(255,255,255,0.5), transparent);
   background-size: 800px 1000px;
-  animation: starTwinkle 4s ease-in-out infinite alternate;
+  animation: starTwinkle 4s ease-in-out 3 alternate;
 }
 
 /* 流星 */
@@ -1923,15 +1930,15 @@ body.theme-starry-night .bg-meteor {
 }
 body.theme-starry-night .bg-meteor-1 {
   top: 10%; right: 30%;
-  animation: meteorFall1 8s ease-in infinite 2s;
+  animation: meteorFall1 8s ease-in 3 2s;
 }
 body.theme-starry-night .bg-meteor-2 {
   top: 20%; right: 60%;
-  animation: meteorFall2 12s ease-in infinite 5s;
+  animation: meteorFall2 12s ease-in 3 5s;
 }
 body.theme-starry-night .bg-meteor-3 {
   top: 5%; right: 80%;
-  animation: meteorFall3 10s ease-in infinite 8s;
+  animation: meteorFall3 10s ease-in 3 8s;
 }
 
 body.theme-starry-night .bg-orb-1 { background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%); }
@@ -1967,7 +1974,7 @@ body.theme-aurora-flow .aurora-band {
   left: -50%;
   filter: blur(40px);
   opacity: 0.6;
-  animation: auroraWave 8s ease-in-out infinite;
+  animation: auroraWave 8s ease-in-out 3;
 }
 body.theme-aurora-flow .aurora-band-1 {
   top: 15%;
@@ -2043,7 +2050,7 @@ body.theme-digital-matrix .matrix-col {
   color: #00E676;
   text-shadow: 0 0 8px rgba(0, 230, 118, 0.5);
   white-space: pre;
-  animation: matrixFall linear infinite;
+  animation: matrixFall linear 3;
 }
 
 body.theme-digital-matrix .bg-orb-1 { background: radial-gradient(circle, rgba(0, 230, 118, 0.10) 0%, transparent 70%); }
@@ -2380,7 +2387,7 @@ body.theme-warm-light .ai-float-input::placeholder {
 
 .cert-level-badge.unlocked {
   box-shadow: 0 4px 16px rgba(96, 165, 250, 0.3);
-  animation: badgePulse 2s ease-in-out infinite;
+  animation: badgePulse 2s ease-in-out 3;
 }
 
 .cert-level-info h3 {
@@ -2791,6 +2798,7 @@ body {
 .page {
   transform: none !important;
   transition: opacity 0.3s ease !important;
+  padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)) !important;
 }
 
 .page.active {
@@ -2895,7 +2903,7 @@ body {
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
   text-shadow: 0 0 50px rgba(255,100,0,0.7), 0 0 100px rgba(255,0,0,0.4), 0 6px 16px rgba(0,0,0,0.7) !important;
-  animation: titlePulse 2.5s ease-in-out infinite !important;
+  animation: titlePulse 2.5s ease-in-out 3 !important;
 }
 
 .menu-logo-sub {
@@ -2919,7 +2927,7 @@ body {
   border: 1px solid rgba(255,215,0,0.3) !important;
   color: #FFD700 !important;
   box-shadow: 0 0 20px rgba(255,215,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1) !important;
-  animation: tagPulse 2s ease-in-out infinite !important;
+  animation: tagPulse 2s ease-in-out 3 !important;
 }
 
 /* ===== 分类按钮 — 简洁统一 ===== */
@@ -3525,7 +3533,7 @@ html {
   height: 6px;
   border-radius: 50%;
   background: #F59E0B;
-  animation: phasePulse 1.5s ease-in-out infinite;
+  animation: phasePulse 1.5s ease-in-out 3;
 }
 
 /* ===== 操作按钮 ===== */
@@ -3748,56 +3756,56 @@ html {
   width: 4px; height: 4px;
   background: rgba(96, 165, 250, 0.6);
   left: 15%; top: 70%;
-  animation: dustRise1 12s ease-in-out infinite;
+  animation: dustRise1 12s ease-in-out 3;
 }
 
 .dust-2 {
   width: 3px; height: 3px;
   background: rgba(251, 146, 60, 0.5);
   left: 80%; top: 80%;
-  animation: dustRise2 15s ease-in-out infinite;
+  animation: dustRise2 15s ease-in-out 3;
 }
 
 .dust-3 {
   width: 5px; height: 5px;
   background: rgba(167, 139, 250, 0.4);
   left: 50%; top: 90%;
-  animation: dustRise3 10s ease-in-out infinite;
+  animation: dustRise3 10s ease-in-out 3;
 }
 
 .dust-4 {
   width: 3px; height: 3px;
   background: rgba(56, 189, 248, 0.5);
   left: 30%; top: 60%;
-  animation: dustRise4 14s ease-in-out infinite;
+  animation: dustRise4 14s ease-in-out 3;
 }
 
 .dust-5 {
   width: 4px; height: 4px;
   background: rgba(96, 165, 250, 0.4);
   left: 70%; top: 75%;
-  animation: dustRise5 11s ease-in-out infinite;
+  animation: dustRise5 11s ease-in-out 3;
 }
 
 .dust-6 {
   width: 2px; height: 2px;
   background: rgba(251, 146, 60, 0.6);
   left: 45%; top: 85%;
-  animation: dustRise6 13s ease-in-out infinite;
+  animation: dustRise6 13s ease-in-out 3;
 }
 
 .dust-7 {
   width: 3px; height: 3px;
   background: rgba(167, 139, 250, 0.5);
   left: 90%; top: 65%;
-  animation: dustRise7 16s ease-in-out infinite;
+  animation: dustRise7 16s ease-in-out 3;
 }
 
 .dust-8 {
   width: 4px; height: 4px;
   background: rgba(56, 189, 248, 0.4);
   left: 10%; top: 80%;
-  animation: dustRise8 12s ease-in-out infinite;
+  animation: dustRise8 12s ease-in-out 3;
 }
 
 /* ========== 2. 光线扫描 ========== */
@@ -3816,7 +3824,7 @@ html {
     transparent 100%
   );
   transform: skewX(-15deg);
-  animation: sweep 20s ease-in-out infinite;
+  animation: sweep 20s ease-in-out 3;
 }
 
 .light-sweep-2 {
@@ -3845,7 +3853,7 @@ html {
   top: 20%;
   right: 10%;
   border-color: rgba(59, 130, 246, 0.06);
-  animation: geoSpin 60s linear infinite;
+  animation: geoSpin 60s linear 3;
 }
 
 .geo-ring-2 {
@@ -3855,7 +3863,7 @@ html {
   right: 15%;
   border-color: rgba(167, 139, 250, 0.05);
   border-style: dashed;
-  animation: geoSpin 40s linear infinite reverse;
+  animation: geoSpin 40s linear 3 reverse;
 }
 
 .geo-ring-3 {
@@ -3864,7 +3872,7 @@ html {
   bottom: 10%;
   left: 5%;
   border-color: rgba(251, 146, 60, 0.04);
-  animation: geoSpin 80s linear infinite;
+  animation: geoSpin 80s linear 3;
 }
 
 .geo-ring-4 {
@@ -3874,7 +3882,7 @@ html {
   left: 12%;
   border-color: rgba(56, 189, 248, 0.06);
   border-style: dotted;
-  animation: geoSpin 30s linear infinite reverse;
+  animation: geoSpin 30s linear 3 reverse;
 }
 
 /* 环上的小圆点装饰 */
@@ -3906,7 +3914,7 @@ html {
   top: 30%;
   left: 20%;
   border-color: rgba(59, 130, 246, 0.3);
-  animation: pulseExpand 6s ease-out infinite;
+  animation: pulseExpand 6s ease-out 3;
 }
 
 .pulse-ring-2 {
@@ -3915,7 +3923,7 @@ html {
   top: 60%;
   right: 25%;
   border-color: rgba(251, 146, 60, 0.25);
-  animation: pulseExpand 8s ease-out infinite 2s;
+  animation: pulseExpand 8s ease-out 3 2s;
 }
 
 .pulse-ring-3 {
@@ -3924,7 +3932,7 @@ html {
   top: 45%;
   left: 60%;
   border-color: rgba(167, 139, 250, 0.3);
-  animation: pulseExpand 7s ease-out infinite 4s;
+  animation: pulseExpand 7s ease-out 3 4s;
 }
 
 /* ========== 5. 微流星 ========== */
@@ -3955,19 +3963,19 @@ html {
 .meteor-1 {
   top: 10%;
   right: 20%;
-  animation: meteorFall 8s ease-in infinite;
+  animation: meteorFall 8s ease-in 3;
 }
 
 .meteor-2 {
   top: 25%;
   right: 40%;
-  animation: meteorFall 12s ease-in infinite 3s;
+  animation: meteorFall 12s ease-in 3 3s;
 }
 
 .meteor-3 {
   top: 5%;
   right: 70%;
-  animation: meteorFall 10s ease-in infinite 6s;
+  animation: meteorFall 10s ease-in 3 6s;
 }
 
 /* ========== 6. 渐变流动条 ========== */
@@ -3984,7 +3992,7 @@ html {
   left: 0;
   width: 30%;
   background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
-  animation: barFlow1 15s ease-in-out infinite;
+  animation: barFlow1 15s ease-in-out 3;
 }
 
 .gradient-bar-2 {
@@ -3992,7 +4000,7 @@ html {
   right: 0;
   width: 25%;
   background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.4), transparent);
-  animation: barFlow2 18s ease-in-out infinite;
+  animation: barFlow2 18s ease-in-out 3;
 }
 
 .gradient-bar-3 {
@@ -4000,7 +4008,7 @@ html {
   left: 10%;
   width: 20%;
   background: linear-gradient(90deg, transparent, rgba(251, 146, 60, 0.4), transparent);
-  animation: barFlow3 12s ease-in-out infinite;
+  animation: barFlow3 12s ease-in-out 3;
 }
 
 /* ========== 7. 角落装饰（HUD 风格） ========== */
@@ -4111,7 +4119,7 @@ html {
   width: 100%;
   height: 60px;
   background: linear-gradient(180deg, transparent, rgba(59, 130, 246, 0.5), transparent);
-  animation: streamFall 4s linear infinite;
+  animation: streamFall 4s linear 3;
 }
 
 .data-stream-1 { left: 8%; height: 100%; }
@@ -4148,7 +4156,7 @@ html {
 /* 高亮元素 — 不改变已有定位方式（fixed/absolute/sticky 保持原样） */
 .guide-highlight {
   z-index: 99999 !important;
-  animation: guidePulse 1.5s ease-in-out infinite;
+  animation: guidePulse 1.5s ease-in-out 3;
   box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.5), 
               0 0 20px rgba(59, 130, 246, 0.3) !important;
 }
@@ -4161,7 +4169,7 @@ html {
 /* 已定位元素的高亮（JS 动态添加） */
 .guide-highlight-positioned {
   z-index: 99999 !important;
-  animation: guidePulse 1.5s ease-in-out infinite;
+  animation: guidePulse 1.5s ease-in-out 3;
   box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.5), 
               0 0 20px rgba(59, 130, 246, 0.3) !important;
 }
@@ -4643,7 +4651,7 @@ html {
 .loading-icon {
   font-size: 80px;
   margin-bottom: 20px;
-  animation: loadingIconPulse 2s ease-in-out infinite;
+  animation: loadingIconPulse 2s ease-in-out 3;
   filter: drop-shadow(0 0 30px rgba(59,130,246,0.5));
 }
 
@@ -4709,7 +4717,7 @@ html {
   height: 6px;
   background: rgba(99,102,241,0.6);
   border-radius: 50%;
-  animation: loadingParticleFloat 4s ease-in-out infinite;
+  animation: loadingParticleFloat 4s ease-in-out 3;
 }
 
 .loading-particles span:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; background: rgba(59,130,246,0.6); }
@@ -4732,7 +4740,7 @@ html {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  animation: loadingGlow 3s ease-in-out infinite;
+  animation: loadingGlow 3s ease-in-out 3;
 }
 
 /* 移动端适配 */
@@ -4905,7 +4913,7 @@ html {
 /* 菜单徽章闪烁 */
 .menu-badge,
 .mode-badge {
-  animation: badgePulse 2s ease-in-out infinite;
+  animation: badgePulse 2s ease-in-out 3;
 }
 
 /* 响应式 */
@@ -5753,7 +5761,7 @@ html {
 .settings-header-icon {
   font-size: 48px;
   margin-bottom: 8px;
-  animation: settingsIconFloat 4s ease-in-out infinite;
+  animation: settingsIconFloat 4s ease-in-out 3;
 }
 .settings-title {
   font-size: 24px;
@@ -6452,7 +6460,7 @@ button:active {
 /* ===== 加载状态脉冲 ===== */
 
 .loading {
-  animation: loadingPulse 1.5s ease-in-out infinite;
+  animation: loadingPulse 1.5s ease-in-out 3;
 }
 
 /* ===== 成功/失败反馈增强 ===== */
@@ -7254,7 +7262,7 @@ body {
   margin-bottom: 12px;
   filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5));
   transform-style: preserve-3d;
-  animation: icon3DGlassFloat 5s ease-in-out infinite;
+  animation: icon3DGlassFloat 5s ease-in-out 3;
 }
 
 /* ===== 题目文字 ===== */
@@ -7360,7 +7368,7 @@ body {
   font-size: 0.85em;
   color: var(--accent-orange);
   text-shadow: 0 0 12px rgba(255,152,0,0.5);
-  animation: streakPulse 1.2s ease-in-out infinite;
+  animation: streakPulse 1.2s ease-in-out 3;
   transform: translateZ(6px);
 }/* ===== 3D 按钮 ===== */
 .btn-primary, .quiz-next-btn{
@@ -7526,7 +7534,7 @@ body {
 /* 菜单 Logo 3D 悬浮 */
 .menu-logo {
   transform-style: preserve-3d;
-  animation: menuLogoFloat 8s ease-in-out infinite;
+  animation: menuLogoFloat 8s ease-in-out 3;
 }
 
 /* 分区标题液态玻璃条 */
@@ -7670,7 +7678,7 @@ body {
   font-weight: 600;
   color: var(--accent-cyan);
   text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
-  animation: versionPulse 2s ease-in-out infinite;
+  animation: versionPulse 2s ease-in-out 3;
 }/* 返回按钮液态玻璃 */
 .back-float{
   background: rgba(15, 23, 42, 0.95); /* fallback for no backdrop-filter */
