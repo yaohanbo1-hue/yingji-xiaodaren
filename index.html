@@ -232,7 +232,7 @@
         <span class="title-deco-icon">⚠️</span>
       </div>
       <p class="menu-logo-sub">🎁 开盲盒 · 学防灾 · 救世界</p>
-      <span class="version-tag">✨ v1.3.3 Premium</span>
+      <span class="version-tag" id="version-badge">✨ v1.3.3 Premium</span>
     </div>
 
     <!-- 主分类按钮 -->
@@ -999,11 +999,11 @@
             <div class="settings-card-icon" style="background:linear-gradient(135deg,#8B5CF6,#EC4899)">📊</div>
             <div class="settings-card-info">
               <div class="settings-card-name">游戏版本</div>
-              <div class="settings-card-desc">v1.3.3 · 369 题 · 34 场景</div>
+              <div class="settings-card-desc" id="settings-version-desc">v1.3.3 · 369 题 · 34 场景</div>
             </div>
           </div>
           <div class="settings-card-right">
-            <span class="settings-card-value">v1.3.3</span>
+            <span class="settings-card-value" id="settings-version-value">v1.3.3</span>
           </div>
         </div>
       </div>
@@ -2081,6 +2081,26 @@
   document.addEventListener('click', unlockAudio, { once: true });
   document.addEventListener('touchstart', unlockAudio, { once: true });
   document.addEventListener('keydown', unlockAudio, { once: true });
+})();
+</script>
+
+<script>
+(function() {
+  function updateVersionDisplay() {
+    var meta = document.querySelector('meta[name="version"]');
+    var version = meta ? meta.content : 'v1.3.3';
+    var badge = document.getElementById('version-badge');
+    if (badge) badge.textContent = '✨ ' + version + ' Premium';
+    var desc = document.getElementById('settings-version-desc');
+    if (desc) desc.innerHTML = version + ' · 369 题 · 34 场景';
+    var val = document.getElementById('settings-version-value');
+    if (val) val.textContent = version;
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updateVersionDisplay);
+  } else {
+    updateVersionDisplay();
+  }
 })();
 </script>
 
