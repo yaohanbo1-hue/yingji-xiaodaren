@@ -28,9 +28,6 @@ if(typeof GameState!=='undefined'&&!GameState.reset){GameState.reset=function(){
 // 4. QuizEngine.startSpeed() 补全
 if(typeof QuizEngine!=='undefined'&&!QuizEngine.startSpeed){QuizEngine.startSpeed=function(count){this._resetState({cards:ALL_CARDS.filter(function(c){return'equip'!==c.disaster}).slice(0,count||10),totalCards:count||10,showTimer:true,timeLeft:5});this._initUI({showTimer:true});this.active=true;this.timeLimit=5;this.showQuestion();};}
 
-// 5. CardSynthesisEngine.render() 检查（已有）
-if(typeof CardSynthesisEngine!=='undefined'&&!CardSynthesisEngine.render){CardSynthesisEngine.render=function(){var items=this.getSynthesizable();if(0===items.length)return'<div style="padding:20px;text-align:center;color:rgba(255,255,255,0.5)">暂无可合成的卡牌<br/>需要 3 张同类型同稀有度</div>';var html='<div style="padding:16px"><h3>🧪 卡牌合成</h3>',labels={common:'普通',rare:'稀有',epic:'史诗'},self=this;items.forEach(function(item){var nextIdx=self.RARITY_ORDER.indexOf(item.rarity)+1,next=self.RARITY_ORDER[nextIdx]||'legendary';html+='<div class="daily-task-item" onclick="CardSynthesisEngine.synthesize(\''+item.key+'\')" style="cursor:pointer"><span>'+item.count+' × '+labels[item.rarity]+' '+item.type+'</span><span style="color:#ffd700">→ 1 × '+labels[next]+'</span></div>'});html+='</div>';return html;};}
-
 // 6. ReportEngine 补全
 if(typeof ReportEngine==='undefined'){window.ReportEngine={showReport(){Modal.show('📊 学习报告','<div style="text-align:center"><p>📊 功能开发中</p><p>请先完成更多游戏来生成报告</p></div>','📊');},showDetailReport(){Modal.show('📊 详细报告','<div style="text-align:center"><p>📊 功能开发中</p></div>','📊');}};}
 
