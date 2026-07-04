@@ -7,16 +7,8 @@
 (function() {
   'use strict';
 
-  // 等待 AITutor 引擎就绪再初始化
+  // 等待 DOM 就绪后创建（不依赖 AITutor，按钮直接可用）
   function init() {
-    if (!window.AITutor) {
-      // 等 ai-tutor-v55.js 先加载
-      if (!init._retry) init._retry = 0;
-      init._retry++;
-      if (init._retry > 100) return; // 10秒后放弃
-      return setTimeout(init, 100);
-    }
-
     // 创建按钮
     const fab = document.createElement('button');
     fab.className = 'ai-fab';
