@@ -13,17 +13,8 @@
  * ===========================================================================
  */
 
-const SafeStorage = {
-  set(key, value) {
-    try { localStorage.setItem(key, JSON.stringify(value)); } catch(e) { console.error('Storage error:', e); }
-  },
-  get(key, defaultVal) {
-    try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : defaultVal; } catch(e) { return defaultVal; }
-  },
-  getString(key, defaultVal) {
-    try { return localStorage.getItem(key) || defaultVal; } catch(e) { return defaultVal; }
-  }
-};
+// [修复] SafeStorage 已由 game-engines.js 定义，此处删除以消除 const 重复声明
+// 以下代码直接使用全局的 SafeStorage（来自 game-engines.js）
 
 const ShareEngine = {
   

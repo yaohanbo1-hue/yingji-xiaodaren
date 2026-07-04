@@ -1,0 +1,46 @@
+/* ========================================
+ * Bug 修复补丁 (bugfix-patch.css)
+ * 集中修复测试发现的所有 CSS 相关问题
+ * ======================================== */
+
+/* ===== 修复1：guide-tooltip 遮挡「学习中心」按钮 ===== */
+/* 容器不拦截点击，仅内部交互元素可点击 */
+.guide-tooltip {
+  pointer-events: none !important;
+}
+.guide-tooltip button,
+.guide-tooltip a,
+.guide-tooltip .guide-close,
+.guide-tooltip .guide-next-btn,
+.guide-tooltip .guide-skip-btn,
+.guide-tooltip [onclick] {
+  pointer-events: auto !important;
+}
+
+/* ===== 修复2：menuToolbar 遮挡「闯关挑战」按钮 ===== */
+/* 为菜单页面底部添加 padding，确保按钮不被工具栏遮挡 */
+#page-menu .menu-categories,
+#page-menu .menu-grid {
+  padding-bottom: 80px !important; /* 底部工具栏高度 + 间距 */
+}
+
+/* 确保菜单分类按钮区域有足够底部空间 */
+#page-menu {
+  padding-bottom: 80px !important;
+}
+
+/* ===== 修复3：btn-clicked 可能永久禁用按钮 ===== */
+/* 在页面切换或可见性变化时，确保 btn-clicked 被移除（配合 JS） */
+.page:not(.active) .btn-clicked {
+  pointer-events: auto !important;
+  opacity: 1 !important;
+  /* 非 active 页面的 btn-clicked 状态应被清除 */
+}
+
+/* ===== 修复4：tilt3d 与点击缩放反馈冲突 ===== */
+/* 确保 :active 缩放优先于 tilt3d 的 transform */
+.quiz-opt:active,
+.scenario-opt:active {
+  transform: scale(0.96) !important;
+  transition: transform 0.1s ease !important;
+}

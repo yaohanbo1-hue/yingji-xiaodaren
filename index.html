@@ -1784,7 +1784,8 @@
 <script src="kit_data.js?v=86" defer></script>
 <script src="game-engines.js?v=86" defer></script>
 <script src="js/core/performance-patch.js?v=86" defer></script>
-<script src="game.js?v=86" defer></script>
+<!-- [修复] game.js 已被 game-engines.js 完全取代，注释掉以消除 const 重复声明 SyntaxError -->
+<!-- <script src="game.js?v=86" defer></script> -->
 
 <!-- ===== 加载与交互脚本 ===== -->
 <script src="loading.js?v=86" defer></script>
@@ -2011,6 +2012,10 @@
 
 <!-- ⚡ 交互体验修复 — 触摸/双击防抖/定时器清理/按钮状态 -->
 <script src="fix-interaction.js?v=1"></script>
+
+<!-- 🔧 Bug 修复补丁 — const冲突/ErrorBoundary/tilt3d重复绑定/按钮遮挡/滑动结构 -->
+<link rel="stylesheet" href="bugfix-patch.css?v=1">
+<script src="bugfix-patch.js?v=1"></script>
 
 </body>
 </html>

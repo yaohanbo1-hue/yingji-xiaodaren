@@ -1,0 +1,38 @@
+/* ========================================
+ * 移动端滚动与触摸优化 (optimizer-mobile.css)
+ * [修复] 合并 mobile-fix.css 内容 + 安全的滚动优化
+ * ======================================== */
+
+/* 移动端滚动修复 */
+@media (max-width: 768px) {
+  html, body {
+    overflow: visible !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .page {
+    -webkit-overflow-scrolling: touch !important;
+    overflow-y: auto !important;
+  }
+
+  #app {
+    -webkit-overflow-scrolling: touch !important;
+  }
+}
+
+/* ===== 滑动结构优化（安全方案，不破坏现有布局）===== */
+/* 问题：.page.active 的 3D perspective transform 与 overflow:auto 冲突 */
+/* 修复：移除 3D transform，保留原有 html 层滚动方式 */
+.page.active {
+  transform: none !important; /* 移除 perspective 3D 变换与 overflow 冲突 */
+}
+
+/* 确保 iOS Safari 有惯性滚动 */
+html {
+  -webkit-overflow-scrolling: touch !important;
+}
+
+/* 防止页面切换时的滚动位置残留 */
+.page:not(.active) {
+  overflow: hidden !important;
+}

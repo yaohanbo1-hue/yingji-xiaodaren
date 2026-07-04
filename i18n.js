@@ -13,7 +13,8 @@
  * ===========================================================================
  */
 
-const I18nEngine = {
+// [修复] game-engines.js 已用 var 声明 I18nEngine，此处改为赋值覆盖（var 变量可重新赋值，不报错）
+I18nEngine = {
   _currentLang: 'zh',
   _translations: {
     zh: {
