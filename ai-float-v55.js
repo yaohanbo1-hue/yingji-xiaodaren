@@ -1,49 +1,93 @@
 /**
  * ============================================================================
- * ai-float-v55.js — AI 浮动助手增强模块（stub）
+ * ai-float-v55.js — AI 悬浮球+对话面板
+ * 右下角常驻按钮，点击弹出 AI 导师对话面板
  * ============================================================================
  */
 (function() {
-  if (typeof AITutor === 'undefined') return;
-  
-  // AI 浮动助手 - 在游戏界面显示 AI 建议气泡
-  const AIFloat = {
-    active: false,
-    _container: null,
-    _interval: null,
-    
-    init: function() {
-      if (this.active) return;
-      this.active = true;
-      this._createUI();
-    },
-    
-    _createUI: function() {
-      if (this._container) return;
-      this._container = document.createElement('div');
-      this._container.id = 'aiFloatContainer';
-      this._container.style.cssText = 'position:fixed;bottom:120px;right:16px;z-index:999;display:none;';
-      document.body.appendChild(this._container);
-    },
-    
-    show: function(text, type) {
-      if (!this._container) this._createUI();
-      this._container.innerHTML = '<div class="ai-float-bubble" style="background:rgba(96,165,250,0.15);border:1px solid rgba(96,165,250,0.3);border-radius:16px;padding:12px 16px;max-width:260px;font-size:13px;color:#fff;backdrop-filter:blur(8px);animation:float-up 0.3s ease">' +
-        '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px"><span>🤖</span><span style="font-weight:600;font-size:12px;color:rgba(255,255,255,0.6)">AI 助手</span></div>' +
-        '<div>' + text + '</div></div>';
-      this._container.style.display = '';
-      clearTimeout(this._hideTimer);
-      var self = this;
-      this._hideTimer = setTimeout(function() {
-        if (self._container) self._container.style.display = 'none';
-      }, 5000);
-    },
-    
-    hide: function() {
-      if (this._container) this._container.style.display = 'none';
+  'use strict';
+
+  // 等待 AITutor 引擎就绪再初始化
+  function init() {
+    if (!window.AITutor) {
+      // 等 ai-tutor-v55.js 先加载
+      if (!init._retry) init._retry = 0;
+      init._retry++;
+      if (init._retry > 100) return; // 10秒后放弃
+      return setTimeout(init, 100);
     }
-  };
-  
-  window.AIFloat = AIFloat;
-  console.log('🤖 AI Float Helper loaded');
+
+    // 创建按钮
+    const fab = document.createElement('button');
+    fab.className = 'ai-fab';
+    fab.id = 'aiFab';
+    fab.setAttribute('aria-label', 'AI 防灾导师');
+    fab.innerHTML = '🤖<span class="ai-fab-badge"></span>';
+    document.body.appendChild(fab);
+
+    // 创建面板
+    const panel = document.createElement('div');
+    panel.className = 'ai-float-panel';
+    panel.id = 'aiFloatPanel';
+    panel.style.display = 'none';
+    panel.innerHTML = '<div class="ai-float-header"><div class="ai-float-title"><span class="ai-float-avatar">🤖</span><div><div class="ai-float-name">AI 防灾导师</div><div class="ai-float-status">在线</div></div></div><button class="ai-float-close" id="aiFloatClose" aria-label="关闭">✕</button></div><div class="ai-float-body" id="aiFloatBody"><div class="ai-float-welcome">点击下方按钮，开始与 AI 防灾导师对话！<br><br>💡 你可以问：<br>• "地震来了怎么办？"<br>• "推荐我练习什么？"<br>• "洪水时如何自救？"</div></div><div class="ai-float-footer"><button class="ai-float-btn" id="aiFloatOpenBtn">🤖 打开 AI 导师</button></div>';
+    document.body.appendChild(panel);
+
+    // 面板样式（防丢失）
+    panel.style.cssText = 'position:fixed !important;bottom:calc(100px + env(safe-area-inset-bottom,0px)) !important;right:20px !important;width:360px !important;max-height:520px !important;z-index:10000 !important;background:rgba(15,23,42,0.97) !important;border:1px solid rgba(255,255,255,0.08) !important;border-radius:20px !important;backdrop-filter:blur(24px) !important;-webkit-backdrop-filter:blur(24px) !important;box-shadow:0 8px 40px rgba(0,0,0,0.5) !important;overflow:hidden !important;display:none;flex-direction:column !important;';
+
+    // 点击按钮切换面板
+    fab.addEventListener('click', function(e) {
+      if (panel.style.display !== 'none') {
+        panel.style.display = 'none';
+        return;
+      }
+      panel.style.display = 'flex';
+      
+      // 自动导航到 AI 导师页面
+      if (typeof PageManager !== 'undefined') {
+        PageManager.navigate('ai-tutor');
+      }
+    });
+
+    // 关闭面板
+    const closeBtn = document.getElementById('aiFloatClose');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function() {
+        panel.style.display = 'none';
+      });
+    }
+
+    // 打开按钮
+    const openBtn = document.getElementById('aiFloatOpenBtn');
+    if (openBtn) {
+      openBtn.addEventListener('click', function() {
+        if (typeof PageManager !== 'undefined') {
+          PageManager.navigate('ai-tutor');
+        }
+        panel.style.display = 'none';
+      });
+    }
+
+    // 点击面板外关闭
+    document.addEventListener('click', function(e) {
+      if (panel.style.display === 'none') return;
+      if (!panel.contains(e.target) && e.target !== fab && !fab.contains(e.target)) {
+        panel.style.display = 'none';
+      }
+    });
+
+    // 暴露接口
+    window.AIFloatUI = {
+      show: function() { panel.style.display = 'flex'; },
+      hide: function() { panel.style.display = 'none'; },
+      toggle: function() { panel.style.display = panel.style.display === 'none' ? 'flex' : 'none'; }
+    };
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
