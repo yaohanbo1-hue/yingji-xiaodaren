@@ -617,14 +617,9 @@ AITutorBrain.generateReply = async function(userMessage, history = []) {
 };
 
 // ===== B方案：暴露纯本地 / 纯云端两个入口，供 ai-float 实现"本地先秒回+云端后台补充" =====
-// 纯本地回复：直接走规则引擎，零网络，2ms 级返回。永不抛错。
+// 纯本地回复：DeepSeek不可用时的提示，不调用本地规则引擎
 AITutorBrain.replyLocal = async function(userMessage, history = []) {
-  try {
-    return await _originalGenerateReply(userMessage, history);
-  } catch (e) {
-    console.error('replyLocal error:', e);
-    return this._fallback ? this._fallback() : '我在这儿，请再说一遍你的问题～';
-  }
+  return '⚠️ DeepSeek AI 暂时不可用，请检查网络或稍后再试。';
 };
 // 纯云端回复：调 DeepSeek 代理。成功返回字符串答案，失败/超时/不可用返回 null（绝不抛错）。
 AITutorBrain.replyCloud = async function(userMessage, history = []) {
