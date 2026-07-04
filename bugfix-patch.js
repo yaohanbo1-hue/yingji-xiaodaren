@@ -121,5 +121,36 @@
     }
   }
 
+  // ============================================================
+  // 修复10：创建 AI 浮动按钮（右下角）
+  // ============================================================
+  // ai-float.css 定义了样式但未被引用，且无 JS 创建按钮元素
+  function createAIFab() {
+    if (document.querySelector('.ai-fab')) return; // 已存在
+
+    var fab = document.createElement('button');
+    fab.className = 'ai-fab';
+    fab.innerHTML = '🤖';
+    fab.title = 'AI 防灾导师';
+    fab.setAttribute('aria-label', 'AI 防灾导师');
+    fab.onclick = function() {
+      // 跳转到 AI 导师页面
+      if (typeof PageManager !== 'undefined' && PageManager.navigate) {
+        PageManager.navigate('ai-tutor');
+      }
+    };
+    document.body.appendChild(fab);
+    console.log('[BugFix] AI 浮动按钮已创建');
+  }
+
+  // 延迟创建，确保 DOM 和引擎就绪
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(createAIFab, 1000);
+    });
+  } else {
+    setTimeout(createAIFab, 1000);
+  }
+
   console.log('[BugFix] bugfix-patch.js 已加载');
 })();
