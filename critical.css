@@ -44,7 +44,7 @@
 body:not(.app-ready) .page { display: none !important; }
 body:not(.app-ready) .page.active { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0) scale(1); }
 .page:not(.active) { opacity: 0; visibility: hidden; position: fixed; inset: 0; pointer-events: none; transform: translateY(20px) scale(0.98); transition: opacity 0.35s cubic-bezier(0.4,0,0.2,1), transform 0.35s cubic-bezier(0.4,0,0.2,1), visibility 0.35s ease; }
-.page.active { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0) scale(1); transition: opacity 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.4s cubic-bezier(0.4,0,0.2,1), visibility 0.4s ease; }
+.page.active { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0) scale(1); transition: opacity 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.4s cubic-bezier(0.4,0,0.2,1), visibility 0.4s ease; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 body:not(.app-ready) #menuToolbar, body:not(.app-ready) .menu-toolbar { display: none !important; }
 
 /* ===== 底部导航栏 — 关键布局保底 ===== */
@@ -117,7 +117,9 @@ body #page-menu .mode-btn .mode-badge { font-size: 14px !important; padding: 7px
 body #page-menu .menu-stats { padding: 14px 20px !important; margin: 10px 16px 24px !important; border-radius: 18px !important; font-size: 14px !important; gap: 24px !important; background: rgba(255,255,255,0.06) !important; border: 1px solid rgba(255,255,255,0.1) !important; font-weight: 500 !important; }
 
 /* ===== 子页面通用样式 ===== */
-.page-content { padding: 70px 12px calc(88px + env(safe-area-inset-bottom, 0px)) !important; overflow-y: auto !important; height: 100vh !important; }
+.page-content { padding: 70px 12px calc(88px + env(safe-area-inset-bottom, 0px)) !important; overflow-y: auto !important; min-height: 100vh !important; -webkit-overflow-scrolling: touch; }
+/* v72: 额外的底部安全间距，确保内容不被工具栏截断 */
+.page-content::after { content: ''; display: block; height: 60px; }
 .back-float { top: 14px !important; left: 14px !important; padding: 12px 18px !important; font-size: 16px !important; border-radius: 14px !important; font-weight: 600 !important; background: rgba(255,255,255,0.1) !important; border: 1px solid rgba(255,255,255,0.12) !important; backdrop-filter: blur(12px) !important; }
 .preview-header { padding: 28px 0 18px !important; margin-bottom: 14px !important; }
 .preview-icon { font-size: 48px !important; margin-bottom: 8px !important; }
@@ -187,7 +189,7 @@ input:focus, select:focus, textarea:focus { border-color: rgba(0,212,255,0.5) !i
 .menu-cat-btn.battle-btn .cat-icon { animation-delay: 0.5s; }
 
 .menu-section { max-height: 0 !important; overflow: hidden !important; opacity: 0 !important; pointer-events: none !important; transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease, margin 0.3s ease, padding 0.3s ease !important; margin-bottom: 0 !important; padding-bottom: 0 !important; }
-.menu-section.expanded { max-height: 2000px !important; overflow: visible !important; opacity: 1 !important; pointer-events: auto !important; margin-bottom: 20px !important; padding-bottom: 80px !important; }
+.menu-section.expanded { max-height: 5000px !important; overflow: visible !important; opacity: 1 !important; pointer-events: auto !important; margin-bottom: 20px !important; padding-bottom: 80px !important; }
 .menu-section-title { cursor: pointer; position: relative; display: flex; align-items: center; justify-content: space-between; padding-right: 40px; }
 .menu-section-title .collapse-arrow { position: absolute; right: 12px; top: 50%; transform: translateY(-50%) rotate(0deg); transition: transform 0.3s ease; font-size: 14px; }
 .menu-section.expanded .collapse-arrow { transform: translateY(-50%) rotate(180deg); }
