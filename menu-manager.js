@@ -58,8 +58,9 @@ const MenuManager = {
         section.style.display = '';
         section.classList.remove('collapsed');
         section.classList.add('expanded');
+        // [修复] 不设 maxHeight，避免截断长内容（闯关挑战20个模式）
         grid.style.display = '';
-        grid.style.maxHeight = grid.scrollHeight + 200 + 'px';
+        grid.style.maxHeight = 'none';
         grid.style.opacity = '1';
         grid.style.overflow = 'visible';
       } else {

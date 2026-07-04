@@ -21,12 +21,12 @@
 /* 为菜单页面底部添加 padding，确保按钮不被工具栏遮挡 */
 #page-menu .menu-categories,
 #page-menu .menu-grid {
-  padding-bottom: 80px !important; /* 底部工具栏高度 + 间距 */
+  padding-bottom: 100px !important; /* 底部工具栏高度 + 间距 */
 }
 
 /* 确保菜单分类按钮区域有足够底部空间 */
 #page-menu {
-  padding-bottom: 80px !important;
+  padding-bottom: 100px !important;
 }
 
 /* ===== 修复3：btn-clicked 可能永久禁用按钮 ===== */
@@ -43,4 +43,18 @@
 .scenario-opt:active {
   transform: scale(0.96) !important;
   transition: transform 0.1s ease !important;
+}
+
+/* ===== 修复5：分类展开后无法滑动 / 滑不到底 ===== */
+/* 根因：.page 有 overflow:auto 但高度被内容撑开(=scrollHeight)，
+   导致 .page 自身不可滚动却吞掉触摸事件，阻止冒泡到 html 层。
+   修复：菜单页的 .page 改为 overflow:visible，让触摸事件冒泡到 html 滚动 */
+#page-menu.page.active {
+  overflow: visible !important;
+  overflow-y: visible !important;
+}
+
+/* 同时确保 menu-grid 不设 maxHeight 截断内容（MenuManager 会设 inline maxHeight）*/
+#page-menu .menu-grid {
+  max-height: none !important;
 }
