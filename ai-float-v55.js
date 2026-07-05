@@ -22,7 +22,7 @@
     panel.className = 'ai-float-panel';
     panel.id = 'aiFloatPanel';
     panel.style.display = 'none';
-    panel.innerHTML = '<div class="ai-float-header"><div class="ai-float-title"><span class="ai-float-avatar">🤖</span><div><div class="ai-float-name">AI 防灾导师</div><div class="ai-float-status">在线</div></div></div><button class="ai-float-close" id="aiFloatClose" aria-label="关闭">✕</button></div><div class="ai-float-body" id="aiFloatBody"><div class="ai-float-welcome">点击下方按钮，开始与 AI 防灾导师对话！<br><br>💡 你可以问：<br>• "地震来了怎么办？"<br>• "推荐我练习什么？"<br>• "洪水时如何自救？"</div></div><div class="ai-float-footer"><button class="ai-float-btn" id="aiFloatOpenBtn">🤖 打开 AI 导师</button></div>';
+    panel.innerHTML = '<div class="ai-float-header"><div class="ai-float-title"><span class="ai-float-avatar">🤖</span><div><div class="ai-float-name">AI 防灾导师</div><div class="ai-float-status">本地引擎 · 在线</div></div></div><button class="ai-float-close" id="aiFloatClose" aria-label="关闭">✕</button></div><div class="ai-float-body" id="aiFloatBody"><div class="ai-float-welcome">本地知识引擎已就绪！<br><br>💡 你可以问：<br>• "地震来了怎么办？"<br>• "推荐我练习什么？"<br>• "洪水时如何自救？"<br>• "讲个防灾冷知识"</div></div><div class="ai-float-footer"><button class="ai-float-btn" id="aiFloatOpenBtn">🤖 打开 AI 导师</button></div>';
     document.body.appendChild(panel);
 
     // 面板样式（防丢失）

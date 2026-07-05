@@ -1,16 +1,15 @@
 /**
  * ===========================================================================
- * AI 防灾导师 — 智能对话引擎 v3.0（完全重写）
+ * AI 防灾导师 — 智能对话引擎 v4.0（本地优先 + 云端增强）
  * ===========================================================================
  *
- * 核心设计：真正的对话式 AI，不是模板匹配
- * 1. 用户意图深度理解（语义级别，不是关键词匹配）
- * 2. 知识图谱：卡牌+场景+百科全书+真实案例 全部关联
- * 3. 多轮对话记忆：记住用户刚才说了什么
- * 4. 个性化回复：根据用户水平调整用词复杂度
- * 5. 情感化回复：鼓励、提醒、科普、警示
+ * 核心设计：
+ * 1. 本地知识引擎始终秒回（卡牌+场景+百科全索引）
+ * 2. 云端增强可选，仅在本地置信度低时后台补充
+ * 3. 多轮对话记忆 + 个性化回复 + 情感化交互
+ * 4. 模糊匹配容错（拼写错误、同义词、n-gram 分词）
  *
- * @version 3.0.0
+ * @version 4.0.0
  * ===========================================================================
  */
 
@@ -19,6 +18,25 @@ const AITutorBrain = {
   _knowledgeBase: [],
   _userProfile: { interests: [], weaknesses: [], level: 'beginner', totalChats: 0 },
   _context: { lastTopic: null, lastDisaster: null, turnCount: 0, pendingQuestion: null },
+  
+  // ===== 同义词/关联词映射 =====
+  _synonyms: {
+    '躲': ['避难','避险','躲避','藏','安全位置','生命三角','桌下','墙角'],
+    '跑': ['逃生','撤离','疏散','逃','离开','往外','向外'],
+    '救': ['救援','救助','急救','自救','互救','施救'],
+    '水': ['洪水','暴雨','淹水','涉水','积水'],
+    '火': ['火灾','着火','燃烧','灭火','消防'],
+    '震': ['地震','摇晃','晃动','余震'],
+    '风': ['台风','大风','狂风','暴风'],
+    '准备': ['预防','储备','应急包','预案','提前','备好'],
+    '保护': ['防护','遮挡','掩护','遮盖','安全'],
+    '高处': ['高地','楼上','山顶','上游','转移'],
+    '信号': ['求救','报警','求助','呼救','SOS'],
+    '窒息': ['浓烟','有毒','烟雾','呼吸困难','捂口鼻'],
+    '触电': ['电线','电源','断电','漏电','电器']
+  },
+
+  // ===== 灾害元数据 =====
   _disasterMeta: {
     earthquake: { name: '地震', icon: '🌍', color: '#F59E0B', keywords: ['地震','晃动','摇晃','余震','震感','楼房摇晃','吊灯晃'] },
     flood: { name: '洪涝', icon: '🌊', color: '#3B82F6', keywords: ['洪水','暴雨','淹水','积水','水位上涨','内涝'] },
@@ -57,7 +75,6 @@ const AITutorBrain = {
   _buildKnowledgeBase() {
     this._knowledgeBase = [];
     
-    // 从卡牌提取
     ALL_CARDS.forEach(card => {
       if (!card.zh) return;
       this._knowledgeBase.push({
@@ -77,7 +94,6 @@ const AITutorBrain = {
       });
     });
 
-    // 从场景提取
     Object.keys(SCENARIOS).forEach(disaster => {
       SCENARIOS[disaster].forEach(s => {
         this._knowledgeBase.push({
@@ -97,17 +113,79 @@ const AITutorBrain = {
 
   _loadUserProfile() {
     try {
-      const saved = localStorage.getItem('aitutor_profile');
-      if (saved) this._userProfile = JSON.parse(saved);
+      const saved = localStorage.getItem('aitutor_state');
+      if (saved) {
+        const state = JSON.parse(saved);
+        this._userProfile = state.profile || this._userProfile;
+      }
     } catch (e) { console.error(e); }
   },
 
   _saveUserProfile() {
     try {
-      localStorage.setItem('aitutor_profile', JSON.stringify(this._userProfile));
+      const existing = JSON.parse(localStorage.getItem('aitutor_state') || '{}');
+      existing.profile = this._userProfile;
+      localStorage.setItem('aitutor_state', JSON.stringify(existing));
     } catch(e) {
       console.error('Storage error:', e);
     }
+  },
+
+  // ===== n-gram 分词（2-4字滑动窗口）=====
+  _tokenize(text) {
+    const clean = text.replace(/[\s,.!?，。！？]+/g, '');
+    const tokens = [];
+    // 1-gram（单字）
+    for (let i = 0; i < clean.length; i++) tokens.push(clean[i]);
+    // 2-gram
+    for (let i = 0; i < clean.length - 1; i++) tokens.push(clean.substring(i, i+2));
+    // 3-gram
+    for (let i = 0; i < clean.length - 2; i++) tokens.push(clean.substring(i, i+3));
+    // 4-gram（长词）
+    for (let i = 0; i < clean.length - 3; i++) tokens.push(clean.substring(i, i+4));
+    return [...new Set(tokens)];
+  },
+
+  // ===== 模糊匹配（Levenshtein 距离）=====
+  _levenshtein(a, b) {
+    if (a.length === 0) return b.length;
+    if (b.length === 0) return a.length;
+    const matrix = [];
+    for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+    for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+    for (let i = 1; i <= b.length; i++) {
+      for (let j = 1; j <= a.length; j++) {
+        if (b[i-1] === a[j-1]) matrix[i][j] = matrix[i-1][j-1];
+        else matrix[i][j] = Math.min(matrix[i-1][j-1]+1, matrix[i][j-1]+1, matrix[i-1][j]+1);
+      }
+    }
+    return matrix[b.length][a.length];
+  },
+
+  _fuzzyMatch(word, candidate, maxDist = 1) {
+    if (word.length <= 2) return word === candidate; // 短词要求精确匹配
+    if (maxDist === 1 && Math.abs(word.length - candidate.length) > 1) return false;
+    return this._levenshtein(word, candidate) <= maxDist;
+  },
+
+  // ===== 扩展查询词（同义词）=====
+  _expandQuery(text) {
+    const expanded = new Set([text]);
+    for (const [key, synonyms] of Object.entries(this._synonyms)) {
+      if (text.includes(key)) {
+        synonyms.forEach(s => expanded.add(s));
+      }
+    }
+    // 反向：如果用户输入了同义词，也加上原词
+    for (const [key, synonyms] of Object.entries(this._synonyms)) {
+      for (const s of synonyms) {
+        if (text.includes(s)) {
+          expanded.add(key);
+          synonyms.forEach(x => expanded.add(x));
+        }
+      }
+    }
+    return [...expanded];
   },
 
   // ===== 核心：理解用户输入 =====
@@ -131,13 +209,23 @@ const AITutorBrain = {
     else if (/故事|真实案例|案例|新闻|发生过|历史/.test(lower)) intent = 'story';
     else if (/冷知识|趣闻|小知识|百科|你知道吗/.test(lower)) intent = 'trivia';
     else if (/拜|再见|bye|下次见|下次再聊|走了/.test(lower)) intent = 'goodbye';
-    else if (lower.length < 3 && /嗯|哦|好|行|ok|可以/.test(lower)) intent = 'ack';
+    else if (lower.length <= 3 && /嗯|哦|好|行|ok|可以/.test(lower)) intent = 'ack';
 
-    // 灾害识别
+    // 灾害识别（精确匹配 + 模糊匹配）
     let disaster = null;
     for (const [d, meta] of Object.entries(this._disasterMeta)) {
       for (const kw of meta.keywords) {
         if (text.includes(kw)) { disaster = d; break; }
+      }
+      // 模糊匹配：用户写了"地正"→匹配"地震"
+      if (!disaster) {
+        const tokens = this._tokenize(text);
+        for (const tk of tokens) {
+          for (const kw of meta.keywords) {
+            if (this._fuzzyMatch(tk, kw)) { disaster = d; break; }
+          }
+          if (disaster) break;
+        }
       }
       if (disaster) break;
     }
@@ -152,33 +240,59 @@ const AITutorBrain = {
     return { intent, disaster, text, words };
   },
 
-  // ===== 核心：生成回复 =====
+  // ===== 核心：生成本地回复（始终先跑）=====
   async generateReply(userMessage, history = []) {
     const input = this.understand(userMessage);
     this._userProfile.totalChats++;
     this._saveUserProfile();
 
+    let reply = '';
+    let source = 'local';
+
     // 处理特殊意图
     switch (input.intent) {
-      case 'greeting': return this._greeting();
-      case 'thanks': return this._thanks();
-      case 'goodbye': return this._goodbye();
-      case 'ack': return this._acknowledge();
-      case 'recommend': return this._recommend();
-      case 'weakness': return this._weakness();
-      case 'progress': return this._progress();
-      case 'practice': return this._practice();
-      case 'trivia': return this._trivia(input.disaster);
-      case 'story': return this._story(input.disaster);
-      case 'compare': return this._compare(input.disaster, userMessage);
+      case 'greeting': reply = this._greeting(); break;
+      case 'thanks': reply = this._thanks(); break;
+      case 'goodbye': reply = this._goodbye(); break;
+      case 'ack': reply = this._acknowledge(); break;
+      case 'recommend': reply = this._recommend(); break;
+      case 'weakness': reply = this._weakness(); break;
+      case 'progress': reply = this._progress(); break;
+      case 'practice': reply = this._practice(); break;
+      case 'trivia': reply = this._trivia(input.disaster); break;
+      case 'story': reply = this._story(input.disaster); break;
+      case 'compare': reply = this._compare(input.disaster, userMessage); break;
+      default:
+        // 知识型问题：howto / why / whatis / scenario / chat
+        if (['howto', 'why', 'whatis', 'scenario', 'chat'].includes(input.intent)) {
+          reply = this._answerKnowledge(input);
+        } else {
+          reply = this._fallback();
+        }
     }
 
-    // 知识型问题：howto / why / whatis / scenario
-    if (['howto', 'why', 'whatis', 'scenario', 'chat'].includes(input.intent)) {
-      return this._answerKnowledge(input);
-    }
+    return { reply, source, confidence: this._lastConfidence || 0.5 };
+  },
 
-    return this._fallback();
+  // ===== 云端增强（异步，不阻塞）=====
+  async _cloudEnhance(userMessage, localReply, history) {
+    // 本地置信度高时不调云端
+    if ((this._lastConfidence || 0) > 0.6) return null;
+    
+    try {
+      if (!await DeepSeekAPI.isReady()) return null;
+      const result = await DeepSeekAPI.chat(
+        `用户问："${userMessage}"。本地回答："${localReply.slice(0,200)}"。请补充更多专业知识或纠正不准确之处。`,
+        history
+      );
+      if (result && result.answer) {
+        this._cacheToKnowledge(userMessage, result.answer);
+        return result.answer;
+      }
+    } catch (e) {
+      // 静默失败，不影响用户体验
+    }
+    return null;
   },
 
   // ===== 回复生成器 =====
@@ -215,21 +329,24 @@ const AITutorBrain = {
   },
 
   _acknowledge() {
-    const replies = ['好的！👍', '明白！', '收到！', '嗯嗯！有什么继续说 😊', 'OK！'];
+    const replies = ['好的！还有什么想了解的？👍', '明白！继续说吧 😊', '收到！', '嗯嗯！有什么继续说 😊', 'OK！'];
     return this._pickRandom(replies);
   },
 
   _answerKnowledge(input) {
-    // 搜索知识
     const matches = this._searchKnowledge(input.text, input.disaster, input.intent);
     
     if (matches.length === 0) {
+      this._lastConfidence = 0;
       return this._noKnowledgeReply(input);
     }
 
-    // 构建回复
+    // 取最佳匹配的分数作为置信度
+    const bestScore = matches[0] ? (matches[0]._score || 0) : 0;
+    this._lastConfidence = Math.min(bestScore / 30, 1.0);
+
     let reply = '';
-    const items = matches.slice(0, 2); // 最多展示2条
+    const items = matches.slice(0, 2);
 
     for (const item of items) {
       if (item.type === 'card') {
@@ -239,7 +356,6 @@ const AITutorBrain = {
       }
     }
 
-    // 添加追问或引导
     if (input.intent === 'scenario') {
       reply += '\n\n💡 **想不想试试？** 去闯关模式里，我可以带你去经历更多类似的场景！';
     } else if (input.intent === 'howto') {
@@ -260,9 +376,7 @@ const AITutorBrain = {
     }
     if (item.tips && item.tips.length > 0) {
       r += '📌 **关键提醒：**\n';
-      item.tips.slice(0, 3).forEach(tip => {
-        r += `${tip}\n`;
-      });
+      item.tips.slice(0, 3).forEach(tip => { r += `${tip}\n`; });
       r += '\n';
     }
     if (item.flavor) {
@@ -286,10 +400,12 @@ const AITutorBrain = {
   },
 
   _noKnowledgeReply(input) {
+    this._lastConfidence = 0;
     const meta = input.disaster ? this._disasterMeta[input.disaster] : null;
     
     if (meta) {
-      return `${meta.icon} 关于 **${meta.name}**，我的知识库里有一些相关内容，但你的问题比较特别。\n\n让我给你讲讲 ${meta.name} 的核心要点：\n\n• 发生时第一优先：保护头部和颈部\n• 不要慌乱奔跑，冷静判断最重要\n• 记住"生命三角"和"伏地遮挡手抓牢"原则\n\n你想深入了解 ${meta.name} 的哪个方面？我可以帮你找相关的练习或场景！`;
+      const tips = this._getDisasterTips(input.disaster);
+      return `${meta.icon} 关于 **${meta.name}**，我的知识库里有一些相关内容，但你的问题比较特别。\n\n让我给你讲讲 ${meta.name} 的核心要点：\n\n${tips}\n\n你想深入了解 ${meta.name} 的哪个方面？我可以帮你找相关的练习或场景！`;
     }
 
     const replies = [
@@ -300,13 +416,31 @@ const AITutorBrain = {
     return this._pickRandom(replies);
   },
 
+  _getDisasterTips(disaster) {
+    const tipsMap = {
+      earthquake: '• 发生时第一优先：伏地、遮挡、手抓牢\n• 躲避在生命三角区（桌下、墙角）\n• 震后走楼梯撤离，不乘电梯',
+      flood: '• 向高处转移，不要涉水\n• 远离电线和电线杆\n• 不喝未处理的水',
+      typhoon: '• 躲在室内小房间\n• 远离窗户和玻璃\n• 储备食物和水',
+      fire: '• 弯腰低姿前行（烟往上走）\n• 湿毛巾捂口鼻\n• 先摸门把手判断门外温度',
+      lightning: '• 不要在大树下避雨\n• 远离金属物品\n• 不要使用手机',
+      blizzard: '• 减少外出\n• 注意保暖防冻\n• 储备食物和饮用水',
+      landslide: '• 向两侧山坡跑\n• 不要顺着滑坡方向跑\n• 远离河道和山谷',
+      wildfire: '• 逆风向跑\n• 用湿毛巾捂口鼻\n• 避开浓烟区域',
+      volcano: '• 远离火山口\n• 用湿布遮住口鼻防火山灰\n• 关注官方预警',
+      tsunami: '• 迅速向高地转移\n• 不要在海边观望\n• 关注海啸预警',
+      sandstorm: '• 关闭门窗\n• 外出戴口罩和护目镜\n• 避免户外活动',
+      drought: '• 节约用水\n• 关注官方供水信息\n• 储备饮用水'
+    };
+    return tipsMap[disaster] || '• 保持冷静，不要慌乱\n• 关注官方预警信息\n• 平时多学习防灾知识';
+  },
+
   _recommend() {
     const data = this._getUserData();
+    this._lastConfidence = 0.9;
     if (!data || data.quizHistory.length === 0) {
       return '你还没有答题记录哦！\n\n**推荐新手路线：**\n\n1️⃣ 先打开「开盲盒」认识几种常见灾害\n2️⃣ 再去「闯关模式」试试洪水/地震场景\n3️⃣ 回来告诉我你遇到了什么，我再帮你深入分析\n\n准备好开始了吗？💪';
     }
 
-    // 找出薄弱项
     const weak = this._findWeaknesses(data);
     if (weak.length > 0) {
       const topWeak = weak[0];
@@ -323,6 +457,7 @@ const AITutorBrain = {
 
   _progress() {
     const data = this._getUserData();
+    this._lastConfidence = 0.95;
     if (!data || data.quizHistory.length === 0) {
       return '你还没有答题记录 📊\n\n快去「开盲盒」或「闯关模式」体验一下吧！\n\n完成后我会帮你分析：\n• 各灾害掌握度对比\n• 薄弱项诊断\n• 个性化推荐\n\n准备好了吗？';
     }
@@ -343,7 +478,6 @@ const AITutorBrain = {
     reply += `正确率：**${pct}%**\n`;
     reply += `当前等级：**${level}**\n\n`;
 
-    // 各灾害统计
     const disasters = {};
     data.quizHistory.forEach(h => {
       if (!disasters[h.disaster]) disasters[h.disaster] = { total: 0, correct: 0 };
@@ -364,10 +498,12 @@ const AITutorBrain = {
   },
 
   _practice() {
+    this._lastConfidence = 0.9;
     return '想练习吗？有几个选择：\n\n🎯 **开盲盒** — 随机抽卡牌，认识各类灾害知识\n🏰 **闯关模式** — 身临其境的 3 幕场景模拟\n⚡ **限时挑战** — 快速反应测试\n\n告诉我你想玩哪个，或者直接点主菜单进入！';
   },
 
   _trivia(disaster) {
+    this._lastConfidence = 0.95;
     const trivias = [
       { text: '🐕 地震前动物会有异常行为：狗狂吠、猫搬家、蛇出洞、老鼠成群逃窜', disaster: 'earthquake' },
       { text: '🔋 电动车锂电池起火后温度可达 1000°C 以上，且难以扑灭！', disaster: 'fire' },
@@ -378,7 +514,9 @@ const AITutorBrain = {
       { text: '🌍 中国约 58% 的国土面积处于 7 度以上地震设防区', disaster: 'earthquake' },
       { text: '❄️ 人体核心温度降到 35°C 以下就会失温，暴雪天要注意保暖', disaster: 'blizzard' },
       { text: '🌋 火山灰可以导电，导致电线短路，引发大面积停电', disaster: 'volcano' },
-      { text: '🏜️ 沙尘暴的能见度可以降到 0 米以下，相当于闭上眼睛开车', disaster: 'sandstorm' }
+      { text: '🏜️ 沙尘暴的能见度可以降到 0 米以下，相当于闭上眼睛开车', disaster: 'sandstorm' },
+      { text: '📱 收到地震预警后，距震中越远预警时间越长，最长可达 60 秒！', disaster: 'earthquake' },
+      { text: '🚗 车辆落水后，车内电子系统在 60 秒内可能失效，要趁早开窗逃生', disaster: 'flood' }
     ];
 
     let pool = trivias;
@@ -390,10 +528,13 @@ const AITutorBrain = {
   },
 
   _story(disaster) {
+    this._lastConfidence = 0.9;
     const stories = [
-      { text: '📖 **2008 年汶川地震**：一位中学老师双手撑住门框，让全班 53 名学生安全撤离，自己却被埋。他后来回忆说，"我只是做了一个老师该做的事"。\n\n💡 这个故事告诉我们：地震时门框不一定安全，但冷静指挥、有序撤离很重要！', disaster: 'earthquake' },
+      { text: '📖 **2008 年汶川地震**：一位中学老师双手撑住门框，让全班 53 名学生安全撤离，自己却被埋。他后来回忆说，"我只是做了一个老师该做的事"。\n\n💡 这个故事告诉我们：地震时冷静指挥、有序撤离比慌乱奔跑重要得多！', disaster: 'earthquake' },
       { text: '📖 **2012 年北京特大暴雨**：一位市民被困车内，情急之下用头枕撬杆击碎车窗逃生，成功脱险。\n\n💡 车里常备破窗锤，关键时刻能救命！', disaster: 'flood' },
-      { text: '📖 **2019 年澳大利亚山火**：一家人提前撤离，并在途中不断通过手机 APP 查看火势动态，成功避开了所有封路区域。\n\n💡 关注官方预警信息，提前规划逃生路线！', disaster: 'wildfire' }
+      { text: '📖 **2019 年澳大利亚山火**：一家人提前撤离，并在途中不断通过手机 APP 查看火势动态，成功避开了所有封路区域。\n\n💡 关注官方预警信息，提前规划逃生路线！', disaster: 'wildfire' },
+      { text: '📖 **2021 年河南暴雨**：地铁五号线一名乘客在积水漫过腰部时，冷静指挥大家站到座椅上，并组织用灭火器砸开通风口，最终全员获救。\n\n💡 危机时刻保持冷静，寻找一切可能的逃生途径！', disaster: 'flood' },
+      { text: '📖 **2011 年日本东北大地震**：一所小学的全体师生在 4 分钟内完成海啸避难撤离，零伤亡。因为他们每年进行 3 次海啸避难演练。\n\n💡 平时的演练，关键时刻就是生命线！', disaster: 'earthquake' }
     ];
 
     let pool = stories;
@@ -405,17 +546,19 @@ const AITutorBrain = {
   },
 
   _compare(disaster, text) {
+    this._lastConfidence = 0.85;
     const lower = text.toLowerCase();
-    if (lower.includes('地震') && lower.includes('火灾')) {
+    if ((lower.includes('地震') || lower.includes('地正')) && (lower.includes('火灾') || lower.includes('火在'))) {
       return `🌍 **地震逃生** vs 🔥 **火灾逃生**\n\n**地震：**\n• 伏地、遮挡、手抓牢（不要跑）\n• 躲避在生命三角区（桌下、墙角）\n• 震后走楼梯撤离（不乘电梯）\n\n**火灾：**\n• 弯腰低姿前行（烟往上走）\n• 湿毛巾捂口鼻（过滤有毒烟）\n• 先摸门把手判断门外温度\n\n⚠️ **最大区别**：地震时"先躲再逃"，火灾时"立刻逃"！\n\n有什么想深入了解的吗？`;
     }
-    if (lower.includes('洪水') && lower.includes('台风')) {
+    if ((lower.includes('洪水') || lower.includes('洪涝')) && (lower.includes('台风'))) {
       return `🌊 **洪水** vs 🌪️ **台风**\n\n**洪水：**\n• 向高处转移\n• 不涉水、不游泳\n• 远离电线和电线杆\n\n**台风：**\n• 躲在室内小房间\n• 远离窗户和玻璃\n• 储备物资，等待台风过境\n\n💡 **两者共同点**：都要提前准备应急包，关注官方预警！`;
     }
     return '你想对比哪两种灾害？直接告诉我，比如"地震和火灾有什么区别"，我帮你详细对比！';
   },
 
   _fallback() {
+    this._lastConfidence = 0.1;
     const replies = [
       '你的问题很有意思！\n\n让我想想怎么回答你最好…\n\n要不你换个方式问？比如：\n• "我想学地震知识"\n• "推荐我练习"\n• "讲个防灾故事"\n• "给我出道题"',
       '我理解了，但这个问题有点综合。\n\n我们可以一步一步来：\n\n你想了解的是：\n1. 某个灾害的应对方法？\n2. 推荐练习？\n3. 模拟场景？\n4. 还是听听冷知识？',
@@ -428,6 +571,18 @@ const AITutorBrain = {
   _searchKnowledge(text, disaster, intent) {
     if (this._knowledgeBase.length === 0) return [];
     const lower = text.toLowerCase();
+    
+    // 扩展查询词
+    const expandedQueries = this._expandQuery(lower);
+    
+    // n-gram 分词
+    const tokens = this._tokenize(lower);
+    const expandedTokens = new Set();
+    tokens.forEach(t => { expandedTokens.add(t); });
+    expandedQueries.forEach(q => {
+      this._tokenize(q).forEach(t => expandedTokens.add(t));
+    });
+    
     const results = [];
 
     this._knowledgeBase.forEach(item => {
@@ -440,10 +595,26 @@ const AITutorBrain = {
       // 灾害匹配
       if (disaster && item.disaster === disaster) score += 15;
 
-      // 关键词匹配（分词匹配）
-      const words = text.split(/[\s,.!?，。！？]+/).filter(w => w.length >= 2);
-      words.forEach(w => {
-        if (content.includes(w)) score += 4;
+      // n-gram token 匹配
+      expandedTokens.forEach(token => {
+        if (content.includes(token)) score += 4;
+      });
+
+      // 扩展查询匹配（同义词）
+      expandedQueries.forEach(q => {
+        if (q.length >= 2 && content.includes(q)) score += 3;
+      });
+
+      // 模糊匹配：对用户输入中的每个词做模糊匹配
+      const inputWords = lower.split(/[\s,.!?，。！？]+/).filter(w => w.length >= 2);
+      const contentWords = content.split(/[\s,.!?，。！？]+/);
+      inputWords.forEach(iw => {
+        for (const cw of contentWords) {
+          if (this._fuzzyMatch(iw, cw) && iw !== cw) {
+            score += 2; // 模糊匹配加分
+            break;
+          }
+        }
       });
 
       // 短语匹配
@@ -456,14 +627,27 @@ const AITutorBrain = {
       // 优先度
       score += (item.priority || 1) * 0.5;
 
-      if (score > 0) results.push({ item, score });
+      if (score > 2) results.push({ item, score });
     });
 
-    return results.sort((a, b) => b.score - a.score).slice(0, 3).map(r => r.item);
+    const sorted = results.sort((a, b) => b.score - a.score).slice(0, 3);
+    sorted.forEach(r => { r.item._score = r.score; });
+    return sorted.map(r => r.item);
   },
 
   _getUserData() {
     try {
+      const state = JSON.parse(localStorage.getItem('aitutor_state') || '{}');
+      // 兼容旧版存储
+      if (!state.quizData) {
+        const old = localStorage.getItem('aiTutorData');
+        if (old) {
+          state.quizData = JSON.parse(old);
+          localStorage.setItem('aitutor_state', JSON.stringify(state));
+        }
+      }
+      if (state.quizData) return state.quizData;
+      // fallback to old key
       const saved = localStorage.getItem('aiTutorData');
       if (saved) return JSON.parse(saved);
     } catch (e) {}
@@ -488,22 +672,110 @@ const AITutorBrain = {
     return arr[Math.floor(Math.random() * arr.length)];
   },
 
-  // 公共 API
+  // ===== 公共 API =====
   isReady() { return this._knowledgeBase.length > 0; },
-  getStatus() { return { ready: this.isReady(), knowledgeCount: this._knowledgeBase.length, chats: this._userProfile.totalChats }; }
+  
+  getStatus() { 
+    return { 
+      ready: this.isReady(), 
+      knowledgeCount: this._knowledgeBase.length, 
+      chats: this._userProfile.totalChats,
+      cloudAvailable: false // 异步检查，同步返回 false
+    }; 
+  },
+
+  // 纯本地回复（供需要断网的场景使用）
+  async replyLocal(userMessage, history = []) {
+    const result = await this.generateReply(userMessage, history);
+    return result.reply;
+  },
+
+  // 纯云端回复（返回 null 表示不可用）
+  async replyCloud(userMessage, history = []) {
+    try {
+      if (!await DeepSeekAPI.isReady()) return null;
+      const result = await DeepSeekAPI.chat(userMessage, history);
+      if (result && result.answer) {
+        this._cacheToKnowledge(userMessage, result.answer);
+        return result.answer;
+      }
+      return null;
+    } catch (e) {
+      return null;
+    }
+  },
+
+  // 缓存问答
+  _cacheToKnowledge(question, answer) {
+    try {
+      const state = JSON.parse(localStorage.getItem('aitutor_state') || '{}');
+      if (!state.cache) state.cache = [];
+      state.cache.push({ question, answer, time: Date.now() });
+      if (state.cache.length > 100) state.cache = state.cache.slice(-100);
+      localStorage.setItem('aitutor_state', JSON.stringify(state));
+    } catch (e) {}
+  },
+
+  // 迁移旧数据
+  migrateOldData() {
+    try {
+      const oldKeys = ['aiTutorData', 'aitutor_profile', 'aitutor_cache', 'aitutor_model'];
+      const state = JSON.parse(localStorage.getItem('aitutor_state') || '{}');
+      let migrated = false;
+
+      // 迁移答题数据
+      if (!state.quizData) {
+        const old = localStorage.getItem('aiTutorData');
+        if (old) { state.quizData = JSON.parse(old); migrated = true; }
+      }
+
+      // 迁移用户画像
+      if (!state.profile) {
+        const old = localStorage.getItem('aitutor_profile');
+        if (old) { state.profile = JSON.parse(old); migrated = true; }
+      }
+
+      // 迁移缓存
+      if (!state.cache) {
+        const old = localStorage.getItem('aitutor_cache');
+        if (old) { state.cache = JSON.parse(old); migrated = true; }
+      }
+
+      // 迁移模型设置
+      if (!state.model) {
+        const old = localStorage.getItem('aitutor_model');
+        if (old) { state.model = old; migrated = true; }
+      }
+
+      if (migrated) {
+        localStorage.setItem('aitutor_state', JSON.stringify(state));
+        console.log('🧠 旧数据已迁移到统一的 aitutor_state');
+      }
+    } catch (e) {
+      console.error('数据迁移失败:', e);
+    }
+  }
 };
 
-// ===== DeepSeek API 集成（代理模式）=====
+// ===== DeepSeek API 集成（代理模式，可选云端增强）=====
 const DeepSeekAPI = {
-  _proxyUrl: (function(){try{return localStorage.getItem('deepseek_proxy_url');}catch(e){console.error('[DeepSeekAPI] Error reading proxy URL:',e);return null;}})() || 'https://yingji-xiaodaren-ai.hamburgerjimmy.workers.dev',
-  // 默认使用 token-plan 套餐的快速款；可用 localStorage 'aitutor_model' 覆盖
-  // 套餐可选: qwen3.6-flash(快) / qwen3.6-plus / qwen3.7-plus / deepseek-v4-flash / deepseek-v4-pro / glm-5.1 / kimi-k2.6
-  _model: (function(){try{return localStorage.getItem('aitutor_model');}catch(e){console.error('[DeepSeekAPI] Error reading model:',e);return null;}})() || 'deepseek-v4-pro',
-  setModel(m){ if(m){ this._model = m; try{ localStorage.setItem('aitutor_model', m); }catch(e){console.warn("[DeepSeekAPI]",e)} } },
-  getModel(){ return this._model; },
-  _systemPrompt: `...`,
+  _proxyUrl: (function(){
+    try { return localStorage.getItem('deepseek_proxy_url'); } 
+    catch(e) { return null; }
+  })() || '',
   
-  // ===== 安全控制：防止重复调用导致高额费用 =====
+  _model: (function(){
+    try { return localStorage.getItem('aitutor_model'); }
+    catch(e) { return null; }
+  })() || 'deepseek-v4-pro',
+  
+  setModel(m) { 
+    if(m) { this._model = m; try { localStorage.setItem('aitutor_model', m); } catch(e) {} }
+  },
+  
+  getModel() { return this._model; },
+
+  // 安全控制
   _requestLock: false,
   _callCount: 0,
   _maxCallsPerSession: 20,
@@ -511,64 +783,53 @@ const DeepSeekAPI = {
   _minInterval: 2000,
   _callLog: [],
 
-  async isReady() {
-    if (!this._proxyUrl || this._proxyUrl.length <= 3) return false;
-    // 直接信任配置的代理URL，不做HEAD探测（跨域HEAD会被CORS拦截）
-    return true;
+  isConfigured() {
+    return !!(this._proxyUrl && this._proxyUrl.length > 10);
   },
 
-  resetReadyCache() { this._isReadyCache = null; },
+  async isReady() {
+    return this.isConfigured();
+  },
 
   setProxyUrl(url) {
     this._proxyUrl = url.trim();
-    localStorage.setItem('deepseek_proxy_url', this._proxyUrl);
+    try { localStorage.setItem('deepseek_proxy_url', this._proxyUrl); } catch(e) {}
   },
 
   getProxyUrl() {
     return this._proxyUrl;
   },
 
-  // 兼容旧 UI（ai-tutor-v55.js 的密钥设置对话框）：映射到代理地址配置
-  getApiKey() {
-    return this._proxyUrl;
-  },
-
-  setApiKey(url) {
-    this.setProxyUrl(url);
-  },
+  getApiKey() { return this._proxyUrl; },
+  setApiKey(url) { this.setProxyUrl(url); },
 
   async chat(userMessage, history = []) {
+    if (!this.isConfigured()) {
+      return { error: '云端 AI 未配置' };
+    }
     if (this._requestLock) {
-      console.warn('DeepSeek: 请求锁已激活，跳过重复调用');
       return { error: '正在处理中，请稍候...' };
     }
     if (this._callCount >= this._maxCallsPerSession) {
-      console.warn('DeepSeek: 单会话调用次数已达上限 ' + this._maxCallsPerSession);
-      return { error: '本会话 AI 调用次数已达上限，请刷新页面后再试。' };
+      return { error: '本会话调用次数已达上限，请刷新页面后再试。' };
     }
     const now = Date.now();
     if (now - this._lastCallTime < this._minInterval) {
-      console.warn('DeepSeek: 调用太频繁');
       return { error: '请求太频繁，请稍后再试。' };
     }
     const lastQuestion = this._callLog.length > 0 ? this._callLog[this._callLog.length - 1].question : null;
     if (lastQuestion === userMessage && now - this._lastCallTime < 10000) {
-      console.warn('DeepSeek: 重复问题，跳过');
       return { error: '正在处理相同的问题，请稍候...' };
     }
+    
     this._requestLock = true;
     this._callCount++;
     this._lastCallTime = now;
     this._callLog.push({ question: userMessage, time: now, count: this._callCount });
 
-    if (!await this.isReady()) {
-      this._requestLock = false;
-      return { error: '代理地址未配置或探测失败' };
-    }
     try {
       const controller = new AbortController();
-      // 评委体验级：2.5秒云端无响应即静默回退本地，避免长时间转圈
-      const timeoutId = setTimeout(() => controller.abort(), 2500);
+      const timeoutId = setTimeout(() => controller.abort(), 3000);
       const response = await fetch(this._proxyUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -577,6 +838,7 @@ const DeepSeekAPI = {
       });
       clearTimeout(timeoutId);
       this._requestLock = false;
+      
       if (!response.ok) {
         const error = await response.json().catch(() => ({}));
         return { error: error.error || '代理错误 (' + response.status + ')' };
@@ -587,75 +849,21 @@ const DeepSeekAPI = {
     } catch (e) {
       this._requestLock = false;
       if (e.name === 'AbortError') return { error: '请求超时' };
-      console.error('DeepSeek proxy error:', e);
       return { error: '网络错误' };
     }
   }
 };
 
-// 保持兼容
+// ===== 全局导出 =====
+window.AITutorBrain = AITutorBrain;
+window.AITutorLLM = AITutorBrain;
+window.BailianAPI = DeepSeekAPI;
 window.DeepSeekAPI = DeepSeekAPI;
 
-// ===== 重写 AITutorBrain 的 generateReply，使用 DeepSeek 云端 API =====
-const _originalGenerateReply = AITutorBrain.generateReply.bind(AITutorBrain);
-AITutorBrain.generateReply = async function(userMessage, history = []) {
-  // 1. 尝试 DeepSeek 云端 API
-  if (await DeepSeekAPI.isReady()) {
-    try {
-      const result = await DeepSeekAPI.chat(userMessage, history);
-      if (result && result.answer) {
-        this._cacheToKnowledge(userMessage, result.answer);
-        return result.answer;
-      }
-    } catch (e) {
-      console.error('[DeepSeek] error:', e.message);
-    }
-  }
-  
-  // 2. DeepSeek 不可用 — 返回提示而非本地规则引擎
-  return '⚠️ DeepSeek AI 暂时不可用，请检查网络连接或稍后再试。\n\n你可以先去「学习模式」复习防灾知识，或直接在「答题模式」练习题目。';
-};
-
-// ===== B方案：暴露纯本地 / 纯云端两个入口，供 ai-float 实现"本地先秒回+云端后台补充" =====
-// 纯本地回复：DeepSeek不可用时的提示，不调用本地规则引擎
-AITutorBrain.replyLocal = async function(userMessage, history = []) {
-  return '⚠️ DeepSeek AI 暂时不可用，请检查网络或稍后再试。';
-};
-// 纯云端回复：调 DeepSeek 代理。成功返回字符串答案，失败/超时/不可用返回 null（绝不抛错）。
-AITutorBrain.replyCloud = async function(userMessage, history = []) {
-  try {
-    if (!await DeepSeekAPI.isReady()) return null;
-    const result = await DeepSeekAPI.chat(userMessage, history);
-    if (result && result.answer) {
-      this._cacheToKnowledge(userMessage, result.answer);
-      return result.answer;
-    }
-    return null;
-  } catch (e) {
-    console.error('replyCloud error:', e);
-    return null;
-  }
-};
-
-// 缓存问答到本地知识库
-AITutorBrain._cacheToKnowledge = function(question, answer) {
-  try {
-    const cache = JSON.parse(localStorage.getItem('aitutor_cache') || '[]');
-    cache.push({ question, answer, time: Date.now() });
-    // 只保留最近100条
-    if (cache.length > 100) cache.shift();
-    localStorage.setItem('aitutor_cache', JSON.stringify(cache));
-  } catch (e) {}
-};
-
-console.log('🧠 DeepSeek API 集成已加载');
-
-// ===== 全局导出（供 ai-tutor-v55.js / ai-float-v55.js 使用）=====
-window.AITutorBrain = AITutorBrain;
-window.AITutorLLM = AITutorBrain;       // 兼容旧引用
-window.BailianAPI = DeepSeekAPI;        // 兼容旧引用
-
-// 初始化AI导师大脑
+// 初始化
 if (typeof AITutorBrain !== 'undefined') {
   AITutorBrain.init();
+  AITutorBrain.migrateOldData();
 }
+
+console.log('🧠 AI 导师 v4.0 已就绪：本地引擎优先 + 云端可选增强');
