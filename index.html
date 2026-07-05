@@ -1785,7 +1785,8 @@
 <script src="kit_data.js?v=86" defer></script>
 <script src="game-engines.js?v=86" defer></script>
 <script src="js/core/performance-patch.js?v=86" defer></script>
-<script src="game.js?v=86" defer></script>
+<!-- [修复] game.js 与 game-engines.js 有 const 重复声明冲突，注释掉 -->
+<!-- <script src="game.js?v=86" defer></script> -->
 
 <!-- ===== 加载与交互脚本 ===== -->
 <script src="loading.js?v=86" defer></script>
@@ -2012,6 +2013,32 @@
 
 <!-- ⚡ 交互体验修复 — 触摸/双击防抖/定时器清理/按钮状态 -->
 <script src="fix-interaction.js?v=1"></script>
+
+<!-- 🔧 AI浮动按钮兜底 — 确保右下角始终显示AI按钮 -->
+<script>
+(function() {
+  function createAIFab() {
+    if (document.getElementById('aiFab')) return;
+    var fab = document.createElement('button');
+    fab.id = 'aiFab';
+    fab.className = 'ai-fab';
+    fab.setAttribute('aria-label', 'AI 防灾导师');
+    fab.innerHTML = '🤖<span class="ai-fab-badge"></span>';
+    fab.style.cssText = 'position:fixed;bottom:calc(100px + env(safe-area-inset-bottom,0px));right:20px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;font-size:24px;border:none;z-index:99999;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 20px rgba(59,130,246,0.4),0 0 40px rgba(139,92,246,0.2);pointer-events:auto;animation:ai-fab-pulse 3s ease-in-out infinite;';
+    fab.onclick = function() {
+      if (typeof PageManager !== 'undefined' && PageManager.navigate) {
+        PageManager.navigate('ai-tutor');
+      }
+    };
+    document.body.appendChild(fab);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', createAIFab);
+  } else {
+    createAIFab();
+  }
+})();
+</script>
 
 </body>
 </html>
