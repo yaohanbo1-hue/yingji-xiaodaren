@@ -73,6 +73,33 @@
 <link rel="stylesheet" href="fix-interaction.css?v=1">
 <link rel="stylesheet" href="ai-float.css?v=86">
 
+<!-- 🔧 关键 Bug 修复 — 内联 CSS 确保始终生效（滑动/点击/遮挡问题） -->
+<style>
+/* ===== 修复1：guide-tooltip 遮挡按钮 ===== */
+.guide-tooltip { pointer-events: none !important; }
+.guide-tooltip button, .guide-tooltip a, .guide-tooltip [onclick] { pointer-events: auto !important; }
+
+/* ===== 修复2：菜单底部被工具栏遮挡 ===== */
+#page-menu .menu-categories, #page-menu .menu-grid { padding-bottom: 100px !important; }
+#page-menu { padding-bottom: 100px !important; }
+
+/* ===== 修复3：btn-clicked 永久禁用按钮 ===== */
+.page:not(.active) .btn-clicked { pointer-events: auto !important; opacity: 1 !important; }
+
+/* ===== 修复4：tilt3d 与点击缩放冲突 ===== */
+.quiz-opt:active, .scenario-opt:active { transform: scale(0.96) !important; transition: transform 0.1s ease !important; }
+
+/* ===== 修复5：子页面无法滑动 / 滑不到底 ===== */
+/* 根因：.page 有 overflow:auto 但高度=scrollHeight，导致 .page 不可滚动却吞掉触摸事件 */
+#page-menu.page.active, #page-encyclopedia.page.active, #page-achievements.page.active,
+#page-stats.page.active, #page-leaderboard.page.active, #page-character.page.active,
+#page-calendar.page.active, #page-games.page.active, #page-shop.page.active, #page-settings.page.active {
+  overflow: visible !important;
+  overflow-y: visible !important;
+}
+#page-menu .menu-grid { max-height: none !important; }
+</style>
+
 <!-- 预获取非关键资源（空闲时加载） -->
 <link rel="prefetch" href="juice.js?v=86" as="script">
 <link rel="prefetch" href="visual-fx.js?v=86" as="script">
@@ -2013,6 +2040,9 @@
 
 <!-- ⚡ 交互体验修复 — 触摸/双击防抖/定时器清理/按钮状态 -->
 <script src="fix-interaction.js?v=1"></script>
+
+<!-- 🔧 关键 Bug 修复 — JS 补丁（ErrorBoundary/tilt3d/按钮状态/SafeStorage/AI按钮） -->
+<script src="bugfix-patch.js?v=1"></script>
 
 <!-- 🔧 AI浮动按钮兜底 — 确保右下角始终显示AI按钮 -->
 <script>
