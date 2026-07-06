@@ -164,6 +164,7 @@ const AITutorBrain = {
 
   _fuzzyMatch(word, candidate, maxDist = 1) {
     if (word.length <= 2) return word === candidate; // 短词要求精确匹配
+    if (word.length > 6 || candidate.length > 6) return false; // 长词不做模糊匹配（性能保护）
     if (maxDist === 1 && Math.abs(word.length - candidate.length) > 1) return false;
     return this._levenshtein(word, candidate) <= maxDist;
   },
@@ -213,14 +214,14 @@ const AITutorBrain = {
 
     // 灾害识别（精确匹配 + 模糊匹配）
     let disaster = null;
+    const fuzzyTokens = this._tokenize(text); // 提到循环外，避免重复分词
     for (const [d, meta] of Object.entries(this._disasterMeta)) {
       for (const kw of meta.keywords) {
         if (text.includes(kw)) { disaster = d; break; }
       }
       // 模糊匹配：用户写了"地正"→匹配"地震"
       if (!disaster) {
-        const tokens = this._tokenize(text);
-        for (const tk of tokens) {
+        for (const tk of fuzzyTokens) {
           for (const kw of meta.keywords) {
             if (this._fuzzyMatch(tk, kw)) { disaster = d; break; }
           }
@@ -570,18 +571,21 @@ const AITutorBrain = {
   // ===== 工具方法 =====
   _searchKnowledge(text, disaster, intent) {
     if (this._knowledgeBase.length === 0) return [];
-    const lower = text.toLowerCase();
+    // 性能保护：截断超长输入
+    const lower = text.toLowerCase().slice(0, 200);
     
     // 扩展查询词
     const expandedQueries = this._expandQuery(lower);
     
-    // n-gram 分词
+    // n-gram 分词（限制 token 数量避免性能问题）
     const tokens = this._tokenize(lower);
     const expandedTokens = new Set();
     tokens.forEach(t => { expandedTokens.add(t); });
     expandedQueries.forEach(q => {
       this._tokenize(q).forEach(t => expandedTokens.add(t));
     });
+    // 限制 token 总量（Set 转 Array 后截断）
+    const tokenArr = [...expandedTokens].slice(0, 500);
     
     const results = [];
 
@@ -596,7 +600,7 @@ const AITutorBrain = {
       if (disaster && item.disaster === disaster) score += 15;
 
       // n-gram token 匹配
-      expandedTokens.forEach(token => {
+      tokenArr.forEach(token => {
         if (content.includes(token)) score += 4;
       });
 

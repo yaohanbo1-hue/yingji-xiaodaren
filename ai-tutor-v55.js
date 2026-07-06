@@ -30,6 +30,8 @@ const AITutorEngine = {
   _data: null,
   _radarAnimProgress: 0,
   _radarAnimFrame: null,
+  _typingTimer: null,
+  _cloudEnabled: false,
   
   // ===== 初始化 =====
   init() {
@@ -477,10 +479,11 @@ const AITutorEngine = {
   
   // ===== 对话系统 =====
   startConversation() {
+    if (this._askingLock) return; // 防止与 handleInput 竞态
     const engine = window.AITutorLLM;
     if (engine && engine.generateReply) {
       engine.generateReply('你好').then(result => {
-        const greeting = typeof result === 'string' ? result : (result.reply || result);
+        const greeting = typeof result === 'string' ? result : (result.reply || '');
         this._typeMessage('ai', greeting);
       }).catch(() => {
         this._typeMessage('ai', '👋 你好！我是你的 AI 防灾导师！\n\n我已经学习了 369 道防灾题目和 34 个真实灾害场景，随时为你解答。\n\n你可以直接问我：\n• "地震来了怎么办？"\n• "推荐我练习什么？"\n• "讲个防灾故事"\n• 或者点击下方的快捷按钮');
@@ -491,14 +494,14 @@ const AITutorEngine = {
   },
   
   _typeMessage(type, text, callback) {
-    const body = document.getElementById('terminalBody');
-    if (!body) return;
-    
-    // 取消正在进行的打字动画
+    // 先取消正在进行的打字动画（即使 body 不存在也要清理）
     if (this._typingTimer) {
       clearTimeout(this._typingTimer);
       this._typingTimer = null;
     }
+    
+    const body = document.getElementById('terminalBody');
+    if (!body) return;
     
     const msg = document.createElement('div');
     msg.className = `terminal-msg ${type === 'ai' ? 'ai-msg' : 'user-msg'}`;
@@ -605,7 +608,7 @@ const AITutorEngine = {
     if (engine && engine.generateReply) {
       engine.generateReply(text, this._chatHistory || []).then(result => {
         // v4.0: generateReply 返回 {reply, source, confidence}
-        const reply = typeof result === 'string' ? result : (result.reply || result);
+        const reply = typeof result === 'string' ? result : (result.reply || '');
         const source = (result && result.source) || 'local';
         this.hideTyping();
         
@@ -618,8 +621,8 @@ const AITutorEngine = {
         this._chatHistory.push({ role: 'assistant', content: reply });
         if (this._chatHistory.length > 20) this._chatHistory = this._chatHistory.slice(-20);
         
-        // 如果置信度低，后台尝试云端增强
-        if ((result.confidence || 0) < 0.5 && window.DeepSeekAPI) {
+        // 如果置信度低且云端增强已开启，后台尝试云端补充
+        if ((result.confidence || 0) < 0.5 && this._cloudEnabled && window.DeepSeekAPI) {
           engine._cloudEnhance(text, reply, this._chatHistory).then(enhanced => {
             if (enhanced) {
               this._typeMessage('ai', '✨ **云端补充：**\n' + enhanced);
@@ -665,7 +668,7 @@ const AITutorEngine = {
     const engine = window.AITutorLLM;
     if (engine && engine.generateReply) {
       engine.generateReply(text, this._chatHistory || []).then(result => {
-        const reply = typeof result === 'string' ? result : (result.reply || result);
+        const reply = typeof result === 'string' ? result : (result.reply || '');
         this.hideTyping();
         this._typeMessage('ai', reply);
         if (!this._chatHistory) this._chatHistory = [];
@@ -758,9 +761,14 @@ const AITutorEngine = {
   },
   
   clearChat() {
+    if (this._typingTimer) {
+      clearTimeout(this._typingTimer);
+      this._typingTimer = null;
+    }
     const body = document.getElementById('terminalBody');
     if (body) body.innerHTML = '';
     this._chatHistory = [];
+    this._askingLock = false;
     setTimeout(() => this.startConversation(), 200);
   },
   
@@ -777,11 +785,13 @@ const AITutorEngine = {
       btn.classList.remove('llm-active');
       btn.innerHTML = '✨';
       btn.title = '云端增强已激活 — 点击切回本地引擎';
+      this._cloudEnabled = true;
       this._typeMessage('ai', '✨ **云端 AI 增强已激活！**\n\n我会先用本地知识引擎秒回，遇到复杂问题时自动调用云端大模型补充更详细的知识。');
     } else {
       btn.classList.add('llm-active');
       btn.innerHTML = '🧠';
       btn.title = '本地知识引擎已激活 — 点击切换云端增强';
+      this._cloudEnabled = false;
       this._typeMessage('ai', '🧠 **已切回本地知识引擎**\n\n本地引擎包含 369 道防灾题目和 34 个真实场景的知识库，秒回且无需联网。');
     }
   },

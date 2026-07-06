@@ -1,0 +1,18 @@
+{
+  "name": "应急小达人 — 防灾教育互动游戏",
+  "short_name": "应急小达人",
+  "description": "面向中小学生的防灾教育互动游戏，盲盒开箱、答题闯关、情景模拟",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#00d4ff",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
