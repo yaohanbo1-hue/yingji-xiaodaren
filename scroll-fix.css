@@ -1,0 +1,99 @@
+/**
+ * ===========================================================================
+ * 应急小达人 v1.3.4 — 核心滚动修复 (Scroll Fix)
+ * ===========================================================================
+ *
+ * 症状：所有 18 个子页面内容超出视口但无法滑动（touch/wheel 均无效）
+ *
+ * 根因链：
+ *   1. .page.active 未被约束为 100vh，高度被内容完全撑开
+ *      → clientHeight === scrollHeight → 浏览器认为"无需滚动条"
+ *   2. index.html 内联 <style> 错误地将多个页面设为 overflow:visible !important
+ *      → 彻底杀死任何滚动可能性
+ *   3. .page-content 未成为独立滚动容器
+ *
+ * 修复策略（三层防护）：
+ *   A. 所有 .page.active 强制约束为视口高度（height:100vh + overflow:hidden）
+ *   B. .page-content 成为真正的滚动容器（overflow-y:auto + -webkit-overflow-scrolling:touch）
+ *   C. 对无 .page-content 的裸页面（如 menu），让 .page 自身滚动
+ *
+ * 兼容性：
+ *   :has() 用于区分有无 .page-content（Chrome 105+, Safari 15.4+）
+ *   回退：无 :has() 时 C 规则对所有无 content 页生效
+ *
+ * @version 1.3.4
+ * ===========================================================================
+ */
+
+/* ===== A. 外层容器：强制视口高度，禁止自身溢出 ===== */
+.page.active {
+  height: 100vh !important;
+  max-height: 100vh !important;
+  min-height: 0 !important;           /* 防止 flex 子项撑开父级 */
+  overflow: hidden !important;       /* 外层不滚，交给内层 */
+  position: relative !important;     /* 相对定位，作为内部绝对定位元素的参考 */
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* ===== B. 内层滚动容器：.page-content 承担实际滚动 ===== */
+.page.active > .page-content,
+.page-active .page-content,
+.page .active .page-content,
+.page-content {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;          /* 关键：允许 flex 子项收缩并产生溢出 */
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;  /* iOS 平滑弹性滚动 */
+  overscroll-behavior: contain !important;        /* 防止滚动传递到 body */
+  -webkit-mask-image: none !important;            /* 清除可能的 mask 遮挡 */
+}
+
+/* ===== C. 裸页面（无 .page-content 包装）回退：.page 自身滚动 ===== */
+.page.active:not(:has(.page-content)) {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+/* ===== D. 特殊页面微调 ===== */
+
+/* 主菜单：flex 居中布局下保持居中 + 可滚动 */
+#page-menu.page.active {
+  justify-content: flex-start !important;    /* 内容从顶部排列而非居中 */
+  align-items: stretch !important;
+  padding-top: 16px !important;
+  padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+/* 知识卡牌网格：确保 grid 不撑破容器 */
+.menu-grid {
+  max-height: none !important;               /* 移除之前的 max-height:none 限制 */
+  overflow: visible !important;              /* grid 本身不滚，由父 page-content 滚 */
+}
+
+/* ===== E. 安全区域适配（刘海屏/底部指示器）===== */
+@supports (padding: env(safe-area-inset-top)) {
+  .page.active {
+    height: calc(100vh - env(safe-area-inset-top)) !important;
+    max-height: calc(100vh - env(safe-area-inset-top)) !important;
+    padding-top: env(safe-area-inset-top) !important;
+  }
+}
+
+/* ===== F. 减少动画偏好兼容 ===== */
+@media (prefers-reduced-motion: reduce) {
+  .page-content {
+    -webkit-overflow-scrolling: auto !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===== G. 桌面端宽屏：限制最大宽度避免过度拉伸 ===== */
+@media (min-width: 769px) {
+  .page.active {
+    max-width: 900px !important;
+    margin: 0 auto !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+}

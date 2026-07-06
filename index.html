@@ -72,7 +72,9 @@
 <!-- 交互体验修复 — 触摸/滚动/按钮状态 -->
 <link rel="stylesheet" href="fix-interaction.css?v=1">
 <link rel="stylesheet" href="ai-float.css?v=86">
-<link rel="stylesheet" href="visual-enhance.css?v=87">
+<link rel="stylesheet" href="visual-enhance.css?v=88">
+<!-- 核心滚动修复：修复所有页面无法滑动/内容截断的系统性 bug -->
+<link rel="stylesheet" href="scroll-fix.css?v=88">
 
 <!-- 🔧 关键 Bug 修复 — 内联 CSS 确保始终生效（滑动/点击/遮挡问题） -->
 <style>
@@ -95,8 +97,10 @@
 #page-menu.page.active, #page-encyclopedia.page.active, #page-achievements.page.active,
 #page-stats.page.active, #page-leaderboard.page.active, #page-character.page.active,
 #page-calendar.page.active, #page-games.page.active, #page-shop.page.active, #page-settings.page.active {
+  /* [v1.3.4] 原 overflow:visible 杀死所有滚动,由 scroll-fix.css 接管
   overflow: visible !important;
-  overflow-y: visible !important;
+  overflow-y: visible !important; */
+  overflow-y: auto !important;
 }
 #page-menu .menu-grid { max-height: none !important; }
 </style>
@@ -1839,7 +1843,7 @@
 <script src="bg-premium.js?v=86" defer></script>
 <script src="ui-polish.js?v=86" defer></script>
 <script src="tilt3d.js?v=86" defer></script>
-<script src="sfx.js?v=87" defer></script>
+<script src="sfx.js?v=88" defer></script>
 <script src="bgm-enhanced.js?v=86" defer></script>
 <script src="audio-integration.js?v=86" defer></script>
 <script src="ai-tutor-llm-v55.js?v=86" defer></script>
