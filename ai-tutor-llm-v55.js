@@ -241,38 +241,32 @@ const AITutorBrain = {
     return { intent, disaster, text, words };
   },
 
-  // ===== 核心：生成本地回复（始终先跑）=====
+  // ===== 核心：纯 DeepSeek API 调用 =====
   async generateReply(userMessage, history = []) {
-    const input = this.understand(userMessage);
     this._userProfile.totalChats++;
     this._saveUserProfile();
 
-    let reply = '';
-    let source = 'local';
-
-    // 处理特殊意图
-    switch (input.intent) {
-      case 'greeting': reply = this._greeting(); break;
-      case 'thanks': reply = this._thanks(); break;
-      case 'goodbye': reply = this._goodbye(); break;
-      case 'ack': reply = this._acknowledge(); break;
-      case 'recommend': reply = this._recommend(); break;
-      case 'weakness': reply = this._weakness(); break;
-      case 'progress': reply = this._progress(); break;
-      case 'practice': reply = this._practice(); break;
-      case 'trivia': reply = this._trivia(input.disaster); break;
-      case 'story': reply = this._story(input.disaster); break;
-      case 'compare': reply = this._compare(input.disaster, userMessage); break;
-      default:
-        // 知识型问题：howto / why / whatis / scenario / chat
-        if (['howto', 'why', 'whatis', 'scenario', 'chat'].includes(input.intent)) {
-          reply = this._answerKnowledge(input);
-        } else {
-          reply = this._fallback();
-        }
+    // 未配置 API Key
+    if (!DeepSeekAPI.isConfigured()) {
+      return {
+        reply: '⚠️ **AI 导师尚未配置**\n\n请点击��上角 ☁️ 按钮，输入你的 DeepSeek API Key 来启用 AI 对话。\n\n💡 没有 Key？前往 [DeepSeek 开放平台](https://platform.deepseek.com) 注册，免费送 500 万 tokens。',
+        source: 'error',
+        confidence: 0
+      };
     }
 
-    return { reply, source, confidence: this._lastConfidence || 0.5 };
+    // 调用 DeepSeek
+    const result = await DeepSeekAPI.chat(userMessage, history);
+
+    if (result.error) {
+      return {
+        reply: `⚠️ **AI 暂时不可用**\n\n${result.error}\n\n请检查网络连接或稍后再试。`,
+        source: 'error',
+        confidence: 0
+      };
+    }
+
+    return { reply: result.answer, source: 'cloud', confidence: 1.0 };
   },
 
   // ===== 云端增强（异步，不阻塞）=====
@@ -746,99 +740,146 @@ const AITutorBrain = {
   }
 };
 
-// ===== DeepSeek API 集成（代理模式，可选云端增强）=====
+// ===== DeepSeek API 集成（纯云端模式）=====
 const DeepSeekAPI = {
-  _proxyUrl: (function(){
-    try { return localStorage.getItem('deepseek_proxy_url'); } 
-    catch(e) { return null; }
-  })() || '',
-  
-  _model: (function(){
-    try { return localStorage.getItem('aitutor_model'); }
-    catch(e) { return null; }
-  })() || 'deepseek-v4-pro',
-  
-  setModel(m) { 
-    if(m) { this._model = m; try { localStorage.setItem('aitutor_model', m); } catch(e) {} }
-  },
-  
-  getModel() { return this._model; },
+  // 支持两种模式：直接 API Key 或 代理 URL
+  _apiKey: (function(){ try { return localStorage.getItem('deepseek_api_key'); } catch(e) { return ''; } })(),
+  _proxyUrl: (function(){ try { return localStorage.getItem('deepseek_proxy_url'); } catch(e) { return ''; } })(),
+  _model: (function(){ try { return localStorage.getItem('aitutor_model'); } catch(e) { return ''; } })() || 'deepseek-chat',
+
+  _systemPrompt: `你是"应急小达人"游戏的 AI 防灾导师。这是一个面向中小学生的防灾教育互动游戏，覆盖 12 种自然灾害：地震、洪涝、台风、火灾、雷电、暴雪、泥石流、干旱、山火、火山、海啸、沙尘暴。
+
+你的职责：
+1. 用通俗易懂的语言回答防灾问题，适合中小学生理解
+2. 给出具体、可操作的避险建议
+3. 必要时提醒安全注意事项
+4. 回答用中文，可以使用 emoji 和 markdown 加粗（**文字**）增加可���性
+5. 如果用户问学习进度或推荐练习，可以建议他们去"开盲盒"、"闯关模式"、"限时挑战"等游戏模式
+
+保持友善、专业、简洁。每次回答控制在 200 字以内。`,
 
   // 安全控制
   _requestLock: false,
   _callCount: 0,
-  _maxCallsPerSession: 20,
+  _maxCallsPerSession: 50,
   _lastCallTime: 0,
-  _minInterval: 2000,
-  _callLog: [],
+  _minInterval: 1000,
 
-  isConfigured() {
-    return !!(this._proxyUrl && this._proxyUrl.length > 10);
+  setApiKey(key) {
+    this._apiKey = (key || '').trim();
+    try { localStorage.setItem('deepseek_api_key', this._apiKey); } catch(e) {}
   },
-
-  async isReady() {
-    return this.isConfigured();
-  },
+  getApiKey() { return this._apiKey; },
 
   setProxyUrl(url) {
-    this._proxyUrl = url.trim();
+    this._proxyUrl = (url || '').trim();
     try { localStorage.setItem('deepseek_proxy_url', this._proxyUrl); } catch(e) {}
   },
+  getProxyUrl() { return this._proxyUrl; },
 
-  getProxyUrl() {
-    return this._proxyUrl;
+  setModel(m) { if(m) { this._model = m; try { localStorage.setItem('aitutor_model', m); } catch(e) {} } },
+  getModel() { return this._model; },
+
+  isConfigured() {
+    return !!(this._apiKey && this._apiKey.length > 10) || !!(this._proxyUrl && this._proxyUrl.length > 10);
   },
+  async isReady() { return this.isConfigured(); },
 
-  getApiKey() { return this._proxyUrl; },
-  setApiKey(url) { this.setProxyUrl(url); },
+  // 构建请求消息
+  _buildMessages(userMessage, history) {
+    const messages = [{ role: 'system', content: this._systemPrompt }];
+    // 加入最近 6 轮对话历史
+    const recent = (history || []).slice(-12);
+    for (const h of recent) {
+      messages.push({ role: h.role || 'user', content: h.content || h });
+    }
+    messages.push({ role: 'user', content: userMessage });
+    return messages;
+  },
 
   async chat(userMessage, history = []) {
     if (!this.isConfigured()) {
-      return { error: '云端 AI 未配置' };
+      return { error: '请先配置 DeepSeek API Key' };
     }
     if (this._requestLock) {
       return { error: '正在处理中，请稍候...' };
     }
     if (this._callCount >= this._maxCallsPerSession) {
-      return { error: '本会话调用次数已达上限，请刷新页面后再试。' };
+      return { error: '本会话调用次数已达上限，请刷新页面后再试' };
     }
     const now = Date.now();
     if (now - this._lastCallTime < this._minInterval) {
-      return { error: '请求太频繁，请稍后再试。' };
+      return { error: '请求太频繁，请稍后再试' };
     }
-    const lastQuestion = this._callLog.length > 0 ? this._callLog[this._callLog.length - 1].question : null;
-    if (lastQuestion === userMessage && now - this._lastCallTime < 10000) {
-      return { error: '正在处理相同的问题，请稍候...' };
-    }
-    
+
     this._requestLock = true;
     this._callCount++;
     this._lastCallTime = now;
-    this._callLog.push({ question: userMessage, time: now, count: this._callCount });
+
+    const messages = this._buildMessages(userMessage, history);
 
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 3000);
-      const response = await fetch(this._proxyUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userMessage, history: history.slice(-6), model: this._model }),
-        signal: controller.signal
-      });
+      const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 秒超时
+
+      let response;
+
+      if (this._proxyUrl && this._proxyUrl.length > 10) {
+        // 代理���式：发送给 Cloudflare Worker
+        response = await fetch(this._proxyUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: userMessage, history: (history || []).slice(-6), model: this._model }),
+          signal: controller.signal
+        });
+      } else {
+        // 直连模式：直接调用 DeepSeek API
+        response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this._apiKey
+          },
+          body: JSON.stringify({
+            model: this._model,
+            messages: messages,
+            stream: false,
+            max_tokens: 500,
+            temperature: 0.7
+          }),
+          signal: controller.signal
+        });
+      }
       clearTimeout(timeoutId);
       this._requestLock = false;
-      
+
       if (!response.ok) {
-        const error = await response.json().catch(() => ({}));
-        return { error: error.error || '代理错误 (' + response.status + ')' };
+        const errData = await response.json().catch(() => ({}));
+        const errMsg = errData.error?.message || errData.error || ('HTTP ' + response.status);
+        if (response.status === 401) return { error: 'API Key 无效，请检查设置' };
+        if (response.status === 429) return { error: '调用频率超限，请稍后再试' };
+        return { error: errMsg };
       }
+
       const data = await response.json();
+
+      // 代理模式返回 { answer: "..." }
       if (data.answer) return { answer: data.answer };
-      return { error: data.error || '返回异常' };
+
+      // 直连模式返回 OpenAI 格式 { choices: [{ message: { content: "..." } }] }
+      if (data.choices && data.choices[0] && data.choices[0].message) {
+        return { answer: data.choices[0].message.content };
+      }
+
+      return { error: '返回格式异常' };
     } catch (e) {
       this._requestLock = false;
-      if (e.name === 'AbortError') return { error: '请求超时' };
-      return { error: '网络错误' };
+      if (e.name === 'AbortError') return { error: '请求超时（15秒），请检查网络后重试' };
+      // CORS 错误检测
+      if (e instanceof TypeError && e.message.includes('Failed to fetch')) {
+        return { error: '网络连接失败。浏览器可能无法直连 DeepSeek API（CORS 限制），建议配置代理地址' };
+      }
+      return { error: '网络错误：' + e.message };
     }
   }
 };
@@ -855,4 +896,4 @@ if (typeof AITutorBrain !== 'undefined') {
   AITutorBrain.migrateOldData();
 }
 
-console.log('🧠 AI 导师 v4.0 已就绪：本地引擎优先 + 云端可选增强');
+console.log('🤖 AI 导师 v5.0 已就绪：纯 DeepSeek API 模式');

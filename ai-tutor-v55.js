@@ -246,8 +246,8 @@ const AITutorEngine = {
             AI 导师对话
           </div>
           <div class="terminal-actions">
-            <div class="terminal-action-btn llm-active" onclick="AITutorEngine.loadLLM()" title="本地知识引擎已激活 — 点击切换云端增强" id="llmToggleBtn">🧠</div>
-            <div class="terminal-action-btn" onclick="AITutorEngine.showApiKeyDialog()" title="可选：配置云端 AI 增强" id="apiKeyBtn">☁️</div>
+            <div class="terminal-action-btn" onclick="AITutorEngine.showApiKeyDialog()" title="设置 DeepSeek API" id="llmToggleBtn">☁️</div>
+            <div class="terminal-action-btn" onclick="AITutorEngine.showApiKeyDialog()" title="DeepSeek API 设置" id="apiKeyBtn">🔑</div>
             <div class="terminal-action-btn" onclick="AITutorEngine.clearChat()" title="清空对话">🗑</div>
           </div>
         </div>
@@ -479,17 +479,16 @@ const AITutorEngine = {
   
   // ===== 对话系统 =====
   startConversation() {
-    if (this._askingLock) return; // 防止与 handleInput 竞态
+    if (this._askingLock) return;
     const engine = window.AITutorLLM;
-    if (engine && engine.generateReply) {
-      engine.generateReply('你好').then(result => {
-        const greeting = typeof result === 'string' ? result : (result.reply || '');
-        this._typeMessage('ai', greeting);
-      }).catch(() => {
-        this._typeMessage('ai', '👋 你好！我是你的 AI 防灾导师！\n\n我已经学习了 369 道防灾题目和 34 个真实灾害场景，随时为你解答。\n\n你可以直接问我：\n• "地震来了怎么办？"\n• "推荐我练习什么？"\n• "讲个防灾故事"\n• 或者点击下方的快捷按钮');
-      });
+    const configured = window.DeepSeekAPI && window.DeepSeekAPI.isConfigured();
+    
+    if (configured) {
+      // 已配置 DeepSeek，发送欢迎语
+      this._typeMessage('ai', '👋 你好！我是你的 AI 防灾导师。\n\n我已经接入 DeepSeek 大模型，可以回答任何防灾问题。\n\n你可以问我：\n• "地震来了怎么办？"\n• "洪水和台风有什么区别？"\n• "推荐我练习什么？"\n• 或者点击下方的快捷按钮');
     } else {
-      this._typeMessage('ai', '👋 你好！我是你的 AI 防灾导师！\n\n我已经学习了 369 道防灾题目和 34 个真实灾害场景，随时为你解答。\n\n你可以直接问我：\n• "地震来了怎么办？"\n• "推荐我练习什么？"\n• "讲个防灾故事"\n• 或者点击下方的快捷按钮');
+      // 未配置，提示用户设置
+      this._typeMessage('ai', '👋 你好！我是你的 AI 防灾导师。\n\n⚠️ **尚未配置 DeepSeek API**\n\n请点击右上角 ☁️ 按钮设置 API Key，启用 AI 对话。\n\n💡 前往 [DeepSeek 开放平台](https://platform.deepseek.com) 注册，免费送 500 万 tokens。');
     }
   },
   
@@ -607,34 +606,20 @@ const AITutorEngine = {
     const engine = window.AITutorLLM;
     if (engine && engine.generateReply) {
       engine.generateReply(text, this._chatHistory || []).then(result => {
-        // v4.0: generateReply 返回 {reply, source, confidence}
         const reply = typeof result === 'string' ? result : (result.reply || '');
-        const source = (result && result.source) || 'local';
         this.hideTyping();
-        
-        // 本地引擎回复（带来源标记）
-        const prefix = source === 'cloud' ? '' : '';
-        this._typeMessage('ai', prefix + reply);
+        this._typeMessage('ai', reply);
         
         if (!this._chatHistory) this._chatHistory = [];
         this._chatHistory.push({ role: 'user', content: text });
         this._chatHistory.push({ role: 'assistant', content: reply });
         if (this._chatHistory.length > 20) this._chatHistory = this._chatHistory.slice(-20);
         
-        // 如果置信度低且云端增强已开启，后台尝试云端补充
-        if ((result.confidence || 0) < 0.5 && this._cloudEnabled && window.DeepSeekAPI) {
-          engine._cloudEnhance(text, reply, this._chatHistory).then(enhanced => {
-            if (enhanced) {
-              this._typeMessage('ai', '✨ **云端补充：**\n' + enhanced);
-            }
-          }).catch(() => {});
-        }
-        
         this._askingLock = false;
       }).catch(err => {
         this.hideTyping();
         if(location.hostname==='localhost')console.error('AI回复错误:', err);
-        this._typeMessage('ai', '抱歉，AI引擎暂时出错了，请稍后再试。');
+        this._typeMessage('ai', '抱歉，AI 引擎出错了，请稍后再试。');
         this._askingLock = false;
       });
     } else {
@@ -773,55 +758,49 @@ const AITutorEngine = {
   },
   
   loadLLM() {
-    const btn = document.getElementById('llmToggleBtn');
-    if (!btn) return;
-    const isActive = btn.classList.contains('llm-active');
-    if (isActive) {
-      // 当前是本地引擎激活状态，尝试切换到云端增强
-      if (!window.DeepSeekAPI || !window.DeepSeekAPI.isConfigured()) {
-        this._typeMessage('ai', '☁️ **云端 AI 增强未配置**\n\n当前使用本地知识引擎，已经可以回答大部分防灾问题。\n\n如需更强大的云端 AI 支持，点击 ☁️ 按钮设置代理地址。');
-        return;
-      }
-      btn.classList.remove('llm-active');
-      btn.innerHTML = '✨';
-      btn.title = '云端增强已激活 — 点击切回本地引擎';
-      this._cloudEnabled = true;
-      this._typeMessage('ai', '✨ **云端 AI 增强已激活！**\n\n我会先用本地知识引擎秒回，遇到复杂问题时自动调用云端大模型补充更详细的知识。');
-    } else {
-      btn.classList.add('llm-active');
-      btn.innerHTML = '🧠';
-      btn.title = '本地知识引擎已激活 — 点击切换云端增强';
-      this._cloudEnabled = false;
-      this._typeMessage('ai', '🧠 **已切回本地知识引擎**\n\n本地引擎包含 369 道防灾题目和 34 个真实场景的知识库，秒回且无需联网。');
-    }
+    // 直接打开设置对话框
+    this.showApiKeyDialog();
   },
   
-  // 显示云端增强设置对话框
+  // 显示 DeepSeek API 设置对话框
   showApiKeyDialog() {
     const existing = document.getElementById('apiKeyDialog');
     if (existing) existing.remove();
     
     const dialog = document.createElement('div');
     dialog.id = 'apiKeyDialog';
-    dialog.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a2e;border:1px solid rgba(0,212,255,0.3);border-radius:16px;padding:24px;z-index:9999;width:90%;max-width:400px;box-shadow:0 0 40px rgba(0,212,255,0.2);';
+    dialog.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a2e;border:1px solid rgba(0,212,255,0.3);border-radius:16px;padding:24px;z-index:9999;width:90%;max-width:420px;box-shadow:0 0 40px rgba(0,212,255,0.2);';
     
-    const currentProxy = window.DeepSeekAPI ? window.DeepSeekAPI.getProxyUrl() : '';
+    const api = window.DeepSeekAPI;
+    const currentKey = api ? api.getApiKey() : '';
+    const currentProxy = api ? api.getProxyUrl() : '';
+    const hasKey = currentKey && currentKey.length > 10;
     const hasProxy = currentProxy && currentProxy.length > 10;
+    const configured = hasKey || hasProxy;
     
     dialog.innerHTML = `
-      <h3 style="margin:0 0 16px;color:#00d4ff;font-size:18px;">☁️ 云端 AI 增强（可选）</h3>
-      <p style="color:#8899aa;font-size:14px;margin:0 0 12px;line-height:1.5;">
-        ${hasProxy ? '<span style="color:#00e676;">✅ 已配置云端代理</span>' : '<span style="color:#F59E0B;">⚠️ 未配置（使用本地引擎）</span>'}
+      <h3 style="margin:0 0 12px;color:#00d4ff;font-size:18px;">🤖 DeepSeek AI 设置</h3>
+      <p style="color:#8899aa;font-size:13px;margin:0 0 16px;line-height:1.5;">
+        ${configured ? '<span style="color:#00e676;">✅ AI 已配置</span>' : '<span style="color:#F59E0B;">⚠️ 未配置，请输入 API Key</span>'}<br>
+        前往 <a href="https://platform.deepseek.com" target="_blank" style="color:#00d4ff;">DeepSeek 开放平台</a> 注册，免费送 500 万 tokens
       </p>
-      <p style="color:#8899aa;font-size:12px;margin:0 0 4px;line-height:1.5;">
-        本地知识引擎已经可以回答 90%+ 的防灾问题。<br>
-        如需更强大的语义理解能力，可配置云端 AI 代理。
-      </p>
-      <input type="text" id="newApiKeyInput" placeholder="输入代理地址（可选）" 
-        style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,212,255,0.2);border-radius:8px;color:#fff;font-size:14px;margin:12px 0;box-sizing:border-box;"
+      
+      <label style="display:block;color:#8899aa;font-size:12px;margin:0 0 6px;">方式一：API Key（推荐）</label>
+      <input type="password" id="newApiKeyInput" placeholder="sk-xxxxxxxxxxxx" 
+        style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,212,255,0.2);border-radius:8px;color:#fff;font-size:14px;margin:0 0 12px;box-sizing:border-box;"
+        value="${escapeHtml(hasKey ? currentKey : '')}">
+      
+      <label style="display:block;color:#8899aa;font-size:12px;margin:0 0 6px;">方式二：代理地址（CORS 受限时用）</label>
+      <input type="text" id="newProxyInput" placeholder="https://your-worker.workers.dev" 
+        style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,212,255,0.2);border-radius:8px;color:#fff;font-size:14px;margin:0 0 12px;box-sizing:border-box;"
         value="${escapeHtml(hasProxy ? currentProxy : '')}">
+      
+      <p style="color:#666;font-size:11px;margin:0 0 12px;line-height:1.4;">
+        💡 浏览器直连 DeepSeek API 可能被 CORS 拦截。如遇此问题，请使用方式二部署一个 Cloudflare Worker 代理（详见 docs/cloudflare-worker.md）。
+      </p>
+      
       <div style="display:flex;gap:8px;justify-content:flex-end;">
-        ${hasProxy ? '<button onclick="AITutorEngine.clearApiKey()" style="padding:8px 16px;background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.3);border-radius:8px;color:#EF4444;cursor:pointer;font-size:14px;">清除</button>' : ''}
+        ${configured ? '<button onclick="AITutorEngine.clearApiKey()" style="padding:8px 16px;background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.3);border-radius:8px;color:#EF4444;cursor:pointer;font-size:14px;">清除</button>' : ''}
         <button onclick="var d=document.getElementById(\'apiKeyDialog\');d&&d.remove()" 
           style="padding:8px 16px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:8px;color:#fff;cursor:pointer;font-size:14px;">取消</button>
         <button onclick="AITutorEngine.saveApiKey()" 
@@ -833,18 +812,22 @@ const AITutorEngine = {
   },
   
   saveApiKey() {
-    const input = document.getElementById('newApiKeyInput');
-    if (!input) return;
+    const keyInput = document.getElementById('newApiKeyInput');
+    const proxyInput = document.getElementById('newProxyInput');
+    if (!keyInput && !proxyInput) return;
     
-    const url = input.value.trim();
-    if (!url) {
+    const key = keyInput ? keyInput.value.trim() : '';
+    const proxy = proxyInput ? proxyInput.value.trim() : '';
+    
+    if (!key && !proxy) {
       this.clearApiKey();
       return;
     }
     
     if (window.DeepSeekAPI) {
-      window.DeepSeekAPI.setProxyUrl(url);
-      this._typeMessage('ai', '✅ 云端代理地址已更新！\n\n遇到复杂问题时，AI 会自动尝试调用云端大模型补充回答。');
+      if (key) window.DeepSeekAPI.setApiKey(key);
+      if (proxy) window.DeepSeekAPI.setProxyUrl(proxy);
+      this._typeMessage('ai', '✅ **DeepSeek AI 已配置成功！**\n\n现在你可以问我任何防灾问题了。试试：\n• "地震来了怎么办？"\n• "洪水和台风有什么区别？"\n• "推荐我练习什么？"');
     }
     
     const dialog = document.getElementById('apiKeyDialog');
@@ -853,11 +836,12 @@ const AITutorEngine = {
 
   clearApiKey() {
     if (window.DeepSeekAPI) {
+      window.DeepSeekAPI.setApiKey('');
       window.DeepSeekAPI.setProxyUrl('');
     }
     const dialog = document.getElementById('apiKeyDialog');
     if (dialog) dialog.remove();
-    this._typeMessage('ai', '已切回纯本地模式。本地知识引擎包含完整防灾知识库，随时可用 🧠');
+    this._typeMessage('ai', '已清除 API 配置。请点击 ☁️ 按钮重新设置 DeepSeek API Key。');
   },
   
   // ===== 练习功能 =====
