@@ -97,3 +97,29 @@
     transform: translateX(-50%) !important;
   }
 }
+
+/* ===== H. 修复 grid 作为 flex 子项时的横向溢出（成就/商店/角色等卡片网格）===== */
+/* 根因：.page.active 是 flex 列容器，grid 子项默认 min-width:auto = 其 min-content
+   宽度（如成就网格 4×200px = 836px），无法收缩到 342px 视口，被父级
+   overflow-x:hidden 裁切，导致大部分卡片不可见/不可点击。放开收缩即可修复。 */
+.page.active > * {
+  min-width: 0 !important;
+}
+
+/* 成就网格：在视口内换行（移动端 2 列、桌面 5~6 列），不再被裁切/无法触及
+   选择器特异性须高于 all-styles-v55.css 的
+   #page-achievements > div:not(.game-header):not(.back-float):not(.menu-toolbar) */
+#page-achievements > div.achievement-list:not(.game-header):not(.back-float):not(.menu-toolbar) {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  padding-left: 0 !important;       /* 释放两侧内边距, 让 2 列布局有空间 */
+  padding-right: 0 !important;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 140px), 1fr)) !important;
+  overflow-x: visible !important;   /* 子项已在视口内, 无需裁切 */
+}
+
+/* 成就页头部被误套用网格规则（#page-achievements > div:not(...)），恢复为块级 */
+#page-achievements > .preview-header {
+  display: block !important;
+}
