@@ -24,7 +24,6 @@ const STATIC_ASSETS = [
   './scenarios.js',
   './kit_data.js',
   './game-engines.js',
-  './game.js',
   './loading.js',
   './menu-manager.js',
   './juice.js',
