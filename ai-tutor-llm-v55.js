@@ -636,18 +636,8 @@ const AITutorBrain = {
   },
 
   _getUserData() {
+    // 始终从 aiTutorData 读取（AITutorEngine 的数据源，是唯一真相来源）
     try {
-      const state = JSON.parse(localStorage.getItem('aitutor_state') || '{}');
-      // 兼容旧版存储
-      if (!state.quizData) {
-        const old = localStorage.getItem('aiTutorData');
-        if (old) {
-          state.quizData = JSON.parse(old);
-          localStorage.setItem('aitutor_state', JSON.stringify(state));
-        }
-      }
-      if (state.quizData) return state.quizData;
-      // fallback to old key
       const saved = localStorage.getItem('aiTutorData');
       if (saved) return JSON.parse(saved);
     } catch (e) {}
@@ -719,15 +709,10 @@ const AITutorBrain = {
   // 迁移旧数据
   migrateOldData() {
     try {
-      const oldKeys = ['aiTutorData', 'aitutor_profile', 'aitutor_cache', 'aitutor_model'];
       const state = JSON.parse(localStorage.getItem('aitutor_state') || '{}');
       let migrated = false;
 
-      // 迁移答题数据
-      if (!state.quizData) {
-        const old = localStorage.getItem('aiTutorData');
-        if (old) { state.quizData = JSON.parse(old); migrated = true; }
-      }
+      // 注意：答题数据(aiTutorData)不迁移，AITutorEngine 始终直接读写 aiTutorData
 
       // 迁移用户画像
       if (!state.profile) {

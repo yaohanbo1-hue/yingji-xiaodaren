@@ -1812,8 +1812,8 @@
 <script src="kit_data.js?v=86" defer></script>
 <script src="game-engines.js?v=86" defer></script>
 <script src="js/core/performance-patch.js?v=86" defer></script>
-<!-- [修复] game.js 与 game-engines.js 有 const 重复声明冲突，注释掉 -->
-<!-- <script src="game.js?v=86" defer></script> -->
+<!-- game.js 已移除：所有引擎已由 game-engines.js 提供，game.js 的 const Modal 重复声明会导致 SyntaxError -->
+<!-- localStorage 保护已由 game-core.js 的 SafeStorage 提供 -->
 
 <!-- ===== 加载与交互脚本 ===== -->
 <script src="loading.js?v=86" defer></script>

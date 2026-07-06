@@ -494,6 +494,12 @@ const AITutorEngine = {
     const body = document.getElementById('terminalBody');
     if (!body) return;
     
+    // 取消正在进行的打字动画
+    if (this._typingTimer) {
+      clearTimeout(this._typingTimer);
+      this._typingTimer = null;
+    }
+    
     const msg = document.createElement('div');
     msg.className = `terminal-msg ${type === 'ai' ? 'ai-msg' : 'user-msg'}`;
     
@@ -508,8 +514,10 @@ const AITutorEngine = {
     msg.appendChild(bubble);
     body.appendChild(msg);
     
-    // XSS安全：先转义HTML
+    // XSS安全：先转义HTML，再渲染 markdown
     const safeText = escapeHtml(text);
+    // 将 **bold** 转为 <strong>bold</strong>（在转义之后，安全）
+    const renderMd = (t) => t.replace(/\n/g, '<br>').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     
     if (type === 'ai' && safeText.length > 30) {
       const speed = 18;
@@ -528,21 +536,23 @@ const AITutorEngine = {
           else if (/[，；：]/.test(char)) delay = speed * 3;
           else if (char === ' ') delay = speed * 1.5;
           
-          bubble.innerHTML = displayText.replace(/\n/g, '<br>');
+          bubble.innerHTML = renderMd(displayText);
           body.scrollTop = body.scrollHeight;
           
           if (i < safeText.length) {
-            setTimeout(typeChar, delay);
+            this._typingTimer = setTimeout(typeChar, delay);
           } else {
+            this._typingTimer = null;
             if (callback) callback();
           }
         } else {
+          this._typingTimer = null;
           if (callback) callback();
         }
       };
       typeChar();
     } else {
-      bubble.innerHTML = safeText.replace(/\n/g, '<br>');
+      bubble.innerHTML = renderMd(safeText);
       body.scrollTop = body.scrollHeight;
       if (callback) callback();
     }
@@ -760,7 +770,7 @@ const AITutorEngine = {
     const isActive = btn.classList.contains('llm-active');
     if (isActive) {
       // 当前是本地引擎激活状态，尝试切换到云端增强
-      if (!window.DeepSeekAPI || !window.DeepSeekAPI.isReady()) {
+      if (!window.DeepSeekAPI || !window.DeepSeekAPI.isConfigured()) {
         this._typeMessage('ai', '☁️ **云端 AI 增强未配置**\n\n当前使用本地知识引擎，已经可以回答大部分防灾问题。\n\n如需更强大的云端 AI 支持，点击 ☁️ 按钮设置代理地址。');
         return;
       }

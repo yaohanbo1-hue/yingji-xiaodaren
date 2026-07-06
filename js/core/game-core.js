@@ -21,6 +21,23 @@ const SafeStorage = {
   }
 };
 
+// localStorage 原生方法保护（原 game.js 中的逻辑，迁移至此）
+// 包装 setItem/getItem/removeItem，防止配额溢出或隐私模式抛出异常
+try {
+  var _origSetItem = localStorage.setItem.bind(localStorage);
+  var _origGetItem = localStorage.getItem.bind(localStorage);
+  var _origRemoveItem = localStorage.removeItem.bind(localStorage);
+  localStorage.setItem = function(key, value) {
+    try { return _origSetItem(key, value); } catch(e) { console.error('[Storage] setItem error:', e); }
+  };
+  localStorage.getItem = function(key) {
+    try { return _origGetItem(key); } catch(e) { return null; }
+  };
+  localStorage.removeItem = function(key) {
+    try { return _origRemoveItem(key); } catch(e) { return null; }
+  };
+} catch(e) {}
+
 // GameRegistry — 模块注册和健康检查
 const GameRegistry = {
   _modules: {},
