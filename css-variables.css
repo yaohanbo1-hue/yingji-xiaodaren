@@ -288,4 +288,58 @@
   /* --glass-highlight: var(--glass-highlight, rgba(255, 255, 255, 0.15)); */
 }
 
+/* ============================================================================
+ * 灾害语义色 + 语义完善（v1.3.4 新增）
+ * ----------------------------------------------------------------------------
+ * 目的：为 12 类自然灾害提供统一、辨识度高的主题色，供情景模拟、灾害百科、
+ *       真实案例、菜单灾害分类等模块使用，避免各处硬编码不一致。
+ * 仅新增变量，不修改任何已有变量，确保向后兼容、零回归风险。
+ * ============================================================================ */
+
+:root {
+  /* ---------- 12 类灾害语义色（主色 + RGB 变量）---------- */
+  --color-disaster-earthquake: #FF7A59; --color-disaster-earthquake-rgb: 255, 122, 89;   /* 地震 */
+  --color-disaster-flood:      #3DA5F4; --color-disaster-flood-rgb: 61, 165, 244;        /* 洪水 */
+  --color-disaster-fire:       #FF5252; --color-disaster-fire-rgb: 255, 82, 82;          /* 火灾 */
+  --color-disaster-typhoon:    #2DD4BF; --color-disaster-typhoon-rgb: 45, 212, 191;      /* 台风 */
+  --color-disaster-tsunami:    #1E88E5; --color-disaster-tsunami-rgb: 30, 136, 229;      /* 海啸 */
+  --color-disaster-landslide:  #C3925B; --color-disaster-landslide-rgb: 195, 146, 91;    /* 滑坡 */
+  --color-disaster-tornado:    #B388FF; --color-disaster-tornado-rgb: 179, 136, 255;     /* 龙卷风 */
+  --color-disaster-drought:    #F4C430; --color-disaster-drought-rgb: 244, 196, 48;      /* 干旱 */
+  --color-disaster-lightning:  #FFD93D; --color-disaster-lightning-rgb: 255, 217, 61;    /* 雷电 */
+  --color-disaster-avalanche:  #DCE6F0; --color-disaster-avalanche-rgb: 220, 230, 240;   /* 雪崩 */
+  --color-disaster-volcano:    #FF6B35; --color-disaster-volcano-rgb: 255, 107, 53;       /* 火山 */
+  --color-disaster-hail:       #7FD3FF; --color-disaster-hail-rgb: 127, 211, 255;        /* 冰雹 */
+
+  /* 灾害色 → 语义角色快捷映射（按使用场景归类） */
+  --disaster-color-soft: rgba(255, 255, 255, 0.06);      /* 灾害卡片软底 */
+  --disaster-border-soft: rgba(255, 255, 255, 0.1);      /* 灾害卡片软边框 */
+
+  /* ---------- 语义完善 ---------- */
+  --color-focus-ring: rgba(0, 212, 255, 0.55);           /* 统一焦点环色 */
+  --color-on-primary: #06121A;                           /* 主色按钮上的文字色 */
+  --color-on-accent: #0F1117;                            /* 强调色按钮上的文字色 */
+
+  /* 表面层级（比纯白透明更可控，便于一致性） */
+  --surface-1: rgba(255, 255, 255, 0.05);
+  --surface-2: rgba(255, 255, 255, 0.07);
+  --surface-3: rgba(255, 255, 255, 0.09);
+  --surface-hover: rgba(255, 255, 255, 0.1);
+
+  /* ---------- 渐变补充 ---------- */
+  --gradient-cta: linear-gradient(135deg, #00d4ff 0%, #5BA4CF 50%, #a855f7 100%);
+  --gradient-success: linear-gradient(135deg, #00e676 0%, #6BC47A 100%);
+  --gradient-danger: linear-gradient(135deg, #ff5252 0%, #ff1744 100%);
+  --gradient-warm: linear-gradient(135deg, #FF7A59 0%, #FFD93D 100%);
+
+  /* ---------- 焦点/选中阴影 ---------- */
+  --shadow-focus: 0 0 0 3px var(--color-focus-ring), 0 0 20px rgba(0, 212, 255, 0.18);
+
+  /* ---------- 排版可读性增强 ---------- */
+  --reading-line-height: 1.75;          /* 长文本正文行高 */
+  --reading-letter-spacing: 0.01em;     /* 中文正文轻微字间距，提升可读性 */
+  --reading-paragraph-gap: 0.85em;      /* 段落间距 */
+  --reading-max-width: 42em;            /* 长文本最佳阅读宽度 */
+}
+
 
