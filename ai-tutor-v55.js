@@ -41,6 +41,10 @@ const AITutorEngine = {
     this.analyzeMastery();
     this.generateRecommendations();
     this.renderDashboard();
+    // 滚动到页面顶部，确保 AI 导师内容可见
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
     setTimeout(() => this.startConversation(), 300);
   },
   
