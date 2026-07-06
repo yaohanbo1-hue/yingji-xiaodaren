@@ -773,10 +773,7 @@ const AITutorEngine = {
     
     const api = window.DeepSeekAPI;
     const currentKey = api ? api.getApiKey() : '';
-    const currentProxy = api ? api.getProxyUrl() : '';
-    const hasKey = currentKey && currentKey.length > 10;
-    const hasProxy = currentProxy && currentProxy.length > 10;
-    const configured = hasKey || hasProxy;
+    const configured = currentKey && currentKey.length > 10;
     
     dialog.innerHTML = `
       <h3 style="margin:0 0 12px;color:#00d4ff;font-size:18px;">🤖 DeepSeek AI 设置</h3>
@@ -785,19 +782,10 @@ const AITutorEngine = {
         前往 <a href="https://platform.deepseek.com" target="_blank" style="color:#00d4ff;">DeepSeek 开放平台</a> 注册，免费送 500 万 tokens
       </p>
       
-      <label style="display:block;color:#8899aa;font-size:12px;margin:0 0 6px;">方式一：API Key（推荐）</label>
+      <label style="display:block;color:#8899aa;font-size:12px;margin:0 0 6px;">DeepSeek API Key</label>
       <input type="password" id="newApiKeyInput" placeholder="sk-xxxxxxxxxxxx" 
         style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,212,255,0.2);border-radius:8px;color:#fff;font-size:14px;margin:0 0 12px;box-sizing:border-box;"
-        value="${escapeHtml(hasKey ? currentKey : '')}">
-      
-      <label style="display:block;color:#8899aa;font-size:12px;margin:0 0 6px;">方式二：代理地址（CORS 受限时用）</label>
-      <input type="text" id="newProxyInput" placeholder="https://your-worker.workers.dev" 
-        style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,212,255,0.2);border-radius:8px;color:#fff;font-size:14px;margin:0 0 12px;box-sizing:border-box;"
-        value="${escapeHtml(hasProxy ? currentProxy : '')}">
-      
-      <p style="color:#666;font-size:11px;margin:0 0 12px;line-height:1.4;">
-        💡 浏览器直连 DeepSeek API 可能被 CORS 拦截。如遇此问题，请使用方式二部署一个 Cloudflare Worker 代理（详见 docs/cloudflare-worker.md）。
-      </p>
+        value="${escapeHtml(configured ? currentKey : '')}">
       
       <div style="display:flex;gap:8px;justify-content:flex-end;">
         ${configured ? '<button onclick="AITutorEngine.clearApiKey()" style="padding:8px 16px;background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.3);border-radius:8px;color:#EF4444;cursor:pointer;font-size:14px;">清除</button>' : ''}
@@ -813,20 +801,16 @@ const AITutorEngine = {
   
   saveApiKey() {
     const keyInput = document.getElementById('newApiKeyInput');
-    const proxyInput = document.getElementById('newProxyInput');
-    if (!keyInput && !proxyInput) return;
+    if (!keyInput) return;
     
-    const key = keyInput ? keyInput.value.trim() : '';
-    const proxy = proxyInput ? proxyInput.value.trim() : '';
-    
-    if (!key && !proxy) {
+    const key = keyInput.value.trim();
+    if (!key) {
       this.clearApiKey();
       return;
     }
     
     if (window.DeepSeekAPI) {
-      if (key) window.DeepSeekAPI.setApiKey(key);
-      if (proxy) window.DeepSeekAPI.setProxyUrl(proxy);
+      window.DeepSeekAPI.setApiKey(key);
       this._typeMessage('ai', '✅ **DeepSeek AI 已配置成功！**\n\n现在你可以问我任何防灾问题了。试试：\n• "地震来了怎么办？"\n• "洪水和台风有什么区别？"\n• "推荐我练习什么？"');
     }
     
