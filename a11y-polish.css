@@ -1,0 +1,70 @@
+/* ============================================================
+ * 应急小达人 — 无障碍与体验打磨 (v1.3.5)
+ *  - prefers-reduced-motion：尊重系统“减少动态效果”设置
+ *  - :focus-visible：键盘可达性焦点环
+ *  - 设置页 AI 模型选择器样式
+ * ============================================================ */
+
+/* ---------- 1. 减少动态效果（无障碍 + 性能） ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- 2. 键盘焦点可见性 ---------- */
+:focus-visible {
+  outline: 3px solid #3B82F6;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+button:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:focus-visible,
+input:focus-visible,
+select:focus-visible,
+.settings-card:focus-visible {
+  outline: 3px solid #3B82F6;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
+}
+/* 鼠标点击不产生焦点环，仅键盘导航时显示 */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ---------- 3. AI 模型选择器 ---------- */
+.settings-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: rgba(15, 23, 42, 0.85);
+  color: #E2E8F0;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  border-radius: 10px;
+  padding: 8px 30px 8px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  max-width: 160px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' stroke='%2394A3B8' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.settings-select:hover {
+  border-color: rgba(96, 165, 250, 0.7);
+}
+.settings-select:focus-visible {
+  border-color: #3B82F6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
+}
+.settings-select option {
+  background: #0F172A;
+  color: #E2E8F0;
+}

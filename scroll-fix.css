@@ -123,3 +123,18 @@
 #page-achievements > .preview-header {
   display: block !important;
 }
+
+/* ===== I. 渲染性能：跳过非激活页面的布局/绘制 =====
+   非激活页面使用 visibility:hidden; position:fixed; inset:0（非 display:none），
+   因此 50+ 个满屏页面仍参与布局与绘制（仅不可见），造成显著的首屏布局成本。
+   content-visibility:auto 让浏览器跳过其布局/绘制，contain-intrinsic-size 提供占位尺寸
+   避免页面切换时布局抖动。激活页 (.active) 自动恢复完整渲染。 */
+.page:not(.active) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 100vh;
+}
+
+/* 激活页布局/绘制隔离：内容变动不影响其它页面，提升交互流畅度 */
+.page.active {
+  contain: layout style;
+}

@@ -95,12 +95,34 @@ function animate() {
   frame++;
   ctx.clearRect(0, 0, W, H);
   ctx.globalAlpha = 1;
-  
+
   for (const p of particles) { p.update(); }
   drawLines();
   for (const p of particles) { p.draw(); }
-  
+
+  if (_bgRunning) requestAnimationFrame(animate);
+}
+
+// v1.3.5：尊重“减少动态效果”系统设置；标签页隐藏时暂停动画以降低 CPU/电量开销
+const _reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let _bgRunning = false;
+
+if (_reduceMotion) {
+  // 仅绘制一帧静态背景，不进入持续动画循环
+  for (const p of particles) { p.update(); }
+  drawLines();
+  for (const p of particles) { p.draw(); }
+} else {
+  _bgRunning = true;
   requestAnimationFrame(animate);
 }
-animate();
+
+document.addEventListener('visibilitychange', function() {
+  if (document.hidden) {
+    _bgRunning = false;
+  } else if (!_reduceMotion && !_bgRunning) {
+    _bgRunning = true;
+    requestAnimationFrame(animate);
+  }
+});
 }

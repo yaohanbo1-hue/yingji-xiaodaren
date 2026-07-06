@@ -45,36 +45,12 @@
 <!-- 关键 CSS — 阻塞渲染但体积小，确保首屏正确 -->
 <link rel="stylesheet" href="critical.css?v=86">
 
-<!-- CSS 变量系统 — 阻塞渲染，体积小，为后续样式提供变量基础 -->
-<link rel="stylesheet" href="css-variables.css?v=86">
+<!-- 非关键样式打包（v1.3.5）：css-variables + all-styles + settings/optimizer/animation + 交互/视觉/滚动修复 合并压缩为单文件 -->
+<link rel="stylesheet" href="css/all.min.css?v=90">
 
-<!-- 预加载最关键资源（限制在6个以内，避免带宽竞争） -->
-<link rel="preload" href="all-styles-v55.css?v=86" as="style">
-<link rel="preload" href="js/core/utils.js?v=86" as="script" fetchpriority="high">
-<link rel="preload" href="js/core/game-core.js?v=86" as="script" fetchpriority="high">
-<link rel="preload" href="cards.js?v=86" as="script" fetchpriority="high">
-<link rel="preload" href="scenarios.js?v=86" as="script" fetchpriority="high">
-<link rel="preload" href="game-engines.js?v=86" as="script" fetchpriority="high">
-
-<!-- 非关键 CSS — 异步加载，不阻塞渲染 -->
-<link rel="stylesheet" href="all-styles-v55.css?v=86">
-
-<!-- settings.css 保留独立加载 -->
-<link rel="stylesheet" href="settings.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="settings.css?v=86"></noscript>
-<link rel="stylesheet" href="optimizer-mobile.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="optimizer-mobile.css?v=86"></noscript>
-
-<!-- 动画性能优化 — 延迟加载，非阻塞渲染 -->
-<link rel="stylesheet" href="animation-optimize.css?v=86" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="animation-optimize.css?v=86"></noscript>
-
-<!-- 交互体验修复 — 触摸/滚动/按钮状态 -->
-<link rel="stylesheet" href="fix-interaction.css?v=1">
-<link rel="stylesheet" href="ai-float.css?v=86">
-<link rel="stylesheet" href="visual-enhance.css?v=88">
-<!-- 核心滚动修复：修复所有页面无法滑动/内容截断的系统性 bug -->
-<link rel="stylesheet" href="scroll-fix.css?v=88">
+<!-- 预加载最关键资源：打包后的 JS 与 CSS（v1.3.5） -->
+<link rel="preload" href="css/all.min.css?v=90" as="style">
+<link rel="preload" href="js/app.min.js?v=90" as="script" fetchpriority="high">
 
 <!-- 🔧 关键 Bug 修复 — 内联 CSS 确保始终生效（滑动/点击/遮挡问题） -->
 <style>
@@ -954,6 +930,28 @@
           </div>
         </div>
       </div>
+      <!-- AI 导师 -->
+      <div class="settings-section">
+        <div class="settings-section-title">
+          <span class="settings-section-icon">🤖</span>AI 导师
+        </div>
+        <div class="settings-card">
+          <div class="settings-card-left">
+            <div class="settings-card-icon" style="background:linear-gradient(135deg,#3B82F6,#8B5CF6)">🧠</div>
+            <div class="settings-card-info">
+              <div class="settings-card-name">推理模型</div>
+              <div class="settings-card-desc" id="aiModelDesc">V3 标准模型 · 快速稳定</div>
+            </div>
+          </div>
+          <div class="settings-card-right">
+            <select id="aiModelSelect" class="settings-select" aria-label="AI 导师推理模型"
+              onchange="(function(s){var v=s.value;try{localStorage.setItem('aitutor_model',v);}catch(e){}if(window.DeepSeekAPI&&window.DeepSeekAPI.setModel){window.DeepSeekAPI.setModel(v);}var d=document.getElementById('aiModelDesc');if(d)d.textContent=v==='deepseek-reasoner'?'R1 推理模型 · 更强逻辑，响应稍慢':'V3 标准模型 · 快速稳定';})(this)">
+              <option value="deepseek-chat">V3 标准（快速）</option>
+              <option value="deepseek-reasoner">R1 推理（更强）</option>
+            </select>
+          </div>
+        </div>
+      </div>
       <!-- 数据 -->
       <div class="settings-section">
         <div class="settings-section-title">
@@ -1803,66 +1801,10 @@
 <!-- bgm.js removed: bgm-enhanced.js provides compatibility layer -->
 
 
-<!-- ===== 核心基础架构（优化模块） ===== -->
-<script src="js/core/optimized/ErrorBoundary.js?v=86" defer></script>
-<script src="js/core/optimized/DOMCache.js?v=86" defer></script>
-<script src="js/core/optimized/EventDelegate.js?v=86" defer></script>
-
-<!-- ===== 核心脚本：按依赖顺序加载 ===== -->
-<script src="js/core/utils.js?v=86" defer></script>
-<script src="js/core/utils-enhanced.js?v=86" defer></script>
-<script src="js/core/game-core.js?v=86" defer></script>
-<script src="cards.js?v=86" defer></script>
-<script src="scenarios.js?v=86" defer></script>
-<script src="kit_data.js?v=86" defer></script>
-<script src="game-engines.js?v=86" defer></script>
-<script src="js/core/performance-patch.js?v=86" defer></script>
-<!-- game.js 已移除：所有引擎已由 game-engines.js 提供，game.js 的 const Modal 重复声明会导致 SyntaxError -->
-<!-- localStorage 保护已由 game-core.js 的 SafeStorage 提供 -->
-
-<!-- ===== 加载与交互脚本 ===== -->
-<script src="loading.js?v=86" defer></script>
-<script src="menu-manager.js?v=86" defer></script>
-
-<!-- ===== 视觉特效脚本 ===== -->
-<script src="juice.js?v=86" defer></script>
-<script src="visual-fx.js?v=86" defer></script>
-<script src="v10-interactions.js?v=86" defer></script>
-<script src="menu-enhance.js?v=86" defer></script>
-
-<!-- ===== 功能模块脚本 ===== -->
-<script src="share.js?v=86" defer></script>
-<script src="i18n.js?v=86" defer></script>
-<script src="bg-themes.js?v=86" defer></script>
-<script src="liquid-glass.js?v=86" defer></script>
-<script src="optimizer-mobile.js?v=86" defer></script>
-
-<!-- ===== 内容/功能模块脚本（v64 修复：恢复被误删的脚本加载）===== -->
-<script src="encyclopedia_extra.js?v=86" defer></script>
-<script src="encyclopedia_final.js?v=86" defer></script>
-<script src="bg-premium.js?v=86" defer></script>
-<script src="ui-polish.js?v=86" defer></script>
-<script src="tilt3d.js?v=86" defer></script>
-<script src="sfx.js?v=88" defer></script>
-<script src="bgm-enhanced.js?v=86" defer></script>
-<script src="audio-integration.js?v=86" defer></script>
-<script src="ai-tutor-llm-v55.js?v=86" defer></script>
-<script src="ai-tutor-v55.js?v=86" defer></script>
-<script src="ai-float-v55.js?v=86" defer></script>
-<script src="certification.js?v=86" defer></script>
-<script src="cert-enhance.js?v=86" defer></script>
-<script src="disaster-sim.js?v=86" defer></script>
-<script src="disaster-particles.js?v=86" defer></script>
-<script src="real-cases.js?v=86" defer></script>
-<script src="wrong-book.js?v=86" defer></script>
-<script src="report.js?v=86" defer></script>
-<script src="voice.js?v=86" defer></script>
-<script src="guide-enhance.js?v=86" defer></script>
-<script src="accessibility.js?v=86" defer></script>
-<script src="performance.js?v=86" defer></script>
-
-<!-- ===== 补丁脚本（由 patch-v75.js 处理） ===== -->
-<script src="patch-v75.js?v=86" defer></script>
+<!-- ===== 核心脚本打包（v1.3.5）：原 45 个 defer 脚本按依赖顺序合并压缩为单个文件 ===== -->
+<!-- 说明：game.js 已在早期移除（const Modal 重复声明冲突），所有引擎由 game-engines.js 提供；localStorage 保护由 SafeStorage 提供 -->
+<!-- 加载顺序与原 45 个独立 <script> 完全一致（共享全局作用域），保证零语义变更 -->
+<script src="js/app.min.js?v=90" defer></script>
 
 <!-- ===== Service Worker 注册 ===== -->
 <script>
@@ -2039,6 +1981,26 @@
     document.addEventListener('DOMContentLoaded', updateVersionDisplay);
   } else {
     updateVersionDisplay();
+  }
+})();
+</script>
+
+<!-- AI 导师推理模型选择器：以 localStorage 初始化默认值 -->
+<script>
+(function() {
+  function initAIModelSelect() {
+    var sel = document.getElementById('aiModelSelect');
+    if (!sel) return;
+    var cur = 'deepseek-chat';
+    try { cur = localStorage.getItem('aitutor_model') || 'deepseek-chat'; } catch (e) {}
+    sel.value = cur;
+    var d = document.getElementById('aiModelDesc');
+    if (d) d.textContent = (cur === 'deepseek-reasoner') ? 'R1 推理模型 · 更强逻辑，响应稍慢' : 'V3 标准模型 · 快速稳定';
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAIModelSelect);
+  } else {
+    initAIModelSelect();
   }
 })();
 </script>
