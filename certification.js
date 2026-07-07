@@ -100,7 +100,8 @@ const CertificationEngine = {
   checkProgress() {
     var aiData = {};
     try {
-      aiData = JSON.parse(localStorage.getItem('aiTutorData') || '{}');
+      var _raw = localStorage.getItem('aiTutorData');
+      aiData = (_raw && _raw !== 'null') ? JSON.parse(_raw) : {};
     } catch(e) { console.warn('[Cert] data error', e); aiData = {}; }
     const mastery = aiData.mastery || {};
     const history = aiData.quizHistory || [];
@@ -168,7 +169,8 @@ const CertificationEngine = {
     
     var aiData = {};
     try {
-      aiData = JSON.parse(localStorage.getItem('aiTutorData') || '{}');
+      var _raw2 = localStorage.getItem('aiTutorData');
+      aiData = (_raw2 && _raw2 !== 'null') ? JSON.parse(_raw2) : {};
     } catch(e) { console.warn('[Cert] data error', e); aiData = {}; }
     const history = aiData.quizHistory || [];
     const mastery = aiData.mastery || {};
