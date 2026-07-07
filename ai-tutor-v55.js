@@ -70,17 +70,22 @@ const AITutorEngine = {
   },
   
   loadData() {
-    const saved = localStorage.getItem('aiTutorData');
-    if (saved) {
+    let saved = null;
+    try { saved = localStorage.getItem('aiTutorData'); } catch (e) { saved = null; }
+    if (saved && saved !== 'null') {
       try {
         this._data = JSON.parse(saved);
       } catch (e) {
-        this._data = this._getEmptyData();
+        this._data = null;
       }
     } else {
+      this._data = null;
+    }
+    // 防御：localStorage 可能被写入字符串 "null"，JSON.parse 会得到 null
+    if (!this._data || typeof this._data !== 'object') {
       this._data = this._getEmptyData();
     }
-    
+
     if (!this._data.quizHistory) this._data.quizHistory = [];
     if (!this._data.mastery) this._data.mastery = {};
     if (!this._data.recommendations) this._data.recommendations = [];
@@ -107,7 +112,12 @@ const AITutorEngine = {
   // ===== 记录答题 =====
   recordAnswer(cardId, correct, disaster) {
     if (!cardId || !disaster) return;
-    
+    // 防御：若 AI 导师页尚未打开过，_data 可能仍为 null，先自愈
+    if (!this._data || typeof this._data !== 'object') {
+      this._data = this._getEmptyData();
+    }
+    if (!this._data.quizHistory) this._data.quizHistory = [];
+
     this._data.quizHistory.push({
       cardId, correct,
       timestamp: Date.now(),
