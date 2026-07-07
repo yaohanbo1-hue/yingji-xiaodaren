@@ -46,11 +46,11 @@
 <link rel="stylesheet" href="critical.css?v=86">
 
 <!-- 非关键样式打包（v1.3.5）：css-variables + all-styles + settings/optimizer/animation + 交互/视觉/滚动修复 合并压缩为单文件 -->
-<link rel="stylesheet" href="css/all.min.css?v=107">
+<link rel="stylesheet" href="css/all.min.css?v=108">
 
 <!-- 预加载最关键资源：打包后的 JS 与 CSS（v1.3.5） -->
-<link rel="preload" href="css/all.min.css?v=107" as="style">
-<link rel="preload" href="js/app.min.js?v=107" as="script" fetchpriority="high">
+<link rel="preload" href="css/all.min.css?v=108" as="style">
+<link rel="preload" href="js/app.min.js?v=108" as="script" fetchpriority="high">
 
 <!-- 🔧 关键 Bug 修复 — 内联 CSS 确保始终生效（滑动/点击/遮挡问题） -->
 <style>
@@ -1232,36 +1232,79 @@
       <div class="mode-label" style="color:#FFD700;font-size:18px;font-weight:800;text-shadow:0 0 12px rgba(255,215,0,0.4);">⚔️ 闯关挑战</div>
       <div style="font-size:13px;color:rgba(255,255,255,0.5);">选择挑战模式 · 击败怪兽</div>
     </div>
-    <div class="feature-list" style="padding:20px;max-width:480px;margin:0 auto;">
-      <div tabindex="0" role="button" class="feature-item" onclick="BattleEngine.init()" style="cursor:pointer;border-color:rgba(255,215,0,0.3);">
-        <span class="feature-icon" style="font-size:36px;">👾</span>
-        <div class="feature-text"><h4>防灾大擂台</h4><p>回合制打怪兽！答题就是攻击！</p></div>
-        <span class="feature-status" style="background:linear-gradient(135deg,#ffd700,#ff6b00);color:#000;">🔥 推荐</span>
-      </div>
-      <div tabindex="0" role="button" class="feature-item" onclick="PageManager.navigate('free')" style="cursor:pointer;">
-        <span class="feature-icon" style="font-size:36px;">🎯</span>
-        <div class="feature-text"><h4>自由模式</h4><p>自选灾害类型，无限练习</p></div>
-        <span class="feature-status feature-ready">🆓 自由</span>
-      </div>
-      <div tabindex="0" role="button" class="feature-item" onclick="PageManager.navigate('speed')" style="cursor:pointer;">
-        <span class="feature-icon" style="font-size:36px;">⚡</span>
-        <div class="feature-text"><h4>速答挑战</h4><p>10题限时竞答，挑战手速</p></div>
-        <span class="feature-status feature-ready">🆓 自由</span>
-      </div>
-      <div tabindex="0" role="button" class="feature-item" onclick="PageManager.navigate('pk')" style="cursor:pointer;">
-        <span class="feature-icon" style="font-size:36px;">👥</span>
-        <div class="feature-text"><h4>双人PK</h4><p>邀请好友，同台竞技</p></div>
-        <span class="feature-status" style="background:linear-gradient(135deg,#a78bfa,#7c3aed);color:#fff;">👥 对战</span>
-      </div>
-      <div tabindex="0" role="button" class="feature-item" onclick="PageManager.navigate('survival')" style="cursor:pointer;">
-        <span class="feature-icon" style="font-size:36px;">♾️</span>
-        <div class="feature-text"><h4>生存挑战</h4><p>无限答题，看你能撑多久</p></div>
-        <span class="feature-status" style="background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;">💀 极限</span>
-      </div>
-      <div tabindex="0" role="button" class="feature-item" onclick="PageManager.navigate('bossrush')" style="cursor:pointer;">
-        <span class="feature-icon" style="font-size:36px;">💀</span>
-        <div class="feature-text"><h4>Boss Rush</h4><p>连续击败Boss，挑战极限</p></div>
-        <span class="feature-status" style="background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;">💀 极限</span>
+    <style>
+.bl-wrap{max-width:540px;margin:0 auto;padding:12px 16px 40px;}
+.bl-grid{display:flex;flex-direction:column;gap:14px;}
+.bl-card{position:relative;display:flex;align-items:center;gap:16px;padding:18px 18px 18px 20px;border-radius:18px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);cursor:pointer;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;}
+.bl-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;border-radius:2px 0 0 2px;background:linear-gradient(180deg,#fbbf24,#f59e0b);}
+.bl-card[data-bl="battle"]::before{background:linear-gradient(180deg,#fbbf24,#ef4444);}
+.bl-card[data-bl="free"]::before{background:linear-gradient(180deg,#34d399,#22c55e);}
+.bl-card[data-bl="speed"]::before{background:linear-gradient(180deg,#38bdf8,#06b6d4);}
+.bl-card[data-bl="pk"]::before{background:linear-gradient(180deg,#a78bfa,#8b5cf6);}
+.bl-card[data-bl="survival"]::before,.bl-card[data-bl="boss"]::before{background:linear-gradient(180deg,#ef4444,#dc2626);}
+.bl-card:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 14px 32px rgba(0,0,0,0.35);border-color:rgba(255,255,255,0.28);}
+.bl-icon{flex:0 0 auto;width:56px;height:56px;display:flex;align-items:center;justify-content:center;font-size:30px;border-radius:16px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.08);}
+.bl-body{flex:1 1 auto;min-width:0;}
+.bl-name{font-size:16px;font-weight:700;color:#fff;margin:0 0 4px;display:flex;align-items:center;gap:8px;}
+.bl-tag{font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;color:#000;line-height:1.6;}
+.bl-tag-hot{background:linear-gradient(135deg,#ffd700,#ff6b00);}
+.bl-tag-free{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;}
+.bl-tag-pvp{background:linear-gradient(135deg,#a78bfa,#7c3aed);color:#fff;}
+.bl-tag-hard{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;}
+.bl-desc{font-size:13px;color:rgba(203,213,225,0.65);margin:0;line-height:1.45;}
+.bl-go{flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.10);color:rgba(148,163,184,0.6);font-size:20px;transition:all .25s ease;}
+.bl-card:hover .bl-go{background:rgba(255,255,255,0.22);color:#fff;transform:translateX(3px);}
+    </style>
+    <div class="bl-wrap">
+      <div class="bl-grid">
+        <div class="bl-card" data-bl="battle" tabindex="0" role="button" onclick="BattleEngine.init()">
+          <div class="bl-icon">👾</div>
+          <div class="bl-body">
+            <div class="bl-name">防灾大擂台<span class="bl-tag bl-tag-hot">🔥 推荐</span></div>
+            <p class="bl-desc">回合制打怪兽！答题就是攻击</p>
+          </div>
+          <div class="bl-go">›</div>
+        </div>
+        <div class="bl-card" data-bl="free" tabindex="0" role="button" onclick="PageManager.navigate('free')">
+          <div class="bl-icon">🎯</div>
+          <div class="bl-body">
+            <div class="bl-name">自由模式<span class="bl-tag bl-tag-free">🆓 免费</span></div>
+            <p class="bl-desc">自选灾害类型，无限练习</p>
+          </div>
+          <div class="bl-go">›</div>
+        </div>
+        <div class="bl-card" data-bl="speed" tabindex="0" role="button" onclick="PageManager.navigate('speed')">
+          <div class="bl-icon">⚡</div>
+          <div class="bl-body">
+            <div class="bl-name">速答挑战<span class="bl-tag bl-tag-free">🆓 免费</span></div>
+            <p class="bl-desc">10题限时竞答，挑战手速</p>
+          </div>
+          <div class="bl-go">›</div>
+        </div>
+        <div class="bl-card" data-bl="pk" tabindex="0" role="button" onclick="PageManager.navigate('pk')">
+          <div class="bl-icon">👥</div>
+          <div class="bl-body">
+            <div class="bl-name">双人PK<span class="bl-tag bl-tag-pvp">👥 对战</span></div>
+            <p class="bl-desc">邀请好友，同台竞技</p>
+          </div>
+          <div class="bl-go">›</div>
+        </div>
+        <div class="bl-card" data-bl="survival" tabindex="0" role="button" onclick="PageManager.navigate('survival')">
+          <div class="bl-icon">♾️</div>
+          <div class="bl-body">
+            <div class="bl-name">生存挑战<span class="bl-tag bl-tag-hard">💀 极限</span></div>
+            <p class="bl-desc">无限答题，看你能撑多久</p>
+          </div>
+          <div class="bl-go">›</div>
+        </div>
+        <div class="bl-card" data-bl="boss" tabindex="0" role="button" onclick="PageManager.navigate('bossrush')">
+          <div class="bl-icon">💀</div>
+          <div class="bl-body">
+            <div class="bl-name">Boss Rush<span class="bl-tag bl-tag-hard">💀 极限</span></div>
+            <p class="bl-desc">连续击败Boss，挑战极限</p>
+          </div>
+          <div class="bl-go">›</div>
+        </div>
       </div>
     </div>
   </div>
@@ -1942,7 +1985,7 @@
 <!-- ===== 核心脚本打包（v1.3.5）：原 45 个 defer 脚本按依赖顺序合并压缩为单个文件 ===== -->
 <!-- 说明：game.js 已在早期移除（const Modal 重复声明冲突），所有引擎由 game-engines.js 提供；localStorage 保护由 SafeStorage 提供 -->
 <!-- 加载顺序与原 45 个独立 <script> 完全一致（共享全局作用域），保证零语义变更 -->
-<script src="js/app.min.js?v=107" defer></script>
+<script src="js/app.min.js?v=108" defer></script>
 
 <!-- ===== Service Worker 注册（含旧缓存强制清除）===== -->
 <script>
@@ -1953,7 +1996,7 @@
       var NEED_CACHE_BUST = true; // 本次更新需要强制刷新所有缓存
       if (NEED_CACHE_BUST) {
         caches.keys().then(function(names) {
-          return Promise.all(names.filter(function(n){ return n.indexOf('yingji-xiaodaren') >= 0 && n !== 'yingji-xiaodaren-v107'; }).map(function(n){
+          return Promise.all(names.filter(function(n){ return n.indexOf('yingji-xiaodaren') >= 0 && n !== 'yingji-xiaodaren-v108'; }).map(function(n){
             console.log('[SW] 删除旧缓存:', n); return caches.delete(n);
           }));
         }).then(function(){
@@ -1969,7 +2012,7 @@
       }
 
       function registerNewSW() {
-        navigator.serviceWorker.register('sw-v55.js?v=107')
+        navigator.serviceWorker.register('sw-v55.js?v=108')
           .then(function(reg) {
             console.log('[SW] 注册成功:', reg.scope);
             reg.addEventListener('updatefound', function() {
