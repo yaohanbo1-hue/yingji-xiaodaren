@@ -25,13 +25,28 @@
  * ===========================================================================
  */
 
-/* ===== A. 外层容器：强制视口高度，禁止自身溢出 ===== */
+/* ===== A. 外层容器：固定为视口尺寸的唯一滚动容器 =====
+ * 修复回归：原先 position:relative + height:100vh，但页面盒模型为
+ * content-box，100vh 仅算内容高、padding 叠加在外 -> 页面实际高度 > 视口，
+ * 且因 relative 留在文档流中 -> document 也变成可滚动 -> 出现「页面内部滚动」
+ * 与「文档滚动」两个竞争容器，滚轮/触摸实际滚动了 document，表现为上下滑动异常。
+ * 现在改为 position:fixed; inset:0; box-sizing:border-box：页面脱离文档流、
+ * 精确等于视口（padding 计入高度），成为唯一滚动容器，document 不再可滚。 */
+/* 清除 UA 默认 body margin(8px)，否则 document 仍会因 16px 余量而可滚动 */
+body { margin: 0 !important; }
+html { margin: 0 !important; }
 .page.active {
-  height: 100vh !important;
-  max-height: 100vh !important;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
   min-height: 0 !important;           /* 防止 flex 子项撑开父级 */
-  overflow: hidden !important;       /* 外层不滚，交给内层 */
-  position: relative !important;     /* 相对定位，作为内部绝对定位元素的参考 */
+  box-sizing: border-box !important;  /* 关键：padding 计入 100% 高度，页面不超出视口 */
+  overflow-y: auto !important;        /* 页面自身即为滚动容器 */
+  overflow-x: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior-y: contain !important;
   display: flex !important;
   flex-direction: column !important;
 }
@@ -71,11 +86,11 @@
   overflow: visible !important;              /* grid 本身不滚，由父 page-content 滚 */
 }
 
-/* ===== E. 安全区域适配（刘海屏/底部指示器）===== */
+/* ===== E. 安全区域适配（刘海屏/底部指示器）=====
+ * 页面已 position:fixed; inset:0（精确等于视口），此处仅补顶部安全区内边距，
+ * 不再改写 height（避免再次撑出视口）。 */
 @supports (padding: env(safe-area-inset-top)) {
   .page.active {
-    height: calc(100vh - env(safe-area-inset-top)) !important;
-    max-height: calc(100vh - env(safe-area-inset-top)) !important;
     padding-top: env(safe-area-inset-top) !important;
   }
 }
