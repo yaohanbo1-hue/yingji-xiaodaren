@@ -3499,6 +3499,26 @@ body {
 .tip-text{font-size:13px;color:rgba(148,163,184,0.6);margin-top:8px;padding-top:8px;border-top:1px solid rgba(34,197,94,0.15);}
 .hidden{display:none !important;}
 
+/* ===== 记忆翻牌 - 玻璃拟态 3D 翻牌 ===== */
+#memoryGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:440px;margin:0 auto;padding:8px 0;perspective:1000px;}
+.memory-card{position:relative;width:100%;aspect-ratio:3/4;cursor:pointer;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1);}
+.memory-card.flipped{transform:rotateY(180deg);}
+.memory-card.matched{transform:rotateY(180deg);pointer-events:none;}
+.memory-card-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;border-radius:16px;overflow:hidden;}
+.memory-card-front,.memory-card-back{position:absolute;top:0;left:0;width:100%;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;align-items:center;justify-content:center;border-radius:16px;border:1.5px solid rgba(255,255,255,.12);}
+.memory-card-front{background:linear-gradient(145deg,rgba(99,102,241,.20),rgba(139,92,246,.10));border-color:rgba(139,92,246,.30);box-shadow:inset 0 2px 12px rgba(99,102,241,.15),0 4px 20px rgba(0,0,0,.25);}
+.memory-card-front::before{content:'';position:absolute;top:0;left:0;right:0;height:50%;background:linear-gradient(180deg,rgba(255,255,255,.12),transparent);border-radius:16px 16px 0 0;}
+.memory-card-front::after{content:'❓';font-size:36px;filter:drop-shadow(0 2px 8px rgba(99,102,241,.5));animation:pulseQuestion 2s ease-in-out infinite;}
+@keyframes pulseQuestion{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
+.memory-card-back{background:linear-gradient(145deg,rgba(15,23,42,.85),rgba(30,41,59,.80));border-color:rgba(56,189,248,.35);box-shadow:0 6px 28px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08);transform:rotateY(180deg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+.memory-card-back::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,rgba(56,189,248,.12),transparent 60%);pointer-events:none;}
+.memory-card-back>span,.memory-card-back{font-size:42px!important;line-height:1;text-shadow:0 4px 12px rgba(0,0,0,.4);}
+/* matched glow */
+.memory-card.matched .memory-card-back{border-color:rgba(52,211,153,.5);box-shadow:0 0 24px rgba(52,211,153,.25),0 6px 28px rgba(0,0,0,.25),inset 0 0 20px rgba(52,211,153,.08);}
+/* page header enhancement */
+#page-memory-card .game-header{text-align:center;padding:20px 16px 8px;}
+#page-memory-card .mode-label{font-size:26px!important;font-weight:900;letter-spacing:2px;}
+
 /* ===== 地图节点 ===== */
 .map-node {
   box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
