@@ -5826,6 +5826,34 @@ body {
   gap: 20px;
 }
 
+/* ===== 设置页面布局 ===== */
+.settings-header {
+  text-align: center;
+  padding: 28px 20px 16px;
+}
+.settings-header-icon {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+.settings-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-primary, #fff);
+  margin: 0 0 6px;
+}
+.settings-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary, #94a3b8);
+  margin: 0;
+}
+.settings-container {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 0 16px 40px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 /* ===== 分组标题 ===== */
 .settings-section {
   animation: settingsFadeIn 0.4s ease backwards;
