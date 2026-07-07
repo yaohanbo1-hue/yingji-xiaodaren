@@ -17,6 +17,7 @@ const BGMEngineV2 = {
   _ctx: null,
   _masterGain: null,
   _currentTrack: null,
+  _pausedTrack: null,
   _playing: false,
   _volume: 0.15,
   _nodes: [],
@@ -71,7 +72,35 @@ const BGMEngineV2 = {
     });
     this._nodes = [];
   },
-  
+
+  // 页面隐藏时暂停 BGM：停止调度循环 + 挂起音频上下文（立即静音）。
+  // 记住当前曲目，待 resume() 时无缝续播。
+  pause() {
+    if (!this._ctx) return;
+    this._pausedTrack = this._currentTrack || null;
+    this._playing = false;
+    this._nodes.forEach(n => { try { n.stop(); } catch (e) {} });
+    this._nodes = [];
+    if (this._ctx.state === 'running') {
+      try { this._ctx.suspend(); } catch (e) {}
+    }
+  },
+
+  // 页面恢复可见时恢复 BGM（仅当隐藏前正在播放）。
+  resume() {
+    if (!this._ctx) return;
+    if (this._ctx.state === 'suspended') {
+      try { this._ctx.resume(); } catch (e) {}
+    }
+    if (this._pausedTrack && !this._playing) {
+      var t = this._pausedTrack;
+      this._pausedTrack = null;
+      if (t === 'menu') this.playMenu();
+      else if (t === 'battle') this.playBattle();
+      else if (t === 'scenario') this.playScenario();
+    }
+  },
+
   // 播放单个音符（带包络）
   _playNote(freq, startTime, duration, type = 'sine', volume = 0.1) {
     if (!this._ctx) return;
