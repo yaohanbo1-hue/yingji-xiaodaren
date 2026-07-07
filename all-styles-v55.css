@@ -5882,6 +5882,9 @@ body {
 
 /* ===== 设置卡片 ===== */
 .settings-card {
+  position: relative;
+  z-index: 1;
+  pointer-events: auto !important;
   display: flex;
   align-items: center;
   justify-content: space-between;

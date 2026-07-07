@@ -46,11 +46,11 @@
 <link rel="stylesheet" href="critical.css?v=86">
 
 <!-- 非关键样式打包（v1.3.5）：css-variables + all-styles + settings/optimizer/animation + 交互/视觉/滚动修复 合并压缩为单文件 -->
-<link rel="stylesheet" href="css/all.min.css?v=106">
+<link rel="stylesheet" href="css/all.min.css?v=107">
 
 <!-- 预加载最关键资源：打包后的 JS 与 CSS（v1.3.5） -->
-<link rel="preload" href="css/all.min.css?v=106" as="style">
-<link rel="preload" href="js/app.min.js?v=106" as="script" fetchpriority="high">
+<link rel="preload" href="css/all.min.css?v=107" as="style">
+<link rel="preload" href="js/app.min.js?v=107" as="script" fetchpriority="high">
 
 <!-- 🔧 关键 Bug 修复 — 内联 CSS 确保始终生效（滑动/点击/遮挡问题） -->
 <style>
@@ -1942,7 +1942,7 @@
 <!-- ===== 核心脚本打包（v1.3.5）：原 45 个 defer 脚本按依赖顺序合并压缩为单个文件 ===== -->
 <!-- 说明：game.js 已在早期移除（const Modal 重复声明冲突），所有引擎由 game-engines.js 提供；localStorage 保护由 SafeStorage 提供 -->
 <!-- 加载顺序与原 45 个独立 <script> 完全一致（共享全局作用域），保证零语义变更 -->
-<script src="js/app.min.js?v=106" defer></script>
+<script src="js/app.min.js?v=107" defer></script>
 
 <!-- ===== Service Worker 注册（含旧缓存强制清除）===== -->
 <script>
@@ -1953,7 +1953,7 @@
       var NEED_CACHE_BUST = true; // 本次更新需要强制刷新所有缓存
       if (NEED_CACHE_BUST) {
         caches.keys().then(function(names) {
-          return Promise.all(names.filter(function(n){ return n.indexOf('yingji-xiaodaren') >= 0 && n !== 'yingji-xiaodaren-v106'; }).map(function(n){
+          return Promise.all(names.filter(function(n){ return n.indexOf('yingji-xiaodaren') >= 0 && n !== 'yingji-xiaodaren-v107'; }).map(function(n){
             console.log('[SW] 删除旧缓存:', n); return caches.delete(n);
           }));
         }).then(function(){
@@ -1969,7 +1969,7 @@
       }
 
       function registerNewSW() {
-        navigator.serviceWorker.register('sw-v55.js?v=106')
+        navigator.serviceWorker.register('sw-v55.js?v=107')
           .then(function(reg) {
             console.log('[SW] 注册成功:', reg.scope);
             reg.addEventListener('updatefound', function() {
