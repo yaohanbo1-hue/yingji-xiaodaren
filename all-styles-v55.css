@@ -3525,7 +3525,8 @@ body {
 #page-stats,
 #page-leaderboard,
 #page-character,
-#page-free{padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))!important;}
+#page-free,
+#page-codex{padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))!important;}
 #aiTutorContent{padding-bottom:20px;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 
 /* ===== 地图节点 ===== */
@@ -4565,6 +4566,64 @@ body {
   margin: 0 auto !important;
 }
 
+/* ===== 图鉴筛选按钮 ===== */
+.codex-filters {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  margin-bottom: var(--space-sm, 12px) !important;
+  justify-content: center !important;
+  padding: 0 8px !important;
+}
+.codex-filter-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  padding: 7px 14px !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 20px !important;
+  background: rgba(255,255,255,0.04) !important;
+  color: rgba(255,255,255,0.55) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all 0.25s ease !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  user-select: none !important;
+  white-space: nowrap !important;
+  line-height: 1.3 !important;
+  letter-spacing: 0.2px !important;
+}
+.codex-filter-btn:hover {
+  background: rgba(255,255,255,0.1) !important;
+  color: rgba(255,255,255,0.85) !important;
+  border-color: rgba(255,255,255,0.22) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.05) inset !important;
+}
+.codex-filter-btn.active {
+  background: linear-gradient(135deg, rgba(59,130,246,0.35), rgba(139,92,246,0.30)) !important;
+  color: #fff !important;
+  border-color: rgba(99,102,241,0.5) !important;
+  box-shadow: 0 2px 12px rgba(99,102,241,0.25), 0 0 18px rgba(99,102,241,0.10) !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3) !important;
+}
+/* 按钮点击动画 */
+.codex-filter-btn:active {
+  transform: scale(0.95) !important;
+}
+
+/* ===== 图鉴卡片增强 ===== */
+#codexGrid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
+  gap: 12px !important;
+  padding: 16px !important;
+  max-width: 800px !important;
+  margin: 0 auto !important;
+}
 .codex-card {
   position: relative !important;
   display: flex !important;
@@ -4581,9 +4640,57 @@ body {
 }
 
 .codex-card:hover {
-  background: rgba(255, 255, 255, 0.06) !important;
-  border-color: rgba(59, 130, 246, 0.3) !important;
-  transform: translateY(-2px) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(99, 102, 241, 0.35) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 12px rgba(99,102,241,0.08) !important;
+}
+/* 未收集卡片 — 暗淡 + 灰色 */
+.codex-card.uncollected {
+  opacity: 0.45 !important;
+  filter: grayscale(70%) !important;
+  border-color: rgba(255,255,255,0.04) !important;
+}
+.codex-card.uncollected:hover {
+  opacity: 0.7 !important;
+  filter: grayscale(30%) !important;
+}
+/* 卡片图标 */
+.codex-card-icon {
+  font-size: 32px !important;
+  line-height: 1 !important;
+  margin-bottom: 6px !important;
+}
+/* 卡片名称 */
+.codex-card-name {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: rgba(255,255,255,0.85) !important;
+  text-align: center !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+/* 稀有度标签 */
+.codex-card-rarity {
+  font-size: 9px !important;
+  padding: 2px 8px !important;
+  border-radius: 10px !important;
+  margin-top: 4px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+.codex-card-rarity.common { background: rgba(156,163,175,0.2); color: #9ca3af; }
+.codex-card-rarity.rare { background: rgba(59,130,246,0.2); color: #60a5fa; }
+.codex-card-rarity.epic { background: rgba(168,85,247,0.2); color: #c084fc; }
+.codex-card-rarity.legendary { background: rgba(245,158,11,0.25); color: #fbbf24; }
+/* 分类标签 */
+.codex-card-category {
+  font-size: 9px !important;
+  color: rgba(255,255,255,0.35) !important;
+  margin-top: 3px !important;
 }
 
 /* ===== 成就网格 ===== */
