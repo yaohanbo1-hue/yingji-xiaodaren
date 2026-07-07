@@ -747,16 +747,19 @@ const DeepSeekAPI = {
   _proxyUrl: (function(){ try { return localStorage.getItem('deepseek_proxy_url'); } catch(e) { return ''; } })(),
   _model: (function(){ try { return localStorage.getItem('aitutor_model'); } catch(e) { return ''; } })() || 'deepseek-chat',
 
-  _systemPrompt: `你是"应急小达人"游戏的 AI 防灾导师。这是一个面向中小学生的防灾教育互动游戏，覆盖 12 种自然灾害：地震、洪涝、台风、火灾、雷电、暴雪、泥石流、干旱、山火、火山、海啸、沙尘暴。
+  _systemPrompt: `你是"应急小达人"——一款面向中小学生的防灾教育互动游戏——的专属 AI 防灾导师（角色名：防灾小卫士）。你性格友善、耐心、专业，像一位可靠的大哥哥/大姐姐。
+
+游戏覆盖 12 种自然灾害：地震、洪涝、台风、火灾、雷电、暴雪、泥石流、干旱、山火、火山、海啸、沙尘暴。
 
 你的职责：
-1. 用通俗易懂的语言回答防灾问题，适合中小学生理解
-2. 给出具体、可操作的避险建议
-3. 必要时提醒安全注意事项
-4. 回答用中文，可以使用 emoji 和 markdown 加粗（**文字**）增加可���性
-5. 如果用户问学习进度或推荐练习，可以建议他们去"开盲盒"、"闯关模式"、"限时挑战"等游戏模式
+1. 用通俗易懂、适合中小学生理解的语言讲解防灾知识
+2. 给出具体、可操作、能救命的避险与自救建议
+3. 必要时强调安全注意事项，纠正危险误区
+4. 可以出防灾选择题考用户，并给出正确答案与通俗解析
+5. 回答用中文，可适当使用 emoji 与 markdown 加粗（**文字**）增强可读性
+6. 若用户询问学习进度或练习推荐，建议其前往"开盲盒""闯关模式""限时挑战"等游戏模块
 
-保持友善、专业、简洁。每次回答控制在 200 字以内。`,
+始终保持友善、专业、简洁。常规问答控制在 200 字以内。`,
 
   // 安全控制
   _requestLock: false,
@@ -785,9 +788,9 @@ const DeepSeekAPI = {
   },
   async isReady() { return this.isConfigured(); },
 
-  // 构建请求消息
-  _buildMessages(userMessage, history) {
-    const messages = [{ role: 'system', content: this._systemPrompt }];
+  // 构建请求消息（支持临时覆盖 system 提示词，用于 AI 出题等场景）
+  _buildMessages(userMessage, history, systemPrompt) {
+    const messages = [{ role: 'system', content: systemPrompt || this._systemPrompt }];
     // 加入最近 6 轮对话历史
     const recent = (history || []).slice(-12);
     for (const h of recent) {
@@ -797,7 +800,7 @@ const DeepSeekAPI = {
     return messages;
   },
 
-  async chat(userMessage, history = []) {
+  async chat(userMessage, history = [], options = {}) {
     if (!this.isConfigured()) {
       return { error: '请先配置 DeepSeek API Key' };
     }
@@ -816,7 +819,12 @@ const DeepSeekAPI = {
     this._callCount++;
     this._lastCallTime = now;
 
-    const messages = this._buildMessages(userMessage, history);
+    const messages = this._buildMessages(userMessage, history, options && options.system);
+
+    // 通知上层：一次真实的 DeepSeek 调用即将发起（用于显示"正在调用"提示）
+    this._emitCall('start', true);
+
+    let callOk = false;
 
     try {
       const controller = new AbortController();
@@ -844,7 +852,7 @@ const DeepSeekAPI = {
             model: this._model,
             messages: messages,
             stream: false,
-            max_tokens: 500,
+            max_tokens: 800,
             temperature: 0.7
           }),
           signal: controller.signal
@@ -864,10 +872,11 @@ const DeepSeekAPI = {
       const data = await response.json();
 
       // 代理模式返回 { answer: "..." }
-      if (data.answer) return { answer: data.answer };
+      if (data.answer) { callOk = true; return { answer: data.answer }; }
 
       // 直连模式返回 OpenAI 格式 { choices: [{ message: { content: "..." } }] }
       if (data.choices && data.choices[0] && data.choices[0].message) {
+        callOk = true;
         return { answer: data.choices[0].message.content };
       }
 
@@ -880,7 +889,15 @@ const DeepSeekAPI = {
         return { error: '网络连接失败。浏览器可能无法直连 DeepSeek API（CORS 限制），建议配置代理地址' };
       }
       return { error: '网络错误：' + e.message };
+    } finally {
+      // 通知上层：一次真实的 DeepSeek 调用已结束（用于显示"正在调用"提示）
+      try { window.dispatchEvent(new CustomEvent('deepseek:call', { detail: { phase: 'end', ok: callOk, model: this._model } })); } catch (_) {}
     }
+  },
+
+  // 向页面广播 DeepSeek 调用状态（供"正在调用"提示使用）
+  _emitCall(phase, ok) {
+    try { window.dispatchEvent(new CustomEvent('deepseek:call', { detail: { phase, ok, model: this._model } })); } catch (_) {}
   }
 };
 

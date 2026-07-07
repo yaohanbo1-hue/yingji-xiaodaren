@@ -46,11 +46,11 @@
 <link rel="stylesheet" href="critical.css?v=86">
 
 <!-- 非关键样式打包（v1.3.5）：css-variables + all-styles + settings/optimizer/animation + 交互/视觉/滚动修复 合并压缩为单文件 -->
-<link rel="stylesheet" href="css/all.min.css?v=90">
+<link rel="stylesheet" href="css/all.min.css?v=92">
 
 <!-- 预加载最关键资源：打包后的 JS 与 CSS（v1.3.5） -->
-<link rel="preload" href="css/all.min.css?v=90" as="style">
-<link rel="preload" href="js/app.min.js?v=90" as="script" fetchpriority="high">
+<link rel="preload" href="css/all.min.css?v=92" as="style">
+<link rel="preload" href="js/app.min.js?v=92" as="script" fetchpriority="high">
 
 <!-- 🔧 关键 Bug 修复 — 内联 CSS 确保始终生效（滑动/点击/遮挡问题） -->
 <style>
@@ -1804,7 +1804,7 @@
 <!-- ===== 核心脚本打包（v1.3.5）：原 45 个 defer 脚本按依赖顺序合并压缩为单个文件 ===== -->
 <!-- 说明：game.js 已在早期移除（const Modal 重复声明冲突），所有引擎由 game-engines.js 提供；localStorage 保护由 SafeStorage 提供 -->
 <!-- 加载顺序与原 45 个独立 <script> 完全一致（共享全局作用域），保证零语义变更 -->
-<script src="js/app.min.js?v=90" defer></script>
+<script src="js/app.min.js?v=92" defer></script>
 
 <!-- ===== Service Worker 注册 ===== -->
 <script>
@@ -1834,8 +1834,35 @@
 <!-- ===== 加载进度 + AudioContext 解锁 ===== -->
 <script>
 (function() {
-  // 如果 LoadingScreen 已加载（loading.js），让它主导加载流程
-  if (typeof LoadingScreen !== 'undefined' && LoadingScreen.init) return;
+  // ===== 第一优先：无条件安装 app-ready 兜底 =====
+  // 无论 LoadingScreen 是否存在、其动画是否完成，都必须保证 body 最终被标记为
+  // app-ready，否则 critical.css 的 .page 显隐机制会让整页 display:none（点击无反应）。
+  // loading.js 内的 LoadingScreen._forceAppReady 作为双重保险。
+  var _screen = document.getElementById('loadingScreen');
+  function forceAppReady() {
+    if (!document.body.classList.contains('app-ready')) {
+      document.body.classList.add('app-ready');
+    }
+    var s = _screen || document.getElementById('loadingScreen');
+    if (s) {
+      s.classList.add('hidden');
+      s.style.pointerEvents = 'none';
+    }
+  }
+  // DOM 解析完即标记（避免全缓存命中时 load 事件迟迟不触发）
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    forceAppReady();
+  }
+  window.addEventListener('load', forceAppReady);
+  setTimeout(forceAppReady, 1500);   // 二次兜底
+  setTimeout(forceAppReady, 4000);   // 最长 4 秒强制完成
+
+  // ===== 进度条 UI（仅当存在旧版加载屏元素时运行；LoadingScreen 存在时跳过）=====
+  var bar = document.getElementById('loadingBar');
+  var pct = document.getElementById('loadingPercent');
+  var tip = document.getElementById('loadingTip');
+  var screen = document.getElementById('loadingScreen');
+  if (!bar || !pct || !tip || !screen) return;  // LoadingScreen 已接管，进度 UI 不重复
 
   var tips = [
     '// 地震时先躲避再撤离，不要贪恋财物',
@@ -1849,13 +1876,6 @@
     '// 地铁着火时按下紧急停车按钮',
     '// 燃气泄漏禁止开灯和打电话'
   ];
-
-  var bar = document.getElementById('loadingBar');
-  var pct = document.getElementById('loadingPercent');
-  var tip = document.getElementById('loadingTip');
-  var screen = document.getElementById('loadingScreen');
-
-  if (!bar || !pct || !tip || !screen) return;
 
   // 安全提示轮播
   var tipIdx = 0;
@@ -1909,33 +1929,12 @@
   });
   updateProgress();
 
-  // 保底：无论加载屏由哪条路径隐藏，都必须给 body 加 app-ready，
-  // 否则 critical.css 的 body:not(.app-ready) .page{display:none!important} 会永久隐藏所有页面。
-  function forceAppReady() {
-    if (!document.body.classList.contains('app-ready')) {
-      document.body.classList.add('app-ready');
-    }
-    if (screen) {
-      screen.classList.add('hidden');
-      screen.style.pointerEvents = 'none';
-    }
-    if (tipInterval) { clearInterval(tipInterval); tipInterval = null; }
-  }
-
   window.addEventListener('load', function() {
     loaded = total;
     updateProgress();
     forceAppReady();
   });
-
-  // 备用：最长 4 秒强制完成（解耦 screen-hidden 判断，无条件兜底 app-ready）
-  setTimeout(function() {
-    loaded = total;
-    updateProgress();
-    forceAppReady();
-  }, 4000);
-
-  // 二次兜底：DOM 解析完即检查，避免全缓存命中时 load 事件迟迟不触发
+  setTimeout(forceAppReady, 4000);
   setTimeout(forceAppReady, 1500);
 
   // 页面可见性优化
@@ -2005,11 +2004,13 @@
 })();
 </script>
 
-<!-- ⚡ 交互体验修复 — 触摸/双击防抖/定时器清理/按钮状态 -->
-<script src="fix-interaction.js?v=1"></script>
+<!-- ⚡ 交互体验修复 — 触摸/双击防抖/定时器清理/按钮状态
+     注意：必须为 defer，使其在主打包脚本(js/app.min.js)之后执行，
+     否则其中对 PageManager/各引擎的补丁会因全局未定义而失效。 -->
+<script src="fix-interaction.js?v=2" defer></script>
 
 <!-- 🔧 关键 Bug 修复 — JS 补丁（ErrorBoundary/tilt3d/按钮状态/SafeStorage/AI按钮） -->
-<script src="bugfix-patch.js?v=1"></script>
+<script src="bugfix-patch.js?v=2" defer></script>
 
 <!-- 🔧 AI浮动按钮兜底 — 确保右下角始终显示AI按钮 -->
 <script>

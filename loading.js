@@ -13,6 +13,10 @@ const LoadingScreen = {
   _shown: false,
   
   init() {
+    // 兜底：无论加载动画是否展示，都强制标记 app-ready，
+    // 否则 critical.css 的 .page 显隐机制（旧版依赖 app-ready）可能让整页不可见。
+    LoadingScreen._forceAppReady();
+
     // 检查是否已显示过
     try {
       if (localStorage.getItem('disaster_hq_loading_shown')) {
@@ -22,6 +26,15 @@ const LoadingScreen = {
     
     this._shown = true;
     this._show();
+  },
+
+  // 强制把 body 标记为已就绪（幂等，可重复调用）
+  _forceAppReady() {
+    try {
+      if (!document.body.classList.contains('app-ready')) {
+        document.body.classList.add('app-ready');
+      }
+    } catch (e) { /* noop */ }
   },
   
   _show() {
@@ -49,6 +62,20 @@ const LoadingScreen = {
     `;
     
     document.body.appendChild(overlay);
+    
+    // 安全兜底：无论进度动画是否完成，最多 6 秒后强制移除全屏遮罩并标记就绪。
+    // 防止动画/定时器在个别设备上异常，导致 #loadingScreen 永久拦截所有点击
+    // （表现为“所有模块点击无反应”）。
+    setTimeout(function() {
+      if (overlay && overlay.parentNode) {
+        overlay.style.pointerEvents = 'none';
+        overlay.classList.add('loading-fade-out');
+        setTimeout(function() {
+          if (overlay && overlay.parentNode) overlay.remove();
+          LoadingScreen._forceAppReady();
+        }, 600);
+      }
+    }, 6000);
     
     // 动画进度条
     var bar = overlay.querySelector('.loading-bar');
@@ -79,10 +106,13 @@ const LoadingScreen = {
       
       if (progress >= 100) {
         clearInterval(interval);
+        LoadingScreen._forceAppReady();
         setTimeout(function() {
+          overlay.style.pointerEvents = 'none';
           overlay.classList.add('loading-fade-out');
           setTimeout(function() {
             overlay.remove();
+            LoadingScreen._forceAppReady();
             try {
               localStorage.setItem('disaster_hq_loading_shown', '1');
             } catch(e) { console.error('Storage error:', e); }
