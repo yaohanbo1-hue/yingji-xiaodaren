@@ -46,11 +46,11 @@
 <link rel="stylesheet" href="critical.css?v=86">
 
 <!-- 非关键样式打包（v1.3.5）：css-variables + all-styles + settings/optimizer/animation + 交互/视觉/滚动修复 合并压缩为单文件 -->
-<link rel="stylesheet" href="css/all.min.css?v=99">
+<link rel="stylesheet" href="css/all.min.css?v=100">
 
 <!-- 预加载最关键资源：打包后的 JS 与 CSS（v1.3.5） -->
-<link rel="preload" href="css/all.min.css?v=99" as="style">
-<link rel="preload" href="js/app.min.js?v=99" as="script" fetchpriority="high">
+<link rel="preload" href="css/all.min.css?v=100" as="style">
+<link rel="preload" href="js/app.min.js?v=100" as="script" fetchpriority="high">
 
 <!-- 🔧 关键 Bug 修复 — 内联 CSS 确保始终生效（滑动/点击/遮挡问题） -->
 <style>
@@ -543,32 +543,147 @@
       <h2 class="preview-title">自由模式</h2>
       <p class="preview-desc">选择你想学的灾害类型，想练多久练多久！</p>
     </div>
-    
-    <div class="feature-list">
-      <div class="feature-item cursor-pointer" onclick="StudyEngine.start('earthquake')" >
-        <span class="feature-icon">🌍</span>
-        <div class="feature-text"><h4>地震</h4><p>5张知识卡 · 掌握度 0%</p></div>
-        <span class="feature-status feature-ready">🆓 自由</span>
+
+    <style>
+      /* ===== 自由模式卡片网格 ===== */
+      .free-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 0 16px;
+        margin-bottom: 20px;
+      }
+      .free-card {
+        position: relative;
+        background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 16px;
+        padding: 20px 16px 16px;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .free-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 2.5px;
+        border-radius: 16px 16px 0 0;
+        opacity: 0.85;
+      }
+      .free-card::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 16px;
+        background: radial-gradient(circle at 50% 20%, var(--fc-glow, rgba(99,102,241,0.08)), transparent 70%);
+        pointer-events: none;
+      }
+      .free-card:hover {
+        transform: translateY(-3px) scale(1.02);
+        border-color: var(--fc-color, rgba(139,92,246,0.35));
+        box-shadow:
+          0 8px 24px rgba(0,0,0,0.3),
+          0 0 20px var(--fc-glow, rgba(139,92,246,0.12));
+      }
+      .free-card:active { transform: translateY(0) scale(0.98); }
+      .free-icon { font-size: 42px; margin-bottom: 10px; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3)); position: relative; z-index: 1; }
+      .free-name { font-size: 17px; font-weight: 700; color: #E8EAED; letter-spacing: 0.5px; position: relative; z-index: 1; }
+      .free-meta { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 4px; position: relative; z-index: 1; }
+      .free-bar-wrap { width: 100%; margin-top: 10px; position: relative; z-index: 1; }
+      .free-bar-bg { width: 100%; height: 3px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+      .free-bar-fill { height: 100%; border-radius: 3px; background: var(--fc-color, #8B5CF6); transition: width 0.5s ease; width: 0%; }
+      .free-tag { display: inline-block; margin-top: 8px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.05); padding: 3px 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); position: relative; z-index: 1; }
+
+      /* 各灾害配色 */
+      [data-disaster="earthquake"] { --fc-color:#8B5CF6; --fc-glow:rgba(139,92,246,0.1); } [data-disaster="earthquake"]::before{background:linear-gradient(90deg,#8B5CF6,#6366F1)}
+      [data-disaster="flood"]       { --fc-color:#0EA5E9; --fc-glow:rgba(14,165,233,0.1); } [data-disaster="flood"]::before{background:linear-gradient(90deg,#0EA5E9,#06B6D4)}
+      [data-disaster="fire"]        { --fc-color:#EF4444; --fc-glow:rgba(239,68,68,0.1);   } [data-disaster="fire"]::before{background:linear-gradient(90deg,#EF4444,#F97316)}
+      [data-disaster="typhoon"]     { --fc-color:#3B82F6; --fc-glow:rgba(59,130,246,0.1);   } [data-disaster="typhoon"]::before{background:linear-gradient(90deg,#3B82F6,#8B5CF6)}
+      [data-disaster="tornado"]     { --fc-color:#A855F7; --fc-glow:rgba(168,85,247,0.1);   } [data-disaster="tornado"]::before{background:linear-gradient(90deg,#A855F7,#6366F1)}
+      [data-disaster="thunder"]     { --fc-color:#F59E0B; --fc-glow:rgba(245,158,11,0.1);   } [data-disaster="thunder"]::before{background:linear-gradient(90deg,#F59E0B,#EAB308)}
+      [data-disaster="blizzard"]    { --fc-color:#22D3EE; --fc-glow:rgba(34,211,238,0.1);   } [data-disaster="blizzard"]::before{background:linear-gradient(90deg,#67E8F9,#22D3EE)}
+      [data-disaster="volcano"]     { --fc-color:#DC2626; --fc-glow:rgba(220,38,38,0.1);     } [data-disaster="volcano"]::before{background:linear-gradient(90deg,#DC2626,#EF4444)}
+      [data-disaster="epidemic"]    { --fc-color:#10B981; --fc-glow:rgba(16,185,129,0.1);   } [data-disaster="epidemic"]::before{background:linear-gradient(90deg,#10B981,#34D399)}
+      [data-disaster="landslide"]   { --fc-color:#D97706; --fc-glow:rgba(217,119,6,0.1);     } [data-disaster="landslide"]::before{background:linear-gradient(90deg,#D97706,#B45309)}
+
+      /* 随机按钮升级 */
+      .btn-random-practice {
+        width: calc(100% - 32px);
+        max-width: 360px;
+        margin: 8px auto 30px;
+        display: block;
+        background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,152,0,0.1)) !important;
+        border: 1px solid rgba(255,215,0,0.25) !important;
+        border-radius: 14px !important;
+        padding: 15px !important;
+        font-size: 17px !important;
+        font-weight: 700 !important;
+        color: #FFD700 !important;
+        cursor: pointer;
+        transition: all 0.25s ease !important;
+        text-align: center;
+        letter-spacing: 0.5px;
+      }
+      .btn-random-practice:hover {
+        background: linear-gradient(135deg, rgba(255,215,0,0.25), rgba(255,152,0,0.18)) !important;
+        border-color: rgba(255,215,0,0.45) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(255,215,0,0.12) !important;
+      }
+      .btn-random-practice:active { transform: translateY(0) scale(0.98) !important; }
+    </style>
+
+    <div class="free-grid">
+      <div class="free-card" data-disaster="earthquake" onclick="StudyEngine.start('earthquake')">
+        <span class="free-icon">🌍</span><span class="free-name">地震</span><span class="free-meta">知识卡 · 掌握度 <span class="fm-pct">0%</span></span>
+        <div class="free-bar-wrap"><div class="free-bar-bg"><div class="free-bar-fill"></div></div></div><span class="free-tag">🆓 自由练习</span>
       </div>
-      <div class="feature-item cursor-pointer" onclick="StudyEngine.start('flood')" >
-        <span class="feature-icon">🌊</span>
-        <div class="feature-text"><h4>洪水</h4><p>5张知识卡 · 掌握度 0%</p></div>
-        <span class="feature-status feature-ready">🆓 自由</span>
+      <div class="free-card" data-disaster="flood" onclick="StudyEngine.start('flood')">
+        <span class="free-icon">🌊</span><span class="free-name">洪水</span><span class="free-meta">知识卡 · 掌握度 <span class="fm-pct">0%</span></span>
+        <div class="free-bar-wrap"><div class="free-bar-bg"><div class="free-bar-fill"></div></div></div><span class="free-tag">🆓 自由练习</span>
       </div>
-      <div class="feature-item cursor-pointer" onclick="StudyEngine.start('typhoon')" >
-        <span class="feature-icon">🌪️</span>
-        <div class="feature-text"><h4>台风</h4><p>5张知识卡 · 掌握度 0%</p></div>
-        <span class="feature-status feature-ready">🆓 自由</span>
+      <div class="free-card" data-disaster="fire" onclick="StudyEngine.start('fire')">
+        <span class="free-icon">🔥</span><span class="free-name">火灾</span><span class="free-meta">知识卡 · 掌握度 <span class="fm-pct">0%</span></span>
+        <div class="free-bar-wrap"><div class="free-bar-bg"><div class="free-bar-fill"></div></div></div><span class="free-tag">🆓 自由练习</span>
       </div>
-      <div class="feature-item cursor-pointer" onclick="StudyEngine.start('volcano')" >
-        <span class="feature-icon">🌋</span>
-        <div class="feature-text"><h4>火山爆发</h4><p>5张知识卡 · 掌握度 0%</p></div>
-        <span class="feature-status feature-ready">🆓 自由</span>
+      <div class="free-card" data-disaster="typhoon" onclick="StudyEngine.start('typhoon')">
+        <span class="free-icon">🌪️</span><span class="free-name">台风</span><span class="free-meta">知识卡 · 掌握度 <span class="fm-pct">0%</span></span>
+        <div class="free-bar-wrap"><div class="free-bar-bg"><div class="free-bar-fill"></div></div></div><span class="free-tag">🆓 自由练习</span>
+      </div>
+      <div class="free-card" data-disaster="tornado" onclick="StudyEngine.start('tornado')">
+        <span class="free-icon">🌀</span><span class="free-name">龙卷风</span><span class="free-meta">知识卡 · 掌握度 <span class="fm-pct">0%</span></span>
+        <div class="free-bar-wrap"><div class="free-bar-bg"><div class="free-bar-fill"></div></div></div><span class="free-tag">🆓 自由练习</span>
+      </div>
+      <div class="free-card" data-disaster="thunder" onclick="StudyEngine.start('thunder')">
+        <span class="free-icon">⚡</span><span class="free-name">雷电</span><span class="free-meta">知识卡 · 掌握度 <span class="fm-pct">0%</span></span>
+        <div class="free-bar-wrap"><div class="free-bar-bg"><div class="free-bar-fill"></div></div></div><span class="free-tag">🆓 自由练习</span>
+      </div>
+      <div class="free-card" data-disaster="blizzard" onclick="StudyEngine.start('blizzard')">
+        <span class="free-icon">❄️</span><span class="free-name">暴雪</span><span class="free-meta">知识卡 · 掌握度 <span class="fm-pct">0%</span></span>
+        <div class="free-bar-wrap"><div class="free-bar-bg"><div class="free-bar-fill"></div></div></div><span class="free-tag">🆓 自由练习</span>
+      </div>
+      <div class="free-card" data-disaster="volcano" onclick="StudyEngine.start('volcano')">
+        <span class="free-icon">🌋</span><span class="free-name">火山喷发</span><span class="free-meta">知识卡 · 掌握度 <span class="fm-pct">0%</span></span>
+        <div class="free-bar-wrap"><div class="free-bar-bg"><div class="free-bar-fill"></div></div></div><span class="free-tag">🆓 自由练习</span>
+      </div>
+      <div class="free-card" data-disaster="epidemic" onclick="StudyEngine.start('epidemic')">
+        <span class="free-icon">🦠</span><span class="free-name">疫情防护</span><span class="free-meta">知识卡 · 掌握度 <span class="fm-pct">0%</span></span>
+        <div class="free-bar-wrap"><div class="free-bar-bg"><div class="free-bar-fill"></div></div></div><span class="free-tag">🆓 自由练习</span>
+      </div>
+      <div class="free-card" data-disaster="landslide" onclick="StudyEngine.start('landslide')">
+        <span class="free-icon">⛰️</span><span class="free-name">泥石流</span><span class="free-meta">知识卡 · 掌握度 <span class="fm-pct">0%</span></span>
+        <div class="free-bar-wrap"><div class="free-bar-bg"><div class="free-bar-fill"></div></div></div><span class="free-tag">🆓 自由练习</span>
       </div>
     </div>
-    <button type="button" class="btn btn-gold btn-lg" style="margin-top:var(--space-sm);width:100%;max-width:360px" onclick="StudyEngine.start()">
-      🎲 随机练习
-    </button>
+
+    <button type="button" class="btn-random-practice" onclick="StudyEngine.start()">🎲 随机开始练习</button>
   </div>
 
   <!-- ======== 速答挑战预览 ======== -->
@@ -1827,7 +1942,7 @@
 <!-- ===== 核心脚本打包（v1.3.5）：原 45 个 defer 脚本按依赖顺序合并压缩为单个文件 ===== -->
 <!-- 说明：game.js 已在早期移除（const Modal 重复声明冲突），所有引擎由 game-engines.js 提供；localStorage 保护由 SafeStorage 提供 -->
 <!-- 加载顺序与原 45 个独立 <script> 完全一致（共享全局作用域），保证零语义变更 -->
-<script src="js/app.min.js?v=99" defer></script>
+<script src="js/app.min.js?v=100" defer></script>
 
 <!-- ===== Service Worker 注册 ===== -->
 <script>
