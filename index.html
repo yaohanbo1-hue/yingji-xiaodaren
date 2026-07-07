@@ -46,11 +46,11 @@
 <link rel="stylesheet" href="critical.css?v=86">
 
 <!-- 非关键样式打包（v1.3.5）：css-variables + all-styles + settings/optimizer/animation + 交互/视觉/滚动修复 合并压缩为单文件 -->
-<link rel="stylesheet" href="css/all.min.css?v=93">
+<link rel="stylesheet" href="css/all.min.css?v=94">
 
 <!-- 预加载最关键资源：打包后的 JS 与 CSS（v1.3.5） -->
-<link rel="preload" href="css/all.min.css?v=93" as="style">
-<link rel="preload" href="js/app.min.js?v=93" as="script" fetchpriority="high">
+<link rel="preload" href="css/all.min.css?v=94" as="style">
+<link rel="preload" href="js/app.min.js?v=94" as="script" fetchpriority="high">
 
 <!-- 🔧 关键 Bug 修复 — 内联 CSS 确保始终生效（滑动/点击/遮挡问题） -->
 <style>
@@ -1044,46 +1044,69 @@
     <div id="gacha-content" class="preview-container"></div>
   </div>
 
-<!-- ======== 学习页（闪卡模式） ======== -->
+<!-- ======== 学习页（闪卡模式 v2） ======== -->
   <div id="page-study" class="page page-content">
     <button aria-label="返回" type="button" class="btn back-float" onclick="PageManager.navigate('free')" data-nav="free">←</button>
-    <div id="studyArea" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:var(--space-md);padding:var(--space-md)">
-      <div class="quiz-header" id="studyHeader">
-        <span class="quiz-progress-text" id="studyProgressTxt">📖 学习中 1/10</span>
-        <span class="quiz-score-text" id="studyScoreTxt">🏆 0 分</span>
+    <div id="studyArea" class="study-area">
+      <!-- 顶部进度 -->
+      <div class="study-topbar">
+        <span class="study-progress-text" id="studyProgressTxt">📖 学习中 1/10</span>
+        <span class="study-score-text" id="studyScoreTxt">🏆 0 分</span>
       </div>
-      <div class="quiz-progress-bar">
-        <div class="quiz-progress-fill" id="studyProgressFill" style="width:0%"></div>
+      <div class="study-progress-track">
+        <div class="study-progress-bar" id="studyProgressFill"></div>
       </div>
-      <!-- 闪卡 -->
-      <div class="study-card" id="studyCard" onclick="StudyEngine.flip()">
-        <div class="study-card-inner" id="studyCardInner">
-          <div class="study-card-front">
-            <div class="study-icon" id="studyIcon">🌍</div>
-            <div class="study-label">❓ 点击翻转看答案</div>
-            <div class="study-question" id="studyQuestion">加载中...</div>
-          </div>
-          <div class="study-card-back">
-            <div class="study-icon" id="studyAnswerIcon">💡</div>
-            <div class="study-label">✅ 正确答案</div>
-            <div class="study-answer" id="studyAnswer">...</div>
-            <div class="study-divider"></div>
-            <div class="study-exp-label">📖 解析</div>
-            <div class="study-exp" id="studyExp">...</div>
-            <div class="study-divider"></div>
-            <div class="study-tips-label">📌 实用贴士</div>
-            <div class="study-tips" id="studyTips">...</div>
-            <div class="study-scenario-label">🎬 场景</div>
-            <div class="study-scenario" id="studyScenario">...</div>
+
+      <!-- 闪卡（3D 翻转） -->
+      <div class="study-card-wrap" id="studyCardWrap">
+        <div class="study-card" id="studyCard" onclick="StudyEngine.flip()">
+          <div class="study-card-inner" id="studyCardInner">
+            <!-- 正面：题目 -->
+            <div class="study-face study-front">
+              <div class="study-front-badge">知识卡片</div>
+              <div class="study-front-icon" id="studyIcon">🌍</div>
+              <div class="study-front-q" id="studyQuestion">加载中...</div>
+              <div class="study-front-hint"><span>👆 点击翻转查看答案</span></div>
+            </div>
+            <!-- 背面：答案+选项+解析 -->
+            <div class="study-face study-back">
+              <div class="study-back-header">
+                <span class="study-back-icon" id="studyAnswerIcon">💡</span>
+                <span class="study-back-label">答案与解析</span>
+              </div>
+              <!-- 选项区 -->
+              <div class="study-options" id="studyOptions"></div>
+              <!-- 正确答案高亮 -->
+              <div class="study-answer-row" id="studyAnswerRow">
+                <span class="study-answer-tag">✅ 正确答案</span>
+                <span class="study-answer-txt" id="studyAnswer">...</span>
+              </div>
+              <!-- 解析 -->
+              <div class="study-section" id="studyExpWrap">
+                <div class="study-section-title">📖 解析</div>
+                <div class="study-section-body" id="studyExp">...</div>
+              </div>
+              <!-- 贴士 & 场景（有内容时才显示） -->
+              <div class="study-section" id="studyTipsWrap">
+                <div class="study-section-title">📌 实用贴士</div>
+                <div class="study-section-body" id="studyTips">...</div>
+              </div>
+              <div class="study-section" id="studyScenarioWrap">
+                <div class="study-section-title">🎬 场景</div>
+                <div class="study-section-body" id="studyScenario">...</div>
+              </div>
+              <div class="study-back-hint">← 点击翻回正面</div>
+            </div>
           </div>
         </div>
       </div>
+
       <!-- 导航按钮 -->
       <div class="study-nav">
         <button type="button" class="study-nav-btn" id="studyPrevBtn" onclick="StudyEngine.prev()">◀ 上一张</button>
         <button type="button" class="study-nav-btn study-nav-primary" id="studyNextBtn" onclick="StudyEngine.next()">下一张 ▶</button>
       </div>
-      <button type="button" class="quiz-menu-btn" onclick="StudyEngine.quit()" style="margin-top:var(--space-sm)">🏠 返回自由模式</button>
+      <button type="button" class="study-exit-btn" onclick="StudyEngine.quit()">🏠 返回自由模式</button>
     </div>
   </div>
 
@@ -1804,7 +1827,7 @@
 <!-- ===== 核心脚本打包（v1.3.5）：原 45 个 defer 脚本按依赖顺序合并压缩为单个文件 ===== -->
 <!-- 说明：game.js 已在早期移除（const Modal 重复声明冲突），所有引擎由 game-engines.js 提供；localStorage 保护由 SafeStorage 提供 -->
 <!-- 加载顺序与原 45 个独立 <script> 完全一致（共享全局作用域），保证零语义变更 -->
-<script src="js/app.min.js?v=93" defer></script>
+<script src="js/app.min.js?v=94" defer></script>
 
 <!-- ===== Service Worker 注册 ===== -->
 <script>

@@ -979,7 +979,131 @@ const StoryEngine = {_chapters:[{id:1,title:"第一章：地震来袭",icon:"�
  * ============================================================================
  */
 
-const StudyEngine = {cards:[],currentIdx:0,isFlipped:!1,active:!1,_el:id=>document.getElementById(id),start(disasterType){var cards;0!==(cards=disasterType&&"all"!==disasterType?ALL_CARDS.filter(function(c){return c.disaster===disasterType}):ALL_CARDS.filter(function(c){return"equip"!==c.disaster})).length?(this.cards=_shuffleArray(cards),this.currentIdx=0,this.isFlipped=!1,this.active=!0,PageManager.navigate("study"),this.render()):Modal.show("暂无卡片","该类型暂无知识卡","📝")},render(){if(this.cards&&0!==this.cards.length&&this.active)if(this.currentIdx>=this.cards.length)this.finish();else{var card=this.cards[this.currentIdx],zh=card.zh||{};this._el("studyProgressTxt").textContent="📖 学习中 "+(this.currentIdx+1)+"/"+this.cards.length,this._el("studyProgressFill").style.width=(this.currentIdx+1)/this.cards.length*100+"%",this._el("studyIcon").textContent=card.icon||"🌍",this._el("studyQuestion").textContent=zh.q||(card.zh?card.zh.name:card.icon||"..."),this._el("studyAnswerIcon").textContent="💡",this._el("studyAnswer").textContent=zh.opts?zh.opts[zh.ans]:"...",this._el("studyExp").textContent=zh.exp||card.explanation||"暂无解析",this._el("studyTips").textContent=card.tip||card.scenario||"暂无贴士",this._el("studyScenario").textContent=card.scenario||"暂无场景",this.isFlipped=!1;var inner=this._el("studyCardInner");inner&&(inner.style.transform="rotateY(0deg)"),this._el("studyPrevBtn").style.visibility=this.currentIdx>0?"visible":"hidden",this._el("studyNextBtn").textContent=this.currentIdx<this.cards.length-1?"下一张 ▶":"🎉 完成"}},flip(){this.isFlipped=!this.isFlipped;var inner=this._el("studyCardInner");inner&&(inner.style.transform=this.isFlipped?"rotateY(180deg)":"rotateY(0deg)"),AudioManager.play("click")},next(){this.currentIdx<this.cards.length-1?(this.currentIdx++,this.render(),AudioManager.play("click")):this.finish()},prev(){this.currentIdx>0&&(this.currentIdx--,this.render(),AudioManager.play("click"))},finish(){this.active=!1,Modal.show("🎉 学习完成！","你已浏览完所有 "+this.cards.length+" 张卡片！<br><br>要不要测试一下自己？","📚"),void 0!==GameState&&(GameState._data.stats.studyCompleted=(GameState._data.stats.studyCompleted||0)+1,GameState.save())},quit(){this.active=!1,PageManager.navigate("free")}};
+const StudyEngine = {
+  cards: [],
+  currentIdx: 0,
+  isFlipped: false,
+  active: false,
+
+  _el: function(id) {
+    return document.getElementById(id);
+  },
+
+  start: function(disasterType) {
+    var cards;
+    if (disasterType && disasterType !== "all") {
+      cards = ALL_CARDS.filter(function(c) { return c.disaster === disasterType; });
+    } else {
+      cards = ALL_CARDS.filter(function(c) { return c.disaster !== "equip"; });
+    }
+    if (cards.length > 0) {
+      this.cards = _shuffleArray(cards);
+      this.currentIdx = 0;
+      this.isFlipped = false;
+      this.active = true;
+      PageManager.navigate("study");
+      this.render();
+    } else {
+      Modal.show("暂无卡片", "该类型暂无知识卡", "📝");
+    }
+  },
+
+  render: function() {
+    if (!this.cards || this.cards.length === 0 || !this.active) return;
+    if (this.currentIdx >= this.cards.length) { this.finish(); return; }
+
+    var card = this.cards[this.currentIdx];
+    var zh = card.zh || {};
+
+    this._el("studyProgressTxt").textContent = "📖 学习中 " + (this.currentIdx + 1) + "/" + this.cards.length;
+    this._el("studyProgressFill").style.width = ((this.currentIdx + 1) / this.cards.length * 100) + "%";
+    this._el("studyIcon").textContent = card.icon || "🌍";
+    this._el("studyQuestion").textContent = zh.q || (card.zh ? card.zh.name : card.icon || "...");
+    this._el("studyAnswerIcon").textContent = "💡";
+    this._el("studyAnswer").textContent = zh.opts ? zh.opts[zh.ans] : "...";
+    this._el("studyExp").textContent = zh.exp || card.explanation || "暂无解析";
+
+    var tipsVal = card.tip || card.scenario || "";
+    var scenarioVal = card.scenario || "";
+    this._el("studyTips").textContent = tipsVal || "暂无贴士";
+    this._el("studyScenario").textContent = scenarioVal || "暂无场景";
+    this._el("studyTipsWrap").style.display = tipsVal ? "" : "none";
+    this._el("studyScenarioWrap").style.display = scenarioVal ? "" : "none";
+
+    // Render options as buttons
+    var optsEl = this._el("studyOptions");
+    if (optsEl) {
+      var opts = zh.opts;
+      if (opts && opts.length) {
+        var ans = zh.ans || 0;
+        var letters = ["A", "B", "C", "D"];
+        optsEl.innerHTML = opts.map(function(o, i) {
+          var cleanOpt = String(o);
+          cleanOpt = cleanOpt.replace(/^[A-Da-d][\u3001.\uff0c\u3002]\s*/, "");
+          var cls = i === ans ? ' study-opt-btn opt-correct' : ' study-opt-btn';
+          return '<div class="' + cls + '"><span class="opt-letter">' + letters[i] + '</span><span>' + cleanOpt + '</span></div>';
+        }).join("");
+      } else {
+        optsEl.innerHTML = '<div style="color:rgba(255,255,255,.3);font-size:13px;text-align:center;padding:8px;">（本卡无可选选项）</div>';
+      }
+    }
+
+    this.isFlipped = false;
+    var wrap = this._el("studyCardWrap");
+    var inner = this._el("studyCardInner");
+    if (wrap) wrap.classList.remove("flipped");
+    if (inner) inner.style.transform = "rotateY(0deg)";
+    this._el("studyPrevBtn").style.visibility = this.currentIdx > 0 ? "visible" : "hidden";
+    this._el("studyNextBtn").textContent = this.currentIdx < this.cards.length - 1 ? "下一张 ▶" : "🎉 完成";
+  },
+
+  flip: function() {
+    this.isFlipped = !this.isFlipped;
+    var wrap = this._el("studyCardWrap");
+    var card = this._el("studyCard");
+    var inner = this._el("studyCardInner");
+    if (wrap) wrap.classList.toggle("flipped", this.isFlipped);
+    if (card) card.classList.toggle("flipped", this.isFlipped);
+    if (inner) inner.style.transform = this.isFlipped ? "rotateY(180deg)" : "rotateY(0deg)";
+    AudioManager.play("click");
+  },
+
+  next: function() {
+    if (this.currentIdx < this.cards.length - 1) {
+      this.currentIdx++;
+      this.render();
+      AudioManager.play("click");
+    } else {
+      this.finish();
+    }
+  },
+
+  prev: function() {
+    if (this.currentIdx > 0) {
+      this.currentIdx--;
+      this.render();
+      AudioManager.play("click");
+    }
+  },
+
+  finish: function() {
+    this.active = false;
+    Modal.show(
+      "🎉 学习完成！",
+      "你已浏览完所有 " + this.cards.length + " 张卡片！<br><br>要不要测试一下自己？",
+      "📚"
+    );
+    if (typeof GameState !== "undefined") {
+      GameState._data.stats.studyCompleted = (GameState._data.stats.studyCompleted || 0) + 1;
+      GameState.save();
+    }
+  },
+
+  quit: function() {
+    this.active = false;
+    PageManager.navigate("free");
+  }
+};
 
 
 /**

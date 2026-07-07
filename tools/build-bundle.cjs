@@ -117,7 +117,8 @@ const cssList = [
   'ai-float.css',
   'visual-enhance.css',
   'scroll-fix.css',
-  'a11y-polish.css'
+  'a11y-polish.css',
+  'study-card-v2.css'
 ];
 console.log(`[CSS] 合并 ${cssList.length} 个样式表...`);
 let cssRaw = 0, cssMin = 0;
