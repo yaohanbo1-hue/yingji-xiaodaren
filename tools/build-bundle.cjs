@@ -73,7 +73,8 @@ const JS_FILES = [
   'guide-enhance.js',
   'accessibility.js',
   'performance.js',
-  'patch-v75.js'
+  'patch-v75.js',
+  'runtime-hardening.js'
 ];
 console.log(`[JS] 按固定清单打包 ${JS_FILES.length} 个源文件...`);
 
