@@ -3519,6 +3519,14 @@ body {
 #page-memory-card .game-header{text-align:center;padding:20px 16px 8px;}
 #page-memory-card .mode-label{font-size:26px!important;font-weight:900;letter-spacing:2px;}
 
+/* ===== 底部导航栏遮挡修复 ===== */
+/* 确保 AI 导师、统计等有底部交互内容的页面不被固定导航遮挡 */
+#page-ai-tutor,
+#page-stats,
+#page-leaderboard,
+#page-character{padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))!important;}
+#aiTutorContent{padding-bottom:20px;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+
 /* ===== 地图节点 ===== */
 .map-node {
   box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
