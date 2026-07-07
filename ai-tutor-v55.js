@@ -26,6 +26,26 @@ function escapeHtml(text) {
     .replace(/'/g, '&#039;');
 }
 
+// AI 智能出题：请求 DeepSeek 返回结构化 JSON（题干 + 选项 + 正确答案 + 解析）
+const AI_TUTOR_QUIZ_SYSTEM = `你是中国防灾教育游戏《应急小达人》的 AI 出题官，面向中小学生。请出一道防灾知识选择题，考查 12 种自然灾害（地震、洪涝、台风、火灾、雷电、暴雪、泥石流、干旱、山火、火山、海啸、沙尘暴）之一的科学应对方法。
+
+要求：
+1. 题干简洁明确，符合中小学生认知水平。
+2. 提供 4 个选项，其中只有 1 个正确。
+3. answer 为正确选项索引，从 0 开始（0=A，1=B，2=C，3=D）。
+4. explanation 用 1-2 句通俗语言说明正确答案的原因，并点出常见误区。
+5. 只输出 JSON，不要任何额外说明文字，不要使用 markdown 代码块标记。
+
+输出格式（严格 JSON）：
+{
+  "question": "题干文字",
+  "options": ["A. 选项一", "B. 选项二", "C. 选项三", "D. 选项四"],
+  "answer": 0,
+  "explanation": "解析文字"
+}`;
+
+const AI_TUTOR_QUIZ_USER = '请出一道新的防灾选择题，严格按系统要求的 JSON 格式返回，只返回 JSON。';
+
 const AITutorEngine = {
   _data: null,
   _radarAnimProgress: 0,
@@ -37,6 +57,7 @@ const AITutorEngine = {
   init() {
     if (this._initialized) return;
     this._initialized = true;
+    this._initDeepSeekToast();
     this.loadData();
     this.analyzeMastery();
     this.generateRecommendations();
@@ -604,15 +625,15 @@ const AITutorEngine = {
     
     this._typeMessage('user', text);
     input.value = '';
-    
+
     this.showTyping();
-    
+
     const engine = window.AITutorLLM;
     if (engine && engine.generateReply) {
       engine.generateReply(text, this._chatHistory || []).then(result => {
         const reply = typeof result === 'string' ? result : (result.reply || '');
         this.hideTyping();
-        this._typeMessage('ai', reply);
+        this._renderAIReply(reply);
         
         if (!this._chatHistory) this._chatHistory = [];
         this._chatHistory.push({ role: 'user', content: text });
@@ -636,6 +657,11 @@ const AITutorEngine = {
   quickAsk(type) {
     if (this._askingLock) {
       console.warn('AI 请求锁已激活，跳过重复调用');
+      return;
+    }
+    // 「给我出题」走结构化 AI 智能答题流程
+    if (type === 'practice') {
+      this.startAIQuiz();
       return;
     }
     this._askingLock = true;
@@ -749,6 +775,239 @@ const AITutorEngine = {
     }
   },
   
+  // 渲染 AI 回复：若返回的是结构化题库 JSON 则渲染为可交互答题卡
+  _renderAIReply(reply) {
+    const quiz = this._parseQuizJSON(reply);
+    if (quiz) {
+      this._currentQuiz = quiz;
+      this.renderAIQuiz(quiz);
+    } else {
+      this._typeMessage('ai', reply);
+    }
+  },
+
+  // ===== AI 结构化智能答题 =====
+  startAIQuiz() {
+    if (this._askingLock) {
+      console.warn('AI 请求锁已激活，跳过重复调用');
+      return;
+    }
+    this._askingLock = true;
+
+    const api = window.DeepSeekAPI;
+    if (!api || !api.isConfigured()) {
+      this._typeMessage('ai', '⚠️ **AI 智能答题需要配置 DeepSeek API**\n\n请点击右上角 ☁️ 按钮，输入你的 DeepSeek API Key 来启用 AI 出题。\n\n💡 前往 [DeepSeek 开放平台](https://platform.deepseek.com) 注册，免费送 500 万 tokens。');
+      this._askingLock = false;
+      return;
+    }
+
+    this._typeMessage('user', '❓ 给我出一道 AI 防灾选择题');
+    this.showTyping();
+
+    api.chat(AI_TUTOR_QUIZ_USER, this._chatHistory || [], { system: AI_TUTOR_QUIZ_SYSTEM }).then(result => {
+      this.hideTyping();
+      if (result.error) {
+        this._typeMessage('ai', '⚠️ **AI 出题失败**\n\n' + result.error + '\n\n你可以稍后再试，或检查 API Key 设置。');
+        this._askingLock = false;
+        return;
+      }
+      const quiz = this._parseQuizJSON(result.answer || '');
+      if (!quiz) {
+        // 退化处理：模型未返回规范 JSON，当作普通回答展示
+        this._typeMessage('ai', '🤖 ' + (result.answer || '（AI 未返回内容）'));
+        this._askingLock = false;
+        return;
+      }
+      this._currentQuiz = quiz;
+      this.renderAIQuiz(quiz);
+      this._askingLock = false;
+    }).catch(err => {
+      this.hideTyping();
+      if (location.hostname === 'localhost') console.error('AI出题错误:', err);
+      this._typeMessage('ai', '抱歉，AI 出题出错了，请稍后再试。');
+      this._askingLock = false;
+    });
+  },
+
+  // 渲染可交互答题卡（选项按钮 + 结果/解析区）
+  renderAIQuiz(quiz) {
+    const body = document.getElementById('terminalBody');
+    if (!body) { this._askingLock = false; return; }
+    const q = escapeHtml(quiz.question || '');
+    const correctIdx = (typeof quiz.answer === 'number') ? quiz.answer : 0;
+    const opts = Array.isArray(quiz.options) ? quiz.options : [];
+    const optHtml = opts.map((o, i) => {
+      const label = String.fromCharCode(65 + i);
+      const text = escapeHtml(String(o).replace(/^[A-Da-d][\.\、\)）．]\s*/, ''));
+      return '<button class="ai-quiz-opt" data-idx="' + i + '" onclick="AITutorEngine.answerAIQuiz(' + i + ', ' + correctIdx + ', this)" style="display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border:1px solid rgba(0,212,255,.25);border-radius:12px;background:rgba(255,255,255,.04);color:#e6edf3;font-size:14px;cursor:pointer;transition:all .2s;font-family:inherit;box-sizing:border-box;">' + label + '. ' + text + '</button>';
+    }).join('');
+
+    const card = document.createElement('div');
+    card.className = 'terminal-msg ai-msg';
+    card.innerHTML = `
+      <div class="msg-avatar">🤖</div>
+      <div class="msg-bubble" style="width:100%;">
+        <div class="ai-quiz-card" style="background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.25);border-radius:14px;padding:14px;margin-top:4px;">
+          <div style="font-size:12px;color:#00d4ff;font-weight:700;letter-spacing:1px;margin-bottom:6px;">🧠 AI 智能出题</div>
+          <div style="font-size:15px;font-weight:600;color:#fff;margin-bottom:10px;line-height:1.5;">${q}</div>
+          <div class="ai-quiz-opts">${optHtml}</div>
+          <div class="ai-quiz-result" style="margin-top:10px;display:none;"></div>
+          <div class="ai-quiz-actions" style="margin-top:10px;"></div>
+        </div>
+      </div>
+    `;
+    body.appendChild(card);
+    body.scrollTop = body.scrollHeight;
+  },
+
+  // 用户作答：判定正误、高亮选项、展示解析，并计入掌握度
+  answerAIQuiz(idx, correctIdx, btn) {
+    const card = btn.closest('.ai-quiz-card');
+    if (!card || card.dataset.answered === '1') return;
+    card.dataset.answered = '1';
+
+    const optsWrap = card.querySelector('.ai-quiz-opts');
+    optsWrap.querySelectorAll('.ai-quiz-opt').forEach(b => {
+      b.disabled = true;
+      b.style.cursor = 'default';
+      const bi = parseInt(b.getAttribute('data-idx'), 10);
+      if (bi === correctIdx) {
+        b.style.background = 'rgba(16,185,129,.25)';
+        b.style.borderColor = '#10B981';
+      } else if (bi === idx) {
+        b.style.background = 'rgba(239,68,68,.22)';
+        b.style.borderColor = '#EF4444';
+      } else {
+        b.style.opacity = '.6';
+      }
+    });
+
+    const correct = idx === correctIdx;
+    const result = card.querySelector('.ai-quiz-result');
+    const quiz = this._currentQuiz || {};
+    const exp = escapeHtml(quiz.explanation || '（AI 未提供解析）');
+    result.style.display = 'block';
+    result.innerHTML = `
+      <div style="padding:10px 12px;border-radius:10px;font-size:14px;line-height:1.7;${correct ? 'background:rgba(16,185,129,.15);color:#6ee7b7;border:1px solid rgba(16,185,129,.4);' : 'background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.4);'}">
+        <strong>${correct ? '✅ 回答正确！' : '❌ 回答错误'}</strong><br>
+        <span style="color:#cbd5e1;">📖 解析：${exp}</span>
+      </div>
+    `;
+
+    // 记录到掌握度分析（不触发整页重渲染，避免覆盖当前答题卡与解析）
+    const disaster = this._detectDisaster((quiz.question || '') + ' ' + (quiz.explanation || ''));
+    this.recordAIAnswer(correct, disaster);
+
+    const actions = card.querySelector('.ai-quiz-actions');
+    actions.innerHTML = '<button onclick="AITutorEngine.startAIQuiz()" style="margin-top:4px;padding:8px 16px;border:none;border-radius:10px;background:linear-gradient(135deg,#00d4ff,#7c4dff);color:#fff;font-weight:600;cursor:pointer;font-size:13px;">🔄 再来一题</button>';
+  },
+
+  // 记录 AI 答题结果（仅更新数据，不重渲染仪表盘，避免覆盖答题卡）
+  recordAIAnswer(correct, disaster) {
+    if (!disaster) disaster = 'earthquake';
+    this._data.quizHistory.push({
+      cardId: 'ai-quiz',
+      correct: !!correct,
+      timestamp: Date.now(),
+      disaster: disaster
+    });
+    if (this._data.quizHistory.length > 500) {
+      this._data.quizHistory = this._data.quizHistory.slice(-500);
+    }
+    this.analyzeMastery();
+    this.saveData();
+  },
+
+  // 从模型文本中稳健解析选择题 JSON
+  _parseQuizJSON(text) {
+    if (!text) return null;
+    let s = String(text).trim();
+    s = s.replace(/^```(?:json)?/i, '').replace(/```$/i, '').trim();
+    const first = s.indexOf('{');
+    const last = s.lastIndexOf('}');
+    if (first !== -1 && last > first) s = s.substring(first, last + 1);
+
+    const tryParse = (str) => {
+      try {
+        const obj = JSON.parse(str);
+        if (obj && obj.question && Array.isArray(obj.options) && obj.options.length >= 2) {
+          let ans = obj.answer;
+          if (typeof ans === 'string') ans = parseInt(ans.replace(/[^0-9]/g, ''), 10);
+          if (typeof ans !== 'number' || isNaN(ans) || ans < 0 || ans >= obj.options.length) ans = 0;
+          return {
+            question: String(obj.question),
+            options: obj.options.map(String),
+            answer: ans,
+            explanation: obj.explanation ? String(obj.explanation) : '（AI 未提供解析）'
+          };
+        }
+      } catch (e) {}
+      return null;
+    };
+
+    let r = tryParse(s);
+    if (r) return r;
+    // 宽松修复：去掉尾随逗号后再试一次
+    try { r = tryParse(s.replace(/,(\s*[}\]])/g, '$1')); } catch (e) {}
+    return r;
+  },
+
+  // 从题目文字推断灾害类型（用于掌握度统计）
+  _detectDisaster(text) {
+    const meta = this._getDisasterMeta().names;
+    for (const key in meta) { if (text.indexOf(meta[key]) !== -1) return key; }
+    const map = {
+      '地震': 'earthquake', '洪涝': 'flood', '洪水': 'flood', '台风': 'typhoon',
+      '火灾': 'fire', '雷电': 'lightning', '暴雪': 'blizzard', '滑坡': 'landslide',
+      '泥石流': 'landslide', '干旱': 'drought', '山火': 'wildfire', '火山': 'volcano',
+      '海啸': 'tsunami', '沙尘暴': 'sandstorm', '沙尘': 'sandstorm'
+    };
+    for (const k in map) { if (text.indexOf(k) !== -1) return map[k]; }
+    return 'earthquake';
+  },
+
+  // 初始化「正在调用 DeepSeek API」提示（监听 DeepSeekAPI 广播的事件）
+  _initDeepSeekToast() {
+    if (this._toastReady) return;
+    this._toastReady = true;
+    if (!document.getElementById('deepseekToastStyle')) {
+      const st = document.createElement('style');
+      st.id = 'deepseekToastStyle';
+      st.textContent = '@keyframes deepseekPulse{0%{opacity:.35;transform:scale(.8)}50%{opacity:1;transform:scale(1.25)}100%{opacity:.35;transform:scale(.8)}}';
+      document.head.appendChild(st);
+    }
+    window.addEventListener('deepseek:call', (e) => {
+      const d = (e && e.detail) || {};
+      this._showDeepSeekToast(d.phase, d);
+    });
+  },
+
+  // 显示/隐藏 DeepSeek 调用提示气泡
+  _showDeepSeekToast(phase, detail) {
+    let toast = document.getElementById('deepseekToast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'deepseekToast';
+      toast.style.cssText = 'position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-14px);background:linear-gradient(135deg,rgba(0,212,255,.96),rgba(124,77,255,.96));color:#fff;padding:10px 18px;border-radius:999px;font-size:13px;font-weight:600;z-index:10000;box-shadow:0 6px 24px rgba(0,212,255,.35);display:flex;align-items:center;gap:8px;pointer-events:none;opacity:0;transition:opacity .3s ease,transform .3s ease;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;max-width:90vw;';
+      document.body.appendChild(toast);
+    }
+    if (phase === 'start') {
+      toast.innerHTML = '<span style="width:8px;height:8px;border-radius:50%;background:#fff;display:inline-block;animation:deepseekPulse 1s infinite;"></span> 正在调用 DeepSeek API（' + (detail.model || 'deepseek-chat') + '）…';
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+      clearTimeout(this._toastHideTimer);
+    } else if (phase === 'end') {
+      toast.innerHTML = detail.ok ? '✅ DeepSeek 已响应' : '⚠️ DeepSeek 调用失败';
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+      clearTimeout(this._toastHideTimer);
+      this._toastHideTimer = setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(-14px)';
+      }, 1500);
+    }
+  },
+
   clearChat() {
     if (this._typingTimer) {
       clearTimeout(this._typingTimer);

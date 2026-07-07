@@ -40,11 +40,36 @@
   100% { transform: scale(1) rotate(0deg); }
 }
 
-/* ===== 页面过渡与布局保底 ===== */
-body:not(.app-ready) .page { display: none !important; }
-body:not(.app-ready) .page.active { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0) scale(1); }
-.page:not(.active) { opacity: 0; visibility: hidden; position: fixed; inset: 0; pointer-events: none; transform: translateY(20px) scale(0.98); transition: opacity 0.35s cubic-bezier(0.4,0,0.2,1), transform 0.35s cubic-bezier(0.4,0,0.2,1), visibility 0.35s ease; }
-.page.active { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0) scale(1); transition: opacity 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.4s cubic-bezier(0.4,0,0.2,1), visibility 0.4s ease; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+/* ===== 页面过渡与布局保底（自包含：激活页始终可见，不再依赖 app-ready 时机） =====
+ * 关键修复：原 `body:not(.app-ready) .page{display:none!important}` 特异性高于 .page.active，
+ * 一旦 app-ready 因任何原因未添加，所有页面（含激活页）都会 display:none → 整页空白、点击无反应。
+ * 现改为：.page 默认隐藏，.page.active 显式 display:flex 始终可见，与 app-ready 解耦。
+ */
+.page { display: none !important; }
+.page.active {
+  display: flex !important;
+  flex-direction: column;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  position: relative;
+  transform: translateY(0) scale(1);
+  transition: opacity 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.4s cubic-bezier(0.4,0,0.2,1), visibility 0.4s ease;
+  overflow-y: auto; -webkit-overflow-scrolling: touch;
+}
+.page:not(.active) {
+  visibility: hidden;
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(20px) scale(0.98);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 100vh;
+  transition: opacity 0.35s cubic-bezier(0.4,0,0.2,1), transform 0.35s cubic-bezier(0.4,0,0.2,1), visibility 0.35s ease;
+}
+/* 加载中转瞬保护：app-ready 前仅隐藏非激活页；激活页始终可见，避免整页空白 */
+body:not(.app-ready) .page:not(.active) { display: none !important; }
 body:not(.app-ready) #menuToolbar, body:not(.app-ready) .menu-toolbar { display: none !important; }
 
 /* ===== 底部导航栏 — 关键布局保底 ===== */
