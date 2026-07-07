@@ -46,11 +46,11 @@
 <link rel="stylesheet" href="critical.css?v=86">
 
 <!-- 非关键样式打包（v1.3.5）：css-variables + all-styles + settings/optimizer/animation + 交互/视觉/滚动修复 合并压缩为单文件 -->
-<link rel="stylesheet" href="css/all.min.css?v=109">
+<link rel="stylesheet" href="css/all.min.css?v=110">
 
 <!-- 预加载最关键资源：打包后的 JS 与 CSS（v1.3.5） -->
-<link rel="preload" href="css/all.min.css?v=109" as="style">
-<link rel="preload" href="js/app.min.js?v=109" as="script" fetchpriority="high">
+<link rel="preload" href="css/all.min.css?v=110" as="style">
+<link rel="preload" href="js/app.min.js?v=110" as="script" fetchpriority="high">
 
 <!-- 🔧 关键 Bug 修复 — 内联 CSS 确保始终生效（滑动/点击/遮挡问题） -->
 <style>
@@ -694,26 +694,55 @@
       <h2 class="preview-title">速答挑战</h2>
       <p class="preview-desc">限时10题竞答！每道题只有10秒，看你能得多少分！</p>
     </div>
-    <div class="feature-list">
-      <div class="feature-item">
-        <span class="feature-icon">⏱️</span>
-        <div class="feature-text"><h4>限时10秒</h4><p>每题倒计时，压迫感拉满</p></div>
-        <span class="feature-status feature-ready">⚡ 竞速</span>
+    <style>
+.spd-wrap{max-width:520px;margin:0 auto;padding:12px 16px 36px;}
+.spd-grid{display:flex;flex-direction:column;gap:14px;}
+.spd-card{position:relative;display:flex;align-items:center;gap:16px;padding:18px 18px 18px 20px;border-radius:18px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);overflow:hidden;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;}
+.spd-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;border-radius:2px 0 0 2px;background:linear-gradient(180deg,#38bdf8,#06b6d4);}
+.spd-card:nth-child(2)::before{background:linear-gradient(180deg,#fbbf24,#f59e0b);}
+.spd-card:nth-child(3)::before{background:linear-gradient(180deg,#a78bfa,#8b5cf6);}
+.spd-card:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 14px 32px rgba(0,0,0,0.35);border-color:rgba(255,255,255,0.28);}
+.spd-icon{flex:0 0 auto;width:52px;height:52px;display:flex;align-items:center;justify-content:center;font-size:28px;border-radius:16px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.08);}
+.spd-body{flex:1 1 auto;min-width:0;}
+.spd-name{font-size:15px;font-weight:700;color:#fff;margin:0 0 3px;}
+.spd-tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;margin-top:2px;line-height:1.6;}
+.spd-tag-blue{background:linear-gradient(135deg,#38bdf8,#06b6d4);color:#000;}
+.spd-tag-gold{background:linear-gradient(135deg,#ffd700,#ff6b00);color:#000;}
+.spd-tag-purple{background:linear-gradient(135deg,#a78bfa,#7c3aed);color:#fff;}
+.spd-desc{font-size:13px;color:rgba(203,213,225,0.6);margin:0;line-height:1.45;}
+.spd-btn-wrap{text-align:center;margin-top:22px;}
+.spd-start-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;max-width:380px;padding:16px 28px;border:none;border-radius:16px;font-size:17px;font-weight:800;cursor:pointer;letter-spacing:1px;transition:all .3s cubic-bezier(.34,1.56,.64,1);background:linear-gradient(135deg,#ffd700,#ff9500,#f59e0b);color:#000;box-shadow:0 6px 24px rgba(255,191,36,0.35),0 0 40px rgba(255,191,36,0.1);text-shadow:0 1px 2px rgba(0,0,0,0.2);}
+.spd-start-btn:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 10px 32px rgba(255,191,36,0.45),0 0 60px rgba(255,191,36,0.15);}
+.spd-start-btn:active{transform:translateY(0) scale(0.98);}
+    </style>
+    <div class="spd-wrap">
+      <div class="spd-grid">
+        <div class="spd-card">
+          <div class="spd-icon">⏱️</div>
+          <div class="spd-body">
+            <div class="spd-name">限时10秒<span class="spd-tag spd-tag-blue">⚡ 竞速</span></div>
+            <p class="spd-desc">每题倒计时，压迫感拉满</p>
+          </div>
+        </div>
+        <div class="spd-card">
+          <div class="spd-icon">🔥</div>
+          <div class="spd-body">
+            <div class="spd-name">连击奖励<span class="spd-tag spd-tag-gold">🔥 Combo</span></div>
+            <p class="spd-desc">连续答对→分数翻倍→combo爆炸</p>
+          </div>
+        </div>
+        <div class="spd-card">
+          <div class="spd-icon">🏆</div>
+          <div class="spd-body">
+            <div class="spd-name">高分排行榜<span class="spd-tag spd-tag-purple">📅 排行</span></div>
+            <p class="spd-desc">冲击最高分，做防灾小英雄</p>
+          </div>
+        </div>
       </div>
-      <div class="feature-item">
-        <span class="feature-icon">🔥</span>
-        <div class="feature-text"><h4>连击奖励</h4><p>连续答对→分数翻倍→combo爆炸</p></div>
-        <span class="feature-status feature-ready">🔥 Combo</span>
-      </div>
-      <div class="feature-item">
-        <span class="feature-icon">🏆</span>
-        <div class="feature-text"><h4>高分排行榜</h4><p>冲击最高分，做防灾小英雄</p></div>
-        <span class="feature-status feature-soon">📅 即将上线</span>
+      <div class="spd-btn-wrap">
+        <button type="button" class="spd-start-btn" onclick="QuizEngine.startSpeed(10)">⚡ 开始挑战</button>
       </div>
     </div>
-    <button type="button" class="btn btn-gold btn-lg" style="margin-top:var(--space-sm);width:100%;max-width:360px" onclick="QuizEngine.startSpeed(10)">
-      ⚡ 开始挑战
-    </button>
   </div>
 
   <!-- ======== 双人PK页 ======== -->
@@ -1985,7 +2014,7 @@
 <!-- ===== 核心脚本打包（v1.3.5）：原 45 个 defer 脚本按依赖顺序合并压缩为单个文件 ===== -->
 <!-- 说明：game.js 已在早期移除（const Modal 重复声明冲突），所有引擎由 game-engines.js 提供；localStorage 保护由 SafeStorage 提供 -->
 <!-- 加载顺序与原 45 个独立 <script> 完全一致（共享全局作用域），保证零语义变更 -->
-<script src="js/app.min.js?v=109" defer></script>
+<script src="js/app.min.js?v=110" defer></script>
 
 <!-- ===== Service Worker 注册（含旧缓存强制清除）===== -->
 <script>
@@ -1996,7 +2025,7 @@
       var NEED_CACHE_BUST = true; // 本次更新需要强制刷新所有缓存
       if (NEED_CACHE_BUST) {
         caches.keys().then(function(names) {
-          return Promise.all(names.filter(function(n){ return n.indexOf('yingji-xiaodaren') >= 0 && n !== 'yingji-xiaodaren-v109'; }).map(function(n){
+          return Promise.all(names.filter(function(n){ return n.indexOf('yingji-xiaodaren') >= 0 && n !== 'yingji-xiaodaren-v110'; }).map(function(n){
             console.log('[SW] 删除旧缓存:', n); return caches.delete(n);
           }));
         }).then(function(){
@@ -2012,7 +2041,7 @@
       }
 
       function registerNewSW() {
-        navigator.serviceWorker.register('sw-v55.js?v=109')
+        navigator.serviceWorker.register('sw-v55.js?v=110')
           .then(function(reg) {
             console.log('[SW] 注册成功:', reg.scope);
             reg.addEventListener('updatefound', function() {
