@@ -829,7 +829,56 @@ window.Modal = Modal;
  * ============================================================================
  */
 
-const MusicEngine = {TRACKS:[{id:"fire_march",name:"🔥 消防进行曲",unlock:"完成10次火灾题",genre:"进行曲",bpm:120},{id:"earthquake",name:"🌍 地震警报",unlock:"地震题全对",genre:"电子",bpm:140},{id:"ocean",name:"🌊 海洋之声",unlock:"收集20张水灾卡",genre:"环境",bpm:80},{id:"wind_dance",name:"🌪️ 风之舞",unlock:"台风题连续5对",genre:"舞曲",bpm:130},{id:"snow_waltz",name:"❄️ 冰雪华尔兹",unlock:"暴风雪题全对",genre:"华尔兹",bpm:90},{id:"sun_march",name:"☀️ 阳光进行曲",unlock:"连续签到7天",genre:"轻快",bpm:110},{id:"victory",name:"🏆 胜利之歌",unlock:"击败10个Boss",genre:"史诗",bpm:100},{id:"lullaby",name:"🌙 防灾摇篮曲",unlock:"写10篇日记",genre:"柔和",bpm:70},{id:"hero",name:"🦸 英雄主题曲",unlock:"等级达到30",genre:"史诗",bpm:105},{id:"disco",name:"🪩 防灾迪斯科",unlock:"开50个盲盒",genre:"迪斯科",bpm:125}],isUnlocked:trackId=>(GameState._data.musicUnlocked||[]).includes(trackId),unlock(trackId){if(!this.isUnlocked(trackId)){var music=GameState._data.musicUnlocked||[];music.push(trackId),GameState._data.musicUnlocked=music,GameState.save();var track=this.TRACKS.find(function(t){return t.id===trackId});track&&Modal.show("🎵 解锁新音乐！",track.name+"<br/>"+track.genre,"🎵")}},getProgress(){return(GameState._data.musicUnlocked||[]).length+"/"+this.TRACKS.length},render(){var unlocked=GameState._data.musicUnlocked||[],html='<div style="padding:16px"><h3>🎵 音乐收藏</h3>';return html+='<div style="text-align:center;margin:12px 0;font-size:14px;color:rgba(255,255,255,0.6)">已解锁 '+unlocked.length+"/"+this.TRACKS.length+"</div>",this.TRACKS.forEach(function(t){var isUnlocked=unlocked.includes(t.id);html+='<div class="daily-task-item" style="'+(isUnlocked?"":"opacity:0.4")+'"><span>'+t.name+'</span><span style="font-size:11px;color:rgba(255,255,255,0.5)">'+(isUnlocked?t.genre+" "+t.bpm+"bpm":"🔒 "+t.unlock)+"</span></div>"}),html+="</div>"}};
+const MusicEngine = {TRACKS:[{id:"fire_march",name:"🔥 消防进行曲",unlock:"完成10次火灾题",genre:"进行曲",bpm:120},{id:"earthquake",name:"🌍 地震警报",unlock:"地震题全对",genre:"电子",bpm:140},{id:"ocean",name:"🌊 海洋之声",unlock:"收集20张水灾卡",genre:"环境",bpm:80},{id:"wind_dance",name:"🌪️ 风之舞",unlock:"台风题连续5对",genre:"舞曲",bpm:130},{id:"snow_waltz",name:"❄️ 冰雪华尔兹",unlock:"暴风雪题全对",genre:"华尔兹",bpm:90},{id:"sun_march",name:"☀️ 阳光进行曲",unlock:"连续签到7天",genre:"轻快",bpm:110},{id:"victory",name:"🏆 胜利之歌",unlock:"击败10个Boss",genre:"史诗",bpm:100},{id:"lullaby",name:"🌙 防灾摇篮曲",unlock:"写10篇日记",genre:"柔和",bpm:70},{id:"hero",name:"🦸 英雄主题曲",unlock:"等级达到30",genre:"史诗",bpm:105},{id:"disco",name:"🪩 防灾迪斯科",unlock:"开50个盲盒",genre:"迪斯科",bpm:125}],isUnlocked:trackId=>true,unlock(trackId){if(!this.isUnlocked(trackId)){var music=GameState._data.musicUnlocked||[];music.push(trackId),GameState._data.musicUnlocked=music,GameState.save();var track=this.TRACKS.find(function(t){return t.id===trackId});track&&Modal.show("🎵 解锁新音乐！",track.name+"<br/>"+track.genre,"🎵")}},getProgress(){return(GameState._data.musicUnlocked||[]).length+"/"+this.TRACKS.length},play(trackId){
+  if(!GameState.get("settings").sound) return;
+  var track=this.TRACKS.find(function(t){return t.id===trackId});
+  if(!track) return;
+  var ctx=AudioManager._getCtx(), t0=ctx.currentTime;
+  var scale=[523.25,587.33,659.25,783.99,880.0,987.77];
+  var beat=60/Math.max(60,track.bpm);
+  var seed=0;
+  for(var c=0;c<track.id.length;c++) seed=(seed*31+track.id.charCodeAt(c))>>>0;
+  var wave=(track.genre==="迪斯科"||track.genre==="舞曲")?"square":((track.genre==="柔和"||track.genre==="华尔兹")?"triangle":"sine");
+  for(var n=0;n<8;n++){
+    var step=(seed>>>(n*3))%scale.length;
+    var f=scale[step];
+    var st=t0+n*beat*0.5;
+    var osc=ctx.createOscillator(), g=ctx.createGain();
+    osc.type=wave; osc.frequency.setValueAtTime(f,st);
+    g.gain.setValueAtTime(0,st);
+    g.gain.linearRampToValueAtTime(.1,st+.03);
+    g.gain.exponentialRampToValueAtTime(.001,st+beat*0.5);
+    osc.connect(g); g.connect(ctx.destination);
+    osc.start(st); osc.stop(st+beat*0.5+.05);
+  }
+},render(){const html=`<style>
+.mus-wrap{max-width:560px;margin:0 auto;padding:12px 16px 40px;}
+.mus-head{text-align:center;margin-bottom:18px;}
+.mus-head h3{font-size:22px;font-weight:800;color:#fff;margin:0 0 6px;letter-spacing:1px;}
+.mus-head p{font-size:13px;color:rgba(148,163,184,.75);margin:0;}
+.mus-banner{display:inline-flex;align-items:center;gap:6px;margin:0 auto 20px;padding:7px 16px;border-radius:999px;background:linear-gradient(135deg,rgba(244,114,182,.18),rgba(139,92,246,.18));border:1px solid rgba(244,114,182,.35);color:#fbcfe8;font-size:13px;font-weight:700;}
+.mus-grid{display:flex;flex-direction:column;gap:10px;}
+.mus-card{position:relative;display:flex;align-items:center;gap:14px;padding:14px 16px 14px 18px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);cursor:pointer;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;}
+.mus-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:2px 0 0 2px;background:linear-gradient(180deg,#f472b6,#ec4899);}
+.mus-card:nth-child(2n)::before{background:linear-gradient(180deg,#a78bfa,#8b5cf6);}
+.mus-card:nth-child(3n)::before{background:linear-gradient(180deg,#38bdf8,#06b6d4);}
+.mus-card:nth-child(4n)::before{background:linear-gradient(180deg,#34d399,#22c55e);}
+.mus-card:nth-child(5n)::before{background:linear-gradient(180deg,#fbbf24,#f59e0b);}
+.mus-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,.3);border-color:rgba(255,255,255,.22);}
+.mus-icon{flex:0 0 auto;width:46px;height:46px;display:flex;align-items:center;justify-content:center;font-size:24px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);}
+.mus-body{flex:1 1 auto;min-width:0;}
+.mus-name{font-size:15px;font-weight:700;color:#fff;margin:0 0 4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.mus-meta{font-size:11px;color:rgba(148,163,184,.6);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.mus-tag{padding:2px 9px;border-radius:999px;font-weight:700;font-size:10px;}
+.mus-tag-0{background:linear-gradient(135deg,#f472b6,#ec4899);color:#fff;}
+.mus-tag-1{background:linear-gradient(135deg,#a78bfa,#8b5cf6);color:#fff;}
+.mus-tag-2{background:linear-gradient(135deg,#38bdf8,#06b6d4);color:#06121f;}
+.mus-tag-3{background:linear-gradient(135deg,#34d399,#22c55e);color:#06140c;}
+.mus-tag-4{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1a1205;}
+.mus-tag-free{margin-left:auto;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;background:rgba(52,211,153,.18);border:1px solid rgba(52,211,153,.4);color:#6ee7b7;}
+.mus-play{flex:0 0 auto;width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-size:15px;transition:transform .25s ease,box-shadow .25s ease;}
+.mus-card:hover .mus-play{transform:scale(1.12);box-shadow:0 4px 16px rgba(99,102,241,.45);}
+</style><div class="mus-wrap"><div class="mus-head"><h3>🎵 音乐收藏</h3><p>全部免费 · 点击试听</p></div><div style="text-align:center"><span class="mus-banner">🎁 全部免费畅听</span></div><div class="mus-grid">${this.TRACKS.map((t,i)=>`<div class="mus-card" onclick="MusicEngine.play('${t.id}')"><div class="mus-icon">${t.name.split(' ')[0]}</div><div class="mus-body"><div class="mus-name">${t.name}<span class="mus-tag-free">免费</span></div><div class="mus-meta"><span class="mus-tag mus-tag-${i%5}">${t.genre}</span><span>♫ ${t.bpm} bpm</span></div></div><div class="mus-play">▶</div></div>`).join('')}</div></div>`;return html}};
 
 
 /**
