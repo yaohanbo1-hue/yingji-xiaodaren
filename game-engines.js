@@ -132,7 +132,77 @@ const BossRushEngine = {_bosses:[{name:"火龙",icon:"🐉",hp:150,element:"fire
  * ============================================================================
  */
 
-const CalendarEngine = {currentYear:(new Date).getFullYear(),currentMonth:(new Date).getMonth(),disasterDays:{"3-1":{name:"国际民防日",icon:"🛡️",desc:"提高公众对民防的认识"},"3-23":{name:"世界气象日",icon:"🌦️",desc:"关注气象灾害防御"},"4-22":{name:"世界地球日",icon:"🌍",desc:"关注地球环境与自然灾害"},"5-12":{name:"全国防灾减灾日",icon:"🌪️",desc:"纪念汶川地震，提高防灾意识"},"6-5":{name:"世界环境日",icon:"🌿",desc:"关注环境问题引发的灾害"},"7-28":{name:"唐山大地震纪念日",icon:"🌍",desc:"1976年唐山7.8级地震"},"9-16":{name:"国际臭氧层保护日",icon:"🌏",desc:"关注臭氧层破坏"},"10-13":{name:"国际减灾日",icon:"🌐",desc:"联合国设立的国际减灾日"},"11-9":{name:"全国消防日",icon:"🔥",desc:"119消防宣传日"},"12-13":{name:"国家公祭日",icon:"🕯️",desc:"缅怀遇难同胞"}},checkIn(){CheckinEngine.checkin()},checkin:function(){return this.checkIn()},render(){const el=document.getElementById("calendarContent");if(!el)return;const today=new Date,year=this.currentYear,month=this.currentMonth,firstDay=new Date(year,month,1).getDay(),daysInMonth=new Date(year,month+1,0).getDate(),checkins=GameState._data.checkinDates||[],todayStr=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}-${String(today.getDate()).padStart(2,"0")}`,isCheckedToday=checkins.includes(todayStr),streak=GameState._data.dailyStreak||0;let html=`\n      <div class="calendar-header-bar">\n        <button class="btn btn-sm" onclick="CalendarEngine.prevMonth()">◀</button>\n        <h3 class="calendar-month-title">${year}年 ${["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"][month]}</h3>\n        <button class="btn btn-sm" onclick="CalendarEngine.nextMonth()">▶</button>\n      </div>\n\n      <div class="calendar-checkin-banner ${isCheckedToday?"checked":""}" onclick="CalendarEngine.checkin()">\n        <span class="checkin-icon">${isCheckedToday?"✅":"📅"}</span>\n        <div>\n          <div class="checkin-text">${isCheckedToday?"今日已打卡！":"点击今日打卡"}</div>\n          <div class="checkin-streak">🔥 连续打卡 ${streak} 天</div>\n        </div>\n        ${isCheckedToday?"":'<button class="btn btn-primary btn-sm">打卡 +10🪙</button>'}\n      </div>\n\n      <div class="calendar-weekdays">\n        <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>\n      </div>\n      <div class="calendar-grid">`;for(let i=0;i<firstDay;i++)html+='<div class="calendar-day empty"></div>';for(let d=1;d<=daysInMonth;d++){const dateKey=`${year}-${month+1}-${d}`,isToday=d===today.getDate()&&month===today.getMonth()&&year===today.getFullYear(),isCheckin=checkins.includes(dateKey),disasterKey=`${month+1}-${d}`,disaster=this.disasterDays[disasterKey];let cls="calendar-day";isToday&&(cls+=" today"),isCheckin&&(cls+=" checked"),disaster&&(cls+=" disaster-day"),!(new Date(year,month,d)<new Date(today.getFullYear(),today.getMonth(),today.getDate()))||isCheckin||isToday||(cls+=" past"),html+=`<div class="${cls}" ${disaster?`onclick="CalendarEngine.showDisaster('${disasterKey}')"`:""}>\n        <span class="day-num">${d}</span>\n        ${disaster?`<span class="day-disaster">${disaster.icon}</span>`:""}\n        ${isCheckin?'<span class="day-check">✓</span>':""}\n      </div>`}html+=`</div>\n\n      <div class="calendar-upcoming">\n        <h4 class="upcoming-title">📌 近期防灾纪念日</h4>\n        ${this._getUpcomingEvents(year,month)}\n      </div>\n    `,el.innerHTML=html},_getUpcomingEvents(year,month){const events=[];for(let m=month;m<Math.min(month+3,12);m++)for(const[key,val]of Object.entries(this.disasterDays)){const[em,ed]=key.split("-").map(Number);em===m+1&&(m>month||ed>=(new Date).getDate())&&events.push({...val,date:`${m+1}月${ed}日`,month:m})}return 0===events.length?'<p style="color:var(--text-dim);font-size:13px">暂无近期纪念日</p>':events.slice(0,5).map(e=>`\n      <div class="upcoming-item">\n        <span>${e.icon}</span>\n        <div>\n          <div class="upcoming-name">${e.name}</div>\n          <div class="upcoming-date">${e.date}</div>\n        </div>\n      </div>\n    `).join("")},prevMonth(){this.currentMonth--,this.currentMonth<0&&(this.currentMonth=11,this.currentYear--),this.render()},nextMonth(){this.currentMonth++,this.currentMonth>11&&(this.currentMonth=0,this.currentYear++),this.render()},checkin(){const today=new Date,todayStr=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}-${String(today.getDate()).padStart(2,"0")}`;if(GameState._data.checkinDates||(GameState._data.checkinDates=[]),GameState._data.checkinDates.includes(todayStr))return void Modal.show("📅 已打卡","今天已经打过卡了，明天再来吧！","✅");GameState._data.checkinDates.push(todayStr);const yesterday=new Date(today);yesterday.setDate(yesterday.getDate()-1);const yesterdayStr=`${yesterday.getFullYear()}-${String(yesterday.getMonth()+1).padStart(2,"0")}-${String(yesterday.getDate()).padStart(2,"0")}`;GameState._data.checkinDates.includes(yesterdayStr)?GameState._data.dailyStreak=(GameState._data.dailyStreak||0)+1:GameState._data.dailyStreak=1,GameState.addCoins(10),showConfetti(20),AudioManager.play("checkin"),"undefined"!=typeof VisualFX&&VisualFX.checkinFireworks(),Modal.show("🎉 打卡成功！",`连续打卡 <strong>${GameState._data.dailyStreak}</strong> 天！<br>获得 <strong class="text-gold">10 金币</strong>`,"📅"),this.render()},showDisaster(key){const d=this.disasterDays[key];d&&Modal.show(`${d.icon} ${d.name}`,d.desc+'<br><br><em style="color:var(--text-dim)">了解更多防灾知识，请查看灾害百科全书！</em>',"📖")}};
+const CalendarEngine = {currentYear:(new Date).getFullYear(),currentMonth:(new Date).getMonth(),disasterDays:{"3-1":{name:"国际民防日",icon:"🛡️",desc:"提高公众对民防的认识"},"3-23":{name:"世界气象日",icon:"🌦️",desc:"关注气象灾害防御"},"4-22":{name:"世界地球日",icon:"🌍",desc:"关注地球环境与自然灾害"},"5-12":{name:"全国防灾减灾日",icon:"🌪️",desc:"纪念汶川地震，提高防灾意识"},"6-5":{name:"世界环境日",icon:"🌿",desc:"关注环境问题引发的灾害"},"7-28":{name:"唐山大地震纪念日",icon:"🌍",desc:"1976年唐山7.8级地震"},"9-16":{name:"国际臭氧层保护日",icon:"🌏",desc:"关注臭氧层破坏"},"10-13":{name:"国际减灾日",icon:"🌐",desc:"联合国设立的国际减灾日"},"11-9":{name:"全国消防日",icon:"🔥",desc:"119消防宣传日"},"12-13":{name:"国家公祭日",icon:"🕯️",desc:"缅怀遇难同胞"}},checkIn(){CheckinEngine.checkin()},checkin:function(){return this.checkIn()},render(){
+/* ===== 日历渲染（含完整样式） ===== */
+const el=document.getElementById("calendarContent");if(!el)return;
+const today=new Date,year=this.currentYear,month=this.currentMonth,
+firstDay=new Date(year,month,1).getDay(),daysInMonth=new Date(year,month+1,0).getDate(),
+checkins=GameState._data.checkinDates||[],
+todayStr=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}-${String(today.getDate()).padStart(2,"0")}`,
+isCheckedToday=checkins.includes(todayStr),streak=GameState._data.dailyStreak||0;
+let css=`<style>
+.cal-wrap{padding:4px 16px 30px;box-sizing:border-box;}
+.cal-nav{display:flex;align-items:center;justify-content:center;gap:16px;padding:14px 16px;margin-bottom:14px;border-radius:16px;background:linear-gradient(135deg,rgba(99,102,241,0.10),rgba(168,85,247,0.06));border:1px solid rgba(139,92,246,0.15);backdrop-filter:blur(8px);}
+.cal-nav button{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.10);color:#E8EAED;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s ease;}
+.cal-nav button:hover{background:rgba(139,92,246,0.20);border-color:rgba(139,92,246,0.35);transform:scale(1.08);}
+.cal-month-label{font-size:19px;font-weight:800;color:#fff;letter-spacing:.5px;text-shadow:0 2px 8px rgba(139,92,246,.25);}
+.cal-checkin-card{display:flex;align-items:center;gap:16px;padding:18px 20px;margin-bottom:16px;border-radius:18px;cursor:pointer;transition:all .25s cubic-bezier(.4,0,.2,1);border:1px solid rgba(255,255,255,0.08);background:linear-gradient(145deg,rgba(255,215,0,0.08),rgba(255,152,0,0.03));backdrop-filter:blur(12px);position:relative;overflow:hidden;}
+.cal-checkin-card::after{content:'';position:absolute;right:-10px;top:-10px;width:80px;height:80px;background:radial-gradient(circle,rgba(255,215,0,0.12),transparent 70%);pointer-events:none;}
+.cal-checkin-card.checked{border-color:rgba(0,230,118,0.25);background:linear-gradient(145deg,rgba(0,230,118,0.09),rgba(0,212,255,0.03));}
+.cal-checkin-card.checked::after{background:radial-gradient(circle,rgba(0,230,118,0.15),transparent 70%);}
+.cal-checkin-card:hover{transform:translateY(-2px) scale(1.01);border-color:rgba(255,215,0,0.28);box-shadow:0 8px 24px rgba(0,0,0,.2);}
+.cal-ci-icon{font-size:40px;line-height:1;flex-shrink:0;filter:drop-shadow(0 3px 8px rgba(0,0,0,.3));}
+.cal-ci-body{flex:1;min-width:0;}
+.cal-ci-status{font-size:17px;font-weight:700;color:#FFD700;margin-bottom:2px;}
+.cal-ci-streak{font-size:13px;color:rgba(255,255,255,0.50);display:flex;align-items:center;gap:4px;font-weight:500;}
+.cal-ci-btn{flex-shrink:0;padding:10px 18px;border-radius:12px;background:linear-gradient(135deg,#FFD700,#F59E0B);color:#000;font-size:13px;font-weight:700;border:none;cursor:pointer;transition:all .2s;letter-spacing:.3px;}
+.cal-ci-btn:hover{transform:scale(1.05);box-shadow:0 4px 16px rgba(255,215,0,.3);}
+.cal-week{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px;padding:0 2px;}
+.cal-wd{text-align:center;font-size:11px;font-weight:600;color:rgba(255,255,255,.35);padding:8px 0 4px;letter-spacing:.5px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:4px 2px 0;}
+.cal-day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:12px;position:relative;cursor:default;transition:all .18s ease;font-size:14px;font-weight:600;color:rgba(255,255,255,.55);min-height:42px;}
+.cal-day:not(.empty):hover{background:rgba(255,255,255,.06);color:#E8EAED;transform:scale(1.08);z-index:2;}
+.cal-day.empty{visibility:hidden;pointer-events:none;}
+.cal-day.today{background:linear-gradient(135deg,rgba(99,102,241,0.22),rgba(168,85,247,0.14));border:1.5px solid rgba(139,92,246,.45);color:#C4B5FD;font-weight:800;z-index:1;box-shadow:0 0 12px rgba(139,92,246,.15),inset 0 1px 0 rgba(255,255,255,.1);}
+.cal-day.checked{background:linear-gradient(135deg,rgba(0,230,118,0.14),rgba(0,212,255,0.06));border:1px solid rgba(0,230,118,.25);color:#34D399;}
+.cal-day.past{opacity:.32;}
+.cal-dn{font-size:14px;line-height:1;}
+.cal-dc{position:absolute;top:2px;right:2px;font-size:9px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5));z-index:1;}
+.cal-dk{position:absolute;bottom:2px;left:50%;transform:translateX(-50%);font-size:9px;color:#00E676;font-weight:700;z-index:1;}
+.cal-events{margin-top:18px;padding:16px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);}
+.cal-ev-title{font-size:14px;font-weight:700;color:rgba(255,255,255,.75);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.cal-ev-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.02);margin-bottom:6px;border-left:3px solid var(--ev-color,rgba(255,215,0,.4));transition:all .2s;cursor:default;}
+.cal-ev-item:hover{background:rgba(255,255,255,.05);transform:translateX(3px);}
+.cal-ev-icon{font-size:24px;flex-shrink:0;}
+.cal-ev-info{flex:1;min-width:0;}
+.cal-ev-name{font-size:13px;font-weight:600;color:#E8EAED;}
+.cal-ev-desc{font-size:11px;color:rgba(255,255,255,.4);margin-top:1px;}
+</style>`;
+
+let html=css+`<div class="cal-wrap">
+<div class="cal-nav"><button onclick="CalendarEngine.prevMonth()">◀</button><span class="cal-month-label">${year}年 ${["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"][month]}</span><button onclick="CalendarEngine.nextMonth()">▶</button></div>
+
+<div class="cal-checkin-card ${isCheckedToday?"checked":""}" onclick="CalendarEngine.checkin()">
+<span class="cal-ci-icon">${isCheckedToday?"✅":"📅"}</span><div class="cal-ci-body"><div class="cal-ci-status">${isCheckedToday?"今日已打卡！":"点击今日打卡"}</div><div class="cal-ci-streak">🔥 连续打卡 ${streak} 天</div></div>${isCheckedToday?"":'<button class="cal-ci-btn" onclick="event.stopPropagation();CalendarEngine.checkin()">打卡 +10🪙</button>'}
+</div>
+
+<div class="cal-week"><span class="cal-wd">日</span><span class="cal-wd">一</span><span class="cal-wd">二</span><span class="cal-wd">三</span><span class="cal-wd">四</span><span class="cal-wd">五</span><span class="cal-wd">六</span></div>
+<div class="cal-grid">`;
+
+for(let i=0;i<firstDay;i++)html+='<div class="cal-day empty"></div>';
+for(let d=1;d<=daysInMonth;d++){
+const dateKey=`${year}-${month+1}-${d}`,isToday=d===today.getDate()&&month===today.getMonth()&&year===today.getFullYear(),isCheckin=checkins.includes(dateKey),disasterKey=`${month+1}-${d}`,disaster=this.disasterDays[disasterKey];
+let cls="cal-day";
+isToday&&(cls+=" today"),isCheckin&&(cls+=" checked"),disaster&&(cls+=" disaster-day");
+!(new Date(year,month,d)<new Date(today.getFullYear(),today.getMonth(),today.getDate()))||isCheckin||isToday||(cls+=" past");
+html+=`<div class="${cls}" ${disaster?`onclick="CalendarEngine.showDisaster('${disasterKey}')"`:""}>
+<span class="cal-dn">${d}</span>${disaster?`<span class="cal-dc">${disaster.icon}</span>`:""}${isCheckin?'<span class="cal-dk">✓</span>':""}
+</div>`;}
+
+html+=`</div>
+<div class="cal-events"><div class="cal-ev-title">📌 近期防灾纪念日</div>${this._getUpcomingEvents(year,month)}</div></div>`;
+el.innerHTML=html;
+},_getUpcomingEvents(year,month){const events=[];for(let m=month;m<Math.min(month+3,12);m++)for(const[key,val]of Object.entries(this.disasterDays)){const[em,ed]=key.split("-").map(Number);em===m+1&&(m>month||ed>=(new Date).getDate())&&events.push({...val,date:`${m+1}月${ed}日`,month:m})}return 0===events.length?'<div style="color:rgba(255,255,255,.3);font-size:13px;text-align:center;padding:10px">暂无近期纪念日</div>':events.slice(0,5).map(e=>`<div class="cal-ev-item" style="--ev-color:rgba(255,215,0,.35)"><span class="cal-ev-icon">${e.icon}</span><div class="cal-ev-info"><div class="cal-ev-name">${e.name}</div><div class="cal-ev-desc">${e.desc} · ${e.date}</div></div></div>`).join("")},prevMonth(){this.currentMonth--,this.currentMonth<0&&(this.currentMonth=11,this.currentYear--),this.render()},nextMonth(){this.currentMonth++,this.currentMonth>11&&(this.currentMonth=0,this.currentYear++),this.render()},checkin(){const today=new Date,todayStr=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}-${String(today.getDate()).padStart(2,"0")}`;if(GameState._data.checkinDates||(GameState._data.checkinDates=[]),GameState._data.checkinDates.includes(todayStr))return void Modal.show("📅 已打卡","今天已经打过卡了，明天再来吧！","✅");GameState._data.checkinDates.push(todayStr);const yesterday=new Date(today);yesterday.setDate(yesterday.getDate()-1);const yesterdayStr=`${yesterday.getFullYear()}-${String(yesterday.getMonth()+1).padStart(2,"0")}-${String(yesterday.getDate()).padStart(2,"0")}`;GameState._data.checkinDates.includes(yesterdayStr)?GameState._data.dailyStreak=(GameState._data.dailyStreak||0)+1:GameState._data.dailyStreak=1,GameState.addCoins(10),showConfetti(20),AudioManager.play("checkin"),"undefined"!=typeof VisualFX&&VisualFX.checkinFireworks(),Modal.show("🎉 打卡成功！",`连续打卡 <strong>${GameState._data.dailyStreak}</strong> 天！<br>获得 <strong class="text-gold">10 金币</strong>`,"📅"),this.render()},showDisaster(key){const d=this.disasterDays[key];d&&Modal.show(`${d.icon} ${d.name}`,d.desc+'<br><br><em style="color:var(--text-dim)">了解更多防灾知识，请查看灾害百科全书！</em>',"📖")}};
 
 
 /**
