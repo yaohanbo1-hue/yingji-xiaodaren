@@ -3524,7 +3524,8 @@ body {
 #page-ai-tutor,
 #page-stats,
 #page-leaderboard,
-#page-character{padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))!important;}
+#page-character,
+#page-free{padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))!important;}
 #aiTutorContent{padding-bottom:20px;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 
 /* ===== 地图节点 ===== */

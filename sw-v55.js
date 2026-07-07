@@ -1,7 +1,7 @@
 // ===== 应急小达人 Service Worker =====
 // 离线缓存策略：Cache First, Network Fallback
 
-const CACHE_NAME = 'yingji-xiaodaren-v116';
+const CACHE_NAME = 'yingji-xiaodaren-v117';
 const STATIC_ASSETS = [
   './',
   './index.html',
