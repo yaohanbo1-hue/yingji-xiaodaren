@@ -49,6 +49,7 @@ html { margin: 0 !important; }
   overscroll-behavior-y: contain !important;
   display: flex !important;
   flex-direction: column !important;
+  padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px)) !important; /* 底部导航栏避让 */
 }
 
 /* ===== B. 内层滚动容器：.page-content 承担实际滚动 ===== */
