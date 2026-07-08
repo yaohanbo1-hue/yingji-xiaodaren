@@ -3499,25 +3499,35 @@ body {
 .tip-text{font-size:13px;color:rgba(148,163,184,0.6);margin-top:8px;padding-top:8px;border-top:1px solid rgba(34,197,94,0.15);}
 .hidden{display:none !important;}
 
-/* ===== 记忆翻牌 - 玻璃拟态 3D 翻牌 ===== */
+/* ===== 记忆翻牌 - 独立页面(#page-memory-card) 玻璃拟态 3D 翻牌 ===== */
 #memoryGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:440px;margin:0 auto;padding:8px 0;perspective:1000px;}
-.memory-card{position:relative;width:100%;aspect-ratio:3/4;cursor:pointer;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1);}
-.memory-card.flipped{transform:rotateY(180deg);}
-.memory-card.matched{transform:rotateY(180deg);pointer-events:none;}
-.memory-card-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;border-radius:16px;overflow:hidden;}
-.memory-card-front,.memory-card-back{position:absolute;top:0;left:0;width:100%;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;align-items:center;justify-content:center;border-radius:16px;border:1.5px solid rgba(255,255,255,.12);}
-.memory-card-front{background:linear-gradient(145deg,rgba(99,102,241,.20),rgba(139,92,246,.10));border-color:rgba(139,92,246,.30);box-shadow:inset 0 2px 12px rgba(99,102,241,.15),0 4px 20px rgba(0,0,0,.25);}
-.memory-card-front::before{content:'';position:absolute;top:0;left:0;right:0;height:50%;background:linear-gradient(180deg,rgba(255,255,255,.12),transparent);border-radius:16px 16px 0 0;}
-.memory-card-front::after{content:'❓';font-size:36px;filter:drop-shadow(0 2px 8px rgba(99,102,241,.5));animation:pulseQuestion 2s ease-in-out infinite;}
+#page-memory-card .memory-card{position:relative;width:100%;aspect-ratio:3/4;cursor:pointer;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1);}
+#page-memory-card .memory-card.flipped{transform:rotateY(180deg);}
+#page-memory-card .memory-card.matched{transform:rotateY(180deg);pointer-events:none;}
+#page-memory-card .memory-card-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;border-radius:16px;overflow:hidden;}
+#page-memory-card .memory-card-front,#page-memory-card .memory-card-back{position:absolute;top:0;left:0;width:100%;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;align-items:center;justify-content:center;border-radius:16px;border:1.5px solid rgba(255,255,255,.12);}
+#page-memory-card .memory-card-front{background:linear-gradient(145deg,rgba(99,102,241,.20),rgba(139,92,246,.10));border-color:rgba(139,92,246,.30);box-shadow:inset 0 2px 12px rgba(99,102,241,.15),0 4px 20px rgba(0,0,0,.25);}
+#page-memory-card .memory-card-front::before{content:'';position:absolute;top:0;left:0;right:0;height:50%;background:linear-gradient(180deg,rgba(255,255,255,.12),transparent);border-radius:16px 16px 0 0;}
+#page-memory-card .memory-card-front::after{content:'❓';font-size:36px;filter:drop-shadow(0 2px 8px rgba(99,102,246,.5));animation:pulseQuestion 2s ease-in-out infinite;}
 @keyframes pulseQuestion{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
-.memory-card-back{background:linear-gradient(145deg,rgba(15,23,42,.85),rgba(30,41,59,.80));border-color:rgba(56,189,248,.35);box-shadow:0 6px 28px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08);transform:rotateY(180deg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
-.memory-card-back::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,rgba(56,189,248,.12),transparent 60%);pointer-events:none;}
-.memory-card-back>span,.memory-card-back{font-size:42px!important;line-height:1;text-shadow:0 4px 12px rgba(0,0,0,.4);}
+#page-memory-card .memory-card-back{background:linear-gradient(145deg,rgba(15,23,42,.85),rgba(30,41,59,.80));border-color:rgba(56,189,248,.35);box-shadow:0 6px 28px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08);transform:rotateY(180deg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+#page-memory-card .memory-card-back::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,rgba(56,189,248,.12),transparent 60%);pointer-events:none;}
+#page-memory-card .memory-card-back>span,#page-memory-card .memory-card-back{font-size:42px!important;line-height:1;text-shadow:0 4px 12px rgba(0,0,0,.4);}
 /* matched glow */
-.memory-card.matched .memory-card-back{border-color:rgba(52,211,153,.5);box-shadow:0 0 24px rgba(52,211,153,.25),0 6px 28px rgba(0,0,0,.25),inset 0 0 20px rgba(52,211,153,.08);}
+#page-memory-card .memory-card.matched .memory-card-back{border-color:rgba(52,211,153,.5);box-shadow:0 0 24px rgba(52,211,153,.25),0 6px 28px rgba(0,0,0,.25),inset 0 0 20px rgba(52,211,153,.08);}
 /* page header enhancement */
 #page-memory-card .game-header{text-align:center;padding:20px 16px 8px;}
 #page-memory-card .mode-label{font-size:26px!important;font-weight:900;letter-spacing:2px;}
+
+/* ===== 小游戏内记忆翻牌(MiniGameEngine.renderMemory) ===== */
+.memory-header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;margin-bottom:16px;border-radius:16px;background:rgba(99,102,241,.10);border:1px solid rgba(99,102,247,.25);font-weight:700;font-size:15px;color:#e0e7ff;}
+.memory-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:480px;margin:0 auto;padding:8px 0;}
+/* 小游戏版 memory-card — 不用 3D 翻转,用简单的背景切换 */
+.minigameContent .memory-card,.memory-grid .memory-card{position:relative;width:100%;aspect-ratio:1;cursor:pointer;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:36px;background:rgba(99,102,241,.12);border:1.5px solid rgba(99,102,247,.28);transition:all .3s ease;user-select:none;-webkit-tap-highlight-color:transparent;}
+.minigameContent .memory-card:hover,.memory-grid .memory-card:hover{background:rgba(99,102,241,.22);transform:scale(1.04);box-shadow:0 6px 22px rgba(0,0,0,.3);}
+.minigameContent .memory-card.flipped,.memory-grid .memory-card.flipped{background:linear-gradient(145deg,rgba(16,23,42,.9),rgba(30,41,59,.85));border-color:rgba(56,189,248,.45);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 4px 16px rgba(0,0,0,.3);}
+.minigameContent .memory-card.matched,.memory-grid .memory-card.matched{background:linear-gradient(145deg,rgba(16,78,62,.9),rgba(6,78,59,.85));border-color:rgba(52,211,153,.55);box-shadow:0 0 20px rgba(52,211,153,.2),inset 0 0 16px rgba(52,211,153,.08);opacity:.85;}
+.minigameContent .memory-front,.memory-grid .memory-front{font-size:38px;line-height:1;filter:drop-shadow(0 3px 10px rgba(0,0,0,.4));}
 
 /* ===== 底部导航栏遮挡修复 ===== */
 /* 确保 AI 导师、统计等有底部交互内容的页面不被固定导航遮挡 */
@@ -3526,7 +3536,8 @@ body {
 #page-leaderboard,
 #page-character,
 #page-free,
-#page-codex{padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))!important;}
+#page-codex,
+#page-minigame{padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))!important;}
 #aiTutorContent{padding-bottom:20px;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 
 /* ===== 地图节点 ===== */
