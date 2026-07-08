@@ -1,14 +1,17 @@
 /**
- * Cloudflare Worker - DeepSeek API 代理
+ * Cloudflare Worker - DeepSeek API 代理（可部署版见 worker/worker.js，本文件为同源参考）
  * 免费套餐每天 10 万次请求，全球边缘节点
- * 
- * 部署说明：
- * 1. 在 Cloudflare Dashboard → Workers & Pages → 创建 Worker
- * 2. 粘贴本文件代码
- * 3. 在 Settings → Variables 添加环境变量 DEEPSEEK_API_KEY
- * 4. 部署后获得 https://你的子域名.workers.dev
- * 5. 在游戏控制台执行：
- *    localStorage.setItem('deepseek_proxy_url', 'https://你的子域名.workers.dev')
+ *
+ * 部署说明（推荐直接用 worker/ 目录，含 wrangler.toml / README）：
+ * 1. 在 Cloudflare Dashboard → Workers & Pages → 创建 Worker，粘贴 worker.js
+ * 2. 在 Settings → Variables 添加环境变量 DEEPSEEK_API_KEY（Encrypt）
+ * 3. 部署后获得 https://你的子域名.workers.dev
+ * 4. 全站免配置：把前端 ai-tutor-llm-v55.js 顶部的
+ *    const AI_TUTOR_DEFAULT_PROXY_URL = '';
+ *    改成你的 Worker 地址并重新部署站点。
+ *    （或仅在游戏内 ☁️/🔑 按钮手动填入 localStorage 的 deepseek_proxy_url）
+ *
+ * 接口：POST { message, history?, model?, system? } → { answer }（system 可选，AI 出题时传入专用 prompt）
  */
 
 export default {
@@ -50,7 +53,7 @@ export default {
       });
     }
 
-    const { message, history = [], model = 'deepseek-chat' } = body;
+    const { message, history = [], model = 'deepseek-chat', system = '' } = body;
     if (!message || typeof message !== 'string') {
       return new Response(JSON.stringify({ error: '缺少 message 参数' }), {
         status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -86,7 +89,7 @@ export default {
           messages: [
             {
               role: 'system',
-              content: '你是一位专业的防灾减灾教育AI导师。你擅长地震、火灾、洪涝、台风、雷电、暴雪、泥石流、干旱、山火、火山、海啸、沙尘暴等自然灾害的预防和应急知识。回答要简洁实用、通俗易懂，适合普通民众和青少年理解。可以适当使用emoji增加亲和力。如果用户问的是非防灾问题，礼貌地引导回防灾话题。使用中文回答。'
+              content: (system && String(system).trim()) ? String(system) : '你是一位专业的防灾减灾教育AI导师。你擅长地震、火灾、洪涝、台风、雷电、暴雪、泥石流、干旱、山火、火山、海啸、沙尘暴等自然灾害的预防和应急知识。回答要简洁实用、通俗易懂，适合普通民众和青少年理解。可以适当使用emoji增加亲和力。如果用户问的是非防灾问题，礼貌地引导回防灾话题。使用中文回答。'
             },
             ...(history || []).slice(-6),
             { role: 'user', content: message }

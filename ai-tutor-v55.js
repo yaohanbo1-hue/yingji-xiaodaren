@@ -305,7 +305,7 @@ const AITutorEngine = {
       
       <!-- 操作按钮 -->
       <div class="actions-card">
-        <button class="action-btn action-btn-primary" onclick="AITutorEngine.startRecommendedPractice()">
+        <button class="action-btn action-btn-primary" onclick="AITutorEngine.startAIQuiz()">
           <span class="action-btn-icon">🎯</span>
           <span class="action-btn-text">开始智能练习</span>
         </button>
@@ -752,7 +752,7 @@ const AITutorEngine = {
           return '目前还没有足够的答题记录来生成推荐。\n\n先去开盲盒或挑战答题吧，我会根据你的表现智能推荐练习题目！';
         }
         
-        return `我为你智能推荐了 ${recs.length} 道练习题，优先针对你的薄弱环节。\n\n点击"开始智能推荐练习"按钮，直接进入针对性训练模式！`;
+        return `我为你智能推荐了 ${recs.length} 道练习题，优先针对你的薄弱环节。\n\n点击「开始智能练习」或「给我出题」按钮，AI 会针对你的薄弱项实时出题，答对答错都会讲解！`;
       }
       
       case 'progress': {
@@ -806,7 +806,7 @@ const AITutorEngine = {
 
     const api = window.DeepSeekAPI;
     if (!api || !api.isConfigured()) {
-      this._typeMessage('ai', '⚠️ **AI 智能答题需要配置 DeepSeek API**\n\n请点击右上角 ☁️ 按钮，输入你的 DeepSeek API Key 来启用 AI 出题。\n\n💡 前往 [DeepSeek 开放平台](https://platform.deepseek.com) 注册，免费送 500 万 tokens。');
+      this._typeMessage('ai', '⚠️ **AI 出题需要连接 AI 代理**\n\n本游戏通过 Cloudflare Worker 代理调用 DeepSeek（浏览器直连 API Key 会被 CORS 拦截，请勿直接填 Key）。\n\n请部署仓库 `worker/` 目录下的 Worker 并在 ☁️ 设置中填入代理地址，或由管理员在 `ai-tutor-llm-v55.js` 配置 `AI_TUTOR_DEFAULT_PROXY_URL`。详见 `worker/README.md`。');
       this._askingLock = false;
       return;
     }

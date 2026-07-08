@@ -1,0 +1,8 @@
+name = "yingji-ai-proxy"
+main = "worker.js"
+compatibility_date = "2024-09-23"
+
+# DEEPSEEK_API_KEY 为密钥，请用以下命令单独设置（不要写进本文件）：
+#   npx wrangler secret put DEEPSEEK_API_KEY
+# 部署：
+#   npx wrangler deploy

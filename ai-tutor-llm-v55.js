@@ -740,6 +740,13 @@ const AITutorBrain = {
   }
 };
 
+// ===== AI 代理默认地址（Cloudflare Worker）=====
+// 部署 worker/ 目录下的 Cloudflare Worker 并在 Cloudflare 后台配置 DEEPSEEK_API_KEY 后，
+// 把下面的空字符串改成你的 Worker 地址（例如 'https://yingji-ai-proxy.xxx.workers.dev'），
+// 所有访客即可免配置直接使用 LLM 出题 / 对话。留空则需用户在 ☁️ 设置中自行填入代理地址。
+// 注意：浏览器无法直连 DeepSeek API（CORS 限制），必须通过此 Worker 代理。
+const AI_TUTOR_DEFAULT_PROXY_URL = '';
+
 // ===== DeepSeek API 集成（纯云端模式）=====
 const DeepSeekAPI = {
   // 支持两种模式：直接 API Key 或 代理 URL
@@ -784,7 +791,8 @@ const DeepSeekAPI = {
   getModel() { return this._model; },
 
   isConfigured() {
-    return !!(this._apiKey && this._apiKey.length > 10) || !!(this._proxyUrl && this._proxyUrl.length > 10);
+    const proxy = (this._proxyUrl && this._proxyUrl.length > 10) ? this._proxyUrl : (AI_TUTOR_DEFAULT_PROXY_URL || '');
+    return !!(this._apiKey && this._apiKey.length > 10) || !!(proxy && proxy.length > 10);
   },
   async isReady() { return this.isConfigured(); },
 
@@ -832,12 +840,14 @@ const DeepSeekAPI = {
 
       let response;
 
-      if (this._proxyUrl && this._proxyUrl.length > 10) {
-        // 代理���式：发送给 Cloudflare Worker
-        response = await fetch(this._proxyUrl, {
+      const proxyUrl = (this._proxyUrl && this._proxyUrl.length > 10) ? this._proxyUrl : (AI_TUTOR_DEFAULT_PROXY_URL || '');
+      if (proxyUrl && proxyUrl.length > 10) {
+        // 代理模式：发送给 Cloudflare Worker
+        response = await fetch(proxyUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: userMessage, history: (history || []).slice(-6), model: this._model }),
+          body: JSON.stringify({ message: userMessage, history: (history || []).slice(-6), model: this._model,
+          system: (options && options.system) || '' }),
           signal: controller.signal
         });
       } else {
