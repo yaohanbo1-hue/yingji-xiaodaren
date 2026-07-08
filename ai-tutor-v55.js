@@ -27,14 +27,15 @@ function escapeHtml(text) {
 }
 
 // AI 智能出题：请求 DeepSeek 返回结构化 JSON（题干 + 选项 + 正确答案 + 解析）
-const AI_TUTOR_QUIZ_SYSTEM = `你是中国防灾教育游戏《应急小达人》的 AI 出题官，面向中小学生。请出一道防灾知识选择题，考查 12 种自然灾害（地震、洪涝、台风、火灾、雷电、暴雪、泥石流、干旱、山火、火山、海啸、沙尘暴）之一的科学应对方法。
+const AI_TUTOR_QUIZ_SYSTEM = `你是中国防灾教育游戏《应急小达人》的 AI 出题官，面向中小学生。请出一道防灾知识选择题，考查 12 种自然灾害（地震、洪涝、台风、火灾、雷电、暴雪、泥石流、干旱、山火、火山、海啸、沙尘暴）之一的科学应对方法。你应当在 12 类灾害之间均衡轮换覆盖，不要反复只出"地震"类题目。
 
 要求：
 1. 题干简洁明确，符合中小学生认知水平。
 2. 提供 4 个选项，其中只有 1 个正确。
 3. answer 为正确选项索引，从 0 开始（0=A，1=B，2=C，3=D）。
 4. explanation 用 1-2 句通俗语言说明正确答案的原因，并点出常见误区。
-5. 只输出 JSON，不要任何额外说明文字，不要使用 markdown 代码块标记。
+5. 题干要用具体、生活化的场景切入（如家里、学校、户外徒步、开车、海边、夜间、厨房等），避免千篇一律的"发生X时，正确做法是"句式；同一灾害也要从不同侧面（预防/避险/自救/互救）出题，不要与已有题目雷同。
+6. 只输出 JSON，不要任何额外说明文字，不要使用 markdown 代码块标记。
 
 输出格式（严格 JSON）：
 {
@@ -52,6 +53,10 @@ const AITutorEngine = {
   _radarAnimFrame: null,
   _typingTimer: null,
   _cloudEnabled: false,
+  // AI 出题题材轮换：保证 12 类灾害均衡覆盖、不连续重复
+  _quizTypes: ['earthquake','flood','typhoon','fire','lightning','blizzard','landslide','drought','wildfire','volcano','tsunami','sandstorm'],
+  _quizOrder: null,
+  _quizPos: 0,
   
   // ===== 初始化 =====
   init() {
@@ -796,6 +801,21 @@ const AITutorEngine = {
     }
   },
 
+  // 从 12 类灾害中按需轮换抽取下一题题材（洗牌后顺序，保证一轮内每类都出现且不连续重复）
+  _nextQuizDisaster() {
+    if (!this._quizOrder) {
+      this._quizOrder = this._quizTypes.slice();
+      for (let i = this._quizOrder.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const t = this._quizOrder[i]; this._quizOrder[i] = this._quizOrder[j]; this._quizOrder[j] = t;
+      }
+      this._quizPos = 0;
+    }
+    const d = this._quizOrder[this._quizPos % this._quizOrder.length];
+    this._quizPos++;
+    return d;
+  },
+
   // ===== AI 结构化智能答题 =====
   startAIQuiz() {
     if (this._askingLock) {
@@ -811,10 +831,18 @@ const AITutorEngine = {
       return;
     }
 
-    this._typeMessage('user', '❓ 给我出一道 AI 防灾选择题');
+    // 前端驱动题材：每次从 12 类灾害中轮换抽取，保证覆盖且不连续重复
+    const disaster = this._nextQuizDisaster();
+    const meta = this._getDisasterMeta();
+    const dName = (meta.names && meta.names[disaster]) || disaster;
+    this._typeMessage('user', '❓ 给我出一道关于【' + dName + '】的 AI 防灾选择题');
     this.showTyping();
 
-    api.chat(AI_TUTOR_QUIZ_USER, this._chatHistory || [], { system: AI_TUTOR_QUIZ_SYSTEM }).then(result => {
+    // 指定题材 + 反模板句式，从源头避免"全地震/泥石流"和"发生X时,正确做法是"的雷同
+    const quizUserMsg = '请出一道关于【' + dName + '】的防灾知识选择题，只返回严格 JSON（不要使用 markdown 代码块）。'
+      + '题干请用具体生活场景切入（如居家、学校、户外、驾车、夜间、海边、山区、厨房等），严禁使用"发生X时，正确做法是"这类模板句式，'
+      + '也不要出与"地震时在教室/室内怎么做"雷同的题目；同一灾害也应换不同侧面（预防/避险/自救/互救）设问。';
+    api.chat(quizUserMsg, [], { system: AI_TUTOR_QUIZ_SYSTEM }).then(result => {
       this.hideTyping();
       if (result.error) {
         this._typeMessage('ai', '⚠️ **AI 出题失败**\n\n' + result.error + '\n\n你可以稍后再试，或检查 API Key 设置。');
