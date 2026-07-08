@@ -1216,7 +1216,11 @@ const StudyEngine = {
 
   start: function(disasterType) {
     var cards;
-    if (disasterType && disasterType !== "all") {
+    // 优先使用外部注入的定制卡组（如 AI 导师推荐练习）
+    if (this.customCards && Array.isArray(this.customCards) && this.customCards.length > 0) {
+      cards = this.customCards.slice();
+      this.customCards = null; // 用完即清，避免下次误入
+    } else if (disasterType && disasterType !== "all") {
       cards = ALL_CARDS.filter(function(c) { return c.disaster === disasterType; });
     } else {
       cards = ALL_CARDS.filter(function(c) { return c.disaster !== "equip"; });
