@@ -7960,6 +7960,21 @@ body {
   transform: perspective(800px) rotateX(-2deg) translateY(-4px);
 }
 
+/* 情景模拟底部按钮可见性保障：确保反馈区+下一幕按钮不被截断 */
+#scenarioContent {
+  padding-bottom: 20px !important;
+}
+#page-scenario .scenario-card {
+  margin-bottom: 8px !important;
+}
+#page-scenario .scenario-feedback {
+  margin-bottom: 10px !important;
+}
+#page-scenario .quiz-next-btn {
+  margin-top: 4px !important;
+  margin-bottom: 16px !important;
+}
+
 /* 进度条液态玻璃 */
 .quiz-progress-bar {
   background: rgba(255, 255, 255, 0.06);
