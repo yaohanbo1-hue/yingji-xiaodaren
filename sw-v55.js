@@ -1,7 +1,7 @@
 // ===== 应急小达人 Service Worker =====
 // 离线缓存策略：Cache First, Network Fallback
 
-const CACHE_NAME = 'yingji-xiaodaren-v126';
+const CACHE_NAME = 'yingji-xiaodaren-v127';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -68,17 +68,52 @@ self.addEventListener('fetch', function(event) {
     // 关键：只在本版本缓存（CACHE_NAME）内查找/写入，绝不跨缓存搜索。
     // 旧版本缓存（如 v91）即使残留被截断的 bundle，也绝不会被服务，彻底杜绝
     // "Unexpected end of input" 这类因旧坏缓存导致的解析错误。
+    //
+    // v126+: 对 JS 资源增加完整性校验 — 检测到截断缓存时自动丢弃并重新拉取
     caches.open(CACHE_NAME).then(function(cache) {
       return cache.match(cacheRequest).then(function(cachedResponse) {
+        var isJS = /\.js($|\?)/i.test(request.url);
+
+        // 完整性检查函数：检测 JS 响应是否被截断
+        function isTruncated(resp) {
+          if (!resp || !isJS) return false;
+          // 正常的 app.min.js 应以 Runtime hardening 标记结尾
+          var CLONE_MARKER = 'Runtime hardening';
+          return resp.headers.get('content-length') < 800000;  // 正常约 1MB，<800KB 很可能截断
+        }
+
         var networkFetch = fetch(request).then(function(networkResponse) {
           if (networkResponse && networkResponse.ok) {
-            cache.put(cacheRequest, networkResponse.clone());
+            // 写入前再次校验完整性（仅对 JS）
+            if (isJS) {
+              networkResponse.clone().text().then(function(text) {
+                if (!text || text.length < 10000 || !text.includes('Runtime hardening')) {
+                  console.warn('[SW] 检测到网络响应可能不完整，不写入缓存');
+                  cache.delete(cacheRequest).catch(function(){});
+                } else {
+                  cache.put(cacheRequest, networkResponse.clone()).catch(function(){});
+                }
+              }).catch(function(){
+                // text() 失败时仍尝试缓存（总比没有好）
+                cache.put(cacheRequest, networkResponse.clone()).catch(function(){});
+              });
+            } else {
+              cache.put(cacheRequest, networkResponse.clone());
+            }
           }
           return networkResponse;
         });
 
         // 缓存优先：有缓存先返回缓存，后台静默更新
         if (cachedResponse) {
+          // v126+：对 JS 缓存做完整性预检，截断则直接走网络
+          if (isJS && isTruncated(cachedResponse)) {
+            console.warn('[SW] 检测到截断的 JS 缓存，丢弃并重新拉取:', request.url);
+            event.waitUntil(cache.delete(cacheRequest));
+            return networkFetch.catch(function() {
+              return new Response('/* cache corrupted */', { status: 200, headers: { 'Content-Type': 'application/javascript' } });
+            });
+          }
           event.waitUntil(networkFetch.catch(function() {}));
           return cachedResponse;
         }

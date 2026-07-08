@@ -46,11 +46,11 @@
 <link rel="stylesheet" href="critical.css?v=86">
 
 <!-- 非关键样式打包（v1.3.5）：css-variables + all-styles + settings/optimizer/animation + 交互/视觉/滚动修复 合并压缩为单文件 -->
-<link rel="stylesheet" href="css/all.min.css?v=126">
+<link rel="stylesheet" href="css/all.min.css?v=127">
 
 <!-- 预加载最关键资源：打包后的 JS 与 CSS（v1.3.5） -->
-<link rel="preload" href="css/all.min.css?v=126" as="style">
-<link rel="preload" href="js/app.min.js?v=126" as="script" fetchpriority="high">
+<link rel="preload" href="css/all.min.css?v=127" as="style">
+<link rel="preload" href="js/app.min.js?v=127" as="script" fetchpriority="high">
 
 <!-- 🔧 关键 Bug 修复 — 内联 CSS 确保始终生效（滑动/点击/遮挡问题） -->
 <style>
@@ -2014,7 +2014,67 @@
 <!-- ===== 核心脚本打包（v1.3.5）：原 45 个 defer 脚本按依赖顺序合并压缩为单个文件 ===== -->
 <!-- 说明：game.js 已在早期移除（const Modal 重复声明冲突），所有引擎由 game-engines.js 提供；localStorage 保护由 SafeStorage 提供 -->
 <!-- 加载顺序与原 45 个独立 <script> 完全一致（共享全局作用域），保证零语义变更 -->
-<script src="js/app.min.js?v=126" defer></script>
+
+<!--
+  缓存损坏自检与自动修复 (v126+)
+  问题：SW 可能服务截断的旧 JS bundle → SyntaxError: Unexpected end of input
+  方案：内联脚本拦截加载错误，检测到损坏时清除 SW 缓存并强制刷新
+-->
+<script>
+(function(){
+  var EXPECTED_VERSION = '126';
+  var _corruptionDetected = false;
+  var _recoveryAttempted = false;
+
+  function forceRecover(reason) {
+    if (_recoveryAttempted) return;
+    _recoveryAttempted = true;
+    console.warn('⚠️ [CacheGuard] 检测到缓存损坏:', reason, '— 正在修复...');
+
+    // 1. 清除所有 SW 注册和缓存
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(regs) {
+        regs.forEach(function(reg) { reg.unregister(); });
+      }).catch(function(){});
+    }
+
+    // 2. 尝试清除所有 caches API 缓存
+    if ('caches' in window) {
+      caches.keys().then(function(names) {
+        names.forEach(function(name) { caches.delete(name); });
+      }).catch(function(){});
+    }
+
+    // 3. 强制硬刷新（绕过所有缓存）
+    setTimeout(function() {
+      location.href = location.href.split('?')[0] + '?_cg=' + Date.now();
+    }, 300);
+  }
+
+  // 拦截全局 SyntaxError（来自截断的 JS bundle）
+  window.addEventListener('error', function(e) {
+    if (e.message && e.message.indexOf('SyntaxError') >= 0 ||
+        e.message && e.message.indexOf('Unexpected end') >= 0) {
+      _corruptionDetected = true;
+      e.preventDefault();
+      forceRecover('SyntaxError: ' + e.message.substring(0,80));
+    }
+  }, true);
+
+  // 脚本加载完成后验证引擎是否正常初始化
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      if (_corruptionDetected || _recoveryAttempted) return;
+      if (typeof PageManager === 'undefined') {
+        forceRecover('PageManager 未定义 — JS bundle 未正确执行');
+      }
+    }, 2000);
+  }, { once: true });
+
+  window._CacheGuard = { version: EXPECTED_VERSION, forceRecover: forceRecover };
+})();
+</script>
+<script src="js/app.min.js?v=127" defer></script>
 
 <!-- ===== Service Worker 注册（含旧缓存强制清除）===== -->
 <script>
@@ -2041,7 +2101,7 @@
       }
 
       function registerNewSW() {
-        navigator.serviceWorker.register('sw-v55.js?v=126')
+        navigator.serviceWorker.register('sw-v55.js?v=127')
           .then(function(reg) {
             console.log('[SW] 注册成功:', reg.scope);
             reg.addEventListener('updatefound', function() {
