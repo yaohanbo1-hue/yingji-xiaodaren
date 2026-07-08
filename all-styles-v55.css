@@ -3529,6 +3529,57 @@ body {
 .minigameContent .memory-card.matched,.memory-grid .memory-card.matched{background:linear-gradient(145deg,rgba(16,78,62,.9),rgba(6,78,59,.85));border-color:rgba(52,211,153,.55);box-shadow:0 0 20px rgba(52,211,153,.2),inset 0 0 16px rgba(52,211,153,.08);opacity:.85;}
 .minigameContent .memory-front,.memory-grid .memory-front{font-size:38px;line-height:1;filter:drop-shadow(0 3px 10px rgba(0,0,0,.4));}
 
+/* ===== 小游戏 - 灾害快速反应 ===== */
+.reaction-header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;margin-bottom:20px;border-radius:18px;background:linear-gradient(135deg,rgba(245,158,11,.12),rgba(234,179,8,.08));border:1px solid rgba(245,158,11,.3);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+.reaction-header span:first-child{font-size:18px;font-weight:800;color:#fbbf24;text-shadow:0 2px 8px rgba(245,158,11,.3);}
+.reaction-header span:last-child{font-size:13px;font-weight:600;color:rgba(255,255,255,.7);}
+.reaction-card{display:flex;flex-direction:column;align-items:center;gap:14px;padding:32px 28px 28px;border-radius:22px;background:linear-gradient(145deg,rgba(30,41,59,.85),rgba(15,23,42,.9));border:2px solid rgba(245,158,11,.25);box-shadow:0 8px 36px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.06),0 0 60px rgba(245,158,11,.06);text-align:center;margin-bottom:24px;position:relative;overflow:hidden;}
+.reaction-card::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:2px;background:linear-gradient(90deg,transparent,#fbbf24,transparent);border-radius:2px;}
+.reaction-icon{display:flex;align-items:center;justify-content:center;width:100px;height:100px;border-radius:26px;background:linear-gradient(145deg,rgba(245,158,11,.15),rgba(234,179,8,.08));border:2px solid rgba(245,158,11,.35);font-size:52px;line-height:1;animation:reactionPulseIn .5s cubic-bezier(.34,1.56,.64,1) both;}
+@keyframes reactionPulseIn{from{opacity:0;transform:scale(.6);}to{opacity:1;transform:scale(1);}}
+.reaction-text{font-size:22px;font-weight:800;color:#fff;margin:0;line-height:1.3;letter-spacing:.5px;text-shadow:0 2px 8px rgba(0,0,0,.4);}
+.reaction-question{font-size:15px;font-weight:600;color:rgba(251,191,36,.85);margin:4px 0 0!important;}
+.reaction-buttons{display:flex;gap:18px;justify-content:center;padding:0 8px;}
+.reaction-btn{flex:1;max-width:200px;display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 28px;border-radius:16px;border:none;font-size:17px;font-weight:700;cursor:pointer;transition:all .25s ease;-webkit-tap-highlight-color:transparent;}
+.reaction-btn.correct{background:linear-gradient(135deg,rgba(52,211,153,.25),rgba(16,185,129,.18));color:#6ee7b7;border:2px solid rgba(52,211,153,.45);box-shadow:0 4px 20px rgba(52,211,153,.15),inset 0 1px 0 rgba(255,255,255,.08);}
+.reaction-btn.wrong{background:linear-gradient(135deg,rgba(239,68,68,.25),rgba(220,38,38,.18));color:#fca5a5;border:2px solid rgba(239,68,68,.45);box-shadow:0 4px 20px rgba(239,68,68,.15),inset 0 1px 0 rgba(255,255,255,.08);}
+.reaction-btn:hover{transform:translateY(-3px) scale(1.03);}
+.reaction-btn.correct:hover{background:linear-gradient(135deg,rgba(52,211,153,.40),rgba(16,185,129,.28));box-shadow:0 8px 28px rgba(52,211,153,.25);}
+.reaction-btn.wrong:hover{background:linear-gradient(135deg,rgba(239,68,68,.40),rgba(220,38,38,.28));box-shadow:0 8px 28px rgba(239,68,68,.25);}
+.reaction-btn:active{transform:scale(.96)!important;}
+
+/* ===== 小游戏 - 逃生顺序挑战 ===== */
+.sequence-header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;margin-bottom:20px;border-radius:18px;background:linear-gradient(135deg,rgba(168,85,247,.12),rgba(139,92,246,.08));border:1px solid rgba(168,85,247,.3);backdrop-filter:blur(10px);}
+.sequence-header span:first-child{font-size:18px;font-weight:800;color:#c084fc;text-shadow:0 2px 8px rgba(168,85,247,.3);}
+.sequence-header span:last-child{font-size:13px;font-weight:600;color:rgba(255,255,255,.7);}
+.sequence-answer{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;min-height:80px;}
+.seq-step{padding:12px 18px;border-radius:14px;background:linear-gradient(145deg,rgba(139,92,246,.12),rgba(99,102,241,.08));border:1px solid rgba(139,92,246,.3);color:#e0e7ff;font-size:15px;font-weight:600;display:flex;align-items:center;gap:10px;animation:seqStepIn .3s cubic-bezier(.34,1.56,.64,1) both;}
+@keyframes seqStepIn{from{opacity:0;transform:translateX(-16px);}to{opacity:1;transform:translateX(0);}}
+.seq-step.done{background:linear-gradient(145deg,rgba(52,211,153,.15),rgba(16,185,129,.10));border-color:rgba(52,211,153,.4);color:#a7f3d0;}
+.seq-placeholder{padding:16px;border-radius:14px;border:2px dashed rgba(139,92,246,.25);color:rgba(196,132,252,.5);font-style:italic;text-align:center;font-size:14px;}
+.sequence-options{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:16px;}
+.seq-option-btn{padding:13px 20px;border-radius:14px;background:rgba(139,92,246,.10);border:1.5px solid rgba(139,92,247,.35);color:#ddd6fe;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s ease;-webkit-tap-highlight-color:transparent;}
+.seq-option-btn:hover{background:rgba(139,92,246,.22);border-color:rgba(168,85,247,.55);transform:scale(1.04);box-shadow:0 4px 16px rgba(139,92,246,.2);}
+.seq-option-btn:active{transform:scale(.97)!important;}
+
+/* ===== 小游戏 - 内嵌问答弹窗 ===== */
+.minigame-quiz-overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:99998;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:quizFadeIn .25s ease both;}
+@keyframes quizFadeIn{from{opacity:0;}to{opacity:1;}}
+.minigame-quiz-card{max-width:480px;width:90%;padding:28px 24px 24px;border-radius:22px;background:linear-gradient(145deg,rgba(30,41,59,.95),rgba(15,23,42,.96));border:1px solid rgba(56,189,248,.3);box-shadow:0 16px 56px rgba(0,0,0,.5),0 0 80px rgba(56,189,248,.08);text-align:center;}
+.quiz-badge{display:inline-block;padding:6px 16px;border-radius:999px;background:linear-gradient(135deg,rgba(56,189,248,.2),rgba(6,182,212,.15));color:#bae6fd;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:16px;border:1px solid rgba(56,189,248,.3);}
+.quiz-question{font-size:17px;font-weight:700;color:#fff;margin:0 0 18px;line-height:1.5;}
+.quiz-options{display:flex;flex-direction:column;gap:10px;}
+.quiz-opt-btn{padding:14px 20px;border-radius:14px;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.12);color:rgba(255,255,255,.85);font-size:15px;font-weight:600;cursor:pointer;transition:all .2s ease;text-align:left;}
+.quiz-opt-btn:hover{background:rgba(59,130,246,.15);border-color:rgba(59,130,246,.4);transform:translateX(4px);}
+.quiz-opt-btn.correct{background:linear-gradient(135deg,rgba(52,211,153,.2),rgba(16,185,129,.12));border-color:rgba(52,211,153,.5)!important;color:#a7f3d0!important;}
+.quiz-opt-btn.wrong{background:linear-gradient(135deg,rgba(239,68,68,.2),rgba(220,38,38,.12));border-color:rgba(239,68,68,.5)!important;color:#fecaca!important;}
+
+/* ===== 屏幕闪烁反馈(flashScreen) ===== */
+.screen-flash{position:fixed;top:0;left:0;width:100%;height:100%;z-index:99999;pointer-events:none;animation:flashFade .35s ease-out forwards;}
+.screen-flash.flash-correct{background:radial-gradient(circle at 50% 50%,rgba(52,211,153,.3),transparent 70%);}
+.screen-flash.flash-wrong{background:radial-gradient(circle at 50% 50%,rgba(239,68,68,.3),transparent 70%);}
+@keyframes flashFade{from{opacity:1;}to{opacity:0;}}
+
 /* ===== 底部导航栏遮挡修复 ===== */
 /* 确保 AI 导师、统计等有底部交互内容的页面不被固定导航遮挡 */
 #page-ai-tutor,
