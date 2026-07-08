@@ -1793,6 +1793,7 @@ html, body {
 #page-menu {
   position: relative;
   z-index: 2;
+  overflow-x: hidden;
 }
 
 #page-menu::before {
@@ -3236,9 +3237,15 @@ body {
 
 /* ===== 返回按钮 ===== */
 .back-float {
+  appearance: none !important;
+  -webkit-appearance: none !important;
   background: rgba(255,255,255,0.06) !important;
   border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 12px !important;
   box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+  color: rgba(255,255,255,0.85) !important;
+  font-size: 16px !important;
+  padding: 6px 12px !important;
 }
 
 .back-float:hover {
@@ -4520,6 +4527,8 @@ body {
 
 /* 按钮 */
 .guide-btn {
+  appearance: none !important;
+  -webkit-appearance: none !important;
   padding: 8px 16px;
   border-radius: 8px;
   font-size: 12px;
@@ -8375,3 +8384,32 @@ body {
 .cert-card{position:relative;}
 .cert-close{position:absolute;top:14px;right:14px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;font-size:22px;line-height:1;cursor:pointer;transition:all .2s ease;appearance:none;-webkit-appearance:none;outline:none;font-family:inherit;z-index:3;}
 .cert-close:hover{background:rgba(239,68,68,.35);border-color:rgba(239,68,68,.55);transform:rotate(90deg);}
+
+/* ==========================================================================
+   v125 全局按钮安全网 + 残留原生样式修复
+   ========================================================================== */
+
+/* 全局：所有 button / [role=button] 强制去除原生外观 */
+button, [role="button"], .btn {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+}
+
+/* 答题选项按钮 */
+.quiz-opt, .dq-opt, .scenario-opt {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+}
+
+/* AI 导师快捷按钮 */
+.suggestion-btn, .action-btn {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+}
+
+/* 图鉴筛选按钮 */
+.codex-filter-btn {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+}
