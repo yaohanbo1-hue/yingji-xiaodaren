@@ -53,10 +53,9 @@ const AITutorEngine = {
   _radarAnimFrame: null,
   _typingTimer: null,
   _cloudEnabled: false,
-  // AI 出题题材轮换：保证 12 类灾害均衡覆盖、不连续重复
+  // AI 出题题材清单 + 去重记忆：让 LLM 自选题材，并带上"近期已出过"的记忆保证多样性
   _quizTypes: ['earthquake','flood','typhoon','fire','lightning','blizzard','landslide','drought','wildfire','volcano','tsunami','sandstorm'],
-  _quizOrder: null,
-  _quizPos: 0,
+  _quizRecent: [],
   
   // ===== 初始化 =====
   init() {
@@ -801,21 +800,6 @@ const AITutorEngine = {
     }
   },
 
-  // 从 12 类灾害中按需轮换抽取下一题题材（洗牌后顺序，保证一轮内每类都出现且不连续重复）
-  _nextQuizDisaster() {
-    if (!this._quizOrder) {
-      this._quizOrder = this._quizTypes.slice();
-      for (let i = this._quizOrder.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        const t = this._quizOrder[i]; this._quizOrder[i] = this._quizOrder[j]; this._quizOrder[j] = t;
-      }
-      this._quizPos = 0;
-    }
-    const d = this._quizOrder[this._quizPos % this._quizOrder.length];
-    this._quizPos++;
-    return d;
-  },
-
   // ===== AI 结构化智能答题 =====
   startAIQuiz() {
     if (this._askingLock) {
@@ -831,17 +815,18 @@ const AITutorEngine = {
       return;
     }
 
-    // 前端驱动题材：每次从 12 类灾害中轮换抽取，保证覆盖且不连续重复
-    const disaster = this._nextQuizDisaster();
+    // 让 LLM 自选题材，但带上"近期已出过"的记忆，引导它自己产出多样化题目（而非前端硬排）
     const meta = this._getDisasterMeta();
-    const dName = (meta.names && meta.names[disaster]) || disaster;
-    this._typeMessage('user', '❓ 给我出一道关于【' + dName + '】的 AI 防灾选择题');
+    const allNames = this._quizTypes.map(k => meta.names[k]).join('、');
+    const recent = (this._quizRecent || []).slice(-6).map(k => meta.names[k]).filter(Boolean);
+    const recentStr = recent.length ? recent.join('、') : '（暂无）';
+    this._typeMessage('user', '❓ 给我出一道 AI 防灾选择题');
     this.showTyping();
 
-    // 指定题材 + 反模板句式，从源头避免"全地震/泥石流"和"发生X时,正确做法是"的雷同
-    const quizUserMsg = '请出一道关于【' + dName + '】的防灾知识选择题，只返回严格 JSON（不要使用 markdown 代码块）。'
-      + '题干请用具体生活场景切入（如居家、学校、户外、驾车、夜间、海边、山区、厨房等），严禁使用"发生X时，正确做法是"这类模板句式，'
-      + '也不要出与"地震时在教室/室内怎么做"雷同的题目；同一灾害也应换不同侧面（预防/避险/自救/互救）设问。';
+    const quizUserMsg = '请从这 12 类灾害【' + allNames + '】中，自选一道【尚未出过或最近没出过】的灾害来出题'
+      + '（最近已出过：' + recentStr + '，请优先选完全不同的；若全都出过则选一个不同的）。'
+      + '只返回严格 JSON（不要使用 markdown 代码块）。题干用具体生活场景切入（居家/学校/户外/驾车/夜间/海边/山区/厨房等），'
+      + '严禁"发生X时，正确做法是"这类模板句式，同一灾害换不同侧面（预防/避险/自救/互救）设问。';
     api.chat(quizUserMsg, [], { system: AI_TUTOR_QUIZ_SYSTEM }).then(result => {
       this.hideTyping();
       if (result.error) {
@@ -856,6 +841,11 @@ const AITutorEngine = {
         this._askingLock = false;
         return;
       }
+      // 记录本题题材到去重记忆，引导 LLM 下次自选不同灾害
+      const d = this._detectDisaster((quiz.question || '') + ' ' + (quiz.explanation || ''));
+      this._quizRecent = this._quizRecent || [];
+      this._quizRecent.push(d);
+      if (this._quizRecent.length > 12) this._quizRecent = this._quizRecent.slice(-12);
       this._currentQuiz = quiz;
       this.renderAIQuiz(quiz);
       this._askingLock = false;
