@@ -402,6 +402,40 @@
   box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4) !important;
 }
 
+/* 面板底部「打开 AI 导师」按钮（此前缺失样式 -> 原生灰按钮） */
+.ai-float-btn {
+  flex: 1 !important;
+  padding: 11px 16px !important;
+  border: none !important;
+  border-radius: 14px !important;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6) !important;
+  color: #fff !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  letter-spacing: .3px !important;
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+  transition: all .2s ease !important;
+  /* 强制清除 button 原生外观 */
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  outline: none !important;
+  font-family: inherit !important;
+}
+
+.ai-float-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(139, 92, 246, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+.ai-float-btn:active {
+  transform: scale(.97) !important;
+}
+
 /* ===== 响应式 ===== */
 @media (max-width: 480px) {
   .ai-float-panel {
