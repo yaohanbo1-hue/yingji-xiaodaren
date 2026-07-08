@@ -1046,19 +1046,26 @@ const AITutorEngine = {
     
     const api = window.DeepSeekAPI;
     const currentKey = api ? api.getApiKey() : '';
-    const configured = currentKey && currentKey.length > 10;
+    const currentProxy = api ? api.getProxyUrl() : '';
+    const configured = (currentKey && currentKey.length > 10) || (currentProxy && currentProxy.length > 10);
     
     dialog.innerHTML = `
       <h3 style="margin:0 0 12px;color:#00d4ff;font-size:18px;">🤖 DeepSeek AI 设置</h3>
-      <p style="color:#8899aa;font-size:13px;margin:0 0 16px;line-height:1.5;">
-        ${configured ? '<span style="color:#00e676;">✅ AI 已配置</span>' : '<span style="color:#F59E0B;">⚠️ 未配置，请输入 API Key</span>'}<br>
-        前往 <a href="https://platform.deepseek.com" target="_blank" style="color:#00d4ff;">DeepSeek 开放平台</a> 注册，免费送 500 万 tokens
+      <p style="color:#8899aa;font-size:12.5px;margin:0 0 14px;line-height:1.6;">
+        ${configured ? '<span style="color:#00e676;">✅ 已配置，可使用 LLM 出题</span>' : '<span style="color:#F59E0B;">⚠️ 尚未配置，AI 导师暂不能出题</span>'}<br>
+        推荐填<b>代理地址</b>：部署仓库 <code>worker/</code> 里的 Cloudflare Worker 后，把地址（如 <code>https://xxx.workers.dev</code>）填到下方即可免 Key 使用。<br>
+        浏览器直连 DeepSeek Key 会被 CORS 拦截，一般不可用，故优先用代理。
       </p>
-      
-      <label style="display:block;color:#8899aa;font-size:12px;margin:0 0 6px;">DeepSeek API Key</label>
-      <input type="password" id="newApiKeyInput" placeholder="sk-xxxxxxxxxxxx" 
+
+      <label style="display:block;color:#8899aa;font-size:12px;margin:0 0 6px;">代理地址（推荐）</label>
+      <input type="text" id="newProxyInput" placeholder="https://你的-worker.workers.dev"
+        style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,212,255,0.2);border-radius:8px;color:#fff;font-size:14px;margin:0 0 14px;box-sizing:border-box;"
+        value="${escapeHtml(currentProxy || '')}">
+
+      <label style="display:block;color:#8899aa;font-size:12px;margin:0 0 6px;">DeepSeek API Key（直连，通常被 CORS 拦截）</label>
+      <input type="password" id="newApiKeyInput" placeholder="sk-xxxxxxxxxxxx"
         style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,212,255,0.2);border-radius:8px;color:#fff;font-size:14px;margin:0 0 12px;box-sizing:border-box;"
-        value="${escapeHtml(configured ? currentKey : '')}">
+        value="${escapeHtml(currentKey || '')}">
       
       <div style="display:flex;gap:8px;justify-content:flex-end;">
         ${configured ? '<button onclick="AITutorEngine.clearApiKey()" style="padding:8px 16px;background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.3);border-radius:8px;color:#EF4444;cursor:pointer;font-size:14px;">清除</button>' : ''}
@@ -1073,20 +1080,28 @@ const AITutorEngine = {
   },
   
   saveApiKey() {
+    const proxyInput = document.getElementById('newProxyInput');
     const keyInput = document.getElementById('newApiKeyInput');
-    if (!keyInput) return;
-    
-    const key = keyInput.value.trim();
-    if (!key) {
+    if (!proxyInput && !keyInput) return;
+
+    const proxy = proxyInput ? proxyInput.value.trim() : '';
+    const key = keyInput ? keyInput.value.trim() : '';
+
+    if (!proxy && !key) {
       this.clearApiKey();
       return;
     }
-    
+
     if (window.DeepSeekAPI) {
+      // 代理地址是浏览器唯一可行的路径（直连 Key 会被 CORS 拦截）
+      window.DeepSeekAPI.setProxyUrl(proxy);
       window.DeepSeekAPI.setApiKey(key);
-      this._typeMessage('ai', '✅ **DeepSeek AI 已配置成功！**\n\n现在你可以问我任何防灾问题了。试试：\n• "地震来了怎么办？"\n• "洪水和台风有什么区别？"\n• "推荐我练习什么？"');
+      const ok = window.DeepSeekAPI.isConfigured();
+      this._typeMessage('ai', ok
+        ? '✅ **AI 已配置成功！**\n\n现在点击下方「开始智能练习」或「给我出题」，AI 会实时出防灾选择题并讲解对错。'
+        : 'ℹ️ 已保存，但代理地址和 Key 都为空。请填入 Cloudflare Worker 代理地址（推荐）后再试。');
     }
-    
+
     const dialog = document.getElementById('apiKeyDialog');
     if (dialog) dialog.remove();
   },
@@ -1098,7 +1113,7 @@ const AITutorEngine = {
     }
     const dialog = document.getElementById('apiKeyDialog');
     if (dialog) dialog.remove();
-    this._typeMessage('ai', '已清除 API 配置。请点击 ☁️ 按钮重新设置 DeepSeek API Key。');
+    this._typeMessage('ai', '已清除 AI 配置（代理地址与 Key 均已清空）。如需使用，请点击 ☁️ 重新填入代理地址。');
   },
   
   // ===== 练习功能 =====
