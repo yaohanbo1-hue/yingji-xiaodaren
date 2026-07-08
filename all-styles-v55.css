@@ -701,6 +701,7 @@ button:focus-visible,
 
 /* ===== 头部卡片 ===== */
 .ai-header-card {
+  flex-shrink: 0;
   position: relative;
   overflow: hidden;
   border-radius: 20px;
@@ -831,6 +832,7 @@ button:focus-visible,
 
 /* ===== 雷达图卡片 ===== */
 .radar-card {
+  flex-shrink: 0;
   border-radius: 20px;
   padding: 20px;
   background: rgba(255, 255, 255, 0.02);
@@ -918,6 +920,7 @@ button:focus-visible,
 
 /* ===== 诊断卡片 ===== */
 .diagnosis-card {
+  flex-shrink: 0;
   border-radius: 20px;
   padding: 18px;
   background: rgba(255, 255, 255, 0.02);
@@ -1079,6 +1082,7 @@ button:focus-visible,
 
 /* ===== 对话终端卡片 ===== */
 .terminal-card {
+  flex-shrink: 0;
   border-radius: 20px;
   overflow: hidden;
   background: rgba(15, 23, 42, 0.6);
@@ -1315,6 +1319,7 @@ button:focus-visible,
 
 /* ===== 操作按钮卡片 ===== */
 .actions-card {
+  flex-shrink: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
