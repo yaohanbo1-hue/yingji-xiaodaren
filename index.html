@@ -46,11 +46,11 @@
 <link rel="stylesheet" href="critical.css?v=86">
 
 <!-- 非关键样式打包（v1.3.5）：css-variables + all-styles + settings/optimizer/animation + 交互/视觉/滚动修复 合并压缩为单文件 -->
-<link rel="stylesheet" href="css/all.min.css?v=131">
+<link rel="stylesheet" href="css/all.min.css?v=132">
 
 <!-- 预加载最关键资源：打包后的 JS 与 CSS（v1.3.5） -->
-<link rel="preload" href="css/all.min.css?v=131" as="style">
-<link rel="preload" href="js/app.min.js?v=131" as="script" fetchpriority="high">
+<link rel="preload" href="css/all.min.css?v=132" as="style">
+<link rel="preload" href="js/app.min.js?v=132" as="script" fetchpriority="high">
 
 <!-- 🔧 关键 Bug 修复 — 内联 CSS 确保始终生效（滑动/点击/遮挡问题） -->
 <style>
@@ -2022,7 +2022,7 @@
 -->
 <script>
 (function(){
-  var EXPECTED_VERSION = '131'
+  var EXPECTED_VERSION = '132'
   var _corruptionDetected = false;
   var _recoveryAttempted = false;
 
@@ -2046,8 +2046,20 @@
     }
 
     // 3. 强制硬刷新（绕过所有缓存）
+    //    关键修复：必须保留 ?v=NNN 版本参数，否则重定向后页面引用的是
+    //    无版本号的裸资源，浏览器/CDN 可能返回旧版（甚至截断的）bundle，
+    //    导致 SyntaxError → 再次触发恢复 → 死循环。
     setTimeout(function() {
-      location.href = location.href.split('?')[0] + '?_cg=' + Date.now();
+      var base = location.href.split('?')[0];
+      var qs = location.href.indexOf('?') > -1 ? location.href.slice(location.href.indexOf('?') + 1) : '';
+      var params = qs ? qs.split('&') : [];
+      var clean = [];
+      for (var i = 0; i < params.length; i++) {
+        if (params[i].indexOf('_cg=') !== 0) clean.push(params[i]);
+      }
+      clean.push('_cg=' + Date.now());
+      clean.push('v=' + EXPECTED_VERSION);
+      location.href = base + '?' + clean.join('&');
     }, 300);
   }
 
@@ -2074,7 +2086,7 @@
   window._CacheGuard = { version: EXPECTED_VERSION, forceRecover: forceRecover };
 })();
 </script>
-<script src="js/app.min.js?v=131" defer></script>
+<script src="js/app.min.js?v=132" defer></script>
 
 <!-- ===== Service Worker 注册（含旧缓存强制清除）===== -->
 <script>
@@ -2101,7 +2113,7 @@
       }
 
       function registerNewSW() {
-        navigator.serviceWorker.register('sw-v55.js?v=131')
+        navigator.serviceWorker.register('sw-v55.js?v=132')
           .then(function(reg) {
             console.log('[SW] 注册成功:', reg.scope);
             reg.addEventListener('updatefound', function() {
