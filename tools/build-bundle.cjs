@@ -49,8 +49,6 @@ const JS_FILES = [
   'share.js',
   'i18n.js',
   'bg-themes.js',
-  'liquid-glass.js',
-  'optimizer-mobile.js',
   'encyclopedia_extra.js',
   'encyclopedia_final.js',
   'bg-premium.js',
@@ -112,9 +110,7 @@ console.log(`[JS] 原始 ${ (rawTotal/1024).toFixed(1) } KB -> 压缩 ${ (minTot
 const cssList = [
   'css-variables.css',
   'all-styles-v55.css',
-  'settings.css',
   'optimizer-mobile.css',
-  'animation-optimize.css',
   'fix-interaction.css',
   'ai-float.css',
   'visual-enhance.css',
