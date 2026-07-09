@@ -372,8 +372,11 @@ I18nEngine = {
     document.documentElement.lang = this._currentLang;
   },
   
-  // 添加语言切换器到设置页面
+  // 添加语言切换器到设置页面（已隐藏，不再注入）
   _addLanguageSwitcher() {
+    // i18n 尚未完全接入（0 个 data-i18n 属性），暂不注入切换器
+    return;
+  },
     const checkInterval = setInterval(() => {
       const settingsPage = document.getElementById('page-settings');
       if (settingsPage && !settingsPage.querySelector('.lang-switcher')) {

@@ -1031,7 +1031,7 @@
           <div class="settings-card-right">
             <div class="settings-volume-wrap">
               <input type="range" min="0" max="100" value="50" class="settings-volume-slider" id="bgmVolumeSlider"
-                oninput="BGMEngine.setVolume(this.value/100);document.getElementById('bgmVolumeVal').textContent=this.value+'%'">
+                oninput="(function(v){try{if(typeof BGMEngineV2!=='undefined'&&BGMEngineV2.setVolume){BGMEngineV2.setVolume(v);}else if(typeof BGMEngine!=='undefined'&&BGMEngine.setVolume){BGMEngine.setVolume(v);}}catch(e){console.warn('BGM setVolume:',e.message);}})(this.value/100);document.getElementById('bgmVolumeVal').textContent=this.value+'%'">
               <span class="settings-volume-value" id="bgmVolumeVal">50%</span>
             </div>
           </div>
@@ -1069,7 +1069,8 @@
             <span class="settings-chevron">›</span>
           </div>
         </div>
-        <div class="settings-card">
+        <!-- 语言切换（i18n 未完全接入，暂隐藏） -->
+        <div class="settings-card" style="display:none;">
           <div class="settings-card-left">
             <div class="settings-card-icon" style="background:linear-gradient(135deg,#06B6D4,#3B82F6)">🌐</div>
             <div class="settings-card-info">
