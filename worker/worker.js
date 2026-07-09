@@ -59,10 +59,11 @@ export default {
 
     // 模型名映射（兼容前端传入的别名 → DeepSeek 官方模型名）
     const modelMap = {
-      'deepseek-v4-flash': 'deepseek-chat',
-      'deepseek-v4-pro': 'deepseek-chat',
-      'deepseek-chat': 'deepseek-chat',
-      'deepseek-reasoner': 'deepseek-reasoner',
+      'deepseek-v4-flash': 'deepseek-v4-flash',
+      'deepseek-v4-pro': 'deepseek-v4-pro',
+      // 兼容旧名（已废弃 2026/07/24）
+      'deepseek-chat': 'deepseek-v4-flash',
+      'deepseek-reasoner': 'deepseek-v4-pro',
     };
     const resolvedModel = modelMap[model] || 'deepseek-chat';
 

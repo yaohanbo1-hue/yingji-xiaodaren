@@ -752,7 +752,7 @@ const DeepSeekAPI = {
   // 支持两种模式：直接 API Key 或 代理 URL
   _apiKey: (function(){ try { return localStorage.getItem('deepseek_api_key'); } catch(e) { return ''; } })(),
   _proxyUrl: (function(){ try { return localStorage.getItem('deepseek_proxy_url'); } catch(e) { return ''; } })(),
-  _model: (function(){ try { return localStorage.getItem('aitutor_model'); } catch(e) { return ''; } })() || 'deepseek-chat',
+  _model: (function(){ try { return localStorage.getItem('aitutor_model'); } catch(e) { return ''; } })() || 'deepseek-v4-flash',
 
   _systemPrompt: `你是"应急小达人"——一款面向中小学生的防灾教育互动游戏——的专属 AI 防灾导师（角色名：防灾小卫士）。你性格友善、耐心、专业，像一位可靠的大哥哥/大姐姐。
 

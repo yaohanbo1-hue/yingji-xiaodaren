@@ -46,11 +46,11 @@
 <link rel="stylesheet" href="critical.css?v=86">
 
 <!-- 非关键样式打包（v1.3.5）：css-variables + all-styles + settings/optimizer/animation + 交互/视觉/滚动修复 合并压缩为单文件 -->
-<link rel="stylesheet" href="css/all.min.css?v=138">
+<link rel="stylesheet" href="css/all.min.css?v=139">
 
 <!-- 预加载最关键资源：打包后的 JS 与 CSS（v1.3.5） -->
-<link rel="preload" href="css/all.min.css?v=138" as="style">
-<link rel="preload" href="js/app.min.js?v=138" as="script" fetchpriority="high">
+<link rel="preload" href="css/all.min.css?v=139" as="style">
+<link rel="preload" href="js/app.min.js?v=139" as="script" fetchpriority="high">
 
 <!-- 🔧 关键 Bug 修复 — 内联 CSS 确保始终生效（滑动/点击/遮挡问题） -->
 <style>
@@ -58,9 +58,11 @@
 .guide-tooltip { pointer-events: none !important; }
 .guide-tooltip button, .guide-tooltip a, .guide-tooltip [onclick] { pointer-events: auto !important; }
 
-/* ===== 修复2：菜单底部被工具栏遮挡 ===== */
+/* ===== 修复2：菜单底部被工具栏遮挡 + 菜单居中 ===== */
 #page-menu .menu-categories, #page-menu .menu-grid { padding-bottom: 100px !important; }
 #page-menu { padding-bottom: 100px !important; }
+/* 菜单内容水平居中（修复靠左问题） */
+#page-menu .menu-grid { max-width: 720px; margin-left: auto !important; margin-right: auto !important; }
 
 /* ===== 修复3：btn-clicked 永久禁用按钮 ===== */
 .page:not(.active) .btn-clicked { pointer-events: auto !important; opacity: 1 !important; }
@@ -79,6 +81,13 @@
   overflow-y: auto !important;
 }
 #page-menu .menu-grid { max-height: none !important; }
+
+/* ===== 修复6：modal "知道了"按钮被遮挡 ===== */
+#modalOverlay { z-index: 100000 !important; }
+#modalOverlay .modal-box { z-index: 100001 !important; position: relative; }
+#modalOverlay button, #modalOverlay [onclick] { pointer-events: auto !important; position: relative; z-index: 100002 !important; }
+/* 确保小精灵气泡等不挡住 modal */
+#mascotBubble { z-index: 50 !important; }
 </style>
 
 <!-- 预获取非关键资源（空闲时加载） -->
@@ -1084,14 +1093,14 @@
             <div class="settings-card-icon" style="background:linear-gradient(135deg,#3B82F6,#8B5CF6)">🧠</div>
             <div class="settings-card-info">
               <div class="settings-card-name">推理模型</div>
-              <div class="settings-card-desc" id="aiModelDesc">V3 标准模型 · 快速稳定</div>
+              <div class="settings-card-desc" id="aiModelDesc">DeepSeek V4 Flash · 快速高效</div>
             </div>
           </div>
           <div class="settings-card-right">
             <select id="aiModelSelect" class="settings-select" aria-label="AI 导师推理模型"
-              onchange="(function(s){var v=s.value;try{localStorage.setItem('aitutor_model',v);}catch(e){}if(window.DeepSeekAPI&&window.DeepSeekAPI.setModel){window.DeepSeekAPI.setModel(v);}var d=document.getElementById('aiModelDesc');if(d)d.textContent=v==='deepseek-reasoner'?'R1 推理模型 · 更强逻辑，响应稍慢':'V3 标准模型 · 快速稳定';})(this)">
-              <option value="deepseek-chat">V3 标准（快速）</option>
-              <option value="deepseek-reasoner">R1 推理（更强）</option>
+              onchange="(function(s){var v=s.value;try{localStorage.setItem('aitutor_model',v);}catch(e){}if(window.DeepSeekAPI&&window.DeepSeekAPI.setModel){window.DeepSeekAPI.setModel(v);}var d=document.getElementById('aiModelDesc');if(d)d.textContent=v==='deepseek-reasoner'?'DeepSeek V4 Pro · 更强推理，深度思考':'DeepSeek V4 Flash · 快速高效';})(this)">
+              <option value="deepseek-v4-flash">V4-Flash（快速）</option>
+              <option value="deepseek-v4-pro">V4-Pro（更强）</option>
             </select>
           </div>
         </div>
@@ -1907,19 +1916,7 @@
       <div class="mode-label" style="color:#fbbf24;">🧩 卡牌工坊</div>
       <div style="font-size:12px;color:rgba(255,255,255,0.4);">合成强化碎片套装</div>
     </div>
-    <div style="text-align:center;padding:40px 20px;">
-      <div style="font-size:80px;margin-bottom:20px;">🧩</div>
-      <h3 style="color:rgba(255,255,255,0.9);margin-bottom:10px;">卡牌工坊</h3>
-      <p style="color:rgba(255,255,255,0.5);margin-bottom:30px;font-size:14px;line-height:1.8;">
-        收集碎片，合成强力卡牌！<br>
-        升级你的防灾装备，提升战斗力。<br>
-        <span style="color:rgba(255,255,255,0.3);">（功能开发中，敬请期待）</span>
-      </p>
-      <button type="button" class="wb-btn wb-btn-primary" onclick="PageManager.navigate('menu')" style="font-size:14px;padding:12px 28px;">
-        ← 返回主菜单
-      </button>
-    </div>
-    <div id="workshop-content"></div>
+    <div id="workshopContent" style="max-width:600px;margin:0 auto;padding:0 var(--space-md) 80px;"></div>
   </div>
 
 </div><!-- /#app -->
@@ -2022,7 +2019,7 @@
 -->
 <script>
 (function(){
-  var EXPECTED_VERSION = '138'
+  var EXPECTED_VERSION = '139'
   var _corruptionDetected = false;
   var _recoveryAttempted = false;
 
@@ -2086,7 +2083,7 @@
   window._CacheGuard = { version: EXPECTED_VERSION, forceRecover: forceRecover };
 })();
 </script>
-<script src="js/app.min.js?v=138" defer></script>
+<script src="js/app.min.js?v=139" defer></script>
 
 <!-- ===== Service Worker 注册（含旧缓存强制清除）===== -->
 <script>
@@ -2113,7 +2110,7 @@
       }
 
       function registerNewSW() {
-        navigator.serviceWorker.register('sw-v55.js?v=138')
+        navigator.serviceWorker.register('sw-v55.js?v=139')
           .then(function(reg) {
             console.log('[SW] 注册成功:', reg.scope);
             reg.addEventListener('updatefound', function() {

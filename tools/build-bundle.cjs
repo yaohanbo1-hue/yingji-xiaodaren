@@ -75,7 +75,8 @@ const JS_FILES = [
   'performance.js',
   'patch-v75.js',
   'runtime-hardening.js',
-  'juice-battle.js'
+  'juice-battle.js',
+  'workshop-renderer.js'
 ];
 console.log(`[JS] 按固定清单打包 ${JS_FILES.length} 个源文件...`);
 

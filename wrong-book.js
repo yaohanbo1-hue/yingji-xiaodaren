@@ -30,6 +30,14 @@ const WrongBookEngine = {
   },
   
   addWrong(question, options, correctAnswer, userAnswer, explanation, category) {
+    // 过滤掉占位/加载中的无效题目标题（如"加载中..."、"题目加载中..."等）
+    var skipPatterns = ['加载中', '题目加载', 'Loading', '...', '请稍候'];
+    var isPlaceholder = false;
+    for (var pi = 0; pi < skipPatterns.length; pi++) {
+      if (question && question.indexOf(skipPatterns[pi]) !== -1) { isPlaceholder = true; break; }
+    }
+    if (isPlaceholder || !question || question.trim().length < 2) return;
+
     var existing = null;
     for (var i = 0; i < this._wrongItems.length; i++) {
       if (this._wrongItems[i].question === question) {
@@ -157,6 +165,16 @@ const WrongBookEngine = {
   renderPage() {
     var container = document.getElementById('wrongBookContent');
     if (!container) return;
+    // 过滤掉无效占位题目标题
+    var skipPatterns = ['加载中', '题目加载', 'Loading', '...'];
+    this._wrongItems = this._wrongItems.filter(function(item) {
+      if (!item.question || item.question.trim().length < 2) return false;
+      for (var pi = 0; pi < skipPatterns.length; pi++) {
+        if (item.question.indexOf(skipPatterns[pi]) !== -1) return false;
+      }
+      return true;
+    });
+    this._save();
     var stats = this.getStats();
     var items = this._wrongItems;
     
