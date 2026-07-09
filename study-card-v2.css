@@ -427,3 +427,7 @@
   .study-front-icon { animation: none; }
   .study-front-hint { animation: none; }
 }
+
+/* v137: 活动页内容区主动避开固定底栏(88px)，修复首屏底部按钮被工具栏遮挡而"点不动" */
+/* 用 body .page.active 提高特异性并置于打包末尾，确保覆盖 all.min.css 的 min-height:100%!important */
+body .page.active { position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 88px !important; min-height: 0 !important; height: auto !important; }
