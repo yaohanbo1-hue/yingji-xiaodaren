@@ -377,31 +377,6 @@ I18nEngine = {
     // i18n 尚未完全接入（0 个 data-i18n 属性），暂不注入切换器
     return;
   },
-    const checkInterval = setInterval(() => {
-      const settingsPage = document.getElementById('page-settings');
-      if (settingsPage && !settingsPage.querySelector('.lang-switcher')) {
-        const switcher = document.createElement('div');
-        switcher.className = 'lang-switcher';
-        switcher.innerHTML = `
-          <label data-i18n="settings.language">语言</label>
-          <div class="lang-buttons">
-            <button class="lang-btn ${this._currentLang === 'zh' ? 'active' : ''}" data-lang="zh" onclick="I18nEngine.setLanguage('zh')">中文</button>
-            <button class="lang-btn ${this._currentLang === 'en' ? 'active' : ''}" data-lang="en" onclick="I18nEngine.setLanguage('en')">English</button>
-          </div>
-        `;
-        
-        // 插入到设置页面顶部
-        const header = settingsPage.querySelector('.game-header');
-        if (header) {
-          header.after(switcher);
-        } else {
-          settingsPage.prepend(switcher);
-        }
-        
-        clearInterval(checkInterval);
-      }
-    }, 500);
-  },
   
   // 获取当前语言
   getCurrentLanguage() {
