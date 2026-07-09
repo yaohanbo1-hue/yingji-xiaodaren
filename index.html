@@ -46,11 +46,11 @@
 <link rel="stylesheet" href="critical.css?v=86">
 
 <!-- 非关键样式打包（v1.3.5）：css-variables + all-styles + settings/optimizer/animation + 交互/视觉/滚动修复 合并压缩为单文件 -->
-<link rel="stylesheet" href="css/all.min.css?v=142">
+<link rel="stylesheet" href="css/all.min.css?v=143">
 
 <!-- 预加载最关键资源：打包后的 JS 与 CSS（v1.3.5） -->
-<link rel="preload" href="css/all.min.css?v=142" as="style">
-<link rel="preload" href="js/app.min.js?v=142" as="script" fetchpriority="high">
+<link rel="preload" href="css/all.min.css?v=143" as="style">
+<link rel="preload" href="js/app.min.js?v=143" as="script" fetchpriority="high">
 
 <!-- 🔧 关键 Bug 修复 — 内联 CSS 确保始终生效（滑动/点击/遮挡问题） -->
 <style>
@@ -1995,7 +1995,7 @@
 -->
 <script>
 (function(){
-  var EXPECTED_VERSION = '142'
+  var EXPECTED_VERSION = '143'
   var _corruptionDetected = false;
   var _recoveryAttempted = false;
 
@@ -2059,7 +2059,7 @@
   window._CacheGuard = { version: EXPECTED_VERSION, forceRecover: forceRecover };
 })();
 </script>
-<script src="js/app.min.js?v=142" defer></script>
+<script src="js/app.min.js?v=143" defer></script>
 
 <!-- ===== Service Worker 注册（含旧缓存强制清除）===== -->
 <script>
@@ -2086,7 +2086,7 @@
       }
 
       function registerNewSW() {
-        navigator.serviceWorker.register('sw-v55.js?v=142')
+        navigator.serviceWorker.register('sw-v55.js?v=143')
           .then(function(reg) {
             console.log('[SW] 注册成功:', reg.scope);
             reg.addEventListener('updatefound', function() {

@@ -108,8 +108,32 @@
     el.innerHTML = html;
   }
 
+  // 工坊页面是否处于激活状态
+  function isWorkshopActive() {
+    var wp = document.getElementById('page-workshop');
+    return !!(wp && wp.classList.contains('active'));
+  }
+
+  // 核心修复：碎片变化时若工坊正显示，立即重绘。
+  // 覆盖「在工坊页打开盲盒(模态)→获得碎片→关闭」这类不触发页面导航、
+  // 且 PageManager.navigate 因 `if(_currentPage===pageId)return` 提前返回而漏渲染的流程。
+  function hookFragmentEngine() {
+    if (typeof CardFragmentEngine === 'undefined' || CardFragmentEngine.__workshopHooked) return;
+    CardFragmentEngine.__workshopHooked = true;
+    ['addFragment', 'craft'].forEach(function (m) {
+      var orig = CardFragmentEngine[m];
+      if (typeof orig !== 'function') return;
+      CardFragmentEngine[m] = function () {
+        var r = orig.apply(this, arguments);
+        if (isWorkshopActive()) render();
+        return r;
+      };
+    });
+  }
+
   // 挂钩 PageManager：导航到 workshop 时自动渲染（多重保险）
   function hook() {
+    hookFragmentEngine();
     if (typeof PageManager === 'undefined') return;
     var _refresh = PageManager._refreshPage;
     if (!_refresh || PageManager.__workshopHooked) return;
@@ -118,17 +142,28 @@
       _refresh.apply(this, arguments);
       if (pageId === 'workshop') { setTimeout(render, 100); setTimeout(render, 500); }
     };
+    // 关键修复：PageManager 在“重复导航到已访问过的页面”时不再调用 _refreshPage，
+    // 导致工坊停留在首次空渲染、开盲盒后拿到的碎片不显示。
+    // 因此直接包裹 navigate（每次导航必然调用），导航到 workshop 时用 rAF 可靠触发渲染。
+    var _nav = PageManager.navigate;
+    if (typeof _nav === 'function') {
+      PageManager.navigate = function (pageId) {
+        var r = _nav.apply(this, arguments);
+        if (pageId === 'workshop') {
+          requestAnimationFrame(function () { requestAnimationFrame(render); });
+        }
+        return r;
+      };
+    }
     // 保险：监听 workshop 页面激活
     var observer = new MutationObserver(function () {
-      var wp = document.getElementById('page-workshop');
-      if (wp && wp.classList.contains('active')) { setTimeout(render, 150); }
+      if (isWorkshopActive()) render();
     });
     var appEl = document.getElementById('app') || document.body;
     if (appEl) observer.observe(appEl, { subtree: true, attributes: true, attributeFilter: ['class'] });
     // 初始检查：如果当前就在 workshop 页面
     setTimeout(function () {
-      var wp = document.getElementById('page-workshop');
-      if (wp && wp.classList.contains('active')) render();
+      if (isWorkshopActive()) render();
     }, 200);
   }
 
