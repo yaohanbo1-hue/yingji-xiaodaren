@@ -16,10 +16,12 @@
 const BGMEngineV2 = {
   _ctx: null,
   _masterGain: null,
+  _limiter: null,
+  _masterLP: null,
   _currentTrack: null,
   _pausedTrack: null,
   _playing: false,
-  _volume: 0.15,
+  _volume: 0.13,
   _nodes: [],
   
   init() {
@@ -27,19 +29,59 @@ const BGMEngineV2 = {
     try {
       this._ctx = new (window.AudioContext || window.webkitAudioContext)();
       this._masterGain = this._ctx.createGain();
-      this._masterGain.gain.value = this._volume;
+      // 从静音起步，由 _fadeIn 平滑拉起，避免突发爆音
+      this._masterGain.gain.value = 0.0001;
       
-      // 添加混响效果
+      // 主低通：削减刺耳高频，增加温暖感，听感更干净
+      this._masterLP = this._ctx.createBiquadFilter();
+      this._masterLP.type = 'lowpass';
+      this._masterLP.frequency.value = 5200;
+      this._masterLP.Q.value = 0.4;
+      
+      // 主总线限制器：防止多层振荡器叠加时削波/爆音
+      this._limiter = this._ctx.createDynamicsCompressor();
+      this._limiter.threshold.value = -12;
+      this._limiter.knee.value = 12;
+      this._limiter.ratio.value = 12;
+      this._limiter.attack.value = 0.005;
+      this._limiter.release.value = 0.25;
+      
+      this._masterGain.connect(this._masterLP);
+      this._masterLP.connect(this._limiter);
+      this._limiter.connect(this._ctx.destination);
+      
+      // 混响：经 reverbGain → 主音量总线（受主音量/限制器统一控制），不再直连 destination
       this._reverb = this._createReverb();
       this._reverbGain = this._ctx.createGain();
-      this._reverbGain.gain.value = 0.3;
+      this._reverbGain.gain.value = 0.16;
       this._reverb.connect(this._reverbGain);
-      this._reverbGain.connect(this._ctx.destination);
+      this._reverbGain.connect(this._masterGain);
       
-      this._masterGain.connect(this._ctx.destination);
+      this._fadeIn();
     } catch (e) {
       console.warn('AudioContext not available');
     }
+  },
+
+  // 平滑淡入到目标主音量（切换/启动曲子时调用）
+  _fadeIn() {
+    if (!this._ctx || !this._masterGain) return;
+    const t = this._ctx.currentTime;
+    const g = this._masterGain.gain;
+    g.cancelScheduledValues(t);
+    g.setValueAtTime(Math.max(0.0001, g.value), t);
+    g.linearRampToValueAtTime(this._volume, t + 0.4);
+  },
+
+  // 快速淡出（用于暂停等需要静音的场景）
+  _fadeOut(cb) {
+    if (!this._ctx || !this._masterGain) { if (cb) cb(); return; }
+    const t = this._ctx.currentTime;
+    const g = this._masterGain.gain;
+    g.cancelScheduledValues(t);
+    g.setValueAtTime(Math.max(0.0001, g.value), t);
+    g.linearRampToValueAtTime(0.0001, t + 0.12);
+    if (cb) setTimeout(cb, 140);
   },
   
   _createReverb() {
@@ -137,10 +179,12 @@ const BGMEngineV2 = {
   
   // 菜单BGM - 轻松愉快的钢琴旋律
   playMenu() {
+    if (this._playing && this._currentTrack === 'menu') return;
     this.stop();
     this.init();
     this._playing = true;
     this._currentTrack = 'menu';
+    this._fadeIn();
     
     const bpm = 90;
     const beatDuration = 60 / bpm;
@@ -169,19 +213,19 @@ const BGMEngineV2 = {
       // 和弦（每4拍换一次）
       chordProgression.forEach((chord, i) => {
         chord.forEach(freq => {
-          this._playNote(freq * 0.5, now + i * 4 * beatDuration, 3.5 * beatDuration, 'triangle', 0.04);
+          this._playNote(freq * 0.5, now + i * 4 * beatDuration, 3.5 * beatDuration, 'triangle', 0.035);
         });
       });
       
       // 旋律（每拍一个音）
       melody.forEach((freq, i) => {
-        this._playNote(freq, now + i * beatDuration, beatDuration * 0.8, 'sine', 0.06);
+        this._playNote(freq, now + i * beatDuration, beatDuration * 0.8, 'sine', 0.05);
       });
       
       // 低音
       const bassNotes = [130.81, 110.00, 87.31, 98.00]; // C3 A2 F2 G2
       bassNotes.forEach((freq, i) => {
-        this._playNote(freq, now + i * 4 * beatDuration, 3.5 * beatDuration, 'triangle', 0.05);
+        this._playNote(freq, now + i * 4 * beatDuration, 3.5 * beatDuration, 'triangle', 0.04);
       });
       
       // 循环
@@ -191,12 +235,14 @@ const BGMEngineV2 = {
     loop();
   },
   
-  // 战斗BGM - 紧张刺激
+  // 战斗BGM - 紧张刺激（柔和波形，避免刺耳嘈杂）
   playBattle() {
+    if (this._playing && this._currentTrack === 'battle') return;
     this.stop();
     this.init();
     this._playing = true;
     this._currentTrack = 'battle';
+    this._fadeIn();
     
     const bpm = 130;
     const beatDuration = 60 / bpm;
@@ -222,29 +268,28 @@ const BGMEngineV2 = {
       
       const now = this._ctx.currentTime;
       
-      // 和弦（每2拍换一次，更紧凑）
+      // 和弦（每2拍换一次，更紧凑）—— 改用柔和 triangle，避免锯齿波刺耳
       chordProgression.forEach((chord, i) => {
         chord.forEach(freq => {
-          this._playNote(freq, now + i * 2 * beatDuration, 1.8 * beatDuration, 'sawtooth', 0.02);
-          this._playNote(freq, now + i * 2 * beatDuration, 1.8 * beatDuration, 'triangle', 0.03);
+          this._playNote(freq, now + i * 2 * beatDuration, 1.8 * beatDuration, 'triangle', 0.02);
         });
       });
       
-      // 旋律（半拍节奏）
+      // 旋律（半拍节奏）—— sine 替代 square，干净不噪
       melody.forEach((freq, i) => {
-        this._playNote(freq, now + i * beatDuration, beatDuration * 0.6, 'square', 0.03);
+        this._playNote(freq, now + i * beatDuration, beatDuration * 0.6, 'sine', 0.025);
       });
       
-      // 鼓点模拟（低频脉冲）
+      // 鼓点模拟（低频脉冲，克制音量避免轰头）
       for (let i = 0; i < 8; i++) {
-        this._playNote(60, now + i * 2 * beatDuration, 0.1, 'sine', 0.08);
-        this._playNote(80, now + i * 2 * beatDuration + beatDuration, 0.08, 'sine', 0.05);
+        this._playNote(60, now + i * 2 * beatDuration, 0.1, 'sine', 0.05);
+        this._playNote(80, now + i * 2 * beatDuration + beatDuration, 0.08, 'sine', 0.035);
       }
       
-      // 低音
+      // 低音 —— triangle 替代锯齿波
       const bassNotes = [110, 87.31, 65.41, 73.42];
       bassNotes.forEach((freq, i) => {
-        this._playNote(freq, now + i * 2 * beatDuration, 1.8 * beatDuration, 'sawtooth', 0.04);
+        this._playNote(freq, now + i * 2 * beatDuration, 1.8 * beatDuration, 'triangle', 0.035);
       });
       
       setTimeout(loop, 16 * beatDuration * 1000);
@@ -255,10 +300,12 @@ const BGMEngineV2 = {
   
   // 情景BGM - 沉浸氛围
   playScenario() {
+    if (this._playing && this._currentTrack === 'scenario') return;
     this.stop();
     this.init();
     this._playing = true;
     this._currentTrack = 'scenario';
+    this._fadeIn();
     
     const bpm = 70;
     const beatDuration = 60 / bpm;
@@ -303,6 +350,7 @@ const BGMEngineV2 = {
     this.stop();
     this.init();
     this._playing = true;
+    this._fadeIn();
     
     const now = this._ctx.currentTime;
     const fanfare = [523.25, 659.25, 783.99, 1046.50, 783.99, 1046.50, 1318.51];

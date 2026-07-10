@@ -31,11 +31,8 @@
       // 调用原始导航
       originalNavigate(pageId);
       
-      // 播放页面切换音效
-      if (typeof SFXEngine !== 'undefined') {
-        SFXEngine.init();
-        SFXEngine.click();
-      }
+      // 注意：按钮点击音效由 hookButtonClicks 统一处理，这里不再重复播放 click()，
+      // 避免一次导航触发两次点击音造成“杂”。
       
       // 切换 BGM
       if (typeof BGMEngineV2 !== 'undefined') {
