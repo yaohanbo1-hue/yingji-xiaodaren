@@ -51,6 +51,7 @@ const JS_FILES = [
   'bg-themes.js',
   'encyclopedia_extra.js',
   'encyclopedia_final.js',
+  'encyclopedia_v153.js',
   'bg-premium.js',
   'ui-polish.js',
   'tilt3d.js',
