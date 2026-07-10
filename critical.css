@@ -265,3 +265,108 @@ body #page-menu { display: flex !important; flex-direction: column !important; j
   .loading-title { font-size: 28px !important; }
   .loading-bar-container { width: 220px !important; }
 }
+
+/* ============================================================
+ * 盲盒开启特效（v145）
+ * 原有 JS 已生成 .blindbox-overlay/.blindbox-stage/.blindbox-box
+ * /.blindbox-card 等结构并引用 blindboxDrop/Shake/CardOut/LabelPop
+ * 关键帧，但全站此前没有任何对应样式，导致“看不清”。
+ * 这里补齐 mask、居中、稀有度光环与关键帧，并增强爽感。
+ * ============================================================ */
+.blindbox-overlay{
+  position:fixed; inset:0; z-index:99990;
+  display:flex; align-items:center; justify-content:center;
+  background:radial-gradient(circle at center, rgba(16,19,42,.82), rgba(4,5,14,.95));
+  -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+  opacity:0; transition:opacity .35s ease;
+  cursor:pointer; /* 点击即可提前关闭 */
+  overflow:hidden;
+}
+.blindbox-overlay.show{ opacity:1; }
+.blindbox-stage{
+  position:relative;
+  display:flex; flex-direction:column; align-items:center; gap:18px;
+  transform:scale(.6); opacity:0;
+  transition:transform .45s cubic-bezier(.34,1.56,.64,1), opacity .35s ease;
+  text-align:center; padding:20px; max-width:92vw;
+}
+.blindbox-overlay.show .blindbox-stage{ transform:scale(1); opacity:1; }
+
+.blindbox-box{
+  position:relative;
+  width:152px; height:152px; border-radius:30px;
+  display:flex; align-items:center; justify-content:center; font-size:84px;
+  background:linear-gradient(145deg,#3a3f5c,#23263b);
+  border:3px solid rgba(255,255,255,.18);
+  box-shadow:0 12px 44px rgba(0,0,0,.55), inset 0 2px 6px rgba(255,255,255,.12);
+  will-change:transform;
+}
+.blindbox-box.common{ box-shadow:0 12px 44px rgba(0,0,0,.55), 0 0 24px rgba(170,170,170,.35); }
+.blindbox-box.rare{ background:linear-gradient(145deg,#0d3a52,#0a2740); border-color:#4fc3f7; box-shadow:0 12px 44px rgba(0,0,0,.55), 0 0 38px rgba(79,195,247,.55); }
+.blindbox-box.epic{ background:linear-gradient(145deg,#3a1a52,#241040); border-color:#ab47bc; box-shadow:0 12px 44px rgba(0,0,0,.55), 0 0 46px rgba(171,71,188,.6); }
+.blindbox-box.legendary{ background:linear-gradient(145deg,#52410d,#3a2e08); border-color:#ffd700; box-shadow:0 12px 44px rgba(0,0,0,.55), 0 0 64px rgba(255,215,0,.85); }
+.blindbox-box.legendary::after{
+  content:""; position:absolute; inset:-14px; border-radius:36px;
+  border:2px solid rgba(255,215,0,.6);
+  animation:blindboxLegendaryPulse 1.4s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes blindboxLegendaryPulse{
+  0%,100%{ box-shadow:0 0 50px rgba(255,215,0,.7); opacity:.9; }
+  50%{ box-shadow:0 0 90px rgba(255,215,0,1); opacity:1; }
+}
+
+.blindbox-card{
+  background:linear-gradient(160deg, rgba(32,36,62,.97), rgba(16,18,36,.97));
+  border-radius:22px; padding:20px 26px; min-width:260px; max-width:88vw;
+  border:3px solid rgba(255,255,255,.2);
+  box-shadow:0 18px 54px rgba(0,0,0,.6);
+  color:#fff;
+}
+.blindbox-card-inner{
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  border:3px solid rgba(255,255,255,.25); border-radius:16px; padding:14px 10px;
+}
+.blindbox-card-name{ font-size:20px; font-weight:800; color:#fff; text-shadow:0 2px 6px rgba(0,0,0,.45); }
+.blindbox-card-rarity{ font-size:15px; font-weight:700; letter-spacing:1px; }
+.blindbox-card-type{ font-size:13px; color:rgba(255,255,255,.65); }
+.blindbox-label{
+  font-size:26px; font-weight:900; letter-spacing:2px;
+  color:#FFD700; text-shadow:0 0 18px rgba(255,215,0,.6), 0 2px 6px rgba(0,0,0,.5);
+  min-height:34px;
+}
+
+/* ===== 关键帧（JS 中通过 element.style.animation 引用） ===== */
+@keyframes blindboxDrop{
+  0%{ transform:translateY(-220px) scale(.7); opacity:0; }
+  60%{ transform:translateY(20px) scale(1.05); opacity:1; }
+  80%{ transform:translateY(-8px) scale(.98); }
+  100%{ transform:translateY(0) scale(1); opacity:1; }
+}
+@keyframes blindboxShake{
+  0%,100%{ transform:rotate(0) translateX(0); }
+  15%{ transform:rotate(-9deg) translateX(-6px); }
+  30%{ transform:rotate(8deg) translateX(6px); }
+  45%{ transform:rotate(-7deg) translateX(-5px); }
+  60%{ transform:rotate(6deg) translateX(5px); }
+  75%{ transform:rotate(-4deg) translateX(-3px); }
+  90%{ transform:rotate(3deg) translateX(3px); }
+}
+@keyframes blindboxCardOut{
+  0%{ transform:scale(.3) rotateY(180deg); opacity:0; }
+  60%{ transform:scale(1.08) rotateY(0); opacity:1; }
+  100%{ transform:scale(1) rotateY(0); opacity:1; }
+}
+@keyframes blindboxLabelPop{
+  0%{ transform:scale(.4); opacity:0; }
+  60%{ transform:scale(1.15); opacity:1; }
+  100%{ transform:scale(1); opacity:1; }
+}
+
+/* ===== 移动端适配 ===== */
+@media (max-width:480px){
+  .blindbox-box{ width:120px; height:120px; font-size:64px; border-radius:24px; }
+  .blindbox-card{ min-width:200px; padding:16px 18px; }
+  .blindbox-card-name{ font-size:17px; }
+  .blindbox-label{ font-size:22px; }
+}
