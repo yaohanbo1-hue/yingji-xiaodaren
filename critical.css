@@ -401,3 +401,63 @@ body #page-menu { display: flex !important; flex-direction: column !important; j
 .blindbox-overlay.r-rare{ background:radial-gradient(circle at center, rgba(10,40,60,.85), rgba(4,12,22,.95)); }
 .blindbox-overlay.r-epic{ background:radial-gradient(circle at center, rgba(40,12,60,.86), rgba(14,4,24,.95)); }
 .blindbox-overlay.r-legendary{ background:radial-gradient(circle at center, rgba(60,44,6,.88), rgba(20,14,2,.96)); }
+
+/* ============================================================
+ * 每日签到美化（v148）
+ * ============================================================ */
+body .cal-checkin-card{
+  position:relative; overflow:hidden;
+  background:linear-gradient(135deg, rgba(255,215,0,.16), rgba(255,152,0,.05)) !important;
+  border:1px solid rgba(255,215,0,.35) !important;
+  box-shadow:0 8px 28px rgba(255,170,0,.18), inset 0 1px 0 rgba(255,255,255,.08) !important;
+  transition:transform .25s cubic-bezier(.4,0,.2,1), box-shadow .25s ease !important;
+}
+body .cal-checkin-card::before{
+  content:""; position:absolute; right:-34px; top:-34px; width:130px; height:130px;
+  background:radial-gradient(circle, rgba(255,215,0,.20), transparent 70%);
+  pointer-events:none;
+}
+body .cal-checkin-card:hover{ transform:translateY(-3px) !important; box-shadow:0 14px 38px rgba(255,170,0,.30), inset 0 1px 0 rgba(255,255,255,.10) !important; }
+body .cal-checkin-card.checked{
+  background:linear-gradient(135deg, rgba(0,230,118,.14), rgba(0,212,255,.05)) !important;
+  border-color:rgba(0,230,118,.30) !important;
+  box-shadow:0 8px 26px rgba(0,230,118,.16) !important;
+}
+body .cal-checkin-card.checked::before{ background:radial-gradient(circle, rgba(0,230,118,.18), transparent 70%); }
+body .cal-ci-icon{ animation:calIconBob 2.6s ease-in-out infinite; }
+@keyframes calIconBob{ 0%,100%{transform:translateY(0) rotate(-2deg);} 50%{transform:translateY(-5px) rotate(2deg);} }
+body .cal-ci-status{ color:#FFD700 !important; text-shadow:0 0 12px rgba(255,215,0,.45); font-weight:800 !important; }
+body .cal-checkin-card.checked .cal-ci-status{ color:#34D399 !important; text-shadow:0 0 12px rgba(0,230,118,.45); }
+body .cal-ci-streak{
+  background:linear-gradient(135deg, rgba(255,107,53,.22), rgba(255,215,0,.12)) !important;
+  border:1px solid rgba(255,215,0,.30) !important;
+  padding:3px 10px; border-radius:999px; font-weight:700 !important;
+  box-shadow:0 0 12px rgba(255,170,0,.25);
+}
+body .cal-ci-btn{
+  background:linear-gradient(135deg,#FFD700,#F59E0B) !important; color:#1a1205 !important;
+  box-shadow:0 4px 16px rgba(255,215,0,.40) !important;
+  animation:calBtnPulse 1.8s ease-in-out infinite;
+}
+body .cal-ci-btn:hover{ box-shadow:0 6px 24px rgba(255,215,0,.65) !important; }
+@keyframes calBtnPulse{ 0%,100%{transform:scale(1);box-shadow:0 4px 16px rgba(255,215,0,.35);} 50%{transform:scale(1.04);box-shadow:0 6px 26px rgba(255,215,0,.65);} }
+
+/* ===== 签到成功印章 ===== */
+.checkin-success{
+  position:fixed; inset:0; z-index:99995; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:10px; pointer-events:none;
+  opacity:0; transform:scale(.6); transition:opacity .3s ease, transform .5s cubic-bezier(.34,1.56,.64,1);
+}
+.checkin-success.show{ opacity:1; transform:scale(1); }
+.checkin-success.out{ opacity:0; transform:scale(1.15); transition:opacity .5s ease, transform .5s ease; }
+.checkin-stamp{
+  width:120px; height:120px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-size:64px; font-weight:900; color:#1a1205;
+  background:linear-gradient(135deg,#FFE45C,#FFB300);
+  box-shadow:0 0 0 8px rgba(255,215,0,.25), 0 12px 40px rgba(255,180,0,.6);
+  animation:checkinStamp .6s cubic-bezier(.34,1.56,.64,1) both;
+  text-shadow:0 2px 0 rgba(255,255,255,.4);
+}
+@keyframes checkinStamp{ 0%{transform:scale(0) rotate(-25deg);} 60%{transform:scale(1.15) rotate(8deg);} 100%{transform:scale(1) rotate(0);} }
+.checkin-text{ font-size:30px; font-weight:900; color:#FFD700; letter-spacing:3px; text-shadow:0 0 20px rgba(255,215,0,.6),0 2px 6px rgba(0,0,0,.5); }
+.checkin-sub{ font-size:15px; color:rgba(255,255,255,.82); font-weight:700; }
