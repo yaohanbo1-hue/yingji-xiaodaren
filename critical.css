@@ -461,3 +461,160 @@ body .cal-ci-btn:hover{ box-shadow:0 6px 24px rgba(255,215,0,.65) !important; }
 @keyframes checkinStamp{ 0%{transform:scale(0) rotate(-25deg);} 60%{transform:scale(1.15) rotate(8deg);} 100%{transform:scale(1) rotate(0);} }
 .checkin-text{ font-size:30px; font-weight:900; color:#FFD700; letter-spacing:3px; text-shadow:0 0 20px rgba(255,215,0,.6),0 2px 6px rgba(0,0,0,.5); }
 .checkin-sub{ font-size:15px; color:rgba(255,255,255,.82); font-weight:700; }
+
+/* ============================================================
+ * 灾害百科全书 — 视觉升级
+ * ============================================================ */
+
+/* ---- 页面容器：给内容区留足呼吸空间 ---- */
+body #page-encyclopedia .preview-container{ padding:4px 20px 40px; }
+
+/* ---- 头部区域 ---- */
+body #page-encyclopedia .preview-header{
+  text-align:center; padding:28px 16px 24px;
+  position:relative; overflow:hidden;
+}
+body #page-encyclopedia .preview-icon{
+  font-size:72px !important; display:block !important; margin-bottom:8px !important;
+  filter:drop-shadow(0 6px 24px rgba(100,180,255,.45));
+  animation:encyIconFloat 3.2s ease-in-out infinite;
+}
+@keyframes encyIconFloat{
+  0%,100%{ transform:translateY(0) scale(1); }
+  50%{ transform:translateY(-10px) scale(1.04); }
+}
+body #page-encyclopedia .preview-title{
+  font-size:30px !important; font-weight:900 !important;
+  letter-spacing:3px; background:linear-gradient(135deg,#64B5F6,#42A5F5,#1E88E5);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+body #page-encyclopedia .preview-desc{
+  color:rgba(255,255,255,.55) !important; font-size:15px !important; margin-top:6px !important;
+}
+
+/* ---- 分类卡片网格（核心升级） ---- */
+#encyclopediaCategories{
+  display:grid !important;
+  grid-template-columns:repeat(2,1fr) !important;
+  gap:14px !important; padding:4px 8px 12px !important;
+  max-width:720px; margin:0 auto;
+}
+@media(max-width:520px){ #encyclopediaCategories{ grid-template-columns:1fr !important; } }
+
+.encyclopedia-category-card{
+  position:relative; display:flex; align-items:center; gap:14px;
+  padding:18px 20px; border-radius:18px; cursor:pointer;
+  background:linear-gradient(145deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
+  border:1.5px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  transition:transform .25s cubic-bezier(.4,0,.2,1), box-shadow .25s ease, border-color .25s ease;
+  overflow:hidden;
+}
+.encyclopedia-category-card::before{
+  content:""; position:absolute; inset:0; border-radius:17px;
+  background:radial-gradient(circle at 20% 50%, var(--cat-color,rgba(255,255,255,.08)) 0%, transparent 60%);
+  opacity:.5; pointer-events:none; transition:opacity .25s ease;
+}
+.encyclopedia-category-card:hover{
+  transform:translateY(-4px) scale(1.02);
+  border-color:var(--cat-color, rgba(255,255,255,.35));
+  box-shadow:0 12px 36px rgba(0,0,0,.35), 0 0 24px color-mix(in srgb, var(--cat-color,#fff) 25%, transparent);
+}
+.encyclopedia-category-card:hover::before{ opacity:.85; }
+.category-icon{
+  font-size:38px !important; flex-shrink:0; line-height:1;
+  filter:drop-shadow(0 3px 8px rgba(0,0,0,.3));
+  transition:transform .25s ease;
+}
+.encyclopedia-category-card:hover .category-icon{ transform:scale(1.15) rotate(-5deg); }
+.category-name{
+  font-size:17px !important; font-weight:800 !important; color:#e8eaed !important;
+  letter-spacing:.5px; line-height:1.3;
+}
+.category-count{
+  font-size:12px !important; color:rgba(255,255,255,.45) !important;
+  font-weight:600 !important; margin-left:auto;
+  background:rgba(255,255,255,.08); padding:3px 10px; border-radius:999px;
+}
+
+/* ---- 按灾害类型着色（hover 时边框高亮） ---- */
+.encyclopedia-category-card[style*="#FF6B35"], /* 地震 */
+.encyclopedia-category-card[style*="#FF6B35"]{ --enc-accent:#FF6B35; }
+.encyclopedia-category-card[style*="#FF5252"], /* 火灾 */
+.encyclopedia-category-card[style*="#FF5252"]{ --enc-accent:#FF5252; }
+.encyclopedia-category-card[style*="#2196F3"], /* 洪水 */
+.encyclopedia-category-card[style*="#2196F3"]{ --enc-accent:#2196F3; }
+.encyclopedia-category-card[style*="#9C27B0"], /* 台风 */
+.encyclopedia-category-card[style*="#9C27B0"]{ --enc-accent:#9C27B0; }
+.encyclopedia-category-card[style*="#FFD700"], /* 雷电 */
+.encyclopedia-category-card[style*="#FFD700"]{ --enc-accent:#FFD700; }
+.encyclopedia-category-card[style*="#795548"], /* 泥石流 */
+.encyclopedia-category-card[style*="#795548"]{ --enc-accent:#A1887F; }
+.encyclopedia-category-card[style*="#607D8B"], /* 龙卷风 */
+.encyclopedia-category-card[style*="#607D8B"]{ --enc-accent:#78909C; }
+.encyclopedia-category-card[style*="#90CAF9"], /* 暴雪 */
+.encyclopedia-category-card[style*="#90CAF9"]{ --enc-accent:#90CAF9; }
+.encyclopedia-category-card[style*="#4CAF50"], /* 燃气 */
+.encyclopedia-category-card[style*="#4CAF50"]{ --enc-accent:#4CAF50; }
+.encyclopedia-category-card[style*="#FF9800"], /* 电梯 */
+.encyclopedia-category-card[style*="#FF9800"]{ --enc-accent:#FF9800; }
+
+/* ---- 文章列表页 ---- */
+.encyclopedia-header{
+  text-align:center; padding:28px 20px 20px; border-radius:20px;
+  margin-bottom:16px;
+}
+.encyclopedia-articles{
+  display:flex; flex-direction:column; gap:10px; max-width:640px; margin:0 auto;
+  padding:0 8px 20px;
+}
+.encyclopedia-article-card{
+  display:flex; align-items:center; gap:14px; padding:16px 20px;
+  border-radius:16px; cursor:pointer;
+  background:linear-gradient(145deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.10);
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  transition:all .22s ease;
+}
+.encyclopedia-article-card:hover{
+  transform:translateX(6px); background:linear-gradient(145deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
+  border-color:rgba(255,255,255,.22); box-shadow:0 6px 20px rgba(0,0,0,.25);
+}
+.article-icon{ font-size:28px; flex-shrink:0; filter:drop-shadow(0 2px 6px rgba(0,0,0,.25)); }
+.article-title{
+  flex:1; font-size:15px; font-weight:700; color:#e8eaed;
+  min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.article-arrow{ font-size:18px; color:rgba(255,255,255,.3); transition:transform .2s ease, color .2s ease; }
+.encyclopedia-article-card:hover .article-arrow{ transform:translateX(4px); color:rgba(255,255,255,.65); }
+
+/* ---- 阅读器 ---- */
+.encyclopedia-reader{
+  max-width:680px; margin:0 auto; padding:16px 12px 32px;
+}
+.reader-header{
+  display:flex; align-items:center; gap:14px; padding:16px 20px;
+  border-radius:16px; margin-bottom:18px;
+  background:linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.10);
+}
+.reader-header > span:first-child{ font-size:36px; }
+.reader-body{
+  font-size:15.5px; line-height:1.82; color:rgba(232,234,237,.88);
+  padding:4px 4px;
+}
+.reader-body strong{ color:#fff; font-weight:800; }
+.reader-body br{ display:block; margin:6px 0; content:""; }
+.reader-nav{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px; margin-top:24px; padding-top:18px;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+
+/* ---- 装饰性背景粒子 ---- */
+body #page-encyclopedia::after{
+  content:""; position:fixed; top:0;left:0;right:0;bottom:0; pointer-events:none; z-index:-1;
+  background:
+    radial-gradient(circle at 15% 25%, rgba(66,165,245,.06) 0%, transparent 50%),
+    radial-gradient(circle at 85% 75%, rgba(171,71,188,.05) 0%, transparent 50%);
+}
