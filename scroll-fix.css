@@ -104,15 +104,10 @@ html { margin: 0 !important; }
   }
 }
 
-/* ===== G. 桌面端宽屏：限制最大宽度避免过度拉伸 ===== */
-@media (min-width: 769px) {
-  .page.active {
-    max-width: 900px !important;
-    margin: 0 auto !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-  }
-}
+/* ===== G. 桌面端宽屏：页面不设全局 max-width，由各页内部网格自行约束 ===== */
+/* 旧规则(max-width:900px + left:50%+translateX)导致桌面端所有页面被压缩到 900px 且居中偏移异常，
+   在 1280px 视口下右侧空出 ~380px、内容靠左。现改为：页面撑满视口，内容区(如 menu-grid)
+   通过自身 max-width+margin:auto 居中，更自然且各页可独立控制宽度。 */
 
 /* ===== H. 修复 grid 作为 flex 子项时的横向溢出（成就/商店/角色等卡片网格）===== */
 /* 根因：.page.active 是 flex 列容器，grid 子项默认 min-width:auto = 其 min-content
