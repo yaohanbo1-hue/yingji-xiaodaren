@@ -403,44 +403,154 @@ body #page-menu { display: flex !important; flex-direction: column !important; j
 .blindbox-overlay.r-legendary{ background:radial-gradient(circle at center, rgba(60,44,6,.88), rgba(20,14,2,.96)); }
 
 /* ============================================================
- * 每日签到美化（v148）
+/* ============================================================
+ * 每日签到美化（v150）— 视觉同步首页 .mode-btn 卡片风格
  * ============================================================ */
+
+/* ---- 主容器：大卡片形态（向 mode-btn 对齐） ---- */
 body .cal-checkin-card{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+  gap:10px !important;
+  padding:28px 24px !important;
+  border-radius:28px !important;
+  min-height:140px !important;
   position:relative; overflow:hidden;
-  background:linear-gradient(135deg, rgba(255,215,0,.16), rgba(255,152,0,.05)) !important;
-  border:1px solid rgba(255,215,0,.35) !important;
-  box-shadow:0 8px 28px rgba(255,170,0,.18), inset 0 1px 0 rgba(255,255,255,.08) !important;
-  transition:transform .25s cubic-bezier(.4,0,.2,1), box-shadow .25s ease !important;
+  background:linear-gradient(145deg,
+    rgba(255,215,0,.14), rgba(255,180,0,.06),
+    rgba(255,152,0,.03)) !important;
+  border:1.5px solid rgba(255,215,0,.30) !important;
+  box-shadow:
+    0 12px 40px rgba(255,170,0,.15),
+    0 4px 12px rgba(0,0,0,.12),
+    inset 0 1px 0 rgba(255,255,255,.10) !important;
+  transition:transform .35s cubic-bezier(.23,1,.32,1),
+             box-shadow .35s cubic-bezier(.23,1,.32,1),
+             border-color .35s ease !important;
 }
 body .cal-checkin-card::before{
-  content:""; position:absolute; right:-34px; top:-34px; width:130px; height:130px;
-  background:radial-gradient(circle, rgba(255,215,0,.20), transparent 70%);
+  content:""; position:absolute; right:-40px; top:-40px;
+  width:160px; height:160px; border-radius:50%;
+  background:radial-gradient(circle, rgba(255,215,0,.18), transparent 70%);
   pointer-events:none;
 }
-body .cal-checkin-card:hover{ transform:translateY(-3px) !important; box-shadow:0 14px 38px rgba(255,170,0,.30), inset 0 1px 0 rgba(255,255,255,.10) !important; }
+body .cal-checkin-card::after{
+  content:""; position:absolute; left:-20px; bottom:-20px;
+  width:100px; height:100px; border-radius:50%;
+  background:radial-gradient(circle, rgba(255,180,0,.10), transparent 70%);
+  pointer-events:none;
+}
+
+/* hover 浮起（同 mode-btn 风格） */
+body .cal-checkin-card:hover{
+  transform:translateY(-5px) scale(1.02) !important;
+  box-shadow:
+    0 22px 60px rgba(255,170,0,.25),
+    0 8px 24px rgba(0,0,0,.18),
+    inset 0 1px 0 rgba(255,255,255,.14) !important;
+  border-color:rgba(255,215,0,.45) !important;
+}
+
+/* ---- 已打卡态（绿色主题） ---- */
 body .cal-checkin-card.checked{
-  background:linear-gradient(135deg, rgba(0,230,118,.14), rgba(0,212,255,.05)) !important;
-  border-color:rgba(0,230,118,.30) !important;
-  box-shadow:0 8px 26px rgba(0,230,118,.16) !important;
+  background:linear-gradient(145deg,
+    rgba(0,230,118,.13), rgba(52,211,153,.06),
+    rgba(0,212,255,.03)) !important;
+  border-color:rgba(0,230,118,.28) !important;
+  box-shadow:
+    0 12px 38px rgba(0,230,118,.14),
+    0 4px 12px rgba(0,0,0,.10),
+    inset 0 1px 0 rgba(255,255,255,.10) !important;
 }
-body .cal-checkin-card.checked::before{ background:radial-gradient(circle, rgba(0,230,118,.18), transparent 70%); }
-body .cal-ci-icon{ animation:calIconBob 2.6s ease-in-out infinite; }
-@keyframes calIconBob{ 0%,100%{transform:translateY(0) rotate(-2deg);} 50%{transform:translateY(-5px) rotate(2deg);} }
-body .cal-ci-status{ color:#FFD700 !important; text-shadow:0 0 12px rgba(255,215,0,.45); font-weight:800 !important; }
-body .cal-checkin-card.checked .cal-ci-status{ color:#34D399 !important; text-shadow:0 0 12px rgba(0,230,118,.45); }
+body .cal-checkin-card.checked::before{
+  background:radial-gradient(circle, rgba(0,230,118,.16), transparent 70%);
+}
+body .cal-checkin-card.checked:hover{
+  box-shadow:
+    0 22px 56px rgba(0,230,118,.24),
+    0 8px 24px rgba(0,0,0,.16),
+    inset 0 1px 0 rgba(255,255,255,.14) !important;
+  border-color:rgba(0,230,118,.42) !important;
+}
+
+/* ---- 图标：放大 ---- */
+body .cal-ci-icon{
+  font-size:52px !important;
+  line-height:1 !important;
+  filter:drop-shadow(0 4px 10px rgba(0,0,0,.3)) !important;
+  animation:calIconBob 2.6s ease-in-out infinite;
+}
+
+/* ---- 状态文字：主标题（对标 mode-name） ---- */
+body .cal-ci-body{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  gap:4px !important;
+}
+body .cal-ci-status{
+  font-size:21px !important;
+  font-weight:800 !important;
+  letter-spacing:.3px !important;
+  color:#FFD700 !important;
+  text-shadow:0 0 16px rgba(255,215,0,.40), 0 2px 4px rgba(0,0,0,.25) !important;
+}
+body .cal-checkin-card.checked .cal-ci-status{
+  color:#34D399 !important;
+  text-shadow:0 0 16px rgba(0,230,118,.40), 0 2px 4px rgba(0,0,0,.25) !important;
+}
+
+/* ---- 连续天数：副标题 pill（对标 mode-desc） ---- */
 body .cal-ci-streak{
-  background:linear-gradient(135deg, rgba(255,107,53,.22), rgba(255,215,0,.12)) !important;
-  border:1px solid rgba(255,215,0,.30) !important;
-  padding:3px 10px; border-radius:999px; font-weight:700 !important;
-  box-shadow:0 0 12px rgba(255,170,0,.25);
+  font-size:14px !important;
+  color:rgba(255,255,255,.65) !important;
+  font-weight:600 !important;
+  letter-spacing:.2px !important;
+  background:linear-gradient(135deg,
+    rgba(255,140,50,.18), rgba(255,200,80,.08)) !important;
+  border:1px solid rgba(255,200,120,.22) !important;
+  padding:4px 16px !important;
+  border-radius:999px !important;
+  display:inline-flex !important;
+  gap:4px !important;
+  box-shadow:0 2px 8px rgba(255,150,50,.12) !important;
 }
+body .cal-checkin-card.checked .cal-ci-streak{
+  background:linear-gradient(135deg,
+    rgba(0,200,150,.16), rgba(0,230,180,.08)) !important;
+  border-color:rgba(52,211,153,.25) !important;
+  box-shadow:0 2px 8px rgba(0,200,130,.12) !important;
+  color:rgba(255,255,255,.7) !important;
+}
+
+/* ---- 打卡按钮 ---- */
 body .cal-ci-btn{
-  background:linear-gradient(135deg,#FFD700,#F59E0B) !important; color:#1a1205 !important;
-  box-shadow:0 4px 16px rgba(255,215,0,.40) !important;
-  animation:calBtnPulse 1.8s ease-in-out infinite;
+  margin-top:4px !important;
+  padding:11px 22px !important;
+  border-radius:14px !important;
+  font-size:14px !important;
+  font-weight:800 !important;
+  letter-spacing:.4px !important;
+  background:linear-gradient(135deg,#FFD700,#F59E0B) !important;
+  color:#1a1205 !important;
+  border:none !important;
+  cursor:pointer !important;
+  box-shadow:0 4px 18px rgba(255,215,0,.35),
+              inset 0 1px 0 rgba(255,255,255,.3) !important;
+  transition:transform .2s ease, box-shadow .2s ease !important;
+  animation:calBtnPulse 2s ease-in-out infinite;
 }
-body .cal-ci-btn:hover{ box-shadow:0 6px 24px rgba(255,215,0,.65) !important; }
-@keyframes calBtnPulse{ 0%,100%{transform:scale(1);box-shadow:0 4px 16px rgba(255,215,0,.35);} 50%{transform:scale(1.04);box-shadow:0 6px 26px rgba(255,215,0,.65);} }
+body .cal-ci-btn:hover{
+  transform:scale(1.05) translateY(-1px) !important;
+  box-shadow:0 6px 26px rgba(255,215,0,.55),
+              inset 0 1px 0 rgba(255,255,255,.4) !important;
+}
+@keyframes calBtnPulse{ 0%,100%{transform:scale(1);box-shadow:0 4px 18px rgba(255,215,0,.32);} 50%{transform:scale(1.04);box-shadow:0 6px 26px rgba(255,215,0,.58);} }
+@keyframes calIconBob{ 0%,100%{transform:translateY(0) rotate(-3deg);} 50%{transform:translateY(-6px) rotate(3deg);} }
+
 
 /* ===== 签到成功印章 ===== */
 .checkin-success{
