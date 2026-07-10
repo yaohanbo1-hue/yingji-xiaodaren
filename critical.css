@@ -370,3 +370,46 @@ body #page-menu { display: flex !important; flex-direction: column !important; j
   .blindbox-card-name{ font-size:17px; }
   .blindbox-label{ font-size:22px; }
 }
+
+/* ===== 盲盒光爆环（揭晓瞬间从中心迸发） ===== */
+.blindbox-burst{
+  position:absolute; top:42%; left:50%;
+  width:48px; height:48px; margin:-24px 0 0 -24px;
+  border-radius:50%; border:3px solid rgba(255,255,255,.75);
+  box-shadow:0 0 24px 6px rgba(255,255,255,.5);
+  opacity:0; pointer-events:none; transform:scale(.2); z-index:1;
+}
+.blindbox-burst.go{ animation:blindboxBurst .75s cubic-bezier(.2,.7,.3,1) forwards; }
+@keyframes blindboxBurst{
+  0%{ transform:scale(.2); opacity:.95; border-width:6px; }
+  70%{ opacity:.55; }
+  100%{ transform:scale(11); opacity:0; border-width:1px; }
+}
+
+/* ===== 盲盒旋转光芒（史诗/传说专属） ===== */
+.blindbox-rays{
+  position:absolute; top:42%; left:50%;
+  width:360px; height:360px; margin:-180px 0 0 -180px;
+  border-radius:50%; opacity:0; pointer-events:none; z-index:0;
+  background:conic-gradient(from 0deg,
+    rgba(255,255,255,0) 0deg, rgba(255,255,255,.0) 6deg, rgba(255,255,255,.45) 12deg, rgba(255,255,255,0) 18deg,
+    rgba(255,255,255,.45) 36deg, rgba(255,255,255,0) 42deg, rgba(255,255,255,.45) 60deg, rgba(255,255,255,0) 66deg,
+    rgba(255,255,255,.45) 84deg, rgba(255,255,255,0) 90deg, rgba(255,255,255,.45) 108deg, rgba(255,255,255,0) 114deg,
+    rgba(255,255,255,.45) 132deg, rgba(255,255,255,0) 138deg, rgba(255,255,255,.45) 156deg, rgba(255,255,255,0) 162deg,
+    rgba(255,255,255,.45) 180deg, rgba(255,255,255,0) 186deg, rgba(255,255,255,.45) 204deg, rgba(255,255,255,0) 210deg,
+    rgba(255,255,255,.45) 228deg, rgba(255,255,255,0) 234deg, rgba(255,255,255,.45) 252deg, rgba(255,255,255,0) 258deg,
+    rgba(255,255,255,.45) 276deg, rgba(255,255,255,0) 282deg, rgba(255,255,255,.45) 300deg, rgba(255,255,255,0) 306deg,
+    rgba(255,255,255,.45) 324deg, rgba(255,255,255,0) 330deg, rgba(255,255,255,.45) 348deg, rgba(255,255,255,0) 354deg,
+    rgba(255,255,255,0) 360deg);
+  -webkit-mask:radial-gradient(circle, transparent 28%, #000 52%, transparent 74%);
+  mask:radial-gradient(circle, transparent 28%, #000 52%, transparent 74%);
+}
+.blindbox-rays.go{ animation:blindboxRaysIn .5s ease-out forwards, blindboxRaysRotate 3.2s linear infinite; }
+@keyframes blindboxRaysRotate{ from{ transform:rotate(0); } to{ transform:rotate(360deg); } }
+@keyframes blindboxRaysIn{ from{ opacity:0; } to{ opacity:.85; } }
+
+/* ===== 稀有度聚光底色（让不同品质氛围不同） ===== */
+.blindbox-overlay.r-common{ background:radial-gradient(circle at center, rgba(20,22,40,.82), rgba(4,5,14,.95)); }
+.blindbox-overlay.r-rare{ background:radial-gradient(circle at center, rgba(10,40,60,.85), rgba(4,12,22,.95)); }
+.blindbox-overlay.r-epic{ background:radial-gradient(circle at center, rgba(40,12,60,.86), rgba(14,4,24,.95)); }
+.blindbox-overlay.r-legendary{ background:radial-gradient(circle at center, rgba(60,44,6,.88), rgba(20,14,2,.96)); }
